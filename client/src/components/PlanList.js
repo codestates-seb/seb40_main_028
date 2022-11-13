@@ -9,8 +9,12 @@ export default function PlanList() {
       title: '숄더프레스',
     },
     {
-      id: 3,
-      title: '윗몸일으키기',
+      id: 1,
+      title: '팔굽혀펴기',
+    },
+    {
+      id: 2,
+      title: '숄더프레스',
     },
     {
       id: 1,
@@ -21,15 +25,35 @@ export default function PlanList() {
       title: '숄더프레스',
     },
     {
-      id: 3,
-      title: '윗몸일으키기',
+      id: 1,
+      title: '팔굽혀펴기',
+    },
+    {
+      id: 2,
+      title: '숄더프레스',
+    },
+    {
+      id: 1,
+      title: '팔굽혀펴기',
+    },
+    {
+      id: 2,
+      title: '숄더프레스',
+    },
+    {
+      id: 1,
+      title: '팔굽혀펴기',
+    },
+    {
+      id: 2,
+      title: '숄더프레스',
     },
   ];
   return (
-    <div className="flex flex-col items-center text-gray-700 text-medium text-xl text-center mt-5 h-[18em] overflow-y-scroll">
+    <div className="flex flex-col items-center w-full text-gray-700 text-medium text-xl text-center mt-5">
       {data.map((item) => (
         <div
-          className="flex justify-between hover:my-1 hover:scale-110 ease-out duration-150 p-4 border rounded-xl w-3/4 border-[#2C2F33] bg-[#4E525A] hover:bg-d-light text-white text-base text-medium"
+          className="flex justify-between hover:my-1 hover:scale-110 ease-out duration-150 p-1 mb-1 border rounded-xl w-[65%] border-[#2C2F33] bg-[#4E525A] hover:bg-d-light text-white text-base text-medium"
           key={item.id}
         >
           <svg
