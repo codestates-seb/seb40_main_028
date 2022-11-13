@@ -9,6 +9,8 @@ module.exports = {
         'd-light': '#2F3136',
         'd-lighter': '#36393F',
         'd-point': '#70A7FF',
+        'd-button': '#5865F2',
+        'd-button-hover': '#4752C4',
       },
     },
   },
