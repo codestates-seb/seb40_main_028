@@ -13,8 +13,8 @@ export default function Button({ text, onGoBack, large, onGoMain }) {
     <button
       onClick={onGoBack ? goBack : onGoMain ? goMain : null}
       className={cls(
-        'px-20 py-2 bg-[#4E525A] hover:bg-d-lighter text-white border border-transparent rounded-md shadow-sm font-medium',
-        large ? 'text-2xl' : 'text-xl'
+        'px-14 py-2 bg-d-button hover:bg-d-button-hover text-white border border-transparent rounded-md shadow-sm font-medium',
+        large ? 'text-xl' : 'text-lg'
       )}
     >
       {text}

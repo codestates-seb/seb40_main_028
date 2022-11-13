@@ -113,7 +113,7 @@ export default function Layout({ title, canGoBack, hasTabBar, children }) {
 
   return (
     <div>
-      <div className="bg-d-lighter w-full h-12 max-w-xl justify-center text-lg px-10 font-medium  fixed text-white border-b top-0  flex items-center">
+      <div className="bg-d-dark w-full h-12 max-w-lg justify-center text-lg px-10 font-medium fixed text-white border-b border-[#2C2F33] top-0  flex items-center">
         {canGoBack ? (
           <button onClick={goToBack} className="absolute left-4">
             <svg
@@ -139,7 +139,7 @@ export default function Layout({ title, canGoBack, hasTabBar, children }) {
 
       <div className={cls('pt-12', hasTabBar ? 'pb-24' : '')}>{children}</div>
       {hasTabBar ? (
-        <nav className="bg-d-lighter max-w-xl text-white border-t fixed bottom-0 w-full px-10 pb-3 pt-3 flex justify-between text-xs">
+        <nav className="bg-d-dark max-w-lg text-white border-[#2C2F33] border-t fixed bottom-0 w-full px-10 pb-3 pt-3 flex justify-between text-xs">
           {menu.map((item, index) => (
             <Link to={item.path}>
               <div

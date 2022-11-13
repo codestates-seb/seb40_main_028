@@ -11,7 +11,7 @@ const NotFound = () => {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="w-48 h-48 mt-[-9em] mx-auto text-[#DB6A6A]"
+          className="w-48 h-48 mt-[-11.5em] mx-auto text-[#DB6A6A]"
         >
           <path
             strokeLinecap="round"
