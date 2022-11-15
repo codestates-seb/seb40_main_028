@@ -13,7 +13,10 @@ export default function PlanCalendar() {
   });
 
   const renderCustomInput = ({ ref }) => (
-    <div className="flex items-center rounded-full bg-d-dark hover:bg-d-light text-white outline-none text-medium p-[0.3em] ">
+    <label
+      for="my-custom-input-class"
+      className="flex items-center rounded-full bg-d-dark hover:bg-d-light text-white outline-none text-medium p-[0.3em] "
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
@@ -36,9 +39,10 @@ export default function PlanCalendar() {
             ? `${selectedDay.year}년 ${selectedDay.month}월 ${selectedDay.day}일`
             : ''
         }
+        id="my-custom-input-class"
         className="my-custom-input-class outline-none bg-d-dark ml-3 w-[8em] hover:bg-d-light rounded-full"
       />
-    </div>
+    </label>
   );
   console.log(selectedDay);
 
