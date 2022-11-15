@@ -1,9 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import PlanModal from './PlanModal';
 
 export default function PlanAdd() {
   const openModal = () => {
-    console.log('open modal');
+    PlanModal(true);
   };
   return (
     <div
