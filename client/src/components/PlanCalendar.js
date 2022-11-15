@@ -14,7 +14,7 @@ export default function PlanCalendar() {
 
   const renderCustomInput = ({ ref }) => (
     <label
-      for="my-custom-input-class"
+      htmlFor="my-custom-input-class"
       className="flex items-center rounded-full bg-d-dark hover:bg-d-light text-white outline-none text-medium p-[0.3em] "
     >
       <svg
