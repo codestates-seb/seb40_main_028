@@ -2,9 +2,11 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/excercise?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:3306/exercise?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username:
     password:
+
+
 
 
   jpa:
