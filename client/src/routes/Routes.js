@@ -6,6 +6,8 @@ import Workout from '../pages/Workout';
 import Mypage from '../pages/Mypage';
 import NotFound from '../pages/NotFound';
 
+import Login from '../pages/Login';
+
 export default function Router() {
   const routes = useRoutes([
     {
@@ -31,6 +33,10 @@ export default function Router() {
     {
       path: '*',
       element: <NotFound />,
+    },
+    {
+      path: '/login',
+      element: <Login />,
     },
   ]);
   return routes;
