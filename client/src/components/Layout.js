@@ -8,7 +8,7 @@ export default function Layout({ title, canGoBack, hasTabBar, children }) {
   const goToBack = () => {
     navigate(-1);
   };
-  
+
   const menu = [
     {
       name: '홈',
@@ -127,7 +127,7 @@ export default function Layout({ title, canGoBack, hasTabBar, children }) {
       {hasTabBar ? (
         <nav className="bg-d-dark max-w-lg text-white border-[#2C2F33] border-t fixed bottom-0 w-full px-10 pb-3 pt-3 flex justify-between text-xs">
           {menu.map((item, index) => (
-            <Link to={item.path}>
+            <Link to={item.path} key={index}>
               <div
                 className={cls(
                   'flex flex-col items-center space-y-2 ',
