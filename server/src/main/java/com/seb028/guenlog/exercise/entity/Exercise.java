@@ -1,5 +1,4 @@
-package com.seb028.guenlog.excercise.entity;
-
+package com.seb028.guenlog.exercise.entity;
 
 import com.seb028.guenlog.base.BaseEntity;
 import lombok.AllArgsConstructor;
@@ -14,14 +13,21 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Category extends BaseEntity {
+public class Exercise extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "category_id")
+    @Column(name = "exercise_id")
     private Long id;
 
     private String name;
+
+    @Lob
+    private String images;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="category_id")
+    private Category category;
 
 
 }
