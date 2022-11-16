@@ -16,8 +16,8 @@ const L = styled.button`
 // 모달 실행시 배경이미지
 const ModalBackdrop = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
-  width: 100vw;
-  height: 100vh;  
+  width: 100%;
+  height: 100%;  
 `;
 
 const BtnContainer = styled.div`
@@ -68,11 +68,6 @@ const CancleBtn = styled.button`
 `;
 
 
-
-
-
-
-
 const Logout = () => {
 
   const [isOpen, setIsOpen] = useState(false);
@@ -83,10 +78,11 @@ const Logout = () => {
   return (
   
   <>
-  {/* <div className="text-gray-700 h-screen text-medium text-xl text-center mt-5">
+  
+  <div className="text-gray-700 h-screen text-medium text-xl text-center mt-5">
           logout
-  </div> */}
   <L onClick={openModalHandler}>모달버튼</L>
+ 
   {isOpen ? (<ModalBackdrop onClick={openModalHandler}>
     <BtnContainer>
       <LogoutBtn >Logout</LogoutBtn>
@@ -95,12 +91,9 @@ const Logout = () => {
   </ModalBackdrop>
   ) : null}
 
-        
-        
+</div>
+  
 
-          
-
-    
     </>
   );
 };
