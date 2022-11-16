@@ -1,12 +1,13 @@
 
 import { useState } from "react";
-import styled from 'styled-components';
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
 
 // 모달 로그아웃 버튼
 const L = styled.button`
-  width: 68px;
-  height: 100px;
+  width: 50px;
+  height: 50px;
   padding: 10px;
   color: white;
   font-size: 13px;
@@ -30,18 +31,19 @@ const BtnContainer = styled.div`
   padding: 20px;
   width: 200px;
   height: 150px;
-
-  display: flex;
-  align-items: center;
   
   background-color: #ffffff;
   border-radius: 10px;
+
+  //버튼 가운데 정렬
+  display: flex;
+  align-items: center;
 
 `;
 
 const LogoutBtn = styled.button`
   width: 100%;
-  height: 50px;
+  height: 50%;
   padding: 10px;
   color: white;
   background: rgb(88 101 242);
@@ -50,48 +52,64 @@ const LogoutBtn = styled.button`
   font-weight: 600;
   border: 0;
   border-radius: 10px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin-right: 20px;
+
   &:hover {
     background: rgb(71 82 196);
 `;
 
 const CancleBtn = styled.button`
   width: 100%;
-  height: 50px;
+  height: 50%;
   padding: 10px;
   color: rgb(88 101 242);
   background: white;
   font-size: 13px;
   box-shadow: rgba(255, 255, 255, 0.4) 0px 1px 0px 0px inset;
   font-weight: 600;
-  border: 0;
+  // border: 0px;
+  border: 1px solid ;
   border-radius: 10px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 
 const Logout = () => {
+  const navigate = useNavigate();
 
   const [isOpen, setIsOpen] = useState(false);
-    const openModalHandler = () => {
-      setIsOpen(!isOpen);
-    };
+  const openModalHandler = () => {
+    setIsOpen(!isOpen);
+  };
 
   return (
   
-  <>
+    <>
   
-  <div className="text-gray-700 h-screen text-medium text-xl text-center mt-5">
+      <div className="text-gray-700 h-screen text-medium text-xl text-center mt-5">
           logout
-  <L onClick={openModalHandler}>모달버튼</L>
+        <L onClick={openModalHandler}>버튼</L>
  
-  {isOpen ? (<ModalBackdrop onClick={openModalHandler}>
-    <BtnContainer>
-      <LogoutBtn >Logout</LogoutBtn>
-      <CancleBtn >Cancle</CancleBtn>
-    </BtnContainer>
-  </ModalBackdrop>
-  ) : null}
+        {isOpen ? (<ModalBackdrop onClick={openModalHandler}>
+          <BtnContainer>
+            {/* <LogoutBtn  onClick={openModalHandler} >Logout</LogoutBtn> */}
+            {/* <LogoutBtn  onClick={navigate('/map')} >Logout</LogoutBtn> */}
+            {/* 로그인 버튼 클릭 시 홈으로 페이지 이동 */}
+            <LogoutBtn  onClick={() => navigate('/')} >Logout</LogoutBtn>
+            <CancleBtn >Cancle</CancleBtn>
+          </BtnContainer>
+        </ModalBackdrop>
+        ) : null}
 
-</div>
+      </div>
   
 
     </>
