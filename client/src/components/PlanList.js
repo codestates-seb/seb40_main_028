@@ -8,46 +8,6 @@ export default function PlanList() {
       id: 2,
       title: '숄더프레스',
     },
-    {
-      id: 1,
-      title: '팔굽혀펴기',
-    },
-    {
-      id: 2,
-      title: '숄더프레스',
-    },
-    {
-      id: 1,
-      title: '팔굽혀펴기',
-    },
-    {
-      id: 2,
-      title: '숄더프레스',
-    },
-    {
-      id: 1,
-      title: '팔굽혀펴기',
-    },
-    {
-      id: 2,
-      title: '숄더프레스',
-    },
-    {
-      id: 1,
-      title: '팔굽혀펴기',
-    },
-    {
-      id: 2,
-      title: '숄더프레스',
-    },
-    {
-      id: 1,
-      title: '팔굽혀펴기',
-    },
-    {
-      id: 2,
-      title: '숄더프레스',
-    },
   ];
   return (
     <div className="flex flex-col items-center w-full text-gray-700 text-medium text-xl text-center mt-5">
