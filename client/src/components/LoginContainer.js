@@ -9,11 +9,11 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-bottom: 10px;
+  // margin-bottom: 10px;
   align-items: center;
   background-color: white;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 10px 24px 0px,
-    rgba(0, 0, 0, 0.05) 0px 20px 48px 0px, rgba(0, 0, 0, 0.1) 0px 1px 4px 0px;
+  // box-shadow: rgba(0, 0, 0, 0.05) 0px 10px 24px 0px,
+  //   rgba(0, 0, 0, 0.05) 0px 20px 48px 0px, rgba(0, 0, 0, 0.1) 0px 1px 4px 0px;
   border-radius: 10px;
 `;
 

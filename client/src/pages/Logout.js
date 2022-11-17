@@ -6,19 +6,30 @@ import styled from "styled-components";
 
 // 모달 로그아웃 버튼
 const L = styled.button`
-  width: 50px;
-  height: 50px;
+  width: 100px;
+  height: 100px;
   padding: 10px;
   color: white;
   font-size: 13px;
-  background: red;
+  background: rgb(88 101 242);
+  border-radius: 10px;
 `;
 
 // 모달 실행시 배경이미지
 const ModalBackdrop = styled.div`
+//위치 고정
+position: fixed;
+
+// 넣을지 말지 고민해보기 서비스이름(근로그)가 가려짐
+// z-index: 1000;
+top: 0;
+left: 0;
+
   background-color: rgba(0, 0, 0, 0.5);
-  width: 100%;
-  height: 100%;  
+  width: 100vw;
+  height: 100vh;
+  
+  
 `;
 
 const BtnContainer = styled.div`
@@ -87,6 +98,24 @@ const CancleBtn = styled.button`
 `;
 
 
+
+const Container = styled.div`
+  // padding-top: 90px;
+  // width: 100vw;
+
+  height: 100%;
+
+  display: flex;
+	flex-direction : column;
+  align-items: center;
+  justify-content: center;
+  
+
+  // 확인하고 지우기
+  // padding-top: 60px;
+
+`;
+
 const Logout = () => {
   const navigate = useNavigate();
 
@@ -98,21 +127,25 @@ const Logout = () => {
   return (
   
     <>
-  
-      <div className="text-gray-700 h-screen text-medium text-xl text-center mt-5">
-          logout
-        <L onClick={openModalHandler}>버튼</L>
+      <div className="bg-d-dark w-full z-[1] h-12 max-w-lg justify-center text-lg px-10 font-medium fixed text-white border-b border-[#2C2F33] top-0  flex items-center">근로그</div>
+      <div className="h-screen bg-d-lighter pt-14">
+        <Container>
+          
+          <L onClick={openModalHandler}>logout</L>
  
-        {isOpen ? (<ModalBackdrop onClick={openModalHandler}>
-          <BtnContainer>
-            {/* <LogoutBtn  onClick={openModalHandler} >Logout</LogoutBtn> */}
-            {/* <LogoutBtn  onClick={navigate('/map')} >Logout</LogoutBtn> */}
-            {/* 로그인 버튼 클릭 시 홈으로 페이지 이동 */}
-            <LogoutBtn  onClick={() => navigate('/')} >Logout</LogoutBtn>
-            <CancleBtn >Cancle</CancleBtn>
-          </BtnContainer>
-        </ModalBackdrop>
-        ) : null}
+          {isOpen ? (<ModalBackdrop onClick={openModalHandler}>
+            <BtnContainer>
+              {/* <LogoutBtn  onClick={openModalHandler} >Logout</LogoutBtn> */}
+              {/* <LogoutBtn  onClick={navigate('/map')} >Logout</LogoutBtn> */}
+              {/* 로그인 버튼 클릭 시 홈으로 페이지 이동 */}
+              <LogoutBtn  onClick={() => navigate('/login')} >Logout</LogoutBtn>
+              <CancleBtn >Cancle</CancleBtn>
+            </BtnContainer>
+          </ModalBackdrop>
+          ) : null}
+
+        </Container>
+
 
       </div>
   
