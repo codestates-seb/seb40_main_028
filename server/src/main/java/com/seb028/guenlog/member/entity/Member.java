@@ -2,18 +2,18 @@ package com.seb028.guenlog.member.entity;
 
 
 import com.seb028.guenlog.base.BaseEntity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+//@Builder
 public class Member extends BaseEntity {
 
     @Id
@@ -21,9 +21,14 @@ public class Member extends BaseEntity {
     @Column(name = "member_id")
     private Long id;
 
+    @Column(nullable = false, unique = true)
     private String email;
 
+    @Column(nullable = false)
     private String nickname;
+
+    @Column(nullable = false)
+    private String password;
 
     private Integer age;
 
@@ -31,7 +36,19 @@ public class Member extends BaseEntity {
 
     private Character gender;
 
-    private Character status;
+    @Enumerated(EnumType.STRING)
+    @Column
+    private MemberStatus status = MemberStatus.Y;
 
+    public enum MemberStatus {
+        Y("회원 활성"),
+        N("회원 탈퇴");
 
+        @Getter
+        private String status;
+
+        MemberStatus(String status) {
+            this.status = status;
+        }
+    }
 }
