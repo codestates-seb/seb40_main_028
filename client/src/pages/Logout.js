@@ -60,7 +60,8 @@ const LogoutBtn = styled.button`
   margin-right: 20px;
 
   &:hover {
-    background: rgb(71 82 196);
+    background: rgb(71 82 196)
+  };
 `;
 
 const CancleBtn = styled.button`
@@ -79,6 +80,10 @@ const CancleBtn = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  &:hover {
+    background: rgb(241, 242, 244);
+  };
 `;
 
 
