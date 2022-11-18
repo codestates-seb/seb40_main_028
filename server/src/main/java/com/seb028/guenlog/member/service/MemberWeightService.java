@@ -1,0 +1,31 @@
+package com.seb028.guenlog.member.service;
+
+import com.seb028.guenlog.exception.BusinessLogicException;
+import com.seb028.guenlog.exception.ExceptionCode;
+import com.seb028.guenlog.member.entity.MemberWeight;
+import com.seb028.guenlog.member.repository.MemberWeightRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class MemberWeightService {
+
+    private final MemberWeightRepository memberWeightRepository;
+
+    public MemberWeightService(MemberWeightRepository memberWeightRepository) {
+        this.memberWeightRepository = memberWeightRepository;
+    }
+
+    // 사용자의 가장 최근 몸무게 기록 하나 조회
+    public MemberWeight findRecentOneWeight(long memberId) {
+        // memberWeightRepository에서 memberId를 이용해 몸무게 기록들 최신순으로 조회
+        List<MemberWeight> findMemberWeights = memberWeightRepository.findRecentByMemberId(memberId);
+
+        // 가장 최근 몸무게 객체 (0번째 인덱스 값)
+        MemberWeight memberWeight = findMemberWeights.get(0);
+
+        return memberWeight;
+    }
+}
