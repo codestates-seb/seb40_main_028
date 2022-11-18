@@ -1,9 +1,26 @@
-import React from 'react';
-import PlanModal from './PlanModal';
+import React, { useEffect } from 'react';
+import { useRecoilState } from 'recoil';
+import { categorie } from '../state/states';
+import axios from 'axios';
 
-export default function PlanAdd() {
+export default function PlanAdd({ setIsModalOpen }) {
+  const [categories, setCategories] = useRecoilState(categorie);
+
+  useEffect(() => {
+    setCategories([
+      '상체운동',
+      '하체운동',
+      '전신운동',
+      '유산소운동',
+      '근력운동',
+    ]);
+  }, []);
+
   const openModal = () => {
-    PlanModal(true);
+    setIsModalOpen(true);
+    // axios.get('/api/plan').then((res) => {
+    //   setCategories(res.data);
+    // });
   };
   return (
     <div
