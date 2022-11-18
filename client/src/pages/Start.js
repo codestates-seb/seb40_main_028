@@ -1,8 +1,7 @@
 
-import Layout from "../components/Layout";
 import styled from "styled-components";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import Logo from '../assets/img/Logo.png';
 

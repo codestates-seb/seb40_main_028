@@ -1,9 +1,10 @@
 // import Layout from '../components/Layout';
 import styled from "styled-components";
 
-import LoginContainer from '../components/LoginContainer';
+import InformationContainer from '../components/InformationContainer';
 
-import Logo from '../assets/img/Logo.png';
+
+// import Logo from '../assets/img/Logo.png';
 
 
 
@@ -25,23 +26,23 @@ const Container = styled.div`
 `;
 
 
-const LogoPng = styled.img`
+// const LogoPng = styled.img`
 
 
-  height: 200px;
-  width: 200px;
-  margin-bottom: 40px;
-  // display: flex;
-  // align-items: center;
-  // justify-content: center;
+//   height: 200px;
+//   width: 200px;
+//   margin-bottom: 40px;
+//   // display: flex;
+//   // align-items: center;
+//   // justify-content: center;
 
 
-  border-radius: 20px;
+//   border-radius: 20px;
 
-  // margin-top: px;
+//   // margin-top: px;
 
 
-`;
+// `;
 
 const Login = () => {
   return (
@@ -49,9 +50,12 @@ const Login = () => {
       <div className="bg-d-dark w-full z-[1] h-12 max-w-lg justify-center text-lg px-10 font-medium fixed text-white border-b border-[#2C2F33] top-0  flex items-center">근로그</div>
       <div className="h-screen bg-d-lighter pt-14">
         <Container>
-          {/* 로고 */}
-          <LogoPng src={Logo} />
-          <LoginContainer></LoginContainer>
+
+          <InformationContainer></InformationContainer>
+          
+
+
+
         </Container>
       </div>
     </>
