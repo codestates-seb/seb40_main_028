@@ -125,6 +125,7 @@ const PlanModal = ({ isModalOpen, setIsModalOpen }) => {
       selectedCategory,
       selectedExercise,
     ]);
+    console.log(finalExercise);
   }, [detailExercise, selectedDay, selectedCategory, selectedExercise]);
 
   const onChange = (e, idx) => {
@@ -279,6 +280,7 @@ const PlanModal = ({ isModalOpen, setIsModalOpen }) => {
                               name="weight"
                               value={item.weight || ''}
                               placeholder={`${item.weight}kg`}
+                              autoComplete="off"
                             />
                           </div>
                           <div className="text-black  font-semibold text-[0.8em]">
@@ -288,6 +290,7 @@ const PlanModal = ({ isModalOpen, setIsModalOpen }) => {
                               name="count"
                               value={item.count || ''}
                               placeholder={`${item.count}회`}
+                              autoComplete="off"
                             />
                           </div>
                           <div className="text-black font-semibold text-[0.8em]">
@@ -297,6 +300,7 @@ const PlanModal = ({ isModalOpen, setIsModalOpen }) => {
                               value={item.timer || ''}
                               name="timer"
                               placeholder={`${item.timer}초`}
+                              autoComplete="off"
                             />
                           </div>
 
