@@ -33,7 +33,7 @@ export default function Layout({ title, canGoBack, hasTabBar, children }) {
     {
       name: '운동시작',
       path: '/workout',
-      svg: <FaDumbbell size={24} />,
+      svg: <FaDumbbell size="24" />,
     },
     {
       name: '계획작성',
