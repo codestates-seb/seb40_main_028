@@ -1,20 +1,24 @@
 package com.seb028.guenlog.member.controller;
 
+import com.seb028.guenlog.member.dto.MyPageInfoDto;
 import com.seb028.guenlog.member.entity.Member;
 import com.seb028.guenlog.member.entity.MemberWeight;
 import com.seb028.guenlog.member.mapper.MyPageInfoMapper;
 import com.seb028.guenlog.member.service.MemberService;
 import com.seb028.guenlog.member.service.MemberWeightService;
 import com.seb028.guenlog.member.service.MyPageService;
+import com.seb028.guenlog.member.util.MyPageInfo;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 
 @RestController
 @RequestMapping("/users/mypages")
+@Validated
 public class MyPageController {
 
     private final MemberService memberService;
@@ -43,14 +47,12 @@ public class MyPageController {
         // long memberId = memberService.findMember();
         long memberId = 1L;
 
-        // memberID를 이용해 memberService에서 사용자 개인 정보 가져옴
-        Member member = memberService.findVerified(memberId);
-        // memberId를 이용해 사용자의 가장 최신 몸무게 값 가져옴.
-        MemberWeight memberWeight = memberWeightService.findRecentOneWeight(memberId);
+        // memberId를 통해 myPageService에서 MyPageInfo 객체 반환
+        MyPageInfo myPageInfo = myPageService.getMyPageInfo(memberId);
 
-        // 사용자 개인정보, 가장 최신 몸무게 값을 ResponsDTO로 변환후 반환
+        // 사용자의 개인정보에 대한 MyPageInfo 객체를 ResponsDTO로 변환후 반환
         return new ResponseEntity<> (
-                myPageInfoMapper.myPageInfoToMyPageInfoResponseDto(member, memberWeight),
+                myPageInfoMapper.myPageInfoToMyPageInfoResponseDto(myPageInfo),
                 HttpStatus.OK
         );
     }
