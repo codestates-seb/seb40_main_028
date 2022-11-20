@@ -56,4 +56,29 @@ public class MyPageController {
                 HttpStatus.OK
         );
     }
+
+    @PatchMapping("/info")
+    public ResponseEntity patchMyPageInfo(
+            // TODO: HttpServletRequest request - 토큰
+            @RequestBody @Valid MyPageInfoDto.Patch myPageInfoPatchDto
+    ) {
+        // TODO: http request로부터 사용자의 memberId 추출
+        // long memberId = memberService.findMember();
+        long memberId = 1L;
+
+        // MyPageInfoDto를 MyPageInfo 객체로 변환
+        MyPageInfo myPageInfo = myPageInfoMapper.myPageInfoPatchDtoToMyPageInfo(myPageInfoPatchDto);
+
+        // MypageInfo객체의 Member객체에 사용자 ID 부여
+        myPageInfo.getMember().setId(memberId);
+
+        // MyPageService에서 MyPageInfo 객체 전달하여 개인정보 수정
+        MyPageInfo updateMyPageInfo =
+                myPageService.updateMyPageInfo(myPageInfo);
+
+        // 수정 완료를 MyPageInfoResponseDTO와 함께 HttpStatus OK로 리턴
+        return new ResponseEntity<>(
+                myPageInfoMapper.myPageInfoToMyPageInfoResponseDto(myPageInfo),
+                HttpStatus.OK);
+    }
 }
