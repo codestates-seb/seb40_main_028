@@ -17,6 +17,10 @@ img {
     -webkit-user-drag: none;
 }
 
+input[type=number].noappearance::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
 ::-webkit-scrollbar {
     display: none;
 }
