@@ -1,7 +1,7 @@
 import '@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css';
 import DatePicker from '@hassanmojab/react-modern-calendar-datepicker';
 import { useRecoilState } from 'recoil';
-import { selectedDays } from '../state/states';
+import { selectedDays } from '../../state/states';
 export default function PlanCalendar() {
   const [selectedDay, setSelectedDay] = useRecoilState(selectedDays);
   const renderCustomInput = ({ ref }) => (

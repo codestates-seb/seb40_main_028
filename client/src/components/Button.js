@@ -10,6 +10,7 @@ export default function Button({
   onGoMain,
   beforeModal,
   saveModal,
+  onClick,
 }) {
   const [isModalOpen, setIsModalOpen] = useRecoilState(isModal);
   const [modalNum, setModalNum] = useRecoilState(ModalNum);
@@ -30,15 +31,12 @@ export default function Button({
   return (
     <button
       onClick={
-        onGoBack
-          ? goBack
-          : onGoMain
-          ? goMain
-          : beforeModal
-          ? goBeforeModal
-          : saveModal
-          ? goSaveModal
-          : null
+        onClick ||
+        (onGoBack && goBack) ||
+        (onGoMain && goMain) ||
+        (beforeModal && goBeforeModal) ||
+        (saveModal && goSaveModal) ||
+        undefined
       }
       className={cls(
         'px-9 py-2 bg-d-button hover:bg-d-button-hover text-white border border-transparent rounded-md shadow-sm font-medium',
