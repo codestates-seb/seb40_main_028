@@ -1,6 +1,5 @@
 import { useSetRecoilState } from 'recoil';
-import specificsetState from '../state/Workoutset';
-
+import { timermodalState, doneState } from '../state/states';
 
 export function Smallerbutton ({name, fn}) {
     return (
@@ -13,14 +12,22 @@ export function Smallerbutton ({name, fn}) {
 export function Smallbutton ({name, fn, ifnext}) {
     return (
         <>
-            <button className={`flex justify-center items-center rounded-lg w-28 h-[6vh] ml-10 bg-gradient-to-b from-[#b8b9bf] to-[#808185] drop-shadow-2xl text-[#4E525A] font-bold ${ifnext}`} onClick={fn}>{name}</button>    
+            <button className={`flex justify-center items-center rounded-lg w-28 h-[4vh] ml-10 bg-gradient-to-b from-[#b8b9bf] to-[#808185] drop-shadow-2xl text-[#4E525A] font-bold ${ifnext}`} onClick={fn}>{name}</button>    
         </>  
     );
 };
 
-export function Setlistbutton ({x, idx}) {
+export function Setlistbutton ({x, idx, record}) {
+  const setIstimermodalon = useSetRecoilState(timermodalState);
+  const setDone = useSetRecoilState(doneState);
+  const setclicked = () => {
+    setDone(record);
+    setIstimermodalon(true);
+    console.log(record);
+  }
     return(
-        <div id={idx} className="flex cursor-default my-4 h-[6vh] mx-10 border-none  text-[3vh] bg-gradient-to-b from-[#4E525A] to-[#36393F] drop-shadow-2xl ease-out hover:h-[100px] hover:mx-5 border-2 rounded-lg justify-center items-center font-bold text-white overflow-x-hidden whitespace-nowrap" >
+        <div id={idx} className="flex cursor-default my-4 h-[6vh] mx-10 border-none  text-[3vh] bg-gradient-to-b from-[#4E525A] to-[#36393F] drop-shadow-2xl ease-out hover:h-[100px] hover:mx-5 border-2 rounded-lg justify-center items-center font-bold text-white overflow-x-hidden whitespace-nowrap" 
+        onClick={setclicked} >
             <div className='basis-1/5 ml-[1vh] whitespace-nowrap'>{idx+1}세트</div>
             <div className='flex flex-row basis-3/5 max-h-[28] justify-center items-center'>
                 <span className='flex-nowrap whitespace-nowrap text-clip basis-1/2 mx-[1vh]'>{x[0]}kg</span>
@@ -37,12 +44,10 @@ export function Setlistbutton ({x, idx}) {
     );
 };
 
-export function Specificsetlistbutton ({x, idx}) {
-    const setSpecificset = useSetRecoilState(specificsetState);
-
+export function Specificsetlistbutton ({x, idx, setState}) {
     return(
         <div id={idx} className="flex justify-items-start cursor-default my-4 h-[6vh] mx-10 border-none bg-gradient-to-b from-[#4E525A] to-[#36393F] drop-shadow-2xl ease-out hover:h-[100px] hover:mx-5 border-2 rounded-lg justify-center items-center font-bold text-[28px] text-white overflow-x-hidden whitespace-nowrap" 
-              onClick={()=> {setSpecificset(idx)}}>{x}</div>
+              onClick={()=> {setState(idx)}}>{x}</div>
     );
 }
 

@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { cls } from '../assets/utils';
-import { ModalNum, isModal } from '../state/states';
-import { useRecoilState } from 'recoil';
+import { ModalNum, isModal, totaltimeState} from '../state/states';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 
 export default function Button({
   text,
@@ -10,9 +10,11 @@ export default function Button({
   onGoMain,
   beforeModal,
   saveModal,
+  workoutodone,
 }) {
-  const [isModalOpen, setIsModalOpen] = useRecoilState(isModal);
+  const setIsModalOpen = useSetRecoilState(isModal);
   const [modalNum, setModalNum] = useRecoilState(ModalNum);
+  const setIsdone = useSetRecoilState(totaltimeState);
   const navigate = useNavigate();
   const goBack = () => {
     navigate(-1);
@@ -27,6 +29,10 @@ export default function Button({
     setIsModalOpen(false);
     setModalNum(0);
   };
+  const finishworkout = () => {
+    setIsdone(0);
+    navigate('/');
+  }
   return (
     <button
       onClick={
@@ -38,6 +44,8 @@ export default function Button({
           ? goBeforeModal
           : saveModal
           ? goSaveModal
+          : workoutodone
+          ? finishworkout
           : null
       }
       className={cls(

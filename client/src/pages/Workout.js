@@ -3,16 +3,13 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useInterval from '../assets/Interval';
 import { useRecoilState } from 'recoil';
-import timermodalState from '../state/Timermodal';
-import specificsetState from '../state/Workoutset';
-import totaltimeState from '../state/Totalworkouttime';
+import {timermodalState, totaltimeState } from '../state/states';
 import Timer from '../components/Timer';
 import Congrats from '../components/Congrats';
 import {Smallbutton, Setlistbutton, Timebutton, Movingbutton, Specificsetlistbutton} from '../components/ExerciseButton';
 
-
 const Workout = () => {
-  const [specificset, setSpecificset] = useRecoilState(specificsetState);
+  const [specificset, setSpecificset] = useState("list");
   const [stopped, setStopped] = useState(false);
   const [workedtime, setWorkedtime] = useRecoilState(totaltimeState);
   const [istimermodalon, setIstimermodalon] = useRecoilState(timermodalState);
@@ -22,7 +19,7 @@ const Workout = () => {
   const setlist = [[110,20],[15,15],[20,10], [2021,1324210],[10,20],[15,15],[20,10],[10,20],[15,15],[20,10]]
   
   const navigate = useNavigate();
-  const gohome = () => navigate("/");
+  const gohome = () => {if(window.confirm("정말 끝내시겠습니까?")) {setWorkedtime(0); navigate("/")}};
   const goback = () => setSpecificset("list");
   const gonext = () => setSpecificset(specificset+1);
   const finished = () => setWorkoutdone(true);
@@ -46,7 +43,10 @@ const Workout = () => {
   // let datenow = new Date();
   // let senddate = `${datenow.getFullYear()}-${datenow.getMonth()+1}-${datenow.getDate()}`
 
+  
+  
 
+  
   return (
     <>
       <div className="relative flex-col text-gray-700 min-h-[100vh] pt-[1vh] first-letter text-medium text-xl text-center">
@@ -65,11 +65,11 @@ const Workout = () => {
         <FaDumbbell size={240} />
         </div>
         {/* 여기에서 onclick 이벤트로 setState 넣어두면 무한반복되어버림=>수정필요 */}
-        <div className='flex-col h-[50vh] mx-auto overflow-scroll'>
+        <div className='flex-col h-[50vh] mx-auto overflow-scroll mouse'>
         {specificset === "list"?
-          workoutlist.map((x, idx)  => <Specificsetlistbutton key={`${x}${idx}`} x={x} idx={idx} />)
+          workoutlist.map((x, idx)  => <Specificsetlistbutton key={`${x}${idx}`} id={`${x}${idx}`} x={x} idx={idx} setState={setSpecificset} />)
         : 
-          setlist.map((x, idx)  => <Setlistbutton key={`${x}${idx}`} x={x} idx={idx} />)
+          setlist.map((x, idx)  => <Setlistbutton key={`${x}${idx}`} x={x} idx={idx} record={`${x}${idx}`} />)
         }
         </div>
         <div className='flex justify-between items-center max-w-m max-h-[80px] w-full mt-auto mb-0 h-[7vh] overflow-clip'>
@@ -89,7 +89,6 @@ const Workout = () => {
         {istimermodalon[0]? <Timer />:null}  
         {workoutdone? <Congrats />:null}  
       </div>
-
     </>
   );
 };
