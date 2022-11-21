@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Map from './Map';
-import styled from 'styled-components/macro';
+import Map from "./Map";
+import styled from "styled-components/macro";
 
 const Container = styled.div`
 width: 500px;
@@ -58,17 +58,17 @@ const SearchPlace = () => {
 
   return (
     <>
-    <Container>
-    <MapText>우리 동네 헬스장 찾아보기</MapText>
-      <form className="inputForm" onSubmit={handleSubmit}>
-        <Input
-          placeholder="사시는 지역 또는 근처역을 입력해주세요."
-          onChange={onChange}
-          value={inputText}
-        />
-        <SerchButton type="submit">검색</SerchButton>
-      </form>
-      <Map searchPlace={place} />
+      <Container>
+        <MapText>우리 동네 헬스장 찾아보기</MapText>
+        <form className="inputForm" onSubmit={handleSubmit}>
+          <Input
+            placeholder="사시는 지역 또는 근처역을 입력해주세요."
+            onChange={onChange}
+            value={inputText}
+          />
+          <SerchButton type="submit">검색</SerchButton>
+        </form>
+        <Map searchPlace={place} />
       </Container>
     </>
   );

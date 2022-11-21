@@ -1,8 +1,8 @@
 
-import styled from 'styled-components/macro';
-import { Link } from 'react-router-dom';
+import styled from "styled-components/macro";
+import { Link } from "react-router-dom";
 import { Line } from "react-chartjs-2";
-import Chart from 'chart.js/auto';
+import Chart from "chart.js/auto";
 
 
 
@@ -67,19 +67,19 @@ const data = {
       label: "몸무게",
       data: KgData,
       fill: true,
-      borderColor: ['rgba(82, 209, 229, 0.2)'],
-      backgroundColor: ['rgba(82, 209, 229, 0.2)'],
-      pointBackgroundColor: ['rgba(82, 208, 255, 1)'],
-      pointBorderColor: ['rgba(83, 85, 255, 0.2)']
+      borderColor: ["rgba(82, 209, 229, 0.2)"],
+      backgroundColor: ["rgba(82, 209, 229, 0.2)"],
+      pointBackgroundColor: ["rgba(82, 208, 255, 1)"],
+      pointBorderColor: ["rgba(83, 85, 255, 0.2)"]
     },
     {
       label: "운동횟수",
       data: GymCheck,
       fill: true,
-      borderColor: ['rgba(24, 206, 83, 0.6)'],
-      backgroundColor: ['rgba(24, 206, 83, 0.6)'],
-      pointBackgroundColor: ['rgba(24, 206, 83, 1)'],
-      pointBorderColor: ['rgba(24, 206, 83, 1)']
+      borderColor: ["rgba(24, 206, 83, 0.6)"],
+      backgroundColor: ["rgba(24, 206, 83, 0.6)"],
+      pointBackgroundColor: ["rgba(24, 206, 83, 1)"],
+      pointBorderColor: ["rgba(24, 206, 83, 1)"]
     }
   ]
 };
@@ -98,14 +98,14 @@ const MyPageFirst = () => {
   return (
     
     <MyPageForm>
-        <div className='h2'>
+      <div className='h2'>
         운동그래프</div>
-        <Container>
+      <Container>
         <Line data={data} options={options}/>
-        </Container>
-        <Link to="/mypage2">
-        </Link>
-        </MyPageForm>
+      </Container>
+      <Link to="/mypage2">
+      </Link>
+    </MyPageForm>
     
   )
 }
