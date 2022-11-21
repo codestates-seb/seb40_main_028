@@ -57,7 +57,7 @@ export default function Layout({ title, canGoBack, hasTabBar, children }) {
     },
     {
       name: '지도',
-      path: '/map',
+      path: '/mappage',
       svg: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -95,6 +95,7 @@ export default function Layout({ title, canGoBack, hasTabBar, children }) {
         </svg>
       ),
     },
+    
   ];
 
   return (
