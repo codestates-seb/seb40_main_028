@@ -1,13 +1,13 @@
-import { atom } from 'recoil';
-import { recoilPersist } from 'recoil-persist'
-import dayjs from 'dayjs';
+import { atom } from "recoil";
+import { recoilPersist } from "recoil-persist"
+import dayjs from "dayjs";
 
 const { persistAtom } = recoilPersist();
-const now = dayjs().format('YYYY-MM-DD');
-let splitNow = now.split('-');
+const now = dayjs().format("YYYY-MM-DD");
+let splitNow = now.split("-");
 
 export const selectedDays = atom({
-  key: 'selectedDays',
+  key: "selectedDays",
   default: {
     day: Number(splitNow[2]),
     month: Number(splitNow[1]),
@@ -16,20 +16,21 @@ export const selectedDays = atom({
 });
 
 export const categorie = atom({
-  key: 'categorie',
+  key: "categorie",
   default: [],
 });
 
 export const ModalNum = atom({
-  key: 'ModalNum',
+  key: "ModalNum",
   default: 0,
 });
 
 export const isModal = atom({
-  key: 'isModal',
+  key: "isModal",
   default: false,
 });
 
+//RJH states
 export const timermodalState = atom({
   key: "timermodalState",
   //0:모달창이 켜지는것에 대한 true false

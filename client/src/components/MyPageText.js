@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from "styled-components/macro";
 
 
 const Container = styled.div`
@@ -38,7 +38,7 @@ box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.2);
 const MyPageText = () => {
   return (
     <>
-    <Container >
+      <Container >
         <Text>
             저번달 몸무게 차이
         </Text>
@@ -47,7 +47,7 @@ const MyPageText = () => {
         </Text>
         <TextForm>-12Kg</TextForm>
         <TextForm>+11</TextForm>
-    </Container>
+      </Container>
     </>
   )
 }

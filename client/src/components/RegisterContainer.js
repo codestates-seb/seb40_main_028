@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import React, { useState } from "react";
+import styled from "styled-components";
 // import { BiLinkExternal } from 'react-icons/bi';
-import { useNavigate } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
+import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 // import Description from './Description';
-import axios from 'axios';
+import axios from "axios";
 
 const Container = styled.div`
   width: 300px;
@@ -20,7 +20,7 @@ const Container = styled.div`
 `;
 
 const MentDiv = styled.div`
-  font-size: ${({ fontSize }) => fontSize || '13px'};
+  font-size: ${({ fontSize }) => fontSize || "13px"};
   margin-bottom: 10px;
   padding: ${({ padding }) => padding || 0};
   margin-top: ${({ mt }) => mt || 0};
@@ -120,7 +120,7 @@ const MainContainer = styled.div`
 // `;
 
 export default function RegisterContainer() {
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const navigate = useNavigate();
   const {
     register,
@@ -131,7 +131,7 @@ export default function RegisterContainer() {
     // console.log(data);
     // 회원가입 api 자리
     try {
-      axios.post('#', { ...data });
+      axios.post("#", { ...data });
     } catch (err) {
       setError(err);
     }
@@ -145,83 +145,83 @@ export default function RegisterContainer() {
         <Container>
           <Form onSubmit={handleSubmit(onLogin)}>
             <InputContainer>
-              <Label htmlFor={'Nickname'}>Nickname</Label>
+              <Label htmlFor={"Nickname"}>Nickname</Label>
               <Input
-                type={'text'}
+                type={"text"}
                 id="Nickname"
-                {...register('Nickname', {
+                {...register("Nickname", {
                   required: true,
                   minLength: 2,
                   maxLength: 16,
                 })}
               />
-              {errors.Nickname && errors.Nickname.type === 'required' && (
+              {errors.Nickname && errors.Nickname.type === "required" && (
                 <Errormsg>⚠ 닉네임을 입력해주세요.</Errormsg>
               )}
-              {errors.Nickname && errors.Nickname.type === 'minLength' && (
+              {errors.Nickname && errors.Nickname.type === "minLength" && (
                 <Errormsg>⚠ 최소 길이는 2자 이상여야 합니다</Errormsg>
               )}
-              {errors.Nickname && errors.Nickname.type === 'maxLength' && (
+              {errors.Nickname && errors.Nickname.type === "maxLength" && (
                 <Errormsg>⚠ 최대 길이는 16자 이하여야 합니다</Errormsg>
               )}
             </InputContainer>
 
             <InputContainer>
-              <Label htmlFor={'Email'}>Email</Label>
+              <Label htmlFor={"Email"}>Email</Label>
               <Input
-                type={'email'}
+                type={"email"}
                 id="Email"
-                {...register('email', {
+                {...register("email", {
                   required: true,
                   pattern: /^\S+@\S+$/i,
                   maxLength: 50,
                 })}
               />
-              {errors.email && errors.email.type === 'required' && (
+              {errors.email && errors.email.type === "required" && (
                 <Errormsg>⚠ 이메일을 입력해주세요.</Errormsg>
               )}
-              {errors.email && errors.email.type === 'pattern' && (
+              {errors.email && errors.email.type === "pattern" && (
                 <Errormsg>⚠ 이메일 형식이여야 합니다.</Errormsg>
               )}
-              {errors.email && errors.email.type === 'maxLength' && (
+              {errors.email && errors.email.type === "maxLength" && (
                 <Errormsg>⚠ 최대 길이는 50자 이하여야 합니다</Errormsg>
               )}
             </InputContainer>
             <InputContainer>
-              <Label htmlFor={'password'}>Password</Label>
+              <Label htmlFor={"password"}>Password</Label>
               <Input
-                type={'password'}
+                type={"password"}
                 id="password"
-                {...register('password', {
+                {...register("password", {
                   required: true,
                   minLength: 10,
                 })}
               />
-              {errors.password && errors.password.type === 'required' && (
+              {errors.password && errors.password.type === "required" && (
                 <Errormsg>⚠ 패스워드를 입력해주세요</Errormsg>
               )}
-              {errors.password && errors.password.type === 'minLength' && (
+              {errors.password && errors.password.type === "minLength" && (
                 <Errormsg>⚠ 최소 길이는 10자 이상이여야 합니다</Errormsg>
               )}
             </InputContainer>
             {/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */}
             <InputContainer>
-              <Label htmlFor={'passwordcheck'}>Password Check</Label>
+              <Label htmlFor={"passwordcheck"}>Password Check</Label>
               <Input
                 // type를 패스워드로 입력 시 화면에 안보임 어떤 값을 입력하는지
-                type={'password'}
+                type={"password"}
                 id="passwordcheck"
-                {...register('passwordcheck', {
+                {...register("passwordcheck", {
                   required: true,
                   minLength: 10,
                 })}
               />
               {errors.passwordcheck &&
-                errors.passwordcheck.type === 'required' && (
+                errors.passwordcheck.type === "required" && (
                 <Errormsg>⚠ 패스워드를 입력해주세요</Errormsg>
               )}
               {errors.passwordcheck &&
-                errors.passwordcheck.type === 'minLength' && (
+                errors.passwordcheck.type === "minLength" && (
                 <Errormsg>⚠ 최소 길이는 10자 이상이여야 합니다{console.log(errors.password)}</Errormsg>
                 
               )}
@@ -250,13 +250,13 @@ export default function RegisterContainer() {
               </div>
             </Checkbox> */}
             {/* 회원가입 버튼 */}
-            <SubmitBtn type="submit" value={'Sign up'}></SubmitBtn>
+            <SubmitBtn type="submit" value={"Sign up"}></SubmitBtn>
             {error && <Errormsg>⚠ {error}</Errormsg>}
           </Form>
         </Container>
         <MentDiv>
           이미 계정이 있습니까?
-          <MentSpan onClick={() => navigate('/login')}> Log in</MentSpan>
+          <MentSpan onClick={() => navigate("/login")}> Log in</MentSpan>
         </MentDiv>
         {/* <MentDiv>
           Are you an employer?{' '}

@@ -1,13 +1,13 @@
-import { FaDumbbell } from 'react-icons/fa';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import useInterval from '../assets/Interval';
-import { useRecoilState } from 'recoil';
-import {timermodalState, totaltimeState } from '../state/states';
-import Timer from '../components/Timer';
-import Congrats from '../components/Congrats';
-import {Smallbutton, Setlistbutton, Timebutton, Movingbutton, Specificsetlistbutton} from '../components/ExerciseButton';
-import expic from '../assets/11.png';
+import { FaDumbbell } from "react-icons/fa";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import useInterval from "../assets/Interval";
+import { useRecoilState } from "recoil";
+import {timermodalState, totaltimeState } from "../state/states";
+import Timer from "../components/Timer";
+import Congrats from "../components/Congrats";
+import {Smallbutton, Setlistbutton, Timebutton, Movingbutton, Specificsetlistbutton} from "../components/ExerciseButton";
+import expic from "../assets/11.png";
 
 const Workout = () => {
   const [specificset, setSpecificset] = useState("list");
@@ -26,9 +26,9 @@ const Workout = () => {
   const finished = () => setWorkoutdone(true);
 
   const timeonscreen = (time) => {
-    let hours = Math.floor(time/3600).toLocaleString('en-US',{minimumIntegerDigits:2});
-    let minutes = Math.floor((time%3600)/60).toLocaleString('en-US',{minimumIntegerDigits:2});
-    let seconds = Math.floor((time%60)).toLocaleString('en-US',{minimumIntegerDigits:2});
+    let hours = Math.floor(time/3600).toLocaleString("en-US",{minimumIntegerDigits:2});
+    let minutes = Math.floor((time%3600)/60).toLocaleString("en-US",{minimumIntegerDigits:2});
+    let seconds = Math.floor((time%60)).toLocaleString("en-US",{minimumIntegerDigits:2});
     let result = `${hours}:${minutes}:${seconds}`;
     return result;
   }
@@ -55,7 +55,7 @@ const Workout = () => {
         <div className='flex justify-between items-center border-transparent overflow-x-hidden h-[3em] px-[1em] pb-[0.5em] text-[1.5em] font-bold text-white'>
           <span className='flex basis-1/2 px-[1.2em] pt-[0.4em] whitespace-nowrap overflow-x-scroll overflow-y-visible'>
             {specificset==="list"? workoutlist[0]:workoutlist[specificset]}</span>
-            {/* {specificset==="list"?null:<button className="justify-self-end itmes-end w-20 h-20 text-lg" onClick={(()=> setIstimermodalon([true,5]))}>타이머</button>} */}
+          {/* {specificset==="list"?null:<button className="justify-self-end itmes-end w-20 h-20 text-lg" onClick={(()=> setIstimermodalon([true,5]))}>타이머</button>} */}
           <div readOnly className='flex basis-1/2 justify-center items-center cursor-pointer h-[2em] w-[10em] max-w-md m-auto mx-[0.5em] rounded-xl bg-d-dark shadow-lg shadow-black transition duration-150 active:ml-[1em] active:shadow-none hover:bg-d-hover' onClick={pausefunction}>
             {stopped? 
               <Timebutton color="text-red-700" time={timeonscreen(workedtime)} />
@@ -63,19 +63,17 @@ const Workout = () => {
             } 
           </div>
         </div>
-        
-  
         {/* <hr className='flex items-center first-letter:mx-2 pb-[1vh]'></hr> */}
         <div className='flex h-[15.5em] border-none mx-[2.4em] justify-center items-center text-white'> 
-        <img src={expic} alt={expic} />
+          <img src={expic} alt={expic} />
         </div>
         {/* 여기에서 onclick 이벤트로 setState 넣어두면 무한반복되어버림=>수정필요 */}
-        <div className='flex-col h-[25.6em] mx-auto overflow-scroll mouse'>
-        {specificset === "list"?
-          workoutlist.map((x, idx)  => <Specificsetlistbutton key={`${x}${idx}`} id={`${x}${idx}`} x={x} idx={idx} setState={setSpecificset} />)
-        : 
-          setlist.map((x, idx)  => <Setlistbutton key={`${x}${idx}`} x={x} idx={idx} record={`${x}${idx}`} />)
-        }
+        <div className='flex-col h-[25.6em] mx-auto overflow-scroll'>
+          {specificset === "list"?
+            workoutlist.map((x, idx)  => <Specificsetlistbutton key={`${x}${idx}`} id={`${x}${idx}`} x={x} idx={idx} setState={setSpecificset} />)
+            : 
+            setlist.map((x, idx)  => <Setlistbutton key={`${x}${idx}`} x={x} idx={idx} record={`${x}${idx}`} />)
+          }
         </div>
         <div className='flex justify-between items-center w-full mt-auto mb-0 h-[4em] overflow-clip'>
           {specificset === "list"? 
@@ -86,8 +84,8 @@ const Workout = () => {
             :<>
               <Smallbutton name="이전" fn={goback}/>
               {workoutlist.length-2 < specificset? 
-              <Smallbutton name="운동완료" fn={finished} ifnext="mr-[2.5em]"/>
-              :<Smallbutton name="다음운동" fn={gonext} ifnext="mr-[2.5em]"/>}
+                <Smallbutton name="운동완료" fn={finished} ifnext="mr-[2.5em]"/>
+                :<Smallbutton name="다음운동" fn={gonext} ifnext="mr-[2.5em]"/>}
             </>}
                 
         </div>

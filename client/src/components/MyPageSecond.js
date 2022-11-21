@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from "styled-components/macro";
 
 // import {
 //    useEffect,useState,useUserState,useUserDispatch,useInput,useCallback
@@ -126,7 +126,7 @@ const MyPageSecond = () => {
   
   return (
     <Container>
-    <MyPageForm>
+      <MyPageForm>
         <div className='h2'>
         정보 수정</div>
         <InputInfo className="displayName">
@@ -157,8 +157,8 @@ const MyPageSecond = () => {
         </InputInfo>
         <MyPageButton>저장</MyPageButton>
         <MyPageButton2>회원탈퇴</MyPageButton2>
-        </MyPageForm>
-        </Container>
+      </MyPageForm>
+    </Container>
   )
 }
 
