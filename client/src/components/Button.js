@@ -11,6 +11,7 @@ export default function Button({
   beforeModal,
   saveModal,
   workoutodone,
+  onClick
 }) {
   const setIsModalOpen = useSetRecoilState(isModal);
   const [modalNum, setModalNum] = useRecoilState(ModalNum);
@@ -35,19 +36,15 @@ export default function Button({
   }
   return (
     <button
-      onClick={
-        onGoBack
-          ? goBack
-          : onGoMain
-          ? goMain
-          : beforeModal
-          ? goBeforeModal
-          : saveModal
-          ? goSaveModal
-          : workoutodone
-          ? finishworkout
-          : null
-      }
+    onClick={
+      onClick ||
+      (onGoBack && goBack) ||
+      (onGoMain && goMain) ||
+      (beforeModal && goBeforeModal) ||
+      (saveModal && goSaveModal) ||
+      (workoutodone && finishworkout) ||
+      undefined
+    }
       className={cls(
         'px-9 py-2 bg-d-button hover:bg-d-button-hover text-white border border-transparent rounded-md shadow-sm font-medium',
         large ? 'text-xl' : 'text-lg'
