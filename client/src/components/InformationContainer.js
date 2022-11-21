@@ -1,16 +1,10 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-// import { BiLinkExternal } from 'react-icons/bi';
-import { useNavigate } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
-// import Description from './Description';
-import axios from 'axios';
+import React, { useState } from "react";
+import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import axios from "axios";
 
-
-import Toggle from '../components/Toggle';
-
-
-
+import Toggle from "../components/Toggle";
 
 const Container = styled.div`
   width: 300px;
@@ -23,25 +17,6 @@ const Container = styled.div`
   box-shadow: rgba(0, 0, 0, 0.05) 0px 10px 24px 0px,
     rgba(0, 0, 0, 0.05) 0px 20px 48px 0px, rgba(0, 0, 0, 0.1) 0px 1px 4px 0px;
   border-radius: 10px;
-`;
-
-const MentDiv = styled.div`
-  font-size: ${({ fontSize }) => fontSize || '13px'};
-  margin-bottom: 10px;
-  padding: ${({ padding }) => padding || 0};
-  margin-top: ${({ mt }) => mt || 0};
-  text-align: center;
-  
-`;
-
-const MentSpan = styled.span`
-  font-size: 13px;
-  cursor: pointer;
-  // & a {
-  //   text-decoration: none;
-  //   color: #0074cc;
-  // }
-  color: rgb(88 101 242);
 `;
 
 const Form = styled.form`
@@ -97,13 +72,6 @@ const SubmitBtn = styled.input`
   }
 `;
 
-const RegisterMent = styled.div`
-  padding: 0 18px;
-  margin-bottom: 16px;
-  color: #6a737c;
-  font-size: 12px;
-`;
-
 const MainContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -111,22 +79,8 @@ const MainContainer = styled.div`
   justify-content: center;
 `;
 
-// const Checkbox = styled.div`
-//   padding: 0 18px;
-//   margin-bottom: 14px;
-//   display: flex;
-//   align-items: flex-start;
-//   & input {
-//     margin-right: 4px;
-//   }
-//   & div {
-//     margin: 2px 0 0 0;
-//     font-size: 12px;
-//   }
-// `;
-
 export default function InformationContainer() {
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const navigate = useNavigate();
   const {
     register,
@@ -137,7 +91,7 @@ export default function InformationContainer() {
     // console.log(data);
     // 회원가입 api 자리
     try {
-      axios.post('#', { ...data });
+      axios.post("#", { ...data });
     } catch (err) {
       setError(err);
     }
@@ -145,119 +99,82 @@ export default function InformationContainer() {
 
   return (
     <MainContainer>
-      {/* 왼쪽 내용 */}
-      {/* <Description /> */}
       <div>
         <Container>
           <Form onSubmit={handleSubmit(onLogin)}>
-           
-
-
-
             <InputContainer>
-              <Label htmlFor={'height'}>height(키)</Label>
+              <Label htmlFor={"height"}>height(키)</Label>
               <Input
-                type={'text'}
+                type={"text"}
                 id="height"
-                {...register('height', {
+                {...register("height", {
                   required: true,
                   minLength: 2,
                   maxLength: 3,
                 })}
               />
-              {errors.height && errors.height.type === 'required' && (
+              {errors.height && errors.height.type === "required" && (
                 <Errormsg>⚠ 키를 입력해주세요.</Errormsg>
               )}
-              {errors.height && errors.height.type === 'minLength' && (
+              {errors.height && errors.height.type === "minLength" && (
                 <Errormsg>⚠ 올바른 키를 입력하세요</Errormsg>
               )}
-              {errors.height && errors.height.type === 'maxLength' && (
+              {errors.height && errors.height.type === "maxLength" && (
                 <Errormsg>⚠ 올바른 키를 입력하세요</Errormsg>
               )}
             </InputContainer>
-
-
             <InputContainer>
-              <Label htmlFor={'weight'}>weight(몸무게)</Label>
+              <Label htmlFor={"weight"}>weight(몸무게)</Label>
               <Input
-                type={'text'}
+                type={"text"}
                 id="weight"
-                {...register('weight', {
+                {...register("weight", {
                   required: true,
                   minLength: 2,
                   maxLength: 3,
                 })}
               />
-              {errors.weight && errors.weight.type === 'required' && (
+              {errors.weight && errors.weight.type === "required" && (
                 <Errormsg>⚠ 몸무게를 입력해주세요.</Errormsg>
               )}
-              {errors.weight && errors.weight.type === 'minLength' && (
+              {errors.weight && errors.weight.type === "minLength" && (
                 <Errormsg>⚠ 올바른 몸무게를 입력하세요</Errormsg>
               )}
-              {errors.weight && errors.weight.type === 'maxLength' && (
+              {errors.weight && errors.weight.type === "maxLength" && (
                 <Errormsg>⚠ 올바른 몸무게를 입력하세요</Errormsg>
               )}
             </InputContainer>
-
-
             <InputContainer>
-              <Label htmlFor={'age'}>age(나이)</Label>
+              <Label htmlFor={"age"}>age(나이)</Label>
               <Input
-                type={'text'}
+                type={"text"}
                 id="age"
-                {...register('age', {
+                {...register("age", {
                   required: true,
                   minLength: 2,
                   maxLength: 3,
                 })}
               />
-              {errors.age && errors.age.type === 'required' && (
+              {errors.age && errors.age.type === "required" && (
                 <Errormsg>⚠ 나이를 입력해주세요.</Errormsg>
               )}
-              {errors.age && errors.age.type === 'minLength' && (
+              {errors.age && errors.age.type === "minLength" && (
                 <Errormsg>⚠ 올바른 나이를 입력하세요</Errormsg>
               )}
-              {errors.age && errors.age.type === 'maxLength' && (
+              {errors.age && errors.age.type === "maxLength" && (
                 <Errormsg>⚠ 올바른 나이를 입력하세요</Errormsg>
               )}
             </InputContainer>
-
-
             <Toggle />
-
-
-
-            {/* 비밀번호 안내문구 */}
-            {/* <RegisterMent>
-              비밀번호는 최소 1개의 문자와 1개의 숫자를 포함하여 최소 8자
-              이상이어야 합니다.
-            </RegisterMent> */}
-            {/* <Checkbox>
-              <input type={'checkbox'} />
-              <div>
-                Opt-in to receive occasional product updates, user research
-                invitations, company announcements, and digests.
-              </div>
-            </Checkbox> */}
-
-
-
-
             {/* 완료 버튼 */}
-            <SubmitBtn type="submit" value={'완료'}></SubmitBtn>
+            {/* 완료 클릭 시 메인 페이지로 이동 */}
+            <SubmitBtn 
+            // onClick={() => navigate('/')} 
+              type="submit" value={"완료"}                              
+            ></SubmitBtn>
             {error && <Errormsg>⚠ {error}</Errormsg>}
           </Form>
         </Container>
-        {/* <MentDiv>
-          이미 계정이 있습니까?
-          <MentSpan onClick={() => navigate('/login')}> Log in</MentSpan>
-        </MentDiv> */}
-        {/* <MentDiv>
-          Are you an employer?{' '}
-          <MentSpan onClick={() => navigate('/login')}>
-            Sign up on Talent <BiLinkExternal />
-          </MentSpan>
-        </MentDiv> */}
       </div>
     </MainContainer>
   );

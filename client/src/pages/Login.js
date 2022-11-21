@@ -1,46 +1,21 @@
 // import Layout from '../components/Layout';
 import styled from "styled-components";
-
-import LoginContainer from '../components/LoginContainer';
-
-import Logo from '../assets/img/Logo.png';
-
-
+import LoginContainer from "../components/LoginContainer";
+import Logo from "../assets/img/Logo.png";
 
 const Container = styled.div`
-  // padding-top: 90px;
-  // width: 100vw;
-
   height: 100%;
-
   display: flex;
 	flex-direction : column;
   align-items: center;
   justify-content: center;
-  
-
-  // 확인하고 지우기
-  // padding-top: 60px;
-
 `;
 
-
 const LogoPng = styled.img`
-
-
   height: 200px;
   width: 200px;
   margin-bottom: 40px;
-  // display: flex;
-  // align-items: center;
-  // justify-content: center;
-
-
   border-radius: 20px;
-
-  // margin-top: px;
-
-
 `;
 
 const Login = () => {
