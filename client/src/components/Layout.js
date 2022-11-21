@@ -1,7 +1,7 @@
-import React from 'react';
-import { cls } from '../assets/utils';
-import { Link, useNavigate } from 'react-router-dom';
-import { CiDumbbell } from 'react-icons/ci';
+import React from "react";
+import { cls } from "../assets/utils";
+import { Link, useNavigate } from "react-router-dom";
+import { CiDumbbell } from "react-icons/ci";
 
 export default function Layout({ title, canGoBack, hasTabBar, children }) {
   const navigate = useNavigate();
@@ -11,8 +11,8 @@ export default function Layout({ title, canGoBack, hasTabBar, children }) {
 
   const menu = [
     {
-      name: '홈',
-      path: '/',
+      name: "홈",
+      path: "/",
       svg: (
         <svg
           className="w-6 h-6"
@@ -31,13 +31,13 @@ export default function Layout({ title, canGoBack, hasTabBar, children }) {
       ),
     },
     {
-      name: '운동시작',
-      path: '/workout',
+      name: "운동시작",
+      path: "/workout",
       svg: <CiDumbbell size="24" />,
     },
     {
-      name: '계획작성',
-      path: '/plan',
+      name: "계획작성",
+      path: "/plan",
       svg: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -56,8 +56,8 @@ export default function Layout({ title, canGoBack, hasTabBar, children }) {
       ),
     },
     {
-      name: '지도',
-      path: '/mappage',
+      name: "지도",
+      path: "/mappage",
       svg: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -76,8 +76,8 @@ export default function Layout({ title, canGoBack, hasTabBar, children }) {
       ),
     },
     {
-      name: '마이페이지',
-      path: '/mypage',
+      name: "마이페이지",
+      path: "/mypage",
       svg: (
         <svg
           className="w-6 h-6"
@@ -95,7 +95,6 @@ export default function Layout({ title, canGoBack, hasTabBar, children }) {
         </svg>
       ),
     },
-    
   ];
 
   return (
@@ -120,21 +119,21 @@ export default function Layout({ title, canGoBack, hasTabBar, children }) {
           </button>
         ) : null}
         {title ? (
-          <span className={cls(canGoBack ? 'mx-auto' : '', '')}>{title}</span>
+          <span className={cls(canGoBack ? "mx-auto" : "", "")}>{title}</span>
         ) : null}
       </div>
 
-      <div className={cls('pt-12', hasTabBar ? 'pb-24' : '')}>{children}</div>
+      <div className={cls("pt-12", hasTabBar ? "pb-24" : "")}>{children}</div>
       {hasTabBar ? (
         <nav className="bg-d-dark max-w-lg text-white border-[#2C2F33] border-t fixed bottom-0 w-full px-10 pb-3 pt-3 flex justify-between text-xs">
           {menu.map((item, index) => (
             <Link to={item.path} key={index}>
               <div
                 className={cls(
-                  'flex flex-col items-center space-y-2 ',
+                  "flex flex-col items-center space-y-2 ",
                   window.location.pathname === `${item.path}`
-                    ? ' text-d-point'
-                    : 'hover:text-d-point transition-colors'
+                    ? " text-d-point"
+                    : "hover:text-d-point transition-colors"
                 )}
               >
                 {item.svg}

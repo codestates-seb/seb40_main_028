@@ -1,5 +1,5 @@
-import { Menu, Transition } from '@headlessui/react';
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid';
+import { Menu, Transition } from "@headlessui/react";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/solid";
 import {
   add,
   eachDayOfInterval,
@@ -13,61 +13,61 @@ import {
   parse,
   parseISO,
   startOfToday,
-} from 'date-fns';
-import { Fragment, useState } from 'react';
+} from "date-fns";
+import { Fragment, useState } from "react";
 
 const meetings = [
   {
     id: 1,
-    name: '스쿼트,바벨로우,풀업',
+    name: "스쿼트,바벨로우,풀업",
     imageUrl:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    startDatetime: '2022-11-20T13:00',
-    endDatetime: '2022-11-21T14:30',
+      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+    startDatetime: "2022-11-20T13:00",
+    endDatetime: "2022-11-21T14:30",
   },
   {
     id: 2,
-    name: 'Michael Foster',
+    name: "Michael Foster",
     imageUrl:
-      'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    startDatetime: '2022-11-22T09:00',
-    endDatetime: '2022-11-23T11:30',
+      "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+    startDatetime: "2022-11-22T09:00",
+    endDatetime: "2022-11-23T11:30",
   },
   {
     id: 3,
-    name: 'Dries Vincent',
+    name: "Dries Vincent",
     imageUrl:
-      'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    startDatetime: '2022-11-15T12:00',
-    endDatetime: '2022-11-15T20:30',
+      "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+    startDatetime: "2022-11-15T12:00",
+    endDatetime: "2022-11-15T20:30",
   },
   {
     id: 4,
-    name: 'Leslie Alexander',
+    name: "Leslie Alexander",
     imageUrl:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    startDatetime: '2022-06-09T13:00',
-    endDatetime: '2022-06-09T14:30',
+      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+    startDatetime: "2022-06-09T13:00",
+    endDatetime: "2022-06-09T14:30",
   },
   {
     id: 5,
-    name: 'Michael Foster',
+    name: "Michael Foster",
     imageUrl:
-      'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    startDatetime: '2022-05-13T14:00',
-    endDatetime: '2022-05-13T14:30',
+      "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+    startDatetime: "2022-05-13T14:00",
+    endDatetime: "2022-05-13T14:30",
   },
 ];
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(' ');
+  return classes.filter(Boolean).join(" ");
 }
 
 export default function MainCalendar() {
   let today = startOfToday();
   let [selectedDay, setSelectedDay] = useState(today);
-  let [currentMonth, setCurrentMonth] = useState(format(today, 'MMM-yyyy'));
-  let firstDayCurrentMonth = parse(currentMonth, 'MMM-yyyy', new Date());
+  let [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
+  let firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
 
   let days = eachDayOfInterval({
     start: firstDayCurrentMonth,
@@ -76,12 +76,12 @@ export default function MainCalendar() {
 
   function previousMonth() {
     let firstDayNextMonth = add(firstDayCurrentMonth, { months: -1 });
-    setCurrentMonth(format(firstDayNextMonth, 'MMM-yyyy'));
+    setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
   }
 
   function nextMonth() {
     let firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 });
-    setCurrentMonth(format(firstDayNextMonth, 'MMM-yyyy'));
+    setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
   }
 
   let selectedDayMeetings = meetings.filter((meeting) =>
@@ -94,7 +94,7 @@ export default function MainCalendar() {
         <div>
           <div className="flex items-center">
             <h2 className="flex-auto font-semibold text-white">
-              {format(firstDayCurrentMonth, 'MMMM yyyy')}
+              {format(firstDayCurrentMonth, "MMMM yyyy")}
             </h2>
             <button
               type="button"
@@ -128,35 +128,35 @@ export default function MainCalendar() {
                 key={day.toString()}
                 className={classNames(
                   dayIdx === 0 && colStartClasses[getDay(day)],
-                  'py-1.5'
+                  "py-1.5"
                 )}
               >
                 <button
                   type="button"
                   onClick={() => setSelectedDay(day)}
                   className={classNames(
-                    isEqual(day, selectedDay) && 'text-white',
+                    isEqual(day, selectedDay) && "text-white",
                     !isEqual(day, selectedDay) &&
                       isToday(day) &&
-                      'text-red-500',
+                      "text-red-500",
                     !isEqual(day, selectedDay) &&
                       !isToday(day) &&
                       isSameMonth(day, firstDayCurrentMonth) &&
-                      'text-white',
+                      "text-white",
                     !isEqual(day, selectedDay) &&
                       !isToday(day) &&
                       !isSameMonth(day, firstDayCurrentMonth) &&
-                      'text-gray-400',
-                    isEqual(day, selectedDay) && isToday(day) && 'bg-red-500',
-                    isEqual(day, selectedDay) && !isToday(day) && 'bg-gray-900',
+                      "text-gray-400",
+                    isEqual(day, selectedDay) && isToday(day) && "bg-red-500",
+                    isEqual(day, selectedDay) && !isToday(day) && "bg-gray-900",
                     !isEqual(day, selectedDay),
                     (isEqual(day, selectedDay) || isToday(day)) &&
-                      'font-semibold',
-                    'mx-auto flex h-8 w-8 items-center justify-center rounded-full'
+                      "font-semibold",
+                    "mx-auto flex h-8 w-8 items-center justify-center rounded-full"
                   )}
                 >
-                  <time dateTime={format(day, 'yyyy-MM-dd')}>
-                    {format(day, 'd')}
+                  <time dateTime={format(day, "yyyy-MM-dd")}>
+                    {format(day, "d")}
                   </time>
                 </button>
 
@@ -171,9 +171,9 @@ export default function MainCalendar() {
         </div>
         <section className="mt-4 px-12">
           <h2 className="font-semibold text-white">
-            이날의 운동{' '}
-            <time dateTime={format(selectedDay, 'yyyy-MM-dd')}>
-              {format(selectedDay, 'MMM dd, yyy')}
+            이날의 운동{" "}
+            <time dateTime={format(selectedDay, "yyyy-MM-dd")}>
+              {format(selectedDay, "MMM dd, yyy")}
             </time>
           </h2>
           <ol className="mt-4 text-sm leading-6 text-gray-500">
@@ -206,11 +206,11 @@ function Meeting({ meeting }) {
         <p className="text-white">{meeting.name}</p>
         <p className="mt-0.5">
           <time dateTime={meeting.startDatetime}>
-            {format(startDateTime, 'h:mm a')}
-          </time>{' '}
-          -{' '}
+            {format(startDateTime, "h:mm a")}
+          </time>{" "}
+          -{" "}
           <time dateTime={meeting.endDatetime}>
-            {format(endDateTime, 'h:mm a')}
+            {format(endDateTime, "h:mm a")}
           </time>
         </p>
       </div>
@@ -230,11 +230,11 @@ function Meeting({ meeting }) {
 }
 
 let colStartClasses = [
-  '',
-  'col-start-2',
-  'col-start-3',
-  'col-start-4',
-  'col-start-5',
-  'col-start-6',
-  'col-start-7',
+  "",
+  "col-start-2",
+  "col-start-3",
+  "col-start-4",
+  "col-start-5",
+  "col-start-6",
+  "col-start-7",
 ];
