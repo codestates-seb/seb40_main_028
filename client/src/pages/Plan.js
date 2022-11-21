@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
-import Layout from '../components/Layout';
-import PlanCalendar from '../components/Plan/PlanCalendar';
-import PlanList from '../components/Plan/PlanList';
-import PlanAdd from '../components/Plan/PlanAdd';
-import PlanModal from '../components/Plan/Modals/PlanModal';
-import { useRecoilState } from 'recoil';
-import { ModalNum, isModal } from '../state/states';
+import { useEffect, useState } from "react";
+import Layout from "../components/Layout";
+import PlanCalendar from "../components/Plan/PlanCalendar";
+import PlanList from "../components/Plan/PlanList";
+import PlanAdd from "../components/Plan/PlanAdd";
+import PlanModal from "../components/Plan/Modals/PlanModal";
+import { useRecoilState } from "recoil";
+import { ModalNum, isModal } from "../state/states";
 
 const Plan = () => {
   const [isModalOpen, setIsModalOpen] = useRecoilState(isModal);
@@ -21,9 +21,9 @@ const Plan = () => {
   useEffect(() => {
     // 모달창 열리면 스크롤 방지
     if (isModalOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     }
   }, [isModalOpen]);
 

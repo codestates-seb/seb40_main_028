@@ -1,7 +1,7 @@
-import '@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css';
-import DatePicker from '@hassanmojab/react-modern-calendar-datepicker';
-import { useRecoilState } from 'recoil';
-import { selectedDays } from '../../state/states';
+import "@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css";
+import DatePicker from "@hassanmojab/react-modern-calendar-datepicker";
+import { useRecoilState } from "recoil";
+import { selectedDays } from "../../state/states";
 export default function PlanCalendar() {
   const [selectedDay, setSelectedDay] = useRecoilState(selectedDays);
   const renderCustomInput = ({ ref }) => (
@@ -29,7 +29,7 @@ export default function PlanCalendar() {
         value={
           selectedDay
             ? `${selectedDay.year}년 ${selectedDay.month}월 ${selectedDay.day}일`
-            : ''
+            : ""
         }
         id="my-custom-input-class"
         className="my-custom-input-class outline-none bg-d-dark ml-2 mr-2 w-[8.2em] hover:bg-d-light rounded-full"

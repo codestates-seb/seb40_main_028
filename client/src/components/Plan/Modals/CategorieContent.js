@@ -1,11 +1,11 @@
-import React from 'react';
+import React from "react";
 
 const categories = [
-  '상체운동',
-  '하체운동',
-  '전신운동',
-  '유산소운동',
-  '근력운동',
+  "상체운동",
+  "하체운동",
+  "전신운동",
+  "유산소운동",
+  "근력운동",
 ];
 
 const CategorieContent = ({ Modals, setModals, setSelectedCategory }) => {

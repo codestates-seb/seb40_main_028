@@ -1,6 +1,6 @@
-import React from 'react';
-import imgsss from '../../../assets/11.png';
-import Button from '../../Button';
+import React from "react";
+import imgsss from "../../../assets/11.png";
+import Button from "../../Button";
 
 const DetailContent = ({
   selectedCategory,
@@ -15,7 +15,7 @@ const DetailContent = ({
     );
 
     if (!isValid) {
-      alert('빈칸을 전부 채워주세요!');
+      alert("빈칸을 전부 채워주세요!");
       return;
     }
   };
@@ -64,7 +64,7 @@ const DetailContent = ({
                       className="noappearance w-[3em] rounded-[0.2em] text-center"
                       onChange={(e) => onChange(e, idx)}
                       name="weight"
-                      value={item.weight || ''}
+                      value={item.weight || ""}
                       placeholder={`${item.weight}kg`}
                       autoComplete="off"
                       type="number"
@@ -75,7 +75,7 @@ const DetailContent = ({
                       className="noappearance w-[3em] rounded-[0.2em] text-center"
                       onChange={(e) => onChange(e, idx)}
                       name="count"
-                      value={item.count || ''}
+                      value={item.count || ""}
                       placeholder={`${item.count}회`}
                       autoComplete="off"
                       type="number"
@@ -85,7 +85,7 @@ const DetailContent = ({
                     <input
                       className="noappearance w-[3em] rounded-[0.2em] text-center"
                       onChange={(e) => onChange(e, idx)}
-                      value={item.timer || ''}
+                      value={item.timer || ""}
                       name="timer"
                       placeholder={`${item.timer}초`}
                       autoComplete="off"
@@ -102,7 +102,7 @@ const DetailContent = ({
                     className="w-6 h-6 text-[#d9d9d9] cursor-pointer hover:text-red-600"
                     onClick={() => {
                       if (detailExercise.length === 1) {
-                        alert('최소 1개의 세트가 필요합니다.');
+                        alert("최소 1개의 세트가 필요합니다.");
                         return;
                       }
                       setDetailExercise(
@@ -127,9 +127,9 @@ const DetailContent = ({
                   setDetailExercise([
                     ...detailExercise,
                     {
-                      weight: '',
-                      count: '',
-                      timer: '',
+                      weight: "",
+                      count: "",
+                      timer: "",
                     },
                   ]);
                 }}
@@ -149,22 +149,22 @@ const DetailContent = ({
               onClick={() => {
                 setDetailExercise([
                   {
-                    weight: '',
-                    count: '',
-                    timer: '',
+                    weight: "",
+                    count: "",
+                    timer: "",
                   },
                 ]);
               }}
             >
               <Button
-                text={'뒤로가기'}
+                text={"뒤로가기"}
                 beforeModal
                 resetDetails
                 setDetailExercise={setDetailExercise}
                 detailExercise={detailExercise}
               />
             </div>
-            <Button text={'저장하기'} onClick={handleSubmit} />
+            <Button text={"저장하기"} onClick={handleSubmit} />
           </div>
         </div>
       </div>

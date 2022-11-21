@@ -1,6 +1,6 @@
-import Layout from '../components/Layout';
-import MainCalendar from '../components/MainCalendar';
-import styled from 'styled-components';
+import Layout from "../components/Layout";
+import MainCalendar from "../components/MainCalendar";
+import styled from "styled-components";
 // import Loding from '../components/Loding';
 
 const Main = () => {

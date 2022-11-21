@@ -1,58 +1,58 @@
-import React from 'react';
-import imgss from '../../../assets/1111.png';
-import Button from '../../Button';
+import React from "react";
+import imgss from "../../../assets/1111.png";
+import Button from "../../Button";
 const data = [
   {
     id: 1,
-    name: '윗몸 일으윗몸 일으윗몸 일으윗',
+    name: "윗몸 일으윗몸 일으윗몸 일으윗",
   },
   {
     id: 2,
-    name: '윗몸 일으키기2',
+    name: "윗몸 일으키기2",
   },
   {
     id: 3,
-    name: '윗몸 일으키기3',
+    name: "윗몸 일으키기3",
   },
   {
     id: 4,
-    name: '윗몸 일으키기4',
+    name: "윗몸 일으키기4",
   },
   {
     id: 5,
-    name: '윗몸 일으키기5',
+    name: "윗몸 일으키기5",
   },
   {
     id: 6,
-    name: '윗몸 일으키기6',
+    name: "윗몸 일으키기6",
   },
   {
     id: 7,
-    name: '윗몸 일으키기7',
+    name: "윗몸 일으키기7",
   },
   {
     id: 8,
-    name: '윗몸 일으키기2',
+    name: "윗몸 일으키기2",
   },
   {
     id: 9,
-    name: '윗몸 일으키기3',
+    name: "윗몸 일으키기3",
   },
   {
     id: 10,
-    name: '윗몸 일으키기4',
+    name: "윗몸 일으키기4",
   },
   {
     id: 11,
-    name: '윗몸 일으키기5',
+    name: "윗몸 일으키기5",
   },
   {
     id: 12,
-    name: '윗몸 일으키기6',
+    name: "윗몸 일으키기6",
   },
   {
     id: 13,
-    name: '윗몸 일으키기7',
+    name: "윗몸 일으키기7",
   },
 ];
 
@@ -88,7 +88,7 @@ const DetailListModal = ({ Modals, setModals, setSelectedExercise }) => {
       <div className="bottom-[0rem] px-3 h-[5rem] absolute left-[0.25rem]  items-center flex flex-col justify-center space-y-3 bg-[#303030]">
         <div className="flex items-center justify-center">
           <div className="flex w-[23em] justify-center items-center">
-            <Button text={'뒤로가기'} beforeModal />
+            <Button text={"뒤로가기"} beforeModal />
           </div>
         </div>
       </div>

@@ -1,43 +1,43 @@
-import { useRecoilState } from 'recoil';
-import { selectedDays, categorie, ModalNum } from '../../../state/states';
-import { useState } from 'react';
-import React from 'react';
-import Modal from 'react-modal';
-import icons from '../../../assets/icons.png';
-import DetailListModal from './DetailListContent';
-import CategorieContent from './CategorieContent';
-import DetailContent from './DetailContent';
+import { useRecoilState } from "recoil";
+import { selectedDays, categorie, ModalNum } from "../../../state/states";
+import { useState } from "react";
+import React from "react";
+import Modal from "react-modal";
+import icons from "../../../assets/icons.png";
+import DetailListModal from "./DetailListContent";
+import CategorieContent from "./CategorieContent";
+import DetailContent from "./DetailContent";
 
 const PlanModal = ({ isModalOpen, setIsModalOpen }) => {
   const style = {
     overlay: {
-      position: 'fixed',
+      position: "fixed",
       top: 0,
       left: 0,
       right: 0,
       bottom: 0,
-      backgroundColor: 'rgba(15, 15, 15, 0.49)',
+      backgroundColor: "rgba(15, 15, 15, 0.49)",
       zIndex: 9997,
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
     },
     content: {
-      position: 'relative',
-      width: '25rem',
-      height: '40.5em',
-      border: '1px solid #ccc',
-      background: 'gray',
-      overflow: 'auto',
-      backgroundColor: '#303030',
-      borderRadius: '0.7em',
-      borderColor: '#36393F',
-      outline: 'none',
+      position: "relative",
+      width: "25rem",
+      height: "40.5em",
+      border: "1px solid #ccc",
+      background: "gray",
+      overflow: "auto",
+      backgroundColor: "#303030",
+      borderRadius: "0.7em",
+      borderColor: "#36393F",
+      outline: "none",
       padding: 0,
       zIndex: 9998,
       inset: 0,
       boxShadow:
-        'rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px',
+        "rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px",
     },
   };
   const [selectedDay, setSelectedDay] = useRecoilState(selectedDays); //달력 저장 날짜
@@ -46,9 +46,9 @@ const PlanModal = ({ isModalOpen, setIsModalOpen }) => {
   const [selectedExercise, setSelectedExercise] = useState(null); //선택한 운동 요기 저장
   const [detailExercise, setDetailExercise] = useState([
     {
-      weight: '',
-      count: '',
-      timer: '',
+      weight: "",
+      count: "",
+      timer: "",
     },
   ]);
 
@@ -66,11 +66,11 @@ const PlanModal = ({ isModalOpen, setIsModalOpen }) => {
           <div className="flex flex-col">
             <div className="h-9 mt-[-0.1em] bg-[#837f7f] rounded-t-lg flex items-center justify-center text-white font-semibold">
               {Modals === 0
-                ? 'Categories'
+                ? "Categories"
                 : Modals === 1
-                ? '상세 운동 목록'
+                ? "상세 운동 목록"
                 : Modals === 2
-                ? '상세 운동 설정'
+                ? "상세 운동 설정"
                 : null}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
