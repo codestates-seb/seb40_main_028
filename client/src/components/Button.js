@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { cls } from "../assets/utils";
-import { ModalNum, isModal, totaltimeState} from "../state/states";
+import { ModalNum, isModal, totaltimeState } from "../state/states";
 import { useRecoilState, useSetRecoilState } from "recoil";
 
 export default function Button({
@@ -33,18 +33,17 @@ export default function Button({
   const finishworkout = () => {
     setIsdone(0);
     navigate("/");
-  }
+  };
   return (
     <button
-
       onClick={
         onClick ||
-      (onGoBack && goBack) ||
-      (onGoMain && goMain) ||
-      (beforeModal && goBeforeModal) ||
-      (saveModal && goSaveModal) ||
-      (workoutodone && finishworkout) ||
-      undefined
+        (onGoBack && goBack) ||
+        (onGoMain && goMain) ||
+        (beforeModal && goBeforeModal) ||
+        (saveModal && goSaveModal) ||
+        (workoutodone && finishworkout) ||
+        undefined
       }
       className={cls(
         "px-9 py-2 bg-d-button hover:bg-d-button-hover text-white border border-transparent rounded-md shadow-sm font-medium",

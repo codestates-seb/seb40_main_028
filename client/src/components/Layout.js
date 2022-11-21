@@ -95,7 +95,6 @@ export default function Layout({ title, canGoBack, hasTabBar, children }) {
         </svg>
       ),
     },
-    
   ];
 
   return (

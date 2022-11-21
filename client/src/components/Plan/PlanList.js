@@ -1,29 +1,29 @@
-import { useState } from 'react';
+import { useState } from "react";
 export default function PlanList() {
   const [data, setData] = useState([
     {
       id: 1,
-      title: '팔굽혀펴기',
+      title: "팔굽혀펴기",
     },
     {
       id: 2,
-      title: '숄더프레스',
+      title: "숄더프레스",
     },
     {
       id: 3,
-      title: '팔굽혀펴기',
+      title: "팔굽혀펴기",
     },
     {
       id: 4,
-      title: '숄더프레스',
+      title: "숄더프레스",
     },
     {
       id: 5,
-      title: '팔굽혀펴기',
+      title: "팔굽혀펴기",
     },
     {
       id: 6,
-      title: '숄더프레스',
+      title: "숄더프레스",
     },
   ]);
 
@@ -60,7 +60,7 @@ export default function PlanList() {
               className="w-6 h-6 text-red-400 hover:text-red-600 hover:scale-125 ease-out duration-150"
               onClick={() => {
                 //alert 로 삭제할지 물어보고 삭제해줘
-                if (window.confirm('삭제하시겠습니까?')) {
+                if (window.confirm("삭제하시겠습니까?")) {
                   setData(data.filter((data) => data.id !== item.id));
                   // axios delete 요청
                 }
