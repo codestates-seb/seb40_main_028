@@ -70,7 +70,7 @@ const DetailListModal = ({ Modals, setModals, setSelectedExercise }) => {
               }}
               className="flex flex-col mb-3 items-center justify-center w-[7em] h-[7em]"
             >
-              <div className="w-16 h-16 hover:bg-d-button-hover pt-1 bg-[#d9d9d9] scale-[4em] rounded-lg">
+              <div className="w-16 h-16 hover:bg-d-button-hover pt-1 bg-[#d9d9d9] scale-[4em] rounded-lg ease-out duration-150">
                 <img
                   src={imgss}
                   alt="hi"

@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect, useState } from "react";
 import Layout from "../components/Layout";
 import PlanCalendar from "../components/Plan/PlanCalendar";
@@ -6,11 +7,44 @@ import PlanAdd from "../components/Plan/PlanAdd";
 import PlanModal from "../components/Plan/Modals/PlanModal";
 import { useRecoilState } from "recoil";
 import { ModalNum, isModal } from "../state/states";
+import icons from "../assets/icons.png";
+import RandomMessage from "../components/Plan/RandomMessage";
 
 const Plan = () => {
   const [isModalOpen, setIsModalOpen] = useRecoilState(isModal);
   const [categories, setCategories] = useState(null);
   const [Modals, setModals] = useRecoilState(ModalNum);
+
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    setData([
+      {
+        id: 1,
+        title: "팔굽혀펴기",
+      },
+      {
+        id: 2,
+        title: "숄더프레스",
+      },
+      {
+        id: 3,
+        title: "팔굽혀펴기",
+      },
+      {
+        id: 4,
+        title: "숄더프레스",
+      },
+      {
+        id: 5,
+        title: "팔굽혀펴기",
+      },
+      {
+        id: 6,
+        title: "숄더프레스",
+      },
+    ]);
+  }, []);
 
   useEffect(() => {
     if (!isModalOpen) {
@@ -33,8 +67,21 @@ const Plan = () => {
         <div className="flex flex-col h-full items-center mt-5">
           <PlanCalendar />
         </div>
-        <PlanList />
-
+        <div className="flex justify-center">
+          {data ? (
+            <PlanList data={data} setData={setData} />
+          ) : (
+            <div className="flex flex-col items-center justify-center mt-[9em]">
+              <img src={icons} alt="image" className="w-48 h-48 rounded-2xl" />
+              <div className="text-[#cccccc] font-semibold text-[1.7em] rounded-lg mt-[-1.5em]">
+                오늘 할일이 아직 없습니다
+              </div>
+              <div className="mt-2">
+                <RandomMessage large />
+              </div>
+            </div>
+          )}
+        </div>
         <PlanAdd
           setIsModalOpen={setIsModalOpen}
           setCategories={setCategories}
