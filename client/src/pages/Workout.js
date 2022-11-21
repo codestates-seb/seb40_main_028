@@ -15,7 +15,7 @@ const Workout = () => {
   const [istimermodalon, setIstimermodalon] = useRecoilState(timermodalState);
   const [workoutdone, setWorkoutdone] = useState(false);
   
-  const workoutlist = ["준비스트레칭", "말도안되게긴운동명을넣어보자이정도를넣으면어떻게될려나", "스쿼트", "데드리프트", "덤벨 컬", "바벨 컬", "크런치", "벤치프레스", "스쿼드", "데드리프트", "덤벨 컬", "바벨 컬", "크런치"];
+  const workoutlist = ["스트레칭준비", "말도안되게긴운동명을넣어보자이정도를넣으면어떻게될려나", "스쿼트", "데드리프트", "덤벨 컬", "바벨 컬", "크런치", "벤치프레스", "스쿼드", "데드리프트", "덤벨 컬", "바벨 컬", "크런치"];
   const setlist = [[110,20],[15,15],[20,10], [2021,1324210],[10,20],[15,15],[20,10],[10,20],[15,15],[20,10]]
   
   const navigate = useNavigate();
