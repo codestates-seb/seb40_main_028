@@ -61,7 +61,7 @@ const DetailContent = ({
 
                   <div className="text-black font-semibold text-[0.8em]">
                     <input
-                      className="noappearance w-[3em] rounded-[0.2em] text-center"
+                      className="noappearance w-[3em]] text-center"
                       onChange={(e) => onChange(e, idx)}
                       name="weight"
                       value={item.weight || ""}
@@ -72,7 +72,7 @@ const DetailContent = ({
                   </div>
                   <div className="text-black  font-semibold text-[0.8em]">
                     <input
-                      className="noappearance w-[3em] rounded-[0.2em] text-center"
+                      className="noappearance w-[3em] text-center"
                       onChange={(e) => onChange(e, idx)}
                       name="count"
                       value={item.count || ""}
@@ -83,7 +83,7 @@ const DetailContent = ({
                   </div>
                   <div className="text-black font-semibold text-[0.8em]">
                     <input
-                      className="noappearance w-[3em] rounded-[0.2em] text-center"
+                      className="noappearance w-[3em] text-center"
                       onChange={(e) => onChange(e, idx)}
                       value={item.timer || ""}
                       name="timer"
@@ -99,7 +99,7 @@ const DetailContent = ({
                     viewBox="0 0 24 24"
                     strokeWidth={1.5}
                     stroke="currentColor"
-                    className="w-6 h-6 text-[#d9d9d9] cursor-pointer hover:text-red-600"
+                    className="w-6 h-6 text-[#d9d9d9] cursor-pointer ease-out duration-150 hover:text-red-600"
                     onClick={() => {
                       if (detailExercise.length === 1) {
                         alert("최소 1개의 세트가 필요합니다.");
@@ -133,7 +133,7 @@ const DetailContent = ({
                     },
                   ]);
                 }}
-                className="flex w-[20%] whitespace-nowrap items-center p-1 mt-[0.5em] justify-center font-medium rounded-lg bg-d-button hover:bg-d-button-hover text-[0.8em]"
+                className="flex w-[20%] ease-out duration-150 whitespace-nowrap items-center p-1 mt-[0.5em] justify-center font-medium rounded-lg bg-d-button hover:bg-d-button-hover text-[0.8em]"
               >
                 세트 추가
               </button>

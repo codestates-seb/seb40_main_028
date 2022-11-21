@@ -24,14 +24,14 @@ const PlanModal = ({ isModalOpen, setIsModalOpen }) => {
     },
     content: {
       position: "relative",
-      width: "25rem",
+      width: "24rem",
       height: "40.5em",
       border: "1px solid #ccc",
       background: "gray",
       overflow: "auto",
       backgroundColor: "#303030",
-      borderRadius: "0.7em",
-      borderColor: "#36393F",
+      borderRadius: "0.8em",
+      borderColor: "#303030",
       outline: "none",
       padding: 0,
       zIndex: 9998,
@@ -64,7 +64,7 @@ const PlanModal = ({ isModalOpen, setIsModalOpen }) => {
       >
         <div className="flex flex-col">
           <div className="flex flex-col">
-            <div className="h-9 mt-[-0.1em] bg-[#837f7f] rounded-t-lg flex items-center justify-center text-white font-semibold">
+            <div className="h-9 px-1 bg-[#837f7f] border-2 border-[#837f7f] rounded-t-lg flex items-center justify-center text-white font-semibold">
               {Modals === 0
                 ? "Categories"
                 : Modals === 1
@@ -78,7 +78,7 @@ const PlanModal = ({ isModalOpen, setIsModalOpen }) => {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="w-6 h-6 text-[#d9d9d9] fixed ml-[11em] cursor-pointer hover:text-red-600"
+                className="w-6 h-6 text-[#d9d9d9] fixed ml-[11em] cursor-pointer ease-out duration-150 hover:text-red-600"
                 onClick={() => setIsModalOpen(false)}
               >
                 <path

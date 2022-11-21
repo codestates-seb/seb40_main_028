@@ -1,56 +1,28 @@
+import React from "react";
 import { useState } from "react";
-export default function PlanList() {
-  const [data, setData] = useState([
-    {
-      id: 1,
-      title: "팔굽혀펴기",
-    },
-    {
-      id: 2,
-      title: "숄더프레스",
-    },
-    {
-      id: 3,
-      title: "팔굽혀펴기",
-    },
-    {
-      id: 4,
-      title: "숄더프레스",
-    },
-    {
-      id: 5,
-      title: "팔굽혀펴기",
-    },
-    {
-      id: 6,
-      title: "숄더프레스",
-    },
-  ]);
-
+import RandomMessage from "./RandomMessage";
+import icons from "../../assets/icons.png";
+export default function PlanList({ data, setData }) {
   return (
     <div className="flex flex-col items-center w-full text-gray-700 text-medium text-xl text-center mt-5">
       {data.map((item) => (
         <div
-          className="flex justify-between py-3 hover:scale-110 ease-out duration-150 p-1 border-b-white last:border-b-0 last:rounded-b-xl border
-          first:rounded-t-lg w-[65%] border-[#2C2F33] bg-[#4E525A] hover:border-b-d-light hover:bg-[#2f3136] hover:rounded-lg  text-white text-base text-medium"
+          className="flex relative shadow-sm justify-between py-4  ease-out duration-150 p-1 rounded-lg mb-2
+    w-[80%] border-[#2C2F33] bg-[#4E525A] hover:border-b-d-light hover:bg-[#2f3136] hover:rounded-lg  text-white text-base text-medium"
           key={item.id}
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M3.75 9h16.5m-16.5 6.75h16.5"
-            />
-          </svg>
-          {item.title}
-          <div className=" my-0 h-full">
+          <img
+            src={icons}
+            alt="image"
+            className="w-12 h-12 bg-[#3c3f45] rounded-2xl absolute ml-3 mt-1"
+          />
+          <div className="flex flex-col text-left ml-[5.5em]  space-y-2">
+            <div className="font-semibold text-[1em] text-[#dcddde]">
+              {item.title}
+            </div>
+            <RandomMessage />
+          </div>
+          <div className="mt-[-0.7em]">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"

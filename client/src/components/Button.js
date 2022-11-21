@@ -46,7 +46,7 @@ export default function Button({
         undefined
       }
       className={cls(
-        "px-9 py-2 bg-d-button hover:bg-d-button-hover text-white border border-transparent rounded-md shadow-sm font-medium",
+        "px-9 py-2 bg-d-button hover:bg-d-button-hover ease-out duration-150 text-white border border-transparent rounded-md shadow-sm font-medium",
         large ? "text-xl" : "text-lg"
       )}
     >
