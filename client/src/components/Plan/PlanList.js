@@ -9,13 +9,30 @@ export default function PlanList() {
       id: 2,
       title: '숄더프레스',
     },
+    {
+      id: 1,
+      title: '팔굽혀펴기',
+    },
+    {
+      id: 2,
+      title: '숄더프레스',
+    },
+    {
+      id: 1,
+      title: '팔굽혀펴기',
+    },
+    {
+      id: 2,
+      title: '숄더프레스',
+    },
   ]);
 
   return (
     <div className="flex flex-col items-center w-full text-gray-700 text-medium text-xl text-center mt-5">
       {data.map((item) => (
         <div
-          className="flex justify-between hover:my-1 hover:scale-110 ease-out duration-150 p-1 mb-1 border rounded-xl w-[65%] border-[#2C2F33] bg-[#4E525A] hover:bg-d-light text-white text-base text-medium"
+          className="flex justify-between py-3 hover:scale-110 ease-out duration-150 p-1 border-b-white last:border-b-0 last:rounded-b-xl border
+          first:rounded-t-lg w-[65%] border-[#2C2F33] bg-[#4E525A] hover:border-b-d-light hover:bg-[#2f3136] hover:rounded-lg  text-white text-base text-medium"
           key={item.id}
         >
           <svg
