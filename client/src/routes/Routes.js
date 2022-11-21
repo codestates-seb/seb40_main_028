@@ -1,10 +1,17 @@
-import { useRoutes } from 'react-router-dom';
-import Main from '../pages/Main';
-import Mappage from '../pages/Mappage';
-import Plan from '../pages/Plan';
-import Workout from '../pages/Workout';
-import Mypage from '../pages/MyPage/Mypage';
-import NotFound from '../pages/NotFound';
+import { useRoutes } from "react-router-dom";
+import Main from "../pages/Main";
+import Mappage from "../pages/Mappage";
+import Plan from "../pages/Plan";
+import Workout from "../pages/Workout";
+import Mypage from "../pages/MyPage/Mypage";
+import NotFound from "../pages/NotFound";
+import Login from "../pages/Login";
+import Start from "../pages/Start";
+import Register from "../pages/Register";
+import Startinginformation from "../pages/Startinginformation";
+
+// 지울예정
+import Logout from "../pages/Logout";
 
 export default function Router() {
   const routes = useRoutes([
@@ -13,7 +20,7 @@ export default function Router() {
       element: <Main />,
     },
     {
-      path: '/mappage',
+      path: "/mappage",
       element: <Mappage />,
     },
     {
