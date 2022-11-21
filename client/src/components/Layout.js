@@ -1,7 +1,7 @@
 import React from 'react';
 import { cls } from '../assets/utils';
 import { Link, useNavigate } from 'react-router-dom';
-import { FaDumbbell } from 'react-icons/fa';
+import { CiDumbbell } from 'react-icons/ci';
 
 export default function Layout({ title, canGoBack, hasTabBar, children }) {
   const navigate = useNavigate();
@@ -33,7 +33,7 @@ export default function Layout({ title, canGoBack, hasTabBar, children }) {
     {
       name: '운동시작',
       path: '/workout',
-      svg: <FaDumbbell size="24" />,
+      svg: <CiDumbbell size="24" />,
     },
     {
       name: '계획작성',
