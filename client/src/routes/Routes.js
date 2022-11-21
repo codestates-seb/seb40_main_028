@@ -1,9 +1,9 @@
 import { useRoutes } from 'react-router-dom';
 import Main from '../pages/Main';
-import Map from '../pages/Map';
+import Mappage from '../pages/Mappage';
 import Plan from '../pages/Plan';
 import Workout from '../pages/Workout';
-import Mypage from '../pages/Mypage';
+import Mypage from '../pages/MyPage/Mypage';
 import NotFound from '../pages/NotFound';
 
 export default function Router() {
@@ -13,8 +13,8 @@ export default function Router() {
       element: <Main />,
     },
     {
-      path: '/map',
-      element: <Map />,
+      path: '/mappage',
+      element: <Mappage />,
     },
     {
       path: '/workout',

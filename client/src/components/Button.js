@@ -11,7 +11,7 @@ export default function Button({
   beforeModal,
   saveModal,
   workoutodone,
-  onClick
+  onClick,
 }) {
   const setIsModalOpen = useSetRecoilState(isModal);
   const [modalNum, setModalNum] = useRecoilState(ModalNum);
@@ -36,6 +36,7 @@ export default function Button({
   }
   return (
     <button
+
     onClick={
       onClick ||
       (onGoBack && goBack) ||
