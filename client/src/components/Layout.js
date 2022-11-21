@@ -1,7 +1,7 @@
 import React from 'react';
 import { cls } from '../assets/utils';
 import { Link, useNavigate } from 'react-router-dom';
-import { FaDumbbell } from 'react-icons/fa';
+import { CiDumbbell } from 'react-icons/ci';
 
 export default function Layout({ title, canGoBack, hasTabBar, children }) {
   const navigate = useNavigate();
@@ -33,7 +33,7 @@ export default function Layout({ title, canGoBack, hasTabBar, children }) {
     {
       name: '운동시작',
       path: '/workout',
-      svg: <FaDumbbell size={24} />,
+      svg: <CiDumbbell size="24" />,
     },
     {
       name: '계획작성',
@@ -57,7 +57,7 @@ export default function Layout({ title, canGoBack, hasTabBar, children }) {
     },
     {
       name: '지도',
-      path: '/map',
+      path: '/mappage',
       svg: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -95,11 +95,12 @@ export default function Layout({ title, canGoBack, hasTabBar, children }) {
         </svg>
       ),
     },
+    
   ];
 
   return (
     <div>
-      <div className="bg-d-dark w-full z-[1] h-12 max-w-lg justify-center text-lg px-10 font-medium fixed text-white border-b border-[#2C2F33] top-0  flex items-center">
+      <div className="bg-d-dark w-full z-[9995] h-12 max-w-lg justify-center text-lg px-10 font-medium fixed text-white border-b border-[#2C2F33] top-0  flex items-center">
         {canGoBack ? (
           <button onClick={goToBack} className="absolute left-4">
             <svg

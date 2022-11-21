@@ -1,17 +1,9 @@
-import { useState } from 'react';
 import '@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css';
 import DatePicker from '@hassanmojab/react-modern-calendar-datepicker';
-import dayjs from 'dayjs';
-import { ko } from 'date-fns/esm/locale';
+import { useRecoilState } from 'recoil';
+import { selectedDays } from '../../state/states';
 export default function PlanCalendar() {
-  const now = dayjs().format('YYYY-MM-DD');
-  let splitNow = now.split('-');
-  const [selectedDay, setSelectedDay] = useState({
-    day: Number(splitNow[2]),
-    month: Number(splitNow[1]),
-    year: Number(splitNow[0]),
-  });
-
+  const [selectedDay, setSelectedDay] = useRecoilState(selectedDays);
   const renderCustomInput = ({ ref }) => (
     <label
       htmlFor="my-custom-input-class"
@@ -40,17 +32,18 @@ export default function PlanCalendar() {
             : ''
         }
         id="my-custom-input-class"
-        className="my-custom-input-class outline-none bg-d-dark ml-3 w-[8em] hover:bg-d-light rounded-full"
+        className="my-custom-input-class outline-none bg-d-dark ml-2 mr-2 w-[8.2em] hover:bg-d-light rounded-full"
       />
     </label>
   );
-  console.log(selectedDay);
 
   return (
     <DatePicker
       value={selectedDay}
       onChange={setSelectedDay}
       renderInput={renderCustomInput}
+      calendarClassName="text-[0.8em]"
+      wrapperClassName="bg-d-dark hover:bg-d-light rounded-lg"
       shouldHighlightWeekends
     />
   );
