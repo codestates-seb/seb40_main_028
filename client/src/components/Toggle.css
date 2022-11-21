@@ -1,0 +1,49 @@
+.toggleSwitch {
+  width: 100px;
+  margin: 30px;
+  height: 50px;
+  display: block;
+  position: relative;
+  border-radius: 30px;
+  background-color: #fff;
+  box-shadow: 0 0 16px 3px rgba(0 0 0 / 15%);
+  cursor: pointer;
+}
+  
+.toggleSwitch .toggleButton {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 50%;
+  left: 4px;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  background: rgb(88 101 242);
+
+   /* 여자일 때 글씨 흰색 */
+   color: white;
+  /* 남자여자 글씨 크기 */
+  font-size: 13px;
+ 
+
+  display: flex;
+  /* 가로 가운데 */
+  justify-content: center;
+  /* 세로 가운데 */
+  align-items: center;
+}
+  
+#toggle:checked ~ .toggleSwitch {
+  background: rgb(88 101 242);
+}
+  
+#toggle:checked ~ .toggleSwitch .toggleButton {
+  left: calc(100% - 44px);
+  background: #fff;
+  /* 남자일 때 글씨 색 */
+  color: rgb(88 101 242);
+}
+  
+.toggleSwitch, .toggleButton {
+  transition: all 0.2s ease-in;
+}
