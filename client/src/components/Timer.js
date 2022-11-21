@@ -1,7 +1,7 @@
 import useInterval from "../assets/Interval";
 import { useState } from "react";
 import { useRecoilState } from "recoil";
-import timermodalState from "../state/Timermodal";
+import {timermodalState} from "../state/states";
 import { Smallerbutton } from "./ExerciseButton";
 
 export default function Timer() {
@@ -27,7 +27,6 @@ export default function Timer() {
             <form className="flex-col z-50 justify-center items-center h-[40vh] w-2/3 max-w-lg bg-d-lighter rounded-2xl overflow-hidden">
                 <div className="bg-d-light text-white h-[3vh]"></div>
                 <div className={`top-[7vh] ${timermodal[1]!==0? "text-green-700":"text-red-700"}`}>{timeonscreen(timermodal[1])}</div>
-                <div className="relative top-[9vh] text-white text-[3vh]">타이머</div>
                 <div className="relative top-[10vh] flex justify-center items-center my-[1vh]">
                     <Smallerbutton name="00:30"/>
                     <Smallerbutton name="01:00"/>
