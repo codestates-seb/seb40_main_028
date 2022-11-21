@@ -25,9 +25,6 @@ const DetailContent = ({
     setDetailExercise(newObject);
   };
 
-  // detailExercise, selectedCategory, selectedExercise, selectedDay
-  // setDetailExercise default
-
   return (
     <>
       <div>

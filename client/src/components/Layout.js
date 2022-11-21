@@ -100,7 +100,7 @@ export default function Layout({ title, canGoBack, hasTabBar, children }) {
 
   return (
     <div>
-      <div className="bg-d-dark w-full z-[1] h-12 max-w-lg justify-center text-lg px-10 font-medium fixed text-white border-b border-[#2C2F33] top-0  flex items-center">
+      <div className="bg-d-dark w-full z-[9995] h-12 max-w-lg justify-center text-lg px-10 font-medium fixed text-white border-b border-[#2C2F33] top-0  flex items-center">
         {canGoBack ? (
           <button onClick={goToBack} className="absolute left-4">
             <svg

@@ -17,7 +17,7 @@ const PlanModal = ({ isModalOpen, setIsModalOpen }) => {
       right: 0,
       bottom: 0,
       backgroundColor: 'rgba(15, 15, 15, 0.49)',
-      zIndex: 9998,
+      zIndex: 9997,
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
@@ -30,12 +30,11 @@ const PlanModal = ({ isModalOpen, setIsModalOpen }) => {
       background: 'gray',
       overflow: 'auto',
       backgroundColor: '#303030',
-      WebkitOverflowScrolling: 'touch',
       borderRadius: '0.7em',
       borderColor: '#36393F',
       outline: 'none',
       padding: 0,
-      zIndex: 9999,
+      zIndex: 9998,
       inset: 0,
       boxShadow:
         'rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px',
@@ -57,13 +56,14 @@ const PlanModal = ({ isModalOpen, setIsModalOpen }) => {
     <>
       <Modal
         overlayClassName="w-full max-w-lg mx-auto"
+        preventScroll={false}
         isOpen={isModalOpen}
         ariaHideApp={false}
         onRequestClose={() => setIsModalOpen(false)}
         style={style}
       >
-        <div className="flex flex-col ">
-          <div>
+        <div className="flex flex-col">
+          <div className="flex flex-col">
             <div className="h-9 mt-[-0.1em] bg-[#837f7f] rounded-t-lg flex items-center justify-center text-white font-semibold">
               {Modals === 0
                 ? 'Categories'
@@ -72,27 +72,29 @@ const PlanModal = ({ isModalOpen, setIsModalOpen }) => {
                 : Modals === 2
                 ? '상세 운동 설정'
                 : null}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6 text-[#d9d9d9] fixed ml-[11em] cursor-pointer hover:text-red-600"
+                onClick={() => setIsModalOpen(false)}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
             </div>
+
             <img
               src={icons}
               alt="hi"
-              className="w-12 h-12 bg-[#d9d9d9] rounded-2xl fixed mt-[-1.5em] ml-[1em]"
+              className="w-12 h-12 bg-[#d9d9d9] rounded-2xl fixed mt-[0.9em] ml-[1em]"
             />
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6 text-[#d9d9d9] fixed mt-[-1.9em] ml-[22.9em] cursor-pointer hover:text-red-600"
-              onClick={() => setIsModalOpen(false)}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
+
             <div className="text-white text-xs ml-[6em] mt-[0.4em]">
               {selectedDay.year}/{selectedDay.month}/{selectedDay.day}
             </div>

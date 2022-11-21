@@ -18,6 +18,15 @@ const Plan = () => {
     }
   }, [isModalOpen]);
 
+  useEffect(() => {
+    // 모달창 열리면 스크롤 방지
+    if (isModalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [isModalOpen]);
+
   return (
     <div className="h-screen bg-d-lighter relative">
       <Layout title="계획작성" hasTabBar>
