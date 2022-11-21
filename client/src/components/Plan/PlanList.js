@@ -10,19 +10,19 @@ export default function PlanList() {
       title: '숄더프레스',
     },
     {
-      id: 1,
+      id: 3,
       title: '팔굽혀펴기',
     },
     {
-      id: 2,
+      id: 4,
       title: '숄더프레스',
     },
     {
-      id: 1,
+      id: 5,
       title: '팔굽혀펴기',
     },
     {
-      id: 2,
+      id: 6,
       title: '숄더프레스',
     },
   ]);
