@@ -1,34 +1,33 @@
-import Layout from '../components/Layout';
-import Map from '../components/Map';
-import styled from 'styled-components/macro';
-import SearchPlace from '../components/SearchPlace';
+import Layout from "../components/Layout";
+import Map from "../components/Map";
+import styled from "styled-components/macro";
+import SearchPlace from "../components/SearchPlace";
 // import Loading from '../components/Loding';
 // import { useState } from 'react';
 
-const Container = styled.div`
-  display: flex;
-  align-items: center;
-  height: 100vh;
-`;
+// const Container = styled.div`
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   height: 100vh;
+// `;
 
 const MapContainer = styled.div`
-  margin-top: -310px;
+  margin-top: 1.5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  width: 100%;
 `;
-
-
-
-
 
 const Mappage = () => {
   return (
-    <Container>
-    <Layout title="지도" hasTabBar>
-       <MapContainer>
-       <SearchPlace />
-       <Map />
-       </MapContainer>
-    </Layout>
-    </Container>
+    <div className="h-screen">
+      <Layout title="지도" hasTabBar>
+        <SearchPlace />
+      </Layout>
+    </div>
   );
 };
 
