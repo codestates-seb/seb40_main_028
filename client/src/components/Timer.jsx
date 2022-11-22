@@ -1,4 +1,3 @@
-import React from "react";
 import { useRecoilState } from "recoil";
 import useInterval from "../assets/Interval";
 // import { useState } from "react";

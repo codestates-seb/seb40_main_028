@@ -1,19 +1,15 @@
 import { useSetRecoilState } from "recoil";
-import { timermodalState, doneState } from "../state/states";
+import { timermodalState, doneState } from "../../state/states";
 
 export function Smallerbutton ({name, fn}) {
   return (
-    <>
-      <button className={"flex justify-center items-center rounded-lg w-28 h-[1em] ml-[3em] bg-gradient-to-b from-[#b8b9bf] to-[#808185] drop-shadow-2xl text-[#4E525A] font-bold"} onClick={fn}>{name}</button>    
-    </>  
+    <button className="flex justify-center items-center rounded-lg w-28 h-[1em] ml-[3em] bg-gradient-to-b from-[#b8b9bf] to-[#808185] drop-shadow-2xl text-[#4E525A] font-bold" onClick={fn}>{name}</button>  
   );
 };
 
 export function Smallbutton ({name, fn, ifnext}) {
   return (
-    <>
-      <button className={`flex justify-center items-center rounded-lg w-[6em] h-[2.5em] ml-[2.5em] bg-d-dark drop-shadow-2xl text-white font-bold hover:bg-d-hover ${ifnext}`} onClick={fn}>{name}</button>    
-    </>  
+    <button className={`flex justify-center items-center rounded-lg w-[6em] h-[2.5em] ml-[2.5em] bg-d-dark drop-shadow-2xl text-white font-bold hover:bg-d-hover ${ifnext}`} onClick={fn}>{name}</button>  
   );
 };
 
@@ -26,7 +22,7 @@ export function Setlistbutton ({x, idx, record}) {
     console.log(record);
   }
   return(
-    <div id={idx} className="flex cursor-default my-[0.6em] h-[2.8em] mx-[1.5em] border-none text-[1.5em] bg-gradient-to-b from-[#4E525A] to-[#36393F] drop-shadow-2xl ease-out hover:bg-d-hover border-2 rounded-lg justify-center items-center font-bold text-white overflow-x-hidden whitespace-nowrap" 
+    <div id={idx} className="flex cursor-default my-[0.6em] h-[2.8em] mx-[1.5em] border-none text-[1.5em] bg-gradient-to-b from-[#4E525A] to-[#36393F] drop-shadow-2xl ease-out hover:from-d-hover border-2 rounded-lg justify-center items-center font-bold text-white overflow-x-hidden whitespace-nowrap" 
       onClick={setclicked} >
       <div className='basis-1/5 ml-[0.2em] whitespace-nowrap'>{idx+1}세트</div>
       <div className='flex flex-row basis-3/5 justify-center items-center'>
@@ -46,7 +42,7 @@ export function Setlistbutton ({x, idx, record}) {
 
 export function Specificsetlistbutton ({x, idx, setState}) {
   return(
-    <div id={idx} className="flex my-[0.6em] h-[2.8em] mx-[1.5em] border-none text-[1.5em] bg-gradient-to-b from-[#4E525A] to-[#36393F] drop-shadow-2xl hover:bg-white border-2 rounded-lg justify-center items-center font-bold text-white overflow-x-hidden whitespace-nowrap" 
+    <div id={idx} className="flex z-10 my-[0.6em] h-[2.8em] mx-[1.5em] border-none text-[1.5em] bg-gradient-to-b from-[#4E525A] to-[#36393F] drop-shadow-2xl hover:from-d-hover border-2 rounded-lg justify-center items-center font-bold text-white overflow-x-hidden whitespace-nowrap" 
       onClick={()=> {setState(idx)}}>{x}</div>
   );
 }
