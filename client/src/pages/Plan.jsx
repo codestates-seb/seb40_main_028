@@ -1,14 +1,13 @@
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
+import icons from "../assets/icons.png";
 import Layout from "../components/Layout";
+import PlanModal from "../components/Plan/Modals/PlanModal";
+import PlanAdd from "../components/Plan/PlanAdd";
 import PlanCalendar from "../components/Plan/PlanCalendar";
 import PlanList from "../components/Plan/PlanList";
-import PlanAdd from "../components/Plan/PlanAdd";
-import PlanModal from "../components/Plan/Modals/PlanModal";
-import { useRecoilState } from "recoil";
-import { ModalNum, isModal } from "../state/states";
-import icons from "../assets/icons.png";
 import RandomMessage from "../components/Plan/RandomMessage";
+import { isModal, ModalNum } from "../state/states";
 
 const Plan = () => {
   const [isModalOpen, setIsModalOpen] = useRecoilState(isModal);
@@ -72,7 +71,7 @@ const Plan = () => {
             <PlanList data={data} setData={setData} />
           ) : (
             <div className="flex flex-col items-center justify-center mt-[9em]">
-              <img src={icons} alt="image" className="w-48 h-48 rounded-2xl" />
+              <img src={icons} alt="icons" className="w-48 h-48 rounded-2xl" />
               <div className="text-[#cccccc] font-semibold text-[1.7em] rounded-lg mt-[-1.5em]">
                 오늘 할일이 아직 없습니다
               </div>

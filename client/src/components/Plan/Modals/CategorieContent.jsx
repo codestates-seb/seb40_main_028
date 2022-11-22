@@ -14,7 +14,8 @@ const CategorieContent = ({ Modals, setModals, setSelectedCategory }) => {
       <div className="flex flex-wrap items-center justify-center ">
         {categories.map((item, idx) => {
           return (
-            <div
+            <button
+              type="button"
               key={idx}
               onClick={() => {
                 setModals(Modals + 1);
@@ -22,9 +23,9 @@ const CategorieContent = ({ Modals, setModals, setSelectedCategory }) => {
               }}
               className="flex flex-col justify-center items-center w-[7em] h-[7em]"
             >
-              <div className="w-16 h-16 hover:bg-d-button-hover bg-[#d9d9d9] rounded-lg ease-out duration-150"></div>
+              <div className="w-16 h-16 hover:bg-d-button-hover bg-[#d9d9d9] rounded-lg ease-out duration-150" />
               <div className="font-medium text-[0.8em] mt-1">{item}</div>
-            </div>
+            </button>
           );
         })}
       </div>

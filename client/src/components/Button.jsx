@@ -1,3 +1,4 @@
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { cls } from "../assets/utils";
@@ -34,6 +35,7 @@ export default function Button({
   };
   return (
     <button
+      type="button"
       onClick={
         onClick ||
         (onGoBack && goBack) ||
