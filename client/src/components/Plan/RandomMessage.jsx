@@ -1,5 +1,5 @@
 import React from "react";
-import { cls } from "../../assets/utils.js";
+import { cls } from "../../assets/utils";
 
 const RandomMessage = ({ large }) => {
   const proverb = [
