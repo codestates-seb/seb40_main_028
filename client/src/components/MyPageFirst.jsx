@@ -1,39 +1,43 @@
 import styled from "styled-components/macro";
-import { Link } from "react-router-dom";
 import { Line } from "react-chartjs-2";
 import Chart from "chart.js/auto";
 import React from "react";
+import MyPageText from "./MyPageText";
 
-
-const MyPageForm = styled.div`
+const MyPageForm = styled.form`
   display: flex;
+  width: 25em;
+  height: 40em;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  justify-content: space-between;
-  width: 25rem;
-  height: 40rem;
-  border-radius: 8px;
-  background-color: #2C2F33;
-  border: none;
-  box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.3);
-  margin-top: 50px;
-  padding: 24px;
   color: white;
-  .h2{
-    font-size: 18px;
-    margin: -15px 0px 20px 0px;
- 
-  }
 `;
 
-const Container = styled.form`
+const Container = styled.div`
 display: flex;
+align-items: center;
 justify-content: center;
-position: fixed;
-margin-top: 70px;
-margin-left: -14px;
-width: 370px;
+width: 25rem;
+margin-bottom: 2em;
+margin-top: 3em;
+`;
 
+const Container2 = styled.div`
+display: flex;
+align-items: center;
+justify-content: center;
+width: 25rem;
+margin-bottom: 12em;
+margin-left: 3em;
+`;
+
+const PageText = styled.div`
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 1.5em;
+width: 25rem;
 `;
 
 
@@ -96,16 +100,15 @@ const options = {
 
 function MyPageFirst() {
   return (
-
     <MyPageForm>
-      <div className="h-screen text-center">
-        운동그래프</div>
+      <PageText>운동그래프</PageText>
       <Container>
         <Line data={data} options={options}/>
       </Container>
-      <Link to="/mypage2" />
+      <Container2>
+        <MyPageText />
+      </Container2>
     </MyPageForm>
-    
   )
 }
 
