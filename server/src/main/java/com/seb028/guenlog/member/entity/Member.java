@@ -7,6 +7,7 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -30,7 +31,7 @@ public class Member extends BaseEntity {
     @Column(nullable = false)
     private String password;
 
-    private Integer age;
+    private LocalDate age;
 
     private Integer height;
 
