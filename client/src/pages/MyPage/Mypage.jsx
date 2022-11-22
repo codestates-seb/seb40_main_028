@@ -1,8 +1,8 @@
 import styled from "styled-components/macro";
 import React,{ useState } from "react";
 import Layout from "../../components/Layout";
-import MyPage1 from "./Mypage1";
-import MyPage2 from "./Mypage2";
+import MyPageFirst from "../../components/MyPageFirst";
+import MyPageSecont from "../../components/MyPageSecond";
 // import { Link } from 'react-router-dom';
 
 const MyPageContainer = styled.div`
@@ -10,9 +10,7 @@ const MyPageContainer = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  height: auto;
-  width: 32rem;
-  background-color: red;
+
 `;
 const MyPageButton = styled.button`
   display: flex;
@@ -23,8 +21,6 @@ const MyPageButton = styled.button`
   padding:15px;
   font-size: 15px;
   color: white;
-  margin-top:-45px;
-  position: absolute;
   :hover {
     background-color: #4C53BF;
     border: 2px solid #3C53BF;
@@ -33,20 +29,22 @@ const MyPageButton = styled.button`
   border: 2px solid #737BF2;
   border-radius: 4px;
   cursor: pointer;
-  margin-left: 190px;
-`;
+  margin-left: 13em;
+  margin-top: 2em;
+
+  `;
 
 function Mypage() {
   const [page,setPage] = useState(false);
 
   return (
-    <div className="h-screen" >
+    <div className="w-full h-screen bg-d-lighter" >
       <Layout title="마이페이지" hasTabBar>
         <MyPageContainer>
-          { page === false ? <MyPage1 /> : <MyPage2/>}
+          { page === false ? <MyPageFirst /> : <MyPageSecont/>}
         </MyPageContainer>
         <MyPageButton onClick={() => {setPage(!page);}}>
-          {page===true ? "정보수정" : "운동그래프"}</MyPageButton>
+          {page===true ? "운동그래프" : "정보수정"}</MyPageButton>
       </Layout>
     </div>
   );
