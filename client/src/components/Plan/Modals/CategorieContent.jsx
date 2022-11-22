@@ -22,7 +22,7 @@ const CategorieContent = ({ Modals, setModals, setSelectedCategory }) => {
               }}
               className="flex flex-col justify-center items-center w-[7em] h-[7em]"
             >
-              <div className="w-16 h-16 hover:bg-d-button-hover bg-[#d9d9d9] rounded-lg"></div>
+              <div className="w-16 h-16 hover:bg-d-button-hover bg-[#d9d9d9] rounded-lg ease-out duration-150"></div>
               <div className="font-medium text-[0.8em] mt-1">{item}</div>
             </div>
           );

@@ -125,7 +125,7 @@ export default function Layout({ title, canGoBack, hasTabBar, children }) {
 
       <div className={cls("pt-12", hasTabBar ? "pb-24" : "")}>{children}</div>
       {hasTabBar ? (
-        <nav className="bg-d-dark max-w-lg text-white border-[#2C2F33] border-t fixed bottom-0 w-full px-10 pb-3 pt-3 flex justify-between text-xs">
+        <nav className="bg-d-dark max-w-lg z-[9995] text-white border-[#2C2F33] border-t fixed bottom-0 w-full px-10 pb-3 pt-3 flex justify-between text-xs">
           {menu.map((item, index) => (
             <Link to={item.path} key={index}>
               <div

@@ -1,3 +1,4 @@
+import React from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/solid";
 import {
@@ -182,7 +183,9 @@ export default function MainCalendar() {
                 <Meeting meeting={meeting} key={meeting.id} />
               ))
             ) : (
-              <p>해당 날짜에는 운동을 진행하지 않았습니다.</p>
+              <p className="whitespace-nowrap">
+                해당 날짜에는 운동을 진행하지 않았습니다.
+              </p>
             )}
           </ol>
         </section>
