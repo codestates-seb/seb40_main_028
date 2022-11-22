@@ -1,5 +1,5 @@
 import { useRecoilState } from "recoil";
-import { selectedDays, categorie, ModalNum } from "../../../state/states";
+import { selectedDays, ModalNum } from "../../../state/states";
 import { useState } from "react";
 import React from "react";
 import Modal from "react-modal";
