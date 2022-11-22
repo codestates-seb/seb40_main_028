@@ -6,6 +6,14 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public class SingleResponseDto<T> {
+
+    private boolean success;
+
     private T data;
+
+    public SingleResponseDto(T data) {
+        this.success = true;
+        this.data = data;
+    }
 
 }
