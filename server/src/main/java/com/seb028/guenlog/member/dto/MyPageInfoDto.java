@@ -16,6 +16,7 @@ public class MyPageInfoDto {
         @Pattern(regexp = "^([a-zA-Z가-힣]){1,8}$",
                 message = "닉네임은 한글 최대 8글자까지 입력 가능합니다.")
         private String nickname;
+        private String age;
         private Character gender;
         private Integer height;
         private Integer weight;
@@ -25,9 +26,10 @@ public class MyPageInfoDto {
     @Builder
     public static class Response {
         private String nickname;
+        private String email;
+        private String age;
         private Character gender;
         private Integer height;
         private Integer weight;
-        private Integer age;
     }
 }
