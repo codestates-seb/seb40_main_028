@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import styled, { withTheme } from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-
 
 
 const Container = styled.div`
@@ -105,19 +104,6 @@ const MainContainer = styled.div`
   justify-content: center;
 `;
 
-// const Checkbox = styled.div`
-//   padding: 0 18px;
-//   margin-bottom: 14px;
-//   display: flex;
-//   align-items: flex-start;
-//   & input {
-//     margin-right: 4px;
-//   }
-//   & div {
-//     margin: 2px 0 0 0;
-//     font-size: 12px;
-//   }
-// `;
 
 export default function RegisterContainer() {
   const [error, setError] = useState("");
@@ -130,8 +116,8 @@ export default function RegisterContainer() {
   } = useForm({ mode: onchange });
   const onLogin = async (data) => {
     console.log(data);
-    console.log(data.password+"패스워드");
-    console.log(data.passwordcheck+"패스워드 확인");
+    console.log(data.password+": 패스워드");
+    console.log(data.passwordcheck+" : 패스워드 확인");
     // 회원가입 api 자리
     // try {
     //   axios.post("#", { ...data });
@@ -156,14 +142,15 @@ export default function RegisterContainer() {
                   required: true,
                   minLength: 2,
                   maxLength: 16,
-                  pattern: /^(?=.*\d)+(?=.*[a-zA-ZS]).{4,}/,
+                  // 공백없는 숫자와 대소문자만 가능 * 숫자만도 가능해서 수정해야될것 같음
+                  pattern: /^[a-zA-Z0-9]*$/,
                 })}
               />
               {errors.Nickname && errors.Nickname.type === "required" && (
                 <Errormsg>⚠ 닉네임을 입력해주세요.</Errormsg>
               )}
               {errors.Nickname && errors.Nickname.type === "pattern" && (
-              <Errormsg>⚠ 닉네임은 영문과 숫자 조합으로만 이루어져야 합니다.</Errormsg>
+              <Errormsg>⚠ 영문과 숫자만 사용하세요</Errormsg>
             )}
               {errors.Nickname && errors.Nickname.type === "minLength" && (
                 <Errormsg>⚠ 최소 길이는 2자 이상여야 합니다</Errormsg>
@@ -180,7 +167,8 @@ export default function RegisterContainer() {
                 id="Email"
                 {...register("email", {
                   required: true,
-                  pattern: /^\S+@\S+$/i,
+                  // pattern: /\w+@\w+\.\w+(\.\w+)?/,
+                  pattern: /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/,
                   maxLength: 50,
                 })}
               />
@@ -202,13 +190,19 @@ export default function RegisterContainer() {
                 {...register("password", {
                   required: true,
                   minLength: 10,
+                  // 최소 10자리 이상 영문 대소문자, 숫자, 특수문자가 각각 1개 이상
+                  pattern:/^(?=.*?[a-zA-Z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{10,}$/,
                 })}
               />
               {errors.password && errors.password.type === "required" && (
                 <Errormsg>⚠ 패스워드를 입력해주세요</Errormsg>
               )}
               {errors.password && errors.password.type === "minLength" && (
-                <Errormsg>⚠ 최소 길이는 10자 이상이여야 합니다</Errormsg>
+                <Errormsg>⚠ 최소 길이는 10자 이상이어야 합니다</Errormsg>
+              )}
+                {errors.password &&
+                errors.password.type === "pattern" && (
+                <Errormsg>⚠ 영문, 특수문자, 숫자 포함하세요</Errormsg>
               )}
             </InputContainer>
             <InputContainer>
@@ -220,32 +214,28 @@ export default function RegisterContainer() {
                 {...register("passwordcheck", {
                   required: true,
                   minLength: 10,
+                  
                 })}
               />
               {errors.passwordcheck &&
                 errors.passwordcheck.type === "required" && (
-                <Errormsg>⚠ 패스워드를 입력해주세요</Errormsg>
+                <Errormsg>⚠ 패스워드를 확인 해주세요</Errormsg>
               )}
+
               {errors.passwordcheck &&
                 errors.passwordcheck.type === "minLength" && (
                 <Errormsg>⚠ 최소 길이는 10자 이상이여야 합니다</Errormsg>
-                
               )}
-           
-            </InputContainer>
 
+            
+             
+            </InputContainer>
+           
             {/* 비밀번호 안내문구 */}
             <RegisterMent>
-              비밀번호는 최소 1개의 특수문자와 1개의 숫자를 포함하여 최소 8자
-              이상이어야 합니다.
+              비밀번호는 10자 이상의 영문대소문자, 특수문자, 숫자를 각각1개 이상 포함해야합니다. 
             </RegisterMent>
-            {/* <Checkbox>
-              <input type={'checkbox'} />
-              <div>
-                Opt-in to receive occasional product updates, user research
-                invitations, company announcements, and digests.
-              </div>
-            </Checkbox> */}
+            
             {/* 회원가입 버튼 */}
             <SubmitBtn type="submit" value={"Sign up"}></SubmitBtn>
             {error && <Errormsg>⚠ {error}</Errormsg>}
