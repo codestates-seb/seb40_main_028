@@ -1,43 +1,26 @@
 import styled from "styled-components/macro";
-
+import React from "react";
+import Toggle from "./Toggle";
 // import {
 //    useEffect,useState,useUserState,useUserDispatch,useInput,useCallback
 // } from 'react';
 
-const Container = styled.form`
-display: flex;
-justify-content: center;
-width: 390px;
-position: fixed;
-margin-top: 10px;
-`;
-
-
 const MyPageForm = styled.div`
   display: flex;
+  height: 40rem;
   flex-direction: column;
-  width: 390px;
-  height: 632px;
-  border-radius: 8px;
-  background-color: #2C2F33;
-  border: none;
-  box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.3);
-  margin-top: 5px;
+  justify-content: center;
   padding: 24px;
   color: white;
-  .h2{
-    font-size: 18px;
-    margin: -15px 0px 20px -5px;
- 
-  }
+  width: 25em;
 `;
 
 const DisplayText = styled.div`
   font-size: 17px;
   font-weight: 600;
-  margin-bottom: 6px;
   text-align: left;
   color: white;
+  margin-bottom: 0.6em;
 `;
 
 const InputInfo = styled.div`
@@ -82,6 +65,9 @@ const Input3 = styled.input`
     box-shadow: 0 0 0 3.3px #ddeaf7;
   }
 `;
+const ToggleDiv = styled.div`
+margin: 0.3em 0em -0.5em -2em;
+`;
 
 const MyPageButton = styled.button`
   display: flex;
@@ -93,7 +79,7 @@ const MyPageButton = styled.button`
   font-size: 15px;
   border: 0.01px solid #43549f;
   color: white;
-  margin: 6px 0px 40px 140px;
+  margin: 6px 0px 10px 140px;
   :hover {
     background-color: #4C53BF;
     border: 2px solid #3C53BF;
@@ -120,45 +106,68 @@ const MyPageButton2 = styled.button`
   border-radius: 4px;
   cursor: pointer;
 `;
+const SerchButton = styled.button`
+  margin-top: -30px;
+  margin-left: 270px;
+  width: 70px;
+  background-color: #747BF2;
+  border: 2px solid #737BF2;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  :hover {
+    background-color: #4C53BF;
+    border: 2px solid #3C53BF;
+  }
+`;
+const PageText = styled.div`
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 1.5em;
+width: 25rem;
+margin-top: 0.7em;
+margin-left: -1em;
+`;
 
 
-const MyPageSecond = () => {
+function MyPageSecond() {
   
   return (
-    <Container>
-      <MyPageForm>
-        <div className='h2'>
-        정보 수정</div>
-        <InputInfo className="displayName">
-          <DisplayText>닉네임</DisplayText>
-          <Input type="text" id="displayname"  />
-        </InputInfo>
+    <MyPageForm>
+      <PageText>정보수정</PageText>
+      <InputInfo className="displayName">
+        <DisplayText>닉네임</DisplayText>
+        <Input type="text" id="displayname"  />
+      </InputInfo>
         
-        <InputInfo className="displayMail">
-          <DisplayText>이메일</DisplayText>
-          <Input2  type="mail" id="displayMail"/>
-        </InputInfo>
-        <InputInfo className="password">
-          <DisplayText>패스워드</DisplayText>
-          <Input2 type="password" id="password"  />
-        </InputInfo>
-
-        <InputInfo className="displayHeight">
-          <DisplayText>신장</DisplayText>
-          <Input3 type="name" id="displayHeight"  />
-        </InputInfo>
-        <InputInfo className="displayWidth">
-          <DisplayText>몸무게</DisplayText>
-          <Input3 type="name" id="displayWidth"  />
-        </InputInfo>
-        <InputInfo className="displayWidth">
-          <DisplayText>나이</DisplayText>
-          <Input3 type="age" id="displayAge"  />
-        </InputInfo>
-        <MyPageButton>저장</MyPageButton>
-        <MyPageButton2>회원탈퇴</MyPageButton2>
-      </MyPageForm>
-    </Container>
+      <InputInfo className="displayMail">
+        <DisplayText>이메일</DisplayText>
+        <Input2  type="mail" id="displayMail"/>
+      </InputInfo>
+      <InputInfo className="password">
+        <DisplayText>패스워드</DisplayText>
+        <Input2 type="password" id="password"  />
+        <SerchButton>변경</SerchButton>
+      </InputInfo>
+      <ToggleDiv>
+        <Toggle />
+      </ToggleDiv>
+      <InputInfo className="displayHeight">
+        <DisplayText>신장</DisplayText>
+        <Input3 type="name" id="displayHeight"  />
+      </InputInfo>
+      <InputInfo className="displayWidth">
+        <DisplayText>몸무게</DisplayText>
+        <Input3 type="name" id="displayWidth"  />
+      </InputInfo>
+      <InputInfo className="displayWidth">
+        <DisplayText>나이</DisplayText>
+        <Input3 type="age" id="displayAge"  />
+      </InputInfo>
+      <MyPageButton>저장</MyPageButton>
+      <MyPageButton2>회원탈퇴</MyPageButton2>
+    </MyPageForm>
   )
 }
 

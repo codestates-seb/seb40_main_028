@@ -1,3 +1,3 @@
-export function cls(...classnames) {
+export default function cls(...classnames) {
   return classnames.join(" ");
 }

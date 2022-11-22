@@ -1,7 +1,8 @@
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { cls } from "../assets/utils";
-import { ModalNum, isModal, totaltimeState } from "../state/states";
 import { useRecoilState, useSetRecoilState } from "recoil";
+import cls from "../assets/utils";
+import { ModalNum, isModal, totaltimeState } from "../state/states";
 
 export default function Button({
   text,
@@ -36,6 +37,7 @@ export default function Button({
   };
   return (
     <button
+      type="button"
       onClick={
         onClick ||
         (onGoBack && goBack) ||
