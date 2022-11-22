@@ -3,11 +3,10 @@ package com.seb028.guenlog.member.entity;
 
 import com.seb028.guenlog.base.BaseEntity;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Getter
@@ -37,19 +36,8 @@ public class Member extends BaseEntity {
 
     private Character gender;
 
-    @Enumerated(EnumType.STRING)
-    @Column
-    private MemberStatus status = MemberStatus.Y;
 
-    public enum MemberStatus {
-        Y("회원 활성"),
-        N("회원 탈퇴");
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles;
 
-        @Getter
-        private String status;
-
-        MemberStatus(String status) {
-            this.status = status;
-        }
-    }
 }
