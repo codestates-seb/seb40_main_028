@@ -30,3 +30,8 @@ logging:
       springframework:
         orm:
           jpa: DEBUG
+
+jwt:
+  secret-key: asdfweqrzxcvfdghtuiytyrtywerfsdzgbfgyjuer5tszdfgfgjt7uyijhbnsdafgsertewrtsdfgdfvbcvbsdfgertsdfgsdfgergertewrtewrt
+  access-token-expiration-minutes: 240
+  refresh-token-expiration-minutes: 420
