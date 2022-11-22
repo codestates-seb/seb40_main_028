@@ -1,14 +1,13 @@
 import React from "react";
-import { cls } from "../assets/utils";
-import { Link, useNavigate } from "react-router-dom";
 import { CiDumbbell } from "react-icons/ci";
+import { Link, useNavigate } from "react-router-dom";
+import cls from "../assets/utils";
 
 export default function Layout({ title, canGoBack, hasTabBar, children }) {
   const navigate = useNavigate();
   const goToBack = () => {
     navigate(-1);
   };
-
   const menu = [
     {
       name: "홈",
@@ -26,7 +25,7 @@ export default function Layout({ title, canGoBack, hasTabBar, children }) {
             strokeLinejoin="round"
             strokeWidth="2"
             d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-          ></path>
+          />
         </svg>
       ),
     },
@@ -91,7 +90,7 @@ export default function Layout({ title, canGoBack, hasTabBar, children }) {
             strokeLinejoin="round"
             strokeWidth="2"
             d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-          ></path>
+          />
         </svg>
       ),
     },
@@ -101,7 +100,7 @@ export default function Layout({ title, canGoBack, hasTabBar, children }) {
     <div>
       <div className="bg-d-dark w-full z-[9995] h-12 max-w-lg justify-center text-lg px-10 font-medium fixed text-white border-b border-[#2C2F33] top-0  flex items-center">
         {canGoBack ? (
-          <button onClick={goToBack} className="absolute left-4">
+          <button type="button" onClick={goToBack} className="absolute left-4">
             <svg
               className="w-6 h-6"
               fill="none"
@@ -114,7 +113,7 @@ export default function Layout({ title, canGoBack, hasTabBar, children }) {
                 strokeLinejoin="round"
                 strokeWidth="2"
                 d="M15 19l-7-7 7-7"
-              ></path>
+              />
             </svg>
           </button>
         ) : null}
@@ -126,11 +125,12 @@ export default function Layout({ title, canGoBack, hasTabBar, children }) {
       <div className={cls("pt-12", hasTabBar ? "pb-24" : "")}>{children}</div>
       {hasTabBar ? (
         <nav className="bg-d-dark max-w-lg z-[9995] text-white border-[#2C2F33] border-t fixed bottom-0 w-full px-10 pb-3 pt-3 flex justify-between text-xs">
-          {menu.map((item, index) => (
-            <Link to={item.path} key={index}>
+          {menu.map((item) => (
+            <Link to={item.path} key={item.name}>
               <div
                 className={cls(
                   "flex flex-col items-center space-y-2 ",
+
                   window.location.pathname === `${item.path}`
                     ? " text-d-point"
                     : "hover:text-d-point transition-colors"

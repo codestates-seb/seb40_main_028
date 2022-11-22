@@ -1,12 +1,11 @@
-import { useRecoilState } from "recoil";
-import { selectedDays, categorie, ModalNum } from "../../../state/states";
-import { useState } from "react";
-import React from "react";
+import React, { useState } from "react";
 import Modal from "react-modal";
+import { useRecoilState } from "recoil";
 import icons from "../../../assets/icons.png";
-import DetailListModal from "./DetailListContent";
+import { ModalNum, selectedDays } from "../../../state/states";
 import CategorieContent from "./CategorieContent";
 import DetailContent from "./DetailContent";
+import DetailListModal from "./DetailListContent";
 
 const PlanModal = ({ isModalOpen, setIsModalOpen }) => {
   const style = {
@@ -51,7 +50,15 @@ const PlanModal = ({ isModalOpen, setIsModalOpen }) => {
       timer: "",
     },
   ]);
-
+  const Title = () => {
+    if (Modals === 0) {
+      return "운동 카테고리";
+    } else if (Modals === 1) {
+      return "운동 선택";
+    } else if (Modals === 2) {
+      return "운동 세부 설정";
+    }
+  };
   return (
     <>
       <Modal
@@ -65,13 +72,7 @@ const PlanModal = ({ isModalOpen, setIsModalOpen }) => {
         <div className="flex flex-col">
           <div className="flex flex-col">
             <div className="h-9 px-1 bg-[#837f7f] border-2 border-[#837f7f] rounded-t-lg flex items-center justify-center text-white font-semibold">
-              {Modals === 0
-                ? "Categories"
-                : Modals === 1
-                ? "상세 운동 목록"
-                : Modals === 2
-                ? "상세 운동 설정"
-                : null}
+              {Title()}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"

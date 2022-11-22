@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { categorie } from "../../state/states";
-import axios from "axios";
+// import axios from "axios";
 
 export default function PlanAdd({ setIsModalOpen }) {
   const [categories, setCategories] = useRecoilState(categorie);
@@ -15,7 +15,8 @@ export default function PlanAdd({ setIsModalOpen }) {
 
   return (
     <div className="w-full max-w-lg fixed flex justify-end pr-6 bottom-[6em]">
-      <div
+      <button
+        type="button"
         onClick={openModal}
         className=" hover:bg-d-button-hover aspect-square border-transparent 
       transition-colors cursor-pointer shadow-xl bg-d-button rounded-full w-14
@@ -35,7 +36,7 @@ export default function PlanAdd({ setIsModalOpen }) {
             d="M12 4.5v15m7.5-7.5h-15"
           />
         </svg>
-      </div>
+      </button>
     </div>
   );
 }

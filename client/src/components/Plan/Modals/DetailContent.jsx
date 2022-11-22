@@ -16,7 +16,6 @@ const DetailContent = ({
 
     if (!isValid) {
       alert("빈칸을 전부 채워주세요!");
-      return;
     }
   };
   const onChange = (e, idx) => {
@@ -36,7 +35,7 @@ const DetailContent = ({
             {selectedExercise.name}
           </div>
         </div>
-        <img src={imgsss} />
+        <img src={imgsss} alt="icons" />
 
         {/* 세트 표 상단 */}
         <div className="w-full h-[3em] rounded-lg px-2 flex justify-between items-center">
@@ -106,7 +105,7 @@ const DetailContent = ({
                         return;
                       }
                       setDetailExercise(
-                        detailExercise.filter((item, index) => {
+                        detailExercise.filter((items, index) => {
                           return index !== idx;
                         })
                       );
@@ -123,6 +122,7 @@ const DetailContent = ({
             })}
             <div className="flex flex-col items-center justify-center">
               <button
+                type="button"
                 onClick={() => {
                   setDetailExercise([
                     ...detailExercise,
@@ -145,7 +145,8 @@ const DetailContent = ({
       <div className="bottom-[0rem] px-3 h-[5rem] absolute left-[-0.65rem]  items-center flex flex-col justify-center space-y-3 bg-[#303030]">
         <div className="flex items-center justify-center">
           <div className="flex justify-center ml-[2rem] space-x-10 items-center whitespace-nowrap">
-            <div
+            <button
+              type="button"
               onClick={() => {
                 setDetailExercise([
                   {
@@ -157,14 +158,14 @@ const DetailContent = ({
               }}
             >
               <Button
-                text={"뒤로가기"}
+                text="뒤로가기"
                 beforeModal
                 resetDetails
                 setDetailExercise={setDetailExercise}
                 detailExercise={detailExercise}
               />
-            </div>
-            <Button text={"저장하기"} onClick={handleSubmit} />
+            </button>
+            <Button text="저장하기" onClick={handleSubmit} />
           </div>
         </div>
       </div>
