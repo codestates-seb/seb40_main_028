@@ -1,5 +1,6 @@
-import MyPageFirst from '../../components/MyPageFirst';
-import styled from 'styled-components/macro';
+import styled from "styled-components/macro";
+import React from "react";
+import MyPageFirst from "../../components/MyPageFirst";
 import MyPageText from "../../components/MyPageText";
 // import { Link } from 'react-router-dom';
 
@@ -8,20 +9,16 @@ const MyPageContainer = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  height: 75vh;
-  min-width: 365px;
 `;
 
 
-const Mypage1 = () => {
+function Mypage1() {
   return (
-    <div>
-      <MyPageContainer>
+    <MyPageContainer>
       <MyPageFirst /> 
       <MyPageText />
-      </MyPageContainer>
-      </div>
+    </MyPageContainer>
   );
-};
+}
 
 export default Mypage1;

@@ -1,23 +1,25 @@
 import styled from "styled-components/macro";
-
+import React from "react";
 // import {
 //    useEffect,useState,useUserState,useUserDispatch,useInput,useCallback
 // } from 'react';
 
-const Container = styled.form`
+const Container = styled.div`
 display: flex;
 justify-content: center;
-width: 390px;
-position: fixed;
-margin-top: 10px;
+align-items: center;
+justify-content: center;
+margin-top: 45px;
+align-items:center;
 `;
 
 
-const MyPageForm = styled.div`
+const MyPageForm = styled.form`
   display: flex;
   flex-direction: column;
-  width: 390px;
-  height: 632px;
+  justify-content: center;
+  width: 25rem;
+  height: 40rem;
   border-radius: 8px;
   background-color: #2C2F33;
   border: none;
@@ -27,7 +29,7 @@ const MyPageForm = styled.div`
   color: white;
   .h2{
     font-size: 18px;
-    margin: -15px 0px 20px -5px;
+    margin: -15px 0px 20px 1px;
  
   }
 `;
@@ -120,9 +122,23 @@ const MyPageButton2 = styled.button`
   border-radius: 4px;
   cursor: pointer;
 `;
+const SerchButton = styled.button`
+  margin-top: -30px;
+  margin-left: 270px;
+  width: 70px;
+  background-color: #747BF2;
+  border: 2px solid #737BF2;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  :hover {
+    background-color: #4C53BF;
+    border: 2px solid #3C53BF;
+  }
+`;
 
 
-const MyPageSecond = () => {
+function MyPageSecond() {
   
   return (
     <Container>
@@ -141,6 +157,7 @@ const MyPageSecond = () => {
         <InputInfo className="password">
           <DisplayText>패스워드</DisplayText>
           <Input2 type="password" id="password"  />
+          <SerchButton>변경</SerchButton>
         </InputInfo>
 
         <InputInfo className="displayHeight">

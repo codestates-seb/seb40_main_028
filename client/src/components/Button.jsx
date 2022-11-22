@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { cls } from "../assets/utils";
 import { ModalNum, isModal, totaltimeState } from "../state/states";
-import { useRecoilState, useSetRecoilState } from "recoil";
 
 export default function Button({
   text,
