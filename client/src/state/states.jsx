@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 
 const { persistAtom } = recoilPersist();
 const now = dayjs().format("YYYY-MM-DD");
-let splitNow = now.split("-");
+const splitNow = now.split("-");
 
 export const selectedDays = atom({
   key: "selectedDays",
@@ -30,24 +30,24 @@ export const isModal = atom({
   default: false,
 });
 
-//RJH states
+// RJH states
 export const timermodalState = atom({
   key: "timermodalState",
-  //0:모달창이 켜지는것에 대한 true false
-  //1:타이머가 돌아가는 시간
-  default: [false, 0]
+  // 0:모달창이 켜지는것에 대한 true false
+  // 1:타이머가 돌아가는 시간
+  default: [true, 0]
 });
 
 export const totaltimeState = atom({
   key: "totaltimeState",
-  //총운동시간
+  // 총운동시간
   default: 0,
   effects_UNSTABLE:[persistAtom],
 });
 
 export const doneState = atom({
   key: "doneState",
-  //총운동시간
+  // 총운동시간
   default: [],
   effects_UNSTABLE:[persistAtom],
 });
