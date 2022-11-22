@@ -28,4 +28,11 @@ public class MemberWeightService {
 
         return memberWeight;
     }
+
+    // 사용자의 몸무게 새로 추가
+    public MemberWeight createMemberWeight(MemberWeight memberWeight) {
+        MemberWeight savedMemberWeight = memberWeightRepository.save(memberWeight);
+
+        return savedMemberWeight;
+    }
 }
