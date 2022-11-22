@@ -1,8 +1,20 @@
 module.exports = {
   extends: ["airbnb", "prettier"],
   rules: {
-    quotes: ["error", "double", { avoidEscape: false }],
-    indent: ["error", 2],
+    quotes: ["warn", "double", { avoidEscape: false }],
+    indent: ["warn", 2],
     "react/prop-types": "off",
+    "react/function-component-definition": ["off"],
+    "no-unused-vars": "warn",
+    "no-undef": "off",
+    "spaced-comment": "off",
+    "react/jsx-no-useless-fragment": "off",
+    "no-nested-ternary": "off",
+    "no-else-return": "off",
+    "arrow-body-style": "off",
+    "react/no-array-index-key": "off",
+    "consistent-return": "off",
+    "no-alert": "off",
+    "no-shadow": "warn",
   },
 };

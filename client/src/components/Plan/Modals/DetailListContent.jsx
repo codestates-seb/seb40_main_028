@@ -1,6 +1,7 @@
 import React from "react";
 import imgss from "../../../assets/1111.png";
 import Button from "../../Button";
+
 const data = [
   {
     id: 1,
@@ -62,7 +63,8 @@ const DetailListModal = ({ Modals, setModals, setSelectedExercise }) => {
       <div className="flex flex-wrap overflow-scroll h-[30em] items-center justify-center">
         {data.map((item, idx) => {
           return (
-            <div
+            <button
+              type="button"
               key={idx}
               onClick={() => {
                 setModals(Modals + 1);
@@ -80,7 +82,7 @@ const DetailListModal = ({ Modals, setModals, setSelectedExercise }) => {
               <div className="font-medium text-[0.8em] mt-[0.6em] h-5">
                 {item.name}
               </div>
-            </div>
+            </button>
           );
         })}
       </div>
@@ -88,7 +90,7 @@ const DetailListModal = ({ Modals, setModals, setSelectedExercise }) => {
       <div className="bottom-[0rem] px-3 h-[5rem] absolute left-[0.25rem]  items-center flex flex-col justify-center space-y-3 bg-[#303030]">
         <div className="flex items-center justify-center">
           <div className="flex w-[23em] justify-center items-center">
-            <Button text={"뒤로가기"} beforeModal />
+            <Button text="뒤로가기" beforeModal />
           </div>
         </div>
       </div>
