@@ -49,7 +49,6 @@ const SignUp = styled.span`
     background-color: rgb(71 82 196);
     color:white;
   }
-
 `;
 
 // 구글 로그인
@@ -75,9 +74,6 @@ const GoogleLogin = styled.span`
     color:white;
   }
 `;
-
-
-
 
 // 로그인 form 
 const Form = styled.form`
@@ -151,12 +147,12 @@ export default function LoginContainer() {
     handleSubmit,
   } = useForm({ mode: onchange });
   const onLogin = async (data) => {
-    // console.log(data);
-    try {
-      console.log(data);
-    } catch (err) {
-      setError(err);
-    }
+    console.log(data);
+    // try {
+    //   console.log(data);
+    // } catch (err) {
+    //   setError(err);
+    // }
   };
   return (
     <MainContainer>

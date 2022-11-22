@@ -7,8 +7,9 @@ import Logo from "../assets/img/Logo.png";
 
 
 const Container = styled.div`
-// 화면 중앙 고정
-  position: fixed;
+  // 화면 중앙 고정
+  // position: fixed;
+  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -56,7 +57,15 @@ const Bt = styled.button`
     background-color: rgb(71 82 196);
 `;
 
-
+const Example = styled.div`
+margin-top: -40px;
+padding-top: 10px;
+font-size: 1em;
+color: white;
+background-color: rgb(88 102 242);
+width: 100%;
+height: 800px;
+`;
 
 
 const Start = () => {
@@ -72,6 +81,7 @@ const Start = () => {
           <Bt>login</Bt>
         </Link>
       </Container>
+        <Example>아래로 스크롤하면 예시페이지 나타남</Example>
     </>
   );
 };

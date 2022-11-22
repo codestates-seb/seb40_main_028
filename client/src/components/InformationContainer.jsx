@@ -156,23 +156,28 @@ export default function InformationContainer() {
               )}
             </InputContainer>
             <InputContainer>
-              <Label htmlFor="age">age(나이)</Label>
+              <Label htmlFor="age">age(생년월일)</Label>
               <Input
                 type="number"
                 id="age"
+                placeholder= "1999-01-01"
                 {...register("age", {
                   required: true,
-                  min: 1,
-                  max: 200,
+                  // min: 1,
+                  // max: 200,
+                  pattern: /\d{4}-\d{2}-\d{2}/,
                 })}
               />
               {errors.age && errors.age.type === "required" && (
                 <Errormsg>⚠ 나이를 입력해주세요.</Errormsg>
               )}
-              {errors.age && errors.age.type === "min" && (
+              {/* {errors.age && errors.age.type === "min" && (
                 <Errormsg>⚠ 올바른 나이를 입력하세요</Errormsg>
               )}
               {errors.age && errors.age.type === "max" && (
+                <Errormsg>⚠ 올바른 나이를 입력하세요</Errormsg>
+              )} */}
+              {errors.age && errors.age.type === "pattern" && (
                 <Errormsg>⚠ 올바른 나이를 입력하세요</Errormsg>
               )}
             </InputContainer>

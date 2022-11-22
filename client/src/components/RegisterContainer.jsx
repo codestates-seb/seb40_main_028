@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+import styled, { withTheme } from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+
+
 
 const Container = styled.div`
   width: 300px;
@@ -119,6 +121,7 @@ const MainContainer = styled.div`
 
 export default function RegisterContainer() {
   const [error, setError] = useState("");
+
   const navigate = useNavigate();
   const {
     register,
@@ -126,13 +129,15 @@ export default function RegisterContainer() {
     handleSubmit,
   } = useForm({ mode: onchange });
   const onLogin = async (data) => {
-    // console.log(data);
+    console.log(data);
+    console.log(data.password+"패스워드");
+    console.log(data.passwordcheck+"패스워드 확인");
     // 회원가입 api 자리
-    try {
-      axios.post("#", { ...data });
-    } catch (err) {
-      setError(err);
-    }
+    // try {
+    //   axios.post("#", { ...data });
+    // } catch (err) {
+    //   setError(err);
+    // }
   };
 
   return (
@@ -151,11 +156,15 @@ export default function RegisterContainer() {
                   required: true,
                   minLength: 2,
                   maxLength: 16,
+                  pattern: /^(?=.*\d)+(?=.*[a-zA-ZS]).{4,}/,
                 })}
               />
               {errors.Nickname && errors.Nickname.type === "required" && (
                 <Errormsg>⚠ 닉네임을 입력해주세요.</Errormsg>
               )}
+              {errors.Nickname && errors.Nickname.type === "pattern" && (
+              <Errormsg>⚠ 닉네임은 영문과 숫자 조합으로만 이루어져야 합니다.</Errormsg>
+            )}
               {errors.Nickname && errors.Nickname.type === "minLength" && (
                 <Errormsg>⚠ 최소 길이는 2자 이상여야 합니다</Errormsg>
               )}
@@ -202,7 +211,6 @@ export default function RegisterContainer() {
                 <Errormsg>⚠ 최소 길이는 10자 이상이여야 합니다</Errormsg>
               )}
             </InputContainer>
-            {/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */}
             <InputContainer>
               <Label htmlFor={"passwordcheck"}>Password Check</Label>
               <Input
@@ -220,24 +228,15 @@ export default function RegisterContainer() {
               )}
               {errors.passwordcheck &&
                 errors.passwordcheck.type === "minLength" && (
-                <Errormsg>⚠ 최소 길이는 10자 이상이여야 합니다{console.log(errors.password)}</Errormsg>
+                <Errormsg>⚠ 최소 길이는 10자 이상이여야 합니다</Errormsg>
                 
               )}
-              {/* 비밀번호 확인 */}
-              {errors.passwordcheck &&
-                errors.passwordcheck.type !== errors.password && (
-                <Errormsg>⚠ 비밀번호가 다르다고~~~</Errormsg>
-              )}
-
-              {/* {errors.passwordcheck &&
-                errors.passwordcheck. !== errors.password.id && (
-                  <div>⚠ 비밀번호가 다르다</div>
-                )} */}
+           
             </InputContainer>
 
             {/* 비밀번호 안내문구 */}
             <RegisterMent>
-              비밀번호는 최소 1개의 문자와 1개의 숫자를 포함하여 최소 8자
+              비밀번호는 최소 1개의 특수문자와 1개의 숫자를 포함하여 최소 8자
               이상이어야 합니다.
             </RegisterMent>
             {/* <Checkbox>
@@ -256,12 +255,7 @@ export default function RegisterContainer() {
           이미 계정이 있습니까?
           <MentSpan onClick={() => navigate("/login")}> Log in</MentSpan>
         </MentDiv>
-        {/* <MentDiv>
-          Are you an employer?{' '}
-          <MentSpan onClick={() => navigate('/login')}>
-            Sign up on Talent <BiLinkExternal />
-          </MentSpan>
-        </MentDiv> */}
+     
       </div>
     </MainContainer>
   );

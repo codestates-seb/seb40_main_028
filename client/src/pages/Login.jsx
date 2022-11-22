@@ -1,4 +1,3 @@
-// import Layout from '../components/Layout';
 import styled from "styled-components";
 import LoginContainer from "../components/LoginContainer";
 import Logo from "../assets/img/Logo.png";
