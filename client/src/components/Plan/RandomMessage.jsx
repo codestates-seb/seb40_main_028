@@ -28,20 +28,18 @@ const RandomMessage = ({ large }) => {
     "기초운동은 필수다",
     "필수적인 운동은 기초운동이다",
   ];
-  const getRandomProverb = () => {
-    return (
-      <div
-        className={cls(
-          " text-white font-medium",
-          large
-            ? "text-[1em]"
-            : "text-[0.8em] rounded-lg bg-d-button px-1  text-left"
-        )}
-      >
-        {proverb[Math.floor(Math.random() * proverb.length)]}
-      </div>
-    );
-  };
+  const getRandomProverb = () => (
+    <div
+      className={cls(
+        " text-white font-medium",
+        large
+          ? "text-[1em]"
+          : "text-[0.8em] rounded-lg bg-d-button px-1  text-left"
+      )}
+    >
+      {proverb[Math.floor(Math.random() * proverb.length)]}
+    </div>
+  );
   return getRandomProverb();
 };
 

@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-// import { BiLinkExternal } from 'react-icons/bi';
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-// import Description from './Description';
 import axios from "axios";
 
 const Container = styled.div`
