@@ -1,22 +1,22 @@
-
 import styled from "styled-components/macro";
 import { Link } from "react-router-dom";
 import { Line } from "react-chartjs-2";
 import Chart from "chart.js/auto";
-
+import React from "react";
 
 
 const MyPageForm = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: space-between;
-  width: 390px;
-  height: 850px;
+  width: 25rem;
+  height: 40rem;
   border-radius: 8px;
   background-color: #2C2F33;
   border: none;
   box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.3);
-  margin-top: 15px;
+  margin-top: 50px;
   padding: 24px;
   color: white;
   .h2{
@@ -94,17 +94,16 @@ const options = {
   },
 };
 
-const MyPageFirst = () => {
+function MyPageFirst() {
   return (
-    
+
     <MyPageForm>
-      <div className='h2'>
+      <div className="h-screen text-center">
         운동그래프</div>
       <Container>
         <Line data={data} options={options}/>
       </Container>
-      <Link to="/mypage2">
-      </Link>
+      <Link to="/mypage2" />
     </MyPageForm>
     
   )

@@ -1,8 +1,8 @@
+import styled from "styled-components/macro";
+import React,{ useState } from "react";
 import Layout from "../../components/Layout";
 import MyPage1 from "./Mypage1";
-import styled from 'styled-components/macro';
-import MyPage2 from './Mypage2';
-import { useState } from "react";
+import MyPage2 from "./Mypage2";
 // import { Link } from 'react-router-dom';
 
 const MyPageContainer = styled.div`
@@ -10,8 +10,9 @@ const MyPageContainer = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  height: 75vh;
-  min-width: 365px;
+  height: auto;
+  width: 32rem;
+  background-color: red;
 `;
 const MyPageButton = styled.button`
   display: flex;
@@ -22,7 +23,7 @@ const MyPageButton = styled.button`
   padding:15px;
   font-size: 15px;
   color: white;
-  margin-top:-42px;
+  margin-top:-45px;
   position: absolute;
   :hover {
     background-color: #4C53BF;
@@ -35,21 +36,20 @@ const MyPageButton = styled.button`
   margin-left: 190px;
 `;
 
-const Mypage = () => {
+function Mypage() {
   const [page,setPage] = useState(false);
 
   return (
-    
-    <Layout title="마이페이지" hasTabBar>
-      <div className="text-gray-700 h-90 text-medium text-xl text-center mt-5">
-      <MyPageContainer>
-        { page === false ? <MyPage1 /> : <MyPage2/>}
-      </MyPageContainer>
-      <MyPageButton onClick={() => {setPage(!page);}}>
-        {page===true ? "정보수정" : "운동그래프"}</MyPageButton>
-      </div>
-    </Layout>
+    <div className="h-screen" >
+      <Layout title="마이페이지" hasTabBar>
+        <MyPageContainer>
+          { page === false ? <MyPage1 /> : <MyPage2/>}
+        </MyPageContainer>
+        <MyPageButton onClick={() => {setPage(!page);}}>
+          {page===true ? "정보수정" : "운동그래프"}</MyPageButton>
+      </Layout>
+    </div>
   );
-};
+}
 
 export default Mypage;

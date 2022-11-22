@@ -1,23 +1,21 @@
-import MyPageSecond from '../../components/MyPageSecond';
-import styled from 'styled-components/macro';
+import styled from "styled-components/macro";
+import React from "react";
+import MyPageSecond from "../../components/MyPageSecond";
 
 const MyPageContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  height: 75vh;
-  min-width: 365px;
 `;
 
-const Mypage = () => {
+
+function Mypage() {
   return (
-    <div>
-      <MyPageContainer>
+    <MyPageContainer>
       <MyPageSecond />
-      </MyPageContainer>
-      </div>
+    </MyPageContainer>
   );
-};
+}
 
 export default Mypage;
