@@ -1,6 +1,7 @@
 package com.seb028.guenlog.member.controller;
 
 import com.seb028.guenlog.member.dto.MyPageInfoDto;
+import com.seb028.guenlog.member.dto.PasswordPatchDto;
 import com.seb028.guenlog.member.entity.Member;
 import com.seb028.guenlog.member.entity.MemberWeight;
 import com.seb028.guenlog.member.mapper.MyPageInfoMapper;
@@ -77,5 +78,21 @@ public class MyPageController {
         return new ResponseEntity<>(
                 new SingleResponseDto<>(myPageInfoMapper.myPageInfoToMyPageInfoResponseDto(myPageInfo)),
                 HttpStatus.OK);
+    }
+
+    @PatchMapping("/password")
+    public ResponseEntity patchPassword(HttpServletRequest request,
+                                        @RequestBody @Valid PasswordPatchDto passwordPatchDto) {
+
+        // http request로부터 사용자의 memberId 추출
+        long memberId = memberService.findMemberId(request);
+
+        // mypageService에서 비밀번호 수정
+        myPageService.updatePassword(passwordPatchDto, memberId);
+
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(null),
+                HttpStatus.OK
+        );
     }
 }

@@ -7,7 +7,9 @@ public enum ExceptionCode {
     QUESTION_NOT_FOUND(413,"Question not found"),
     USER_NOT_FOUND(415, "User not found"),
     USER_EMAIL_EXIST(409, "User email Exist"),
-    USER_NICKNAME_EXIST(409, "User Nickname Exist");
+    USER_NICKNAME_EXIST(409, "User Nickname Exist"),
+
+    PASSWORD_NOT_MATCH(401, "Password Not Match");
 
 
     @Getter
