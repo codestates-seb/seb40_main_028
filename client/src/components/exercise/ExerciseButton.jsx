@@ -1,64 +1,67 @@
-import { useSetRecoilState } from "recoil";
-import { timermodalState, doneState } from "../../state/states";
+import React from "react";
+
+export function Exitbutton ({name, fn, ifnext}) {
+  
+  return (
+    <button type="button" className={`flex justify-center items-center rounded-lg w-[10em] h-[3em] bg-d-dark drop-shadow-2xl text-white font-bold hover:bg-d-hover ${ifnext}`} onClick={fn}>{name}</button>  
+  );
+};
 
 export function Smallerbutton ({name, fn}) {
   return (
-    <button className="flex justify-center items-center rounded-lg w-28 h-[1em] ml-[3em] bg-gradient-to-b from-[#b8b9bf] to-[#808185] drop-shadow-2xl text-[#4E525A] font-bold" onClick={fn}>{name}</button>  
+    <button type="button" className="flex justify-center items-center rounded-lg w-28 h-[2em] bg-gradient-to-b from-[#b8b9bf] to-[#808185] hover:from-d-hover drop-shadow-2xl text-[#4E525A] font-bold" onClick={fn}>{name}</button>  
   );
 };
 
 export function Smallbutton ({name, fn, ifnext}) {
   return (
-    <button className={`flex justify-center items-center rounded-lg w-[6em] h-[2.5em] ml-[2.5em] bg-d-dark drop-shadow-2xl text-white font-bold hover:bg-d-hover ${ifnext}`} onClick={fn}>{name}</button>  
+    <button type="button" className={`flex justify-center items-center rounded-lg w-[6em] h-[2.5em] ml-[2.5em] bg-d-dark drop-shadow-2xl text-white font-bold hover:bg-d-hover ${ifnext}`} onClick={fn}>{name}</button>  
   );
 };
 
-export function Setlistbutton ({x, idx, record}) {
-  const setIstimermodalon = useSetRecoilState(timermodalState);
-  const setDone = useSetRecoilState(doneState);
-  const setclicked = () => {
-    setDone(record);
-    setIstimermodalon(true);
-    console.log(record);
-  }
+
+export function EachRecordbutton ({kg, count, idx, iscompleted, fn}) {
   return(
-    <div id={idx} className="flex cursor-default my-[0.6em] h-[2.8em] mx-[1.5em] border-none text-[1.5em] bg-gradient-to-b from-[#4E525A] to-[#36393F] drop-shadow-2xl ease-out hover:from-d-hover border-2 rounded-lg justify-center items-center font-bold text-white overflow-x-hidden whitespace-nowrap" 
-      onClick={setclicked} >
+    <div role="button" id={idx} className="flex cursor-default my-[0.6em] h-[2.8em] mx-[1.5em] border-none text-[1.5em] bg-gradient-to-b from-[#4E525A] to-[#36393F] drop-shadow-2xl ease-out hover:from-d-hover border-2 rounded-lg justify-center items-center font-bold text-white overflow-x-hidden whitespace-nowrap" 
+      onClick={fn} onKeyDown={fn} tabIndex={idx} >
       <div className='basis-1/5 ml-[0.2em] whitespace-nowrap'>{idx+1}세트</div>
       <div className='flex flex-row basis-3/5 justify-center items-center'>
-        <span className='flex-nowrap whitespace-nowrap text-clip basis-1/2 mx-[0.5em]'>{x[0]}kg</span>
-        <span className='flex-nowrap whitespace-nowrap text-clip basis-1/2'>{x[1]}회</span>
+        <span className='flex-nowrap whitespace-nowrap text-clip basis-1/2 mx-[0.5em]'>{kg}kg</span>
+        <span className='flex-nowrap whitespace-nowrap text-clip basis-1/2'>{count}회</span>
       </div>
       <div className='basis-1/5 justify-center items-center'>
-        <button onClick={() => {console.log("clicked")}}>
+        {iscompleted?
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="4" stroke="green" className="w-[2em] h-[2em]">
             <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
           </svg>
-        </button>
+          :null
+        }
       </div>  
     </div>
   );
 };
 
-export function Specificsetlistbutton ({x, idx, setState}) {
+
+export function Worklistbutton ({id, name, idx, setState}) {
+  console.log(id);
   return(
-    <div id={idx} className="flex z-10 my-[0.6em] h-[2.8em] mx-[1.5em] border-none text-[1.5em] bg-gradient-to-b from-[#4E525A] to-[#36393F] drop-shadow-2xl hover:from-d-hover border-2 rounded-lg justify-center items-center font-bold text-white overflow-x-hidden whitespace-nowrap" 
-      onClick={()=> {setState(idx)}}>{x}</div>
+    <div role="button" id={idx} className="flex z-10 my-[0.6em] h-[3rem] xs:h-[4rem] mx-[1.5em] border-none text-[1.5em] bg-gradient-to-b from-[#4E525A] to-[#36393F] drop-shadow-2xl hover:from-d-hover border-2 rounded-lg justify-center items-center font-bold text-white overflow-x-hidden whitespace-nowrap" 
+      onClick={()=>setState(idx)} onKeyDown={()=>setState} tabIndex={idx}>{name}</div>
   );
 }
 
 export function Timebutton ({color, time}) {
   return(
-    <div className={`${color} font-extrabold text-[1.7em]`}>
+    <div className={`${color} font-extrabold`}>
       {time}
     </div>
   );
 };
 
-export function Movingbutton () {
+export function Movingbutton ({fn}) {
   return(
     <div className='flex-row w-[11em]'>
-      <button className='mx-[0.1em]'>
+      <button type="button" className='mx-[0.1em]' onClick={fn}>
         <svg 
           transform="scale(-1 -1)" 
           xmlns="http://www.w3.org/2000/svg" 
@@ -75,7 +78,7 @@ export function Movingbutton () {
           />
         </svg>
       </button>
-      <button className='mr-[0.1em]'>
+      <button type="button" className='mr-[0.1em]' onClick={fn}>
         <svg 
           xmlns="http://www.w3.org/2000/svg" 
           fill="none" 
