@@ -1,18 +1,28 @@
 package com.seb028.guenlog.member.service;
 
+import com.seb028.guenlog.config.auth.jwt.filter.JwtVerificationFilter;
 import com.seb028.guenlog.exception.BusinessLogicException;
 import com.seb028.guenlog.exception.ExceptionCode;
 import com.seb028.guenlog.member.entity.Member;
 import com.seb028.guenlog.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class MemberService {
     private final MemberRepository memberRepository;
+    private final JwtVerificationFilter jwtVerificationFilter;
+
+    private final PasswordEncoder passwordEncoder;
+
 
     /**
      * @param member : email, nickname, password 입력 받아 Member 객체 생성
@@ -21,6 +31,8 @@ public class MemberService {
     public Member createMember(Member member) {
         verifyExistMember(member.getEmail());
         verifyExistMember(member.getNickname());
+        member.setPassword(passwordEncoder.encode(member.getPassword()));
+
         return memberRepository.save(member);
     }
 
@@ -55,5 +67,13 @@ public class MemberService {
         if (memberNickname.isPresent()) {
             throw new BusinessLogicException(ExceptionCode.USER_NICKNAME_EXIST);
         }
+    }
+
+    public Long findMemberId(HttpServletRequest request) {
+        Map<String, Object> claims = jwtVerificationFilter.verifyJws(request);
+        long userId = ((Number)claims.get("userId")).longValue();
+
+        log.info("userId -> {}", userId);
+        return userId;
     }
 }
