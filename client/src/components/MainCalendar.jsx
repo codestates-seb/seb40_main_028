@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment, useState } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/solid";
 import {
@@ -15,7 +15,16 @@ import {
   parseISO,
   startOfToday,
 } from "date-fns";
-import { Fragment, useState } from "react";
+
+const colStartClasses = [
+  "",
+  "col-start-2",
+  "col-start-3",
+  "col-start-4",
+  "col-start-5",
+  "col-start-6",
+  "col-start-7",
+];
 
 const meetings = [
   {
@@ -65,27 +74,27 @@ function classNames(...classes) {
 }
 
 export default function MainCalendar() {
-  let today = startOfToday();
-  let [selectedDay, setSelectedDay] = useState(today);
-  let [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
-  let firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
+  const today = startOfToday();
+  const [selectedDay, setSelectedDay] = useState(today);
+  const [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
+  const firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
 
-  let days = eachDayOfInterval({
+  const days = eachDayOfInterval({
     start: firstDayCurrentMonth,
     end: endOfMonth(firstDayCurrentMonth),
   });
 
   function previousMonth() {
-    let firstDayNextMonth = add(firstDayCurrentMonth, { months: -1 });
+    const firstDayNextMonth = add(firstDayCurrentMonth, { months: -1 });
     setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
   }
 
   function nextMonth() {
-    let firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 });
+    const firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 });
     setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
   }
 
-  let selectedDayMeetings = meetings.filter((meeting) =>
+  const selectedDayMeetings = meetings.filter((meeting) =>
     isSameDay(parseISO(meeting.startDatetime), selectedDay)
   );
 
@@ -100,7 +109,7 @@ export default function MainCalendar() {
             <button
               type="button"
               onClick={previousMonth}
-              className="-my-1.5 flex flex-none items-center justify-center p-1.5 text-gray-100 hover:text-gray-500"
+              className="-my-1.5 flex flex-none items-center justify-center p-1.5 text-gray-100 ease-out duration-150 hover:text-gray-500"
             >
               <span className="sr-only">Previous month</span>
               <ChevronLeftIcon className="w-5 h-5" aria-hidden="true" />
@@ -108,7 +117,7 @@ export default function MainCalendar() {
             <button
               onClick={nextMonth}
               type="button"
-              className="-my-1.5 -mr-1.5 ml-2 flex flex-none items-center justify-center p-1.5 text-gray-100 hover:text-gray-500"
+              className="-my-1.5 -mr-1.5 ml-2 flex flex-none items-center justify-center p-1.5 text-gray-100 ease-out duration-150 hover:text-gray-500"
             >
               <span className="sr-only">Next month</span>
               <ChevronRightIcon className="w-5 h-5" aria-hidden="true" />
@@ -149,11 +158,13 @@ export default function MainCalendar() {
                       !isSameMonth(day, firstDayCurrentMonth) &&
                       "text-gray-400",
                     isEqual(day, selectedDay) && isToday(day) && "bg-red-500",
-                    isEqual(day, selectedDay) && !isToday(day) && "bg-gray-900",
+                    isEqual(day, selectedDay) &&
+                      !isToday(day) &&
+                      "bg-gray-900 pb-[0.13em] ",
                     !isEqual(day, selectedDay),
                     (isEqual(day, selectedDay) || isToday(day)) &&
                       "font-semibold",
-                    "mx-auto flex h-8 w-8 items-center justify-center rounded-full"
+                    "mx-auto flex h-8 w-8 items-center justify-center rounded-lg pb-[0.187em] ease-out duration-150 "
                   )}
                 >
                   <time dateTime={format(day, "yyyy-MM-dd")}>
@@ -164,7 +175,7 @@ export default function MainCalendar() {
                 <div className="w-1 h-1 mx-auto mt-1">
                   {meetings.some((meeting) =>
                     isSameDay(parseISO(meeting.startDatetime), day)
-                  ) && <div className="w-1 h-1 rounded-full bg-sky-500"></div>}
+                  ) && <div className="w-1 h-1 rounded-full bg-sky-500" />}
                 </div>
               </div>
             ))}
@@ -195,11 +206,11 @@ export default function MainCalendar() {
 }
 
 function Meeting({ meeting }) {
-  let startDateTime = parseISO(meeting.startDatetime);
-  let endDateTime = parseISO(meeting.endDatetime);
+  const startDateTime = parseISO(meeting.startDatetime);
+  const endDateTime = parseISO(meeting.endDatetime);
 
   return (
-    <li className="flex items-center px-4 py-2 space-x-4 group rounded-xl">
+    <li className="flex items-center px-4 py-2 space-x-4 group rounded-xl bg-gray-400">
       <img
         src={meeting.imageUrl}
         alt=""
@@ -226,18 +237,8 @@ function Meeting({ meeting }) {
           leave="transition ease-in duration-75"
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
-        ></Transition>
+        />
       </Menu>
     </li>
   );
 }
-
-let colStartClasses = [
-  "",
-  "col-start-2",
-  "col-start-3",
-  "col-start-4",
-  "col-start-5",
-  "col-start-6",
-  "col-start-7",
-];

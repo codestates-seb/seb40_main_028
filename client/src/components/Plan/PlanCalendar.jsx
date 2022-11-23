@@ -9,7 +9,7 @@ export default function PlanCalendar() {
   const renderCustomInput = ({ ref }) => (
     <label
       htmlFor="my-custom-input-class"
-      className="flex items-center rounded-full  text-white outline-none text-medium p-[0.3em] "
+      className="flex items-center rounded-full  ease-out duration-150 hover:bg-d-light bg-d-dark text-white outline-none text-medium p-[0.3em] "
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -34,7 +34,7 @@ export default function PlanCalendar() {
             : ""
         }
         id="my-custom-input-class"
-        className="my-custom-input-class outline-none bg-d-dark ml-2 mr-2 w-[8.2em] hover:bg-d-light rounded-full"
+        className="my-custom-input-class outline-none ml-2 mr-2 w-[8.2em] bg-transparent hover:bg-transparent"
       />
     </label>
   );
@@ -45,7 +45,6 @@ export default function PlanCalendar() {
       onChange={setSelectedDay}
       renderInput={renderCustomInput}
       calendarClassName="text-[0.8em]"
-      wrapperClassName="bg-d-dark hover:bg-d-light rounded-lg ease-out duration-150"
       shouldHighlightWeekends
     />
   );
