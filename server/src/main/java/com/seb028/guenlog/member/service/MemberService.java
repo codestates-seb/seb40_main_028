@@ -7,6 +7,7 @@ import com.seb028.guenlog.member.entity.Member;
 import com.seb028.guenlog.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +21,9 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final JwtVerificationFilter jwtVerificationFilter;
 
+    private final PasswordEncoder passwordEncoder;
+
+
     /**
      * @param member : email, nickname, password 입력 받아 Member 객체 생성
      * @return MemberRepository -> dataBase에 member 객체 저장
@@ -27,6 +31,8 @@ public class MemberService {
     public Member createMember(Member member) {
         verifyExistMember(member.getEmail());
         verifyExistMember(member.getNickname());
+        member.setPassword(passwordEncoder.encode(member.getPassword()));
+
         return memberRepository.save(member);
     }
 
