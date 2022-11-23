@@ -1,10 +1,14 @@
 package com.seb028.guenlog.member.service;
 
+import com.seb028.guenlog.exception.BusinessLogicException;
+import com.seb028.guenlog.exception.ExceptionCode;
+import com.seb028.guenlog.member.dto.PasswordPatchDto;
 import com.seb028.guenlog.member.entity.Member;
 import com.seb028.guenlog.member.entity.MemberWeight;
 import com.seb028.guenlog.member.repository.MemberRepository;
 import com.seb028.guenlog.member.repository.MemberWeightRepository;
 import com.seb028.guenlog.member.util.MyPageInfo;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -18,17 +22,21 @@ public class MyPageService {
 
     private final MemberWeightService memberWeightService;
 
+    private final PasswordEncoder passwordEncoder;
+
     public MyPageService(MemberRepository memberRepository,
                          MemberWeightRepository memberWeightRepository,
                          MemberService memberService,
-                         MemberWeightService memberWeightService){
+                         MemberWeightService memberWeightService,
+                         PasswordEncoder passwordEncoder) {
         this.memberRepository = memberRepository;
         this.memberWeightRepository = memberWeightRepository;
         this.memberService = memberService;
         this.memberWeightService = memberWeightService;
+        this.passwordEncoder = passwordEncoder;
     }
 
-    public MyPageInfo getMyPageInfo(long memberId){
+    public MyPageInfo getMyPageInfo(long memberId) {
         // memberID를 이용해 memberService에서 사용자 개인 정보 가져옴
         Member findMember = memberService.findVerified(memberId);
 
@@ -88,5 +96,22 @@ public class MyPageService {
                 .build();
 
         return updatedMyPageInfo;
+    }
+
+    public void updatePassword(PasswordPatchDto passwordPatchDto, long memberId) {
+        // memberId를 통해 member객체 조회
+        Member findMember = memberService.findVerified(memberId);
+
+        String password = passwordPatchDto.getPassword();          // 입력한 비밀 번호
+        // 입력한 비밀번호와 저장된 비밀번호 비교 후 다르면
+        if (!passwordEncoder.matches(password, findMember.getPassword()))
+            // 에러 출력
+            throw new BusinessLogicException(ExceptionCode.PASSWORD_NOT_MATCH);
+
+        // 새로운 비밀 번호 가져와서 암호화하여 저장
+        String newPassword = passwordPatchDto.getNewPassword();
+        findMember.setPassword(passwordEncoder.encode(newPassword));
+
+        memberRepository.save(findMember);
     }
 }

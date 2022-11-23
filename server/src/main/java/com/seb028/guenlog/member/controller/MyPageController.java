@@ -1,6 +1,7 @@
 package com.seb028.guenlog.member.controller;
 
 import com.seb028.guenlog.member.dto.MyPageInfoDto;
+import com.seb028.guenlog.member.dto.PasswordPatchDto;
 import com.seb028.guenlog.member.entity.Member;
 import com.seb028.guenlog.member.entity.MemberWeight;
 import com.seb028.guenlog.member.mapper.MyPageInfoMapper;
@@ -14,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 
@@ -41,12 +43,9 @@ public class MyPageController {
     }
 
     @GetMapping("/info")
-    public ResponseEntity getMyPageInfo(
-            // TODO: HttpServeletRequest request - 토큰
-    ) {
-        // TODO: http request로부터 사용자의 memberId 추출
-        // long memberId = memberService.findMember();
-        long memberId = 1L;
+    public ResponseEntity getMyPageInfo( HttpServletRequest request) {
+        // http request로부터 사용자의 memberId 추출
+        long memberId = memberService.findMemberId(request);
 
         // memberId를 통해 myPageService에서 MyPageInfo 객체 반환
         MyPageInfo myPageInfo = myPageService.getMyPageInfo(memberId);
@@ -60,12 +59,10 @@ public class MyPageController {
 
     @PatchMapping("/info")
     public ResponseEntity patchMyPageInfo(
-            // TODO: HttpServletRequest request - 토큰
-            @RequestBody @Valid MyPageInfoDto.Patch myPageInfoPatchDto
-    ) {
-        // TODO: http request로부터 사용자의 memberId 추출
-        // long memberId = memberService.findMember();
-        long memberId = 1L;
+            HttpServletRequest request,
+            @RequestBody @Valid MyPageInfoDto.Patch myPageInfoPatchDto) {
+        // http request로부터 사용자의 memberId 추출
+       long memberId = memberService.findMemberId(request);
 
         // MyPageInfoDto를 MyPageInfo 객체로 변환
         MyPageInfo myPageInfo = myPageInfoMapper.myPageInfoPatchDtoToMyPageInfo(myPageInfoPatchDto);
@@ -81,5 +78,21 @@ public class MyPageController {
         return new ResponseEntity<>(
                 new SingleResponseDto<>(myPageInfoMapper.myPageInfoToMyPageInfoResponseDto(myPageInfo)),
                 HttpStatus.OK);
+    }
+
+    @PatchMapping("/password")
+    public ResponseEntity patchPassword(HttpServletRequest request,
+                                        @RequestBody @Valid PasswordPatchDto passwordPatchDto) {
+
+        // http request로부터 사용자의 memberId 추출
+        long memberId = memberService.findMemberId(request);
+
+        // mypageService에서 비밀번호 수정
+        myPageService.updatePassword(passwordPatchDto, memberId);
+
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(null),
+                HttpStatus.OK
+        );
     }
 }

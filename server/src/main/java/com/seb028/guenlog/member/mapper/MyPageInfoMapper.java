@@ -4,9 +4,12 @@ import com.seb028.guenlog.member.dto.MyPageInfoDto;
 import com.seb028.guenlog.member.entity.Member;
 import com.seb028.guenlog.member.entity.MemberWeight;
 import com.seb028.guenlog.member.util.MyPageInfo;
+import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
 
 import java.time.LocalDate;
 
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface MyPageInfoMapper {
     default MyPageInfoDto.Response myPageInfoToMyPageInfoResponseDto(MyPageInfo myPageInfo) {
         Member member = myPageInfo.getMember();
