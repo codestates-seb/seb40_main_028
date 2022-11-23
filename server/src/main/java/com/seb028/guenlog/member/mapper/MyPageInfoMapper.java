@@ -17,6 +17,7 @@ public interface MyPageInfoMapper {
 
         return MyPageInfoDto.Response.builder()
                 .nickname(member.getNickname())
+                .email(member.getEmail())
                 .gender(member.getGender())
                 .height(member.getHeight())
                 .weight(memberWeight.getWeight())
@@ -27,7 +28,8 @@ public interface MyPageInfoMapper {
     default MyPageInfo myPageInfoPatchDtoToMyPageInfo(MyPageInfoDto.Patch myPageInfoPatchDto) {
         Member member = new Member();
         member.setNickname(myPageInfoPatchDto.getNickname());
-        member.setAge(LocalDate.parse(myPageInfoPatchDto.getAge()));
+        if (myPageInfoPatchDto.getAge() != null)
+            member.setAge(LocalDate.parse(myPageInfoPatchDto.getAge()));
         member.setGender(myPageInfoPatchDto.getGender());
         member.setHeight(myPageInfoPatchDto.getHeight());
 

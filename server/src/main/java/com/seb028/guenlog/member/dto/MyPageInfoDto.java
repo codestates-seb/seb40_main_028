@@ -12,7 +12,6 @@ public class MyPageInfoDto {
     @Getter
     @Builder
     public static class Patch {
-        @NotBlank(message = "닉네임은 필수 입력 항목입니다")
         @Pattern(regexp = "^([a-zA-Z가-힣]){1,8}$",
                 message = "닉네임은 한글 최대 8글자까지 입력 가능합니다.")
         private String nickname;

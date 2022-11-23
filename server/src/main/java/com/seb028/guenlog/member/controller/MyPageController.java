@@ -71,12 +71,12 @@ public class MyPageController {
         myPageInfo.getMember().setId(memberId);
 
         // MyPageService에서 MyPageInfo 객체 전달하여 개인정보 수정
-        MyPageInfo updateMyPageInfo =
+        MyPageInfo updatedMyPageInfo =
                 myPageService.updateMyPageInfo(myPageInfo);
 
         // 수정 완료를 MyPageInfoResponseDTO와 함께 HttpStatus OK로 리턴
         return new ResponseEntity<>(
-                new SingleResponseDto<>(myPageInfoMapper.myPageInfoToMyPageInfoResponseDto(myPageInfo)),
+                new SingleResponseDto<>(myPageInfoMapper.myPageInfoToMyPageInfoResponseDto(updatedMyPageInfo)),
                 HttpStatus.OK);
     }
 
