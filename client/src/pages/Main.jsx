@@ -1,6 +1,6 @@
 import React from "react";
 import Layout from "../components/Layout";
-import MainCalendar from "../components/MainCalendar";
+import MainCalendar from "../components/Main/MainCalendar";
 // import styled from "styled-components";
 // import Loding from '../components/Loding';
 

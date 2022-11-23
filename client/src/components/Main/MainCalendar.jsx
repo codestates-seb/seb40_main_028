@@ -1,6 +1,5 @@
-import React, { Fragment, useState } from "react";
-import { Menu, Transition } from "@headlessui/react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/solid";
+import axios from "axios";
 import {
   add,
   eachDayOfInterval,
@@ -15,74 +14,79 @@ import {
   parseISO,
   startOfToday,
 } from "date-fns";
+import dayjs from "dayjs";
+import React, { useEffect, useState } from "react";
+import CalendarContent from "./CalendarContent";
 
-const colStartClasses = [
-  "",
-  "col-start-2",
-  "col-start-3",
-  "col-start-4",
-  "col-start-5",
-  "col-start-6",
-  "col-start-7",
-];
+const MainCalendar = () => {
+  const colStartClasses = [
+    "",
+    "col-start-2",
+    "col-start-3",
+    "col-start-4",
+    "col-start-5",
+    "col-start-6",
+    "col-start-7",
+  ];
 
-const meetings = [
-  {
-    id: 1,
-    name: "스쿼트,바벨로우,풀업",
-    imageUrl:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    startDatetime: "2022-11-20T13:00",
-    endDatetime: "2022-11-21T14:30",
-  },
-  {
-    id: 2,
-    name: "Michael Foster",
-    imageUrl:
-      "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    startDatetime: "2022-11-22T09:00",
-    endDatetime: "2022-11-23T11:30",
-  },
-  {
-    id: 3,
-    name: "Dries Vincent",
-    imageUrl:
-      "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    startDatetime: "2022-11-15T12:00",
-    endDatetime: "2022-11-15T20:30",
-  },
-  {
-    id: 4,
-    name: "Leslie Alexander",
-    imageUrl:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    startDatetime: "2022-06-09T13:00",
-    endDatetime: "2022-06-09T14:30",
-  },
-  {
-    id: 5,
-    name: "Michael Foster",
-    imageUrl:
-      "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    startDatetime: "2022-05-13T14:00",
-    endDatetime: "2022-05-13T14:30",
-  },
-];
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
-
-export default function MainCalendar() {
+  const getDetail = (date) => {
+    const day = format(date, "yyyy-MM-dd");
+    const res = axios.get("http://localhost:5000/api/today/");
+    console.log(res);
+    return res;
+  };
   const today = startOfToday();
   const [selectedDay, setSelectedDay] = useState(today);
   const [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
+  const [todos, setTodos] = useState([
+    {
+      totalTime: 0,
+      exercise: [
+        {
+          exerciseId: 1,
+          exerciseName: "벤치프레스",
+          isComleted: true,
+        },
+        {
+          exerciseId: 2,
+          exerciseName: "스쿼트",
+          isComleted: false,
+        },
+        {
+          exerciseId: 3,
+          exerciseName: "데드리프트",
+          isComleted: false,
+        },
+      ],
+    },
+  ]);
+  const [boolean, setBoolean] = useState(false);
+  const [meetings, setMeetings] = useState([
+    {
+      success: true,
+      data: [
+        {
+          dueDate: "2022-11-20",
+          todayId: 1,
+          completed: 1,
+        },
+        {
+          dueDate: "2022-11-22",
+          todayId: 2,
+          completed: 0,
+        },
+      ],
+    },
+  ]);
   const firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
-
   const days = eachDayOfInterval({
     start: firstDayCurrentMonth,
     end: endOfMonth(firstDayCurrentMonth),
   });
+
+  function classNames(...classes) {
+    return classes.filter(Boolean).join(" ");
+  }
 
   function previousMonth() {
     const firstDayNextMonth = add(firstDayCurrentMonth, { months: -1 });
@@ -94,9 +98,42 @@ export default function MainCalendar() {
     setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
   }
 
-  const selectedDayMeetings = meetings.filter((meeting) =>
-    isSameDay(parseISO(meeting.startDatetime), selectedDay)
-  );
+  // const selectedDayMeetings = meetings[0].data.filter((meeting) =>
+  //   isSameDay(parseISO(meeting.dueDate), selectedDay)
+  // );
+
+  const getApi = async () => {
+    // 달력 월 바뀔때 api 호출
+    const month = dayjs(currentMonth).format("YYYY-MM");
+    await axios
+      .get(`http://localhost:5000/exercises/calendar?date=${month}`)
+      .then((res) => {
+        // setMeetings(res.data);
+      });
+  };
+
+  const onDateClick = async (day) => {
+    const selectDay = dayjs(day).format("YYYY-MM-DD");
+    const todayId = meetings[0].data.find(
+      (item) => item.dueDate === selectDay
+    )?.todayId;
+
+    if (todayId) {
+      setBoolean(true);
+
+      // await axios
+      //   .get(`http://localhost:5000/exercises/calendar/detail/${todayId}`)
+      //   .then((res) => {
+      //     setTodos(res.data);
+      //   });
+    } else {
+      setBoolean(false);
+    }
+  };
+
+  useEffect(() => {
+    getApi();
+  }, [currentMonth]);
 
   return (
     <div className="pt-5 min-w-[20em] max-w-[20em]">
@@ -143,9 +180,12 @@ export default function MainCalendar() {
               >
                 <button
                   type="button"
-                  onClick={() => setSelectedDay(day)}
+                  onClick={() => {
+                    setSelectedDay(day);
+                    onDateClick(day);
+                  }}
                   className={classNames(
-                    isEqual(day, selectedDay) && "text-white",
+                    isEqual(day, selectedDay) && "text-d-dark",
                     !isEqual(day, selectedDay) &&
                       isToday(day) &&
                       "text-red-500",
@@ -157,14 +197,16 @@ export default function MainCalendar() {
                       !isToday(day) &&
                       !isSameMonth(day, firstDayCurrentMonth) &&
                       "text-gray-400",
-                    isEqual(day, selectedDay) && isToday(day) && "bg-red-500",
+                    isEqual(day, selectedDay) &&
+                      isToday(day) &&
+                      "bg-d-button text-red-600 pt-[0.1em]",
                     isEqual(day, selectedDay) &&
                       !isToday(day) &&
-                      "bg-gray-900 pb-[0.13em] ",
+                      "bg-d-button pb-[0.13em] ",
                     !isEqual(day, selectedDay),
                     (isEqual(day, selectedDay) || isToday(day)) &&
                       "font-semibold",
-                    "mx-auto flex h-8 w-8 items-center justify-center rounded-lg pb-[0.187em] ease-out duration-150 "
+                    "mx-auto flex h-8 w-8 items-center justify-center rounded-xl pb-[0.1em] ease-out duration-150 "
                   )}
                 >
                   <time dateTime={format(day, "yyyy-MM-dd")}>
@@ -173,14 +215,15 @@ export default function MainCalendar() {
                 </button>
 
                 <div className="w-1 h-1 mx-auto mt-1">
-                  {meetings.some((meeting) =>
-                    isSameDay(parseISO(meeting.startDatetime), day)
+                  {meetings[0].data.some((meeting) =>
+                    isSameDay(parseISO(meeting.dueDate), day)
                   ) && <div className="w-1 h-1 rounded-full bg-sky-500" />}
                 </div>
               </div>
             ))}
           </div>
         </div>
+
         <section className="mt-4 px-12">
           <h2 className="font-semibold text-white">
             이날의 운동{" "}
@@ -189,10 +232,8 @@ export default function MainCalendar() {
             </time>
           </h2>
           <ol className="mt-4 text-sm leading-6 text-gray-500">
-            {selectedDayMeetings.length > 0 ? (
-              selectedDayMeetings.map((meeting) => (
-                <Meeting meeting={meeting} key={meeting.id} />
-              ))
+            {boolean ? (
+              <CalendarContent todos={todos} />
             ) : (
               <p className="whitespace-nowrap">
                 해당 날짜에는 운동을 진행하지 않았습니다.
@@ -203,42 +244,6 @@ export default function MainCalendar() {
       </div>
     </div>
   );
-}
+};
 
-function Meeting({ meeting }) {
-  const startDateTime = parseISO(meeting.startDatetime);
-  const endDateTime = parseISO(meeting.endDatetime);
-
-  return (
-    <li className="flex items-center px-4 py-2 space-x-4 group rounded-xl bg-gray-400">
-      <img
-        src={meeting.imageUrl}
-        alt=""
-        className="flex-none w-10 h-10 rounded-full"
-      />
-      <div className="flex-auto">
-        <p className="text-white">{meeting.name}</p>
-        <p className="mt-0.5">
-          <time dateTime={meeting.startDatetime}>
-            {format(startDateTime, "h:mm a")}
-          </time>{" "}
-          -{" "}
-          <time dateTime={meeting.endDatetime}>
-            {format(endDateTime, "h:mm a")}
-          </time>
-        </p>
-      </div>
-      <Menu as="div" className="relative opacity-0 ">
-        <Transition
-          as={Fragment}
-          enter="transition ease-out duration-100"
-          enterFrom="transform opacity-0 scale-95"
-          enterTo="transform opacity-100 scale-100"
-          leave="transition ease-in duration-75"
-          leaveFrom="transform opacity-100 scale-100"
-          leaveTo="transform opacity-0 scale-95"
-        />
-      </Menu>
-    </li>
-  );
-}
+export default MainCalendar;
