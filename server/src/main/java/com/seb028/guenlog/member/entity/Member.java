@@ -35,6 +35,8 @@ public class Member extends BaseEntity {
     private Integer height;
 
     private Character gender;
+    //최초 로그인 판별을 위한 필드 추가
+    private Boolean initialLogin = false;
 
 
     @ElementCollection(fetch = FetchType.EAGER)

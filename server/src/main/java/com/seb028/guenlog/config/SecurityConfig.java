@@ -1,6 +1,7 @@
 package com.seb028.guenlog.config;
 
 import com.seb028.guenlog.config.auth.JwtTokenizer;
+import com.seb028.guenlog.config.auth.handler.MemberAuthenticationSuccessHandler;
 import com.seb028.guenlog.config.auth.jwt.filter.JwtAuthenticationFilter;
 import com.seb028.guenlog.config.auth.jwt.filter.JwtVerificationFilter;
 import com.seb028.guenlog.config.auth.utils.CustomAuthorityUtils;
@@ -69,6 +70,7 @@ public class SecurityConfig {
             AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class); //authentication 객체를 얻음
             JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(tokenizer, authenticationManager);
             jwtAuthenticationFilter.setFilterProcessesUrl("/users/login");//로그인 url 설정
+            jwtAuthenticationFilter.setAuthenticationSuccessHandler(new MemberAuthenticationSuccessHandler());
 
             JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(tokenizer, authorityUtils);
 
