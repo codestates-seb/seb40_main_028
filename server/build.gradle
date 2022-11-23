@@ -36,6 +36,8 @@ dependencies {
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
 
 	implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.28'
+	//json 형식을 넣기위해서 추가
+	implementation 'com.vladmihalcea:hibernate-types-52:2.16.2'
 
 }
 

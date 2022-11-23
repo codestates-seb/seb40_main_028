@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -23,5 +25,11 @@ public class Category extends BaseEntity {
 
     private String name;
 
+    @Lob
+    @Column(name = "image_url")
+    private String imageUrl;
+
+    @OneToMany(mappedBy = "category", cascade = {CascadeType.ALL}  )
+    private List<Exercise> exercises = new ArrayList<>();;
 
 }
