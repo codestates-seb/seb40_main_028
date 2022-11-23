@@ -165,7 +165,7 @@ export default function LoginContainer() {
               id="Email"
               {...register("email", {
                 required: true,
-                pattern: /^\S+@\S+$/i,
+                pattern: /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/,
                 maxLength: 50,
               })}
             />

@@ -91,33 +91,49 @@ const MainContainer = styled.div`
 
 export default function InformationContainer() {
   const [error, setError] = useState("");
-  const navigate = useNavigate();
   
+  const navigate = useNavigate();
+
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm({ mode: onchange });
   const onLogin = async (data) => {
-    // console.log(data);
+    console.log(data);
     // 회원가입 api 자리
-    try {
-      axios.post("#", { ...data });
-    } catch (err) {
-      setError(err);
-    }
+    // try {
+    //   axios.post("#", { ...data });
+    // } catch (err) {
+    //   setError(err);
+    // }
   };
+
+  const [account, setAccount] = useState({
+    height: "",
+    // weight: "",
+    // age: "",
+  });
+
+  //input에 입력될 때마다 account state값 변경되게 하는 함수
+  const onChangeAccount = (e) => {
+    setAccount({
+      ...account,
+      [e.target.name]: e.target.value,
+    });
+  };
+  // console.log(account);
 
   return (
     <MainContainer>
       <div>
         <Container>
-          <Form onSubmit={handleSubmit(onLogin)}>
+          <Form onSubmit={handleSubmit(onLogin)} onChange={onChangeAccount}>
             <InputContainer>
               <Label htmlFor="height">height(키)</Label>
               <Input
                 type="number"
-                id="height"
+                id="height"              
                 {...register("height", {
                   required: true,
                   min: 50,
@@ -158,9 +174,9 @@ export default function InformationContainer() {
             <InputContainer>
               <Label htmlFor="age">age(생년월일)</Label>
               <Input
-                type="number"
+                type="text"
                 id="age"
-                placeholder= "1999-01-01"
+                placeholder= "2000-01-01"
                 {...register("age", {
                   required: true,
                   // min: 1,
@@ -171,14 +187,8 @@ export default function InformationContainer() {
               {errors.age && errors.age.type === "required" && (
                 <Errormsg>⚠ 나이를 입력해주세요.</Errormsg>
               )}
-              {/* {errors.age && errors.age.type === "min" && (
-                <Errormsg>⚠ 올바른 나이를 입력하세요</Errormsg>
-              )}
-              {errors.age && errors.age.type === "max" && (
-                <Errormsg>⚠ 올바른 나이를 입력하세요</Errormsg>
-              )} */}
               {errors.age && errors.age.type === "pattern" && (
-                <Errormsg>⚠ 올바른 나이를 입력하세요</Errormsg>
+                <Errormsg>⚠ 2000-01-01 형식을 맞춰주세요</Errormsg>
               )}
             </InputContainer>
             <Toggle />

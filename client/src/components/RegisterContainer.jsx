@@ -1,8 +1,9 @@
 import React, { useState, useRef } from "react";
-import styled, { withTheme } from "styled-components";
+import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+
 
 
 
@@ -114,17 +115,20 @@ export default function RegisterContainer() {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm({ mode: onchange });
-  const onLogin = async (data) => {
-    console.log(data);
-    console.log(data.password+": 패스워드");
-    console.log(data.passwordcheck+" : 패스워드 확인");
-    // 회원가입 api 자리
-    // try {
-    //   axios.post("#", { ...data });
-    // } catch (err) {
-    //   setError(err);
-    // }
+    watch,
+  } = useForm();
+  // } = useForm({ mode: onchange });
+  
+  const password = useRef();
+  password.current = watch("password");
+
+  // 실시간 입력 값 확인
+  // console.log(watch("email"));
+  
+  const onSubmit = (data) => {
+    console.log("data", data)
+
+
   };
 
   return (
@@ -133,120 +137,114 @@ export default function RegisterContainer() {
       {/* <Description /> */}
       <div>
         <Container>
-          <Form onSubmit={handleSubmit(onLogin)}>
+          <Form onSubmit={handleSubmit(onSubmit)}>
             <InputContainer>
-              <Label htmlFor={"Nickname"}>Nickname</Label>
+              <Label htmlFor="Nickname">Nickname</Label>
               <Input
-                type={"text"}
+                type="text"
                 id="Nickname"
                 {...register("Nickname", {
                   required: true,
                   minLength: 2,
-                  maxLength: 16,
+                  maxLength: 10,
                   // 공백없는 숫자와 대소문자만 가능 * 숫자만도 가능해서 수정해야될것 같음
-                  pattern: /^[a-zA-Z0-9]*$/,
+                  // pattern: /^[a-zA-Z0-9]*$/,
+                  // pattern: /^([a-zA-Z가-힣]){1,8}$/,
+                  pattern: /^([a-zA-Z0-9가-힣])*$/,
                 })}
               />
               {errors.Nickname && errors.Nickname.type === "required" && (
-                <Errormsg>⚠ 닉네임을 입력해주세요.</Errormsg>
+                <Errormsg>닉네임을 입력해주세요.</Errormsg>
               )}
               {errors.Nickname && errors.Nickname.type === "pattern" && (
-              <Errormsg>⚠ 영문과 숫자만 사용하세요</Errormsg>
-            )}
+                <Errormsg>한글, 영문, 숫자을 사용하세요.</Errormsg>
+              )}
               {errors.Nickname && errors.Nickname.type === "minLength" && (
-                <Errormsg>⚠ 최소 길이는 2자 이상여야 합니다</Errormsg>
+                <Errormsg>최소 길이는 2자 이상여야 합니다.</Errormsg>
               )}
               {errors.Nickname && errors.Nickname.type === "maxLength" && (
-                <Errormsg>⚠ 최대 길이는 16자 이하여야 합니다</Errormsg>
+                <Errormsg>최대 길이는 10자 이하여야 합니다.</Errormsg>
               )}
             </InputContainer>
 
             <InputContainer>
-              <Label htmlFor={"Email"}>Email</Label>
+              <Label htmlFor="email">Email</Label>
               <Input
-                type={"email"}
-                id="Email"
+                type="email"
+                id="email"
                 {...register("email", {
                   required: true,
-                  // pattern: /\w+@\w+\.\w+(\.\w+)?/,
                   pattern: /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/,
                   maxLength: 50,
                 })}
               />
               {errors.email && errors.email.type === "required" && (
-                <Errormsg>⚠ 이메일을 입력해주세요.</Errormsg>
+                <Errormsg>이메일을 입력해주세요.</Errormsg>
               )}
               {errors.email && errors.email.type === "pattern" && (
-                <Errormsg>⚠ 이메일 형식이여야 합니다.</Errormsg>
+                <Errormsg>이메일 형식이여야 합니다.</Errormsg>
               )}
               {errors.email && errors.email.type === "maxLength" && (
-                <Errormsg>⚠ 최대 길이는 50자 이하여야 합니다</Errormsg>
+                <Errormsg>최대 길이는 50자 이하여야 합니다.</Errormsg>
               )}
             </InputContainer>
+
+
+
             <InputContainer>
-              <Label htmlFor={"password"}>Password</Label>
+              <Label htmlFor="password">Password</Label>
               <Input
-                type={"password"}
+                type="password"
                 id="password"
                 {...register("password", {
                   required: true,
                   minLength: 10,
                   // 최소 10자리 이상 영문 대소문자, 숫자, 특수문자가 각각 1개 이상
                   pattern:/^(?=.*?[a-zA-Z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{10,}$/,
+                  // pattern:/^(?=.*?[a-zA-Z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).$/,
                 })}
               />
               {errors.password && errors.password.type === "required" && (
-                <Errormsg>⚠ 패스워드를 입력해주세요</Errormsg>
+                <Errormsg>패스워드를 입력해주세요</Errormsg>
               )}
               {errors.password && errors.password.type === "minLength" && (
-                <Errormsg>⚠ 최소 길이는 10자 이상이어야 합니다</Errormsg>
+                <Errormsg> 최소 길이는 10자 이상이어야 합니다</Errormsg>
               )}
                 {errors.password &&
                 errors.password.type === "pattern" && (
-                <Errormsg>⚠ 영문, 특수문자, 숫자 포함하세요</Errormsg>
+                <Errormsg>영문, 특수문자, 숫자 포함하세요</Errormsg>
               )}
             </InputContainer>
             <InputContainer>
-              <Label htmlFor={"passwordcheck"}>Password Check</Label>
+              <Label htmlFor="passwordConfirm">passwordConfirm</Label>
               <Input
                 // type를 패스워드로 입력 시 화면에 안보임 어떤 값을 입력하는지
-                type={"password"}
-                id="passwordcheck"
-                {...register("passwordcheck", {
+                type="password"
+                id="passwordConfirm"
+                {...register("passwordConfirm", {
                   required: true,
-                  minLength: 10,
-                  
+                  validate: (value) =>
+                    value === password.current
                 })}
               />
-              {errors.passwordcheck &&
-                errors.passwordcheck.type === "required" && (
-                <Errormsg>⚠ 패스워드를 확인 해주세요</Errormsg>
-              )}
-
-              {errors.passwordcheck &&
-                errors.passwordcheck.type === "minLength" && (
-                <Errormsg>⚠ 최소 길이는 10자 이상이여야 합니다</Errormsg>
-              )}
-
-            
-             
+              {errors.passwordConfirm && errors.passwordConfirm.type === "required"
+                      && <Errormsg>패스워드를 입력해주세요.</Errormsg>}
+              {errors.passwordConfirm && errors.passwordConfirm.type === "validate"
+                      && <Errormsg>패스워드가 일치하지 않습니다. </Errormsg>}          
             </InputContainer>
-           
             {/* 비밀번호 안내문구 */}
             <RegisterMent>
               비밀번호는 10자 이상의 영문대소문자, 특수문자, 숫자를 각각1개 이상 포함해야합니다. 
             </RegisterMent>
-            
             {/* 회원가입 버튼 */}
-            <SubmitBtn type="submit" value={"Sign up"}></SubmitBtn>
-            {error && <Errormsg>⚠ {error}</Errormsg>}
+            <SubmitBtn type="submit" value="Sign up" />
+            {error && <Errormsg>{error}</Errormsg>}
           </Form>
         </Container>
         <MentDiv>
           이미 계정이 있습니까?
           <MentSpan onClick={() => navigate("/login")}> Log in</MentSpan>
         </MentDiv>
-     
       </div>
     </MainContainer>
   );
