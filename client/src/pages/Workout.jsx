@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import useInterval from "../assets/Interval";
-import {timermodalState, workoutlistState } from "../state/states";
+import { workoutlistState, worktimeState } from "../state/states";
 import Congrats from "../components/Congrats";
-import {Smallbutton, Setlistbutton, Timebutton, Movingbutton, Specificsetlistbutton} from "../components/exercise/ExerciseButton";
+import {Smallbutton, EachRecordbutton, Timebutton, Movingbutton, Worklistbutton} from "../components/exercise/ExerciseButton";
 import expic from "../assets/11.png";
 import Restmodal from "../components/exercise/Restmodal";
 
@@ -12,13 +12,10 @@ import Restmodal from "../components/exercise/Restmodal";
 function Workout() {
   const [specificset, setSpecificset] = useState("list");
   const [stopped, setStopped] = useState(false);
-  const [isrestmodalon, setIsrestmodalon] = useRecoilState(timermodalState);
+  const [isrestmodalon, setIsrestmodalon] = useState([false,0]);
   const [workoutdone, setWorkoutdone] = useState(false);
+  const [worktime, setWorktime] = useRecoilState(worktimeState);
   const [workoutdata, setWorkoutdata] = useRecoilState(workoutlistState);
-  
-  const workoutlist = ["스트레칭준비", "말도안되게긴운동명을넣어보자이정도를넣으면어떻게될려나", "스쿼트", "데드리프트", "덤벨 컬", "바벨 컬", "크런치", "벤치프레스", "스쿼드", "데드리프트", "덤벨 컬", "바벨 컬", "크런치"];
-  // 
-  const setlist = [[110,20],[15,15],[20,10], [2021,1324210],[10,20],[15,15],[20,10],[10,20],[15,15],[20,10]]
   
   const navigate = useNavigate();
   // gohome에 axios 걸고 진행상황 넘겨주고 초기화해야함.
@@ -26,6 +23,7 @@ function Workout() {
   const goback = () => setSpecificset("list");
   const gonext = () => setSpecificset(specificset+1);
   const finished = () => setWorkoutdone(true);
+  setWorkoutdata(cur => cur);
 
   const timeonscreen = (time) => {
     const hours = Math.floor(time/3600).toLocaleString("en-US",{minimumIntegerDigits:2});
@@ -35,17 +33,34 @@ function Workout() {
     return result;
   }
 
-  useInterval(() => setWorkoutdata(prevState => 
-    ({success:{...prevState.success},
-      data:{
-        today_id : prevState.data.today_id, 
-        totalTime : prevState.data.totalTime+1, 
-        exercises : prevState.data.exercises, 
-      }})),stopped)
+  useInterval(() => setWorktime(prevState => 
+    prevState+1),stopped)
 
   const pausefunction = () => {
     setStopped(!stopped);
   }
+
+  const setclicked = async (timer, set) => {
+    setIsrestmodalon([true,timer]);
+    // if(set !== "list") {
+    //   setWorkoutdata(prevState => 
+    //     ({success:true,
+    //       data:{
+    //         ...prevState.data, 
+    //         exercises : [
+             
+    //           prevState.data.exercises[set] : {
+    //             ...prevState.data.exercises[set],  
+    //           // //   isCompleted : true,
+    //           // // eachRecords : [
+    //           // //   prevState.data.exercises[specificset][eachRecords],
+    //           // // ],
+    //           },
+    //           ...prevState.data.exercises, 
+    //         ]
+    //       }}));
+    // }
+  };
 
   // 이부분은 layout 버튼부분에 눌렀을때 날짜가 전송되게 구현할때 필요한 날짜형식
   // 이 날짜는 처음 눌렀을 때 날짜를 저장해야겠다. recoil로 state 저장
@@ -84,14 +99,14 @@ function Workout() {
       {/* 시간이 흘러갈때는 초록색으로 표기하고 멈췄을때는 빨간색으로 표기하는것 적용 */}
       <div className='flex justify-between items-center border-transparent h-[3em] px-[1em] py-[0.1em] xs:py-[0.5em] text-[1.5em] font-bold text-white'>
         <span className='flex basis-1/2 px-[1em] xs:px-[1.2em] pt-[0.3em] xs:pt-[0.4em] xs:text-[1.5rem] whitespace-nowrap overflow-x-clip overflow-y-visible text-left'>
-          {specificset==="list"? workoutlist[0]:workoutlist[specificset]}</span>
+          {specificset==="list"? workoutdata.data.exercises[0].exerciseName:workoutdata.data.exercises[specificset].exerciseName}</span>
         {/* {specificset==="list"?null:<button className="justify-self-end itmes-end w-20 h-20 text-lg" onClick={(()=> setisrestmodalon([true,5]))}>타이머</button>} */}
         <button type="button" readOnly className='flex justify-center items-center cursor-pointer w-[10rem] xs:w-[24rem] h-[3rem] text-[1em] xs:text-[1.7em]    m-auto mx-[0.5em] rounded-xl bg-d-dark shadow-lg shadow-black transition duration-150 active:ml-[0.5em] active:shadow-none hover:bg-d-hover
         max-w-' 
         onClick={pausefunction} onKeyDown={pausefunction}>
           {stopped? 
-            <Timebutton color="text-red-700" time={timeonscreen(workoutdata.data.totalTime)} />
-            :<Timebutton color="text-green-700" time={timeonscreen(workoutdata.data.totalTime)} />
+            <Timebutton color="text-red-700" time={timeonscreen(worktime)} />
+            :<Timebutton color="text-green-700" time={timeonscreen(worktime)} />
           } 
         </button>
       </div>
@@ -103,9 +118,16 @@ function Workout() {
       {/* 여기에서 onclick 이벤트로 setState 넣어두면 무한반복되어버림=>useRef사용예정 */}
       <div className='flex-col w-full h-[25rem] xs:h-[40rem] max-h-[58rem] mx-auto overflow-scroll' >
         {specificset === "list"?
-          workoutdata.data.exercises.map((x, idx)  => <Specificsetlistbutton key={`list${x.exerciseId}`} id={`${x.exerciseId}`} x={x.exerciseName} idx={idx} setState={setSpecificset}/>)
+          workoutdata.data.exercises.map((x, idx)  => <Worklistbutton key={`${x.exerciseId}`} id={x.exerciseId} name={x.exerciseName} idx={idx} setState={setSpecificset}/>)
           : 
-          setlist.map((x, idx)  => <Setlistbutton key={`set${x}`} x={x} idx={idx} record={`${x}${idx}`} />)
+          workoutdata.data.exercises[specificset].eachRecords.map((x,idx) => <EachRecordbutton 
+            key={idx} 
+            kg={x.weight} 
+            count={x.count} 
+            idx={idx}
+            iscompleted={x.eachCompleted} 
+            fn={()=>setclicked(x.eachTimer, specificset)} 
+            restfn={setIsrestmodalon} />)
         }
       </div>
       <div className='flex justify-between items-center w-full mt-auto mb-0 h-[4em] overflow-clip'>
@@ -116,11 +138,11 @@ function Workout() {
           </>
           :<>
             <Smallbutton name="이전" fn={goback}/>
-            {workoutlist.length-2 < specificset? 
+            {workoutdata.data.exercises.length-2 < specificset? 
               <Smallbutton name="운동완료" fn={finished} ifnext="mr-[2.5em]"/>
               :<Smallbutton name="다음운동" fn={gonext} ifnext="mr-[2.5em]"/>}
           </>}
-        {isrestmodalon[0]? <Restmodal />:null}  
+        {isrestmodalon[0]? <Restmodal data={isrestmodalon} fn={setIsrestmodalon} />:null} 
         {workoutdone? <Congrats workoutdone/>:null}  
       </div>
 

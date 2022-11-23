@@ -1,8 +1,6 @@
 import React from "react";
-import { useRecoilState } from "recoil";
 import Modal from "react-modal";
 import useInterval from "../../assets/Interval";
-import {timermodalState} from "../../state/states";
 import { Smallerbutton, Exitbutton } from "./ExerciseButton";
 
 const categories = [
@@ -12,9 +10,7 @@ const categories = [
   "180",
 ];
 
-function Restmodal() {
-  const [timermodal, setTimermodal] = useRecoilState(timermodalState);
-    
+function Restmodal({data, fn}) {
   const timeonscreen = (time, specific) => {
     const hours = Math.floor(time/3600).toLocaleString("en-US",{minimumIntegerDigits:2});
     const minutes = Math.floor((time%3600)/60).toLocaleString("en-US",{minimumIntegerDigits:2});
@@ -25,10 +21,9 @@ function Restmodal() {
   }
 
   useInterval(() => {
-    console.log("ticking")
-    if(timermodal[1] > 0) return (setTimermodal([true,timermodal[1]-1]),false)
-    return (null,false)
-  })
+    if(data[1] > 0) fn([true,data[1]-1]);
+    return null;
+  },!data[0])
   
   const style = {
     overlay: {
@@ -66,21 +61,21 @@ function Restmodal() {
     <Modal
       overlayClassName="w-full max-w-lg mx-auto"
       preventScroll={false}
-      isOpen={timermodal[0]}
+      isOpen={data[0]}
       ariaHideApp={false}
-      onRequestClose={() =>{setTimermodal(false,timermodal[1]);}}
+      onRequestClose={() =>{fn(false,data[1]);}}
       style={style}
     >
       <div className="flex flex-col justify-center items-center">
         <div className="flex pt-[1rem] text-[2rem] text-white">휴식시간측정기</div>
-        <div className={`flex justify-center items-center text-[4rem] ${timermodal[1]!==0? "text-green-700":"text-red-700"}`}>{timeonscreen(timermodal[1])}</div>
+        <div className={`flex justify-center items-center text-[4rem] ${data[1]!==0? "text-green-700":"text-red-700"}`}>{timeonscreen(data[1])}</div>
         {categories.map((item) => (
           <div className="flex flex-wrap basis-1/2 justify-center items-center m-[1em]">
-            <Smallerbutton name={timeonscreen(item, "minutes")} fn={() => {setTimermodal([true, item])}}/>
+            <Smallerbutton key={item} name={timeonscreen(item, "minutes")} fn={() => {fn([true, item])}}/>
           </div>
         ))}
         <div className="flex pt-[2rem]">
-          <Exitbutton name="뒤로가기" fn={(()=> setTimermodal(false,timermodal[1]))} />  
+          <Exitbutton name="뒤로가기" fn={(()=> fn(false,data[1]))} />  
         </div>
         
       </div>

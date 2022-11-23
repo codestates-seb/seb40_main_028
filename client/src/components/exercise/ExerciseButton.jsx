@@ -1,9 +1,4 @@
 import React from "react";
-import { useSetRecoilState } from "recoil";
-import { timermodalState, doneState } from "../../state/states";
-
-
-
 
 export function Exitbutton ({name, fn, ifnext}) {
   
@@ -24,34 +19,34 @@ export function Smallbutton ({name, fn, ifnext}) {
   );
 };
 
-export function Setlistbutton ({x, idx, record}) {
-  const setIstimermodalon = useSetRecoilState(timermodalState);
-  const setDone = useSetRecoilState(doneState);
-  const setclicked = () => {
-    setDone(record);
-    setIstimermodalon(true);
-  }
+
+export function EachRecordbutton ({kg, count, idx, iscompleted, fn}) {
   return(
     <div role="button" id={idx} className="flex cursor-default my-[0.6em] h-[2.8em] mx-[1.5em] border-none text-[1.5em] bg-gradient-to-b from-[#4E525A] to-[#36393F] drop-shadow-2xl ease-out hover:from-d-hover border-2 rounded-lg justify-center items-center font-bold text-white overflow-x-hidden whitespace-nowrap" 
-      onClick={() => {setclicked}} onKeyPress={setclicked} tabIndex={idx} >
+      onClick={fn} onKeyDown={fn} tabIndex={idx} >
       <div className='basis-1/5 ml-[0.2em] whitespace-nowrap'>{idx+1}세트</div>
       <div className='flex flex-row basis-3/5 justify-center items-center'>
-        <span className='flex-nowrap whitespace-nowrap text-clip basis-1/2 mx-[0.5em]'>{x[0]}kg</span>
-        <span className='flex-nowrap whitespace-nowrap text-clip basis-1/2'>{x[1]}회</span>
+        <span className='flex-nowrap whitespace-nowrap text-clip basis-1/2 mx-[0.5em]'>{kg}kg</span>
+        <span className='flex-nowrap whitespace-nowrap text-clip basis-1/2'>{count}회</span>
       </div>
       <div className='basis-1/5 justify-center items-center'>
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="4" stroke="green" className="w-[2em] h-[2em]">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-        </svg>
+        {iscompleted?
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="4" stroke="green" className="w-[2em] h-[2em]">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+          </svg>
+          :null
+        }
       </div>  
     </div>
   );
 };
 
-export function Specificsetlistbutton ({x, idx, setState, ref}) {
+
+export function Worklistbutton ({id, name, idx, setState}) {
+  console.log(id);
   return(
-    <div id={idx} role="button" className="flex z-10 my-[0.6em] h-[3rem] xs:h-[4rem] mx-[1.5em] border-none text-[1.5em] bg-gradient-to-b from-[#4E525A] to-[#36393F] drop-shadow-2xl hover:from-d-hover border-2 rounded-lg justify-center items-center font-bold text-white overflow-x-hidden whitespace-nowrap" 
-      onClick={() => {setState(idx)}} onKeyPress={()=> {setState(idx)}} tabIndex={idx} ref={ref}>{x}</div>
+    <div role="button" id={idx} className="flex z-10 my-[0.6em] h-[3rem] xs:h-[4rem] mx-[1.5em] border-none text-[1.5em] bg-gradient-to-b from-[#4E525A] to-[#36393F] drop-shadow-2xl hover:from-d-hover border-2 rounded-lg justify-center items-center font-bold text-white overflow-x-hidden whitespace-nowrap" 
+      onClick={()=>setState(idx)} onKeyDown={()=>setState} tabIndex={idx}>{name}</div>
   );
 }
 
