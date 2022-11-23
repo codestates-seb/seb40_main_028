@@ -1,20 +1,65 @@
+import React from "react";
+import Modal from "react-modal";
 import Button from "./Button";
 
-export default function Congrats() {
-    
-  return(
-    <div className="flex fixed inset-0 bg-d-dark bg-opacity-90 h-full max-w-lg mx-auto z-40 justify-center items-center">
-      <form className="flex-col z-50 justify-center items-center h-[40vh] w-2/3 max-w-lg bg-d-lighter rounded-2xl overflow-hidden">
-        <div className="bg-d-light text-white h-[3vh]" />
-        <div className="relative top-[5vh] text-white text-[3vh]">축하합니다</div>
-        <span className="relative flex justify-center top-[10vh] text-white mx-[2vh] text-[1.8vh]">Optional: 오늘의 몸무게를</span>
-        <span className="relative flex justify-center top-[10vh] text-white mx-[2vh] text-[1.8vh]">입력해주세요</span>
-        <input className="relative top-[12vh] rounded-xl h-[4vh]" />
-        <div className="relative top-[20vh] flex justify-center items-center">
-          <Button workoutodone text="홈으로" />
-        </div>
-      </form>
-    </div>
+export default function Congrats({workoutdone}) {
+  const style = {
+    overlay: {
+      position: "fixed",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: "rgba(15, 15, 15, 0.49)",
+      zIndex: 9997,
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    content: {
+      position: "relative",
+      width: "24rem",
+      height: "32.5em",
+      border: "1px solid #ccc",
+      background: "gray",
+      overflow: "auto",
+      backgroundColor: "#303030",
+      borderRadius: "0.8em",
+      borderColor: "#303030",
+      outline: "none",
+      padding: 0,
+      zIndex: 9998,
+      inset: 0,
+      boxShadow:
+        "rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px",
+    },
+  };
+
+  return (
+    <Modal
+      overlayClassName="w-full max-w-lg mx-auto"
+      preventScroll={false}
+      isOpen={workoutdone}
+      ariaHideApp={false}
+      onRequestClose={() =>{}}
+      style={style}
+    >
+
+      <div className="flex justify-center items-center">
+        {/* <div className="flex fixed inset-0 bg-d-dark bg-opacity-90 h-full max-w-lg mx-auto z-40 justify-center items-center"> */}
+        <form className="flex flex-col justify-center items-center">
+          <div className="bg-d-light text-white h-[1em]" />
+          <div className="relative text-white text-[3em] py-[1em]">축하합니다</div>
+          <span className="relative flex justify-center text-white text-[1.8em]">Optional: 오늘의 몸무게</span>
+          <span className="relative flex justify-center text-white text-[1.8em]">입력해주세요</span>
+          <input className="relative rounded-xl h-[4em] my-[2rem]" />
+          <div className="relative flex justify-center items-center">
+            <Button workoutodone text="홈으로" />
+          </div>
+        </form>      
+      </div>
+      
+    </Modal>
   );
     
 };

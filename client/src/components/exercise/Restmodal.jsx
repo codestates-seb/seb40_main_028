@@ -1,8 +1,7 @@
-import React, { useState } from "react";
-import { RecoilState, useRecoilState } from "recoil";
+import React from "react";
+import Modal from "react-modal";
 import useInterval from "../../assets/Interval";
-import {timermodalState} from "../../state/states";
-import { Smallerbutton } from "./ExerciseButton";
+import { Smallerbutton, Exitbutton } from "./ExerciseButton";
 
 const categories = [
   "30",
@@ -11,59 +10,80 @@ const categories = [
   "180",
 ];
 
-function Restmodal({ time }) {
-  const [timermodal, setTimermodal] = useRecoilState(timermodalState);
-    
-  const timeonscreen = (time) => {
+function Restmodal({data, fn}) {
+  const timeonscreen = (time, specific) => {
     const hours = Math.floor(time/3600).toLocaleString("en-US",{minimumIntegerDigits:2});
     const minutes = Math.floor((time%3600)/60).toLocaleString("en-US",{minimumIntegerDigits:2});
     const seconds = Math.floor((time%60)).toLocaleString("en-US",{minimumIntegerDigits:2});
-    const result = `${hours}:${minutes}:${seconds}`;
+    let result = `${hours}:${minutes}:${seconds}`;
+    if(specific === "minutes") {result = `${minutes}:${seconds}`};
     return result;
   }
 
   useInterval(() => {
-    console.log("ticking")
-    if(timermodal[1] > 0) return (setTimermodal([true,timermodal[1]-1]),false)
-    return (null,false)
-  })
+    if(data[1] > 0) fn([true,data[1]-1]);
+    return null;
+  },!data[0])
+  
+  const style = {
+    overlay: {
+      position: "fixed",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: "rgba(15, 15, 15, 0.49)",
+      zIndex: 9997,
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    content: {
+      position: "relative",
+      width: "24rem",
+      height: "32.5em",
+      border: "1px solid #ccc",
+      background: "gray",
+      overflow: "auto",
+      backgroundColor: "#303030",
+      borderRadius: "0.8em",
+      borderColor: "#303030",
+      outline: "none",
+      padding: 0,
+      zIndex: 9998,
+      inset: 0,
+      boxShadow:
+        "rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px",
+    },
+  };
 
   return (
-    <div className="flex fixed inset-0 bg-d-dark bg-opacity-90 h-full max-w-lg mx-auto z-40 justify-center items-center">
-      <div className="bg-d-light text-white h-[3vh]" />
-      
-      <div className="flex-col z-50 justify-center items-center h-[40vh] w-2/3 max-w-lg bg-d-lighter rounded-2xl overflow-hidden">
-        <div className="flex flex-wrap items-center justify-center ">
-          {categories.map((item, idx) => (
-            <div
-              key={idx}
-              onClick={() => {
-                setTimermodal([true, item])
-              }}
-              className="flex flex-col justify-center items-center w-[7em] h-[7em]"
-            >
-              <div className="w-16 h-16 hover:bg-d-button-hover bg-[#d9d9d9] rounded-lg" />
-              <div className="font-medium text-[0.8em] mt-1">{item}</div>
-            </div>
-          ))}
+    <Modal
+      overlayClassName="w-full max-w-lg mx-auto"
+      preventScroll={false}
+      isOpen={data[0]}
+      ariaHideApp={false}
+      onRequestClose={() =>{fn(false,data[1]);}}
+      style={style}
+    >
+      <div className="flex flex-col justify-center items-center">
+        <div className="flex pt-[1rem] text-[2rem] text-white">휴식시간측정기</div>
+        <div className={`flex justify-center items-center text-[4rem] ${data[1]!==0? "text-green-700":"text-red-700"}`}>{timeonscreen(data[1])}</div>
+        {categories.map((item) => (
+          <div className="flex flex-wrap basis-1/2 justify-center items-center m-[1em]">
+            <Smallerbutton key={item} name={timeonscreen(item, "minutes")} fn={() => {fn([true, item])}}/>
+          </div>
+        ))}
+        <div className="flex pt-[2rem]">
+          <Exitbutton name="뒤로가기" fn={(()=> fn(false,data[1]))} />  
         </div>
-
         
-        <div className={`top-[7vh] ${timermodal[1]!==0? "text-green-700":"text-red-700"}`}>{timeonscreen(timermodal[1])}</div>
-        <div className="relative top-[10vh] flex justify-center items-center my-[1vh]">
-          <Smallerbutton name="00:30"/>
-          <Smallerbutton name="01:00"/>
-        </div>
-        <div className="relative top-[11vh] flex justify-center items-center my-[1vh]">
-          <Smallerbutton name="02:00"/>
-          <Smallerbutton name="03:00"/>
-        </div>
-                
-        <button className="w-12 h-12 bg-white" onClick={(()=> setTimermodal(false,timermodal[1]))}>뒤로가기</button>
-        <div className="relative top-[20vh] flex justify-center items-center" />
       </div>
-    </div>
+      
+    </Modal>
 
+    
+    
     
   );
 }
