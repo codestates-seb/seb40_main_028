@@ -1,5 +1,6 @@
 package com.seb028.guenlog.exercise.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.seb028.guenlog.base.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,11 +24,14 @@ public class Exercise extends BaseEntity {
     private String name;
 
     @Lob
-    private String images;
+    @Column(name = "image_url")
+    private String imageUrl;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY  )
     @JoinColumn(name="category_id")
-    private Category category;
+    private Category category ;
 
 
 }

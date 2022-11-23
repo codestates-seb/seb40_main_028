@@ -1,35 +1,30 @@
 package com.seb028.guenlog.exercise.entity;
 
-
 import com.seb028.guenlog.base.BaseEntity;
 import com.seb028.guenlog.member.entity.Member;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
-import java.sql.Date;
-import java.sql.Time;
+import java.time.LocalDate;
 
 @Entity
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class RecordList  extends BaseEntity {
+@ToString(exclude = {"member"})
+public class Today extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "record_list_id")
+    @Column(name = "today_id")
     private Long id;
 
-
     @Column(name = "total_time")
-    private Time  totalTime;
+    private Integer totalTime;
 
-    @Column(name = "due_date")
-    private Date dueDate;
+    @Column(name="due_date" )
+    private LocalDate dueDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="member_id")
