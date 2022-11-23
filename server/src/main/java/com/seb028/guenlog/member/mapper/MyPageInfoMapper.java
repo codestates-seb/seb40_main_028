@@ -5,6 +5,8 @@ import com.seb028.guenlog.member.entity.Member;
 import com.seb028.guenlog.member.entity.MemberWeight;
 import com.seb028.guenlog.member.util.MyPageInfo;
 
+import java.time.LocalDate;
+
 public interface MyPageInfoMapper {
     default MyPageInfoDto.Response myPageInfoToMyPageInfoResponseDto(MyPageInfo myPageInfo) {
         Member member = myPageInfo.getMember();
@@ -15,13 +17,14 @@ public interface MyPageInfoMapper {
                 .gender(member.getGender())
                 .height(member.getHeight())
                 .weight(memberWeight.getWeight())
-                .age(member.getAge())
+                .age(String.valueOf(member.getAge()))
                 .build();
     }
 
     default MyPageInfo myPageInfoPatchDtoToMyPageInfo(MyPageInfoDto.Patch myPageInfoPatchDto) {
         Member member = new Member();
         member.setNickname(myPageInfoPatchDto.getNickname());
+        member.setAge(LocalDate.parse(myPageInfoPatchDto.getAge()));
         member.setGender(myPageInfoPatchDto.getGender());
         member.setHeight(myPageInfoPatchDto.getHeight());
 

@@ -8,6 +8,7 @@ import com.seb028.guenlog.member.service.MemberService;
 import com.seb028.guenlog.member.service.MemberWeightService;
 import com.seb028.guenlog.member.service.MyPageService;
 import com.seb028.guenlog.member.util.MyPageInfo;
+import com.seb028.guenlog.response.SingleResponseDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -52,7 +53,7 @@ public class MyPageController {
 
         // 사용자의 개인정보에 대한 MyPageInfo 객체를 ResponsDTO로 변환후 반환
         return new ResponseEntity<> (
-                myPageInfoMapper.myPageInfoToMyPageInfoResponseDto(myPageInfo),
+                new SingleResponseDto<>(myPageInfoMapper.myPageInfoToMyPageInfoResponseDto(myPageInfo)),
                 HttpStatus.OK
         );
     }
@@ -78,7 +79,7 @@ public class MyPageController {
 
         // 수정 완료를 MyPageInfoResponseDTO와 함께 HttpStatus OK로 리턴
         return new ResponseEntity<>(
-                myPageInfoMapper.myPageInfoToMyPageInfoResponseDto(myPageInfo),
+                new SingleResponseDto<>(myPageInfoMapper.myPageInfoToMyPageInfoResponseDto(myPageInfo)),
                 HttpStatus.OK);
     }
 }
