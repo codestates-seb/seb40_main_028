@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 
@@ -41,12 +42,9 @@ public class MyPageController {
     }
 
     @GetMapping("/info")
-    public ResponseEntity getMyPageInfo(
-            // TODO: HttpServeletRequest request - 토큰
-    ) {
-        // TODO: http request로부터 사용자의 memberId 추출
-        // long memberId = memberService.findMember();
-        long memberId = 1L;
+    public ResponseEntity getMyPageInfo( HttpServletRequest request) {
+        // http request로부터 사용자의 memberId 추출
+        long memberId = memberService.findMemberId(request);
 
         // memberId를 통해 myPageService에서 MyPageInfo 객체 반환
         MyPageInfo myPageInfo = myPageService.getMyPageInfo(memberId);
@@ -60,12 +58,10 @@ public class MyPageController {
 
     @PatchMapping("/info")
     public ResponseEntity patchMyPageInfo(
-            // TODO: HttpServletRequest request - 토큰
-            @RequestBody @Valid MyPageInfoDto.Patch myPageInfoPatchDto
-    ) {
-        // TODO: http request로부터 사용자의 memberId 추출
-        // long memberId = memberService.findMember();
-        long memberId = 1L;
+            HttpServletRequest request,
+            @RequestBody @Valid MyPageInfoDto.Patch myPageInfoPatchDto) {
+        // http request로부터 사용자의 memberId 추출
+       long memberId = memberService.findMemberId(request);
 
         // MyPageInfoDto를 MyPageInfo 객체로 변환
         MyPageInfo myPageInfo = myPageInfoMapper.myPageInfoPatchDtoToMyPageInfo(myPageInfoPatchDto);
