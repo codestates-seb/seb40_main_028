@@ -1,3 +1,6 @@
+// 운동진행리스트 state 업데이트 문제
+// useref로 리스트 파악 문제
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
@@ -42,24 +45,25 @@ function Workout() {
 
   const setclicked = async (timer, set) => {
     setIsrestmodalon([true,timer]);
-    // if(set !== "list") {
-    //   setWorkoutdata(prevState => 
-    //     ({success:true,
-    //       data:{
-    //         ...prevState.data, 
-    //         exercises : [
-             
-    //           prevState.data.exercises[set] : {
-    //             ...prevState.data.exercises[set],  
-    //           // //   isCompleted : true,
-    //           // // eachRecords : [
-    //           // //   prevState.data.exercises[specificset][eachRecords],
-    //           // // ],
-    //           },
-    //           ...prevState.data.exercises, 
-    //         ]
-    //       }}));
-    // }
+    if(set !== "list") {
+      setWorkoutdata(prevState => 
+        ({success:true,
+          data:{
+            ...prevState.data, 
+            exercises : [
+              //이부분이없으면 기존의 데이터를 못가져옴, 있으면 데이터가 증식함
+              ...prevState.data.exercises, 
+              prevState.data.exercises[set] : {
+                ...prevState.data.exercises[set],  
+              // //   isCompleted : true,
+              // // eachRecords : [
+              // //   prevState.data.exercises[specificset][eachRecords],
+              // // ],
+              },
+              
+            ]
+          }}));
+    }
   };
 
   // 이부분은 layout 버튼부분에 눌렀을때 날짜가 전송되게 구현할때 필요한 날짜형식
