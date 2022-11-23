@@ -1,6 +1,7 @@
 import styled from "styled-components/macro";
 import { Line } from "react-chartjs-2";
 import Chart from "chart.js/auto";
+// import axios from "axios";
 import React from "react";
 import MyPageText from "./MyPageText";
 
@@ -41,23 +42,6 @@ width: 25rem;
 `;
 
 
-// function minMaxData() {
-//   ajaxCall(
-//       "GET",
-//       "url",
-//       null,
-//       function (data) {
-//           for (let i = 0; i < 6; i++) {
-//              set.push(set.data);
-//               KgData.push(KgData.data);
-//               Gym.push(Gym.data);
-
-//           }
-//       },
-//       null,
-//       null
-//   );
-// }
 
 const Month = ["1월","2월","3월", "4월", "5월","6월"]
 const KgData = ["87", "88", 91,105, 90, 110]
@@ -97,8 +81,43 @@ const options = {
     },
   },
 };
+// function minMaxData() {
+//   ajaxCall(
+//       "GET",
+//       "url",
+//       null,
+//       function (data) {
+//           for (let i = 0; i < 6; i++) {
+//              set.push(set.data);
+//               KgData.push(KgData.data);
+//               Gym.push(Gym.data);
 
-function MyPageFirst() {
+//           }
+//       },
+//       null,
+//       null
+//   );
+// }
+
+const MyPageFirst = () => {
+  // axios({
+  //   method: "get", 
+  //   url: "", 
+  // })
+  //   .then((data) => {
+  //     for (let i = 0; i < 6; i++) {
+  //       Month.push(Month.data);
+  //       KgData.push(KgData.data);
+  //       GymCheck.push(GymCheck.data);
+  //       console.log(data)
+  //     }
+  //   },
+  //   null
+  //   );
+      
+ 
+
+
   return (
     <MyPageForm>
       <PageText>운동그래프</PageText>

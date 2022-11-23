@@ -1,7 +1,6 @@
 import styled from "styled-components/macro";
 import React from "react";
 
-
 const Container = styled.div`
 display: flex;
 align-items: center;
@@ -38,18 +37,20 @@ box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.2);
 margin-top: 1em;
 `
 
-function MyPageText() {
+const MyPageText = () => {
   return (
-    <Container >
-      <Text>
+    <>
+      <Container >
+        <Text>
             저번달 몸무게 차이
-      </Text>
-      <Text>
+        </Text>
+        <Text>
             저번달 운동 횟수 차이
-      </Text>
-      <TextForm>-12Kg</TextForm>
-      <TextForm>+11</TextForm>
-    </Container>
+        </Text>
+        <TextForm>-12Kg</TextForm>
+        <TextForm>+11</TextForm>
+      </Container>
+    </>
   )
 }
 
