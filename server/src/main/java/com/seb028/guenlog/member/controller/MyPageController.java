@@ -5,9 +5,11 @@ import com.seb028.guenlog.member.dto.PasswordPatchDto;
 import com.seb028.guenlog.member.entity.Member;
 import com.seb028.guenlog.member.entity.MemberWeight;
 import com.seb028.guenlog.member.mapper.MyPageInfoMapper;
+import com.seb028.guenlog.member.mapper.MyPageMapper;
 import com.seb028.guenlog.member.service.MemberService;
 import com.seb028.guenlog.member.service.MemberWeightService;
 import com.seb028.guenlog.member.service.MyPageService;
+import com.seb028.guenlog.member.util.MyPage;
 import com.seb028.guenlog.member.util.MyPageInfo;
 import com.seb028.guenlog.response.SingleResponseDto;
 import org.springframework.http.HttpStatus;
@@ -32,14 +34,18 @@ public class MyPageController {
 
     private final MyPageInfoMapper myPageInfoMapper;
 
+    private final MyPageMapper myPageMapper;
+
     public MyPageController(MemberService memberService,
                             MyPageService myPageService,
                             MemberWeightService memberWeightService,
-                            MyPageInfoMapper myPageInfoMapper) {
+                            MyPageInfoMapper myPageInfoMapper,
+                            MyPageMapper myPageMapper) {
         this.memberService = memberService;
         this.myPageService = myPageService;
         this.memberWeightService = memberWeightService;
         this.myPageInfoMapper = myPageInfoMapper;
+        this.myPageMapper = myPageMapper;
     }
 
     @GetMapping("/info")
@@ -94,5 +100,18 @@ public class MyPageController {
                 new SingleResponseDto<>(null),
                 HttpStatus.OK
         );
+    }
+
+    @GetMapping
+    public ResponseEntity getMyPage(HttpServletRequest request) {
+        // http request로부터 사용자의 memberId 추출
+        long memberId = memberService.findMemberId(request);
+
+        // memberId를 이용해 MyPageService에서 getMyPage메서드 호출
+        MyPage myPage = myPageService.findMyPage(memberId);
+
+        return new ResponseEntity<> (
+                new SingleResponseDto<>(myPageMapper.myPageToMyPageResponseDto(myPage)),
+                HttpStatus.OK);
     }
 }

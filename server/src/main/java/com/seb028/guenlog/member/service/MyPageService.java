@@ -2,15 +2,21 @@ package com.seb028.guenlog.member.service;
 
 import com.seb028.guenlog.exception.BusinessLogicException;
 import com.seb028.guenlog.exception.ExceptionCode;
+import com.seb028.guenlog.exercise.entity.Today;
+import com.seb028.guenlog.exercise.repository.TodayRepository;
 import com.seb028.guenlog.member.dto.PasswordPatchDto;
 import com.seb028.guenlog.member.entity.Member;
 import com.seb028.guenlog.member.entity.MemberWeight;
 import com.seb028.guenlog.member.repository.MemberRepository;
 import com.seb028.guenlog.member.repository.MemberWeightRepository;
+import com.seb028.guenlog.member.util.MonthlyRecord;
+import com.seb028.guenlog.member.util.MonthlyWeight;
+import com.seb028.guenlog.member.util.MyPage;
 import com.seb028.guenlog.member.util.MyPageInfo;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,16 +30,20 @@ public class MyPageService {
 
     private final PasswordEncoder passwordEncoder;
 
+    private final TodayRepository todayRepository;
+
     public MyPageService(MemberRepository memberRepository,
                          MemberWeightRepository memberWeightRepository,
                          MemberService memberService,
                          MemberWeightService memberWeightService,
-                         PasswordEncoder passwordEncoder) {
+                         PasswordEncoder passwordEncoder,
+                         TodayRepository todayRepository) {
         this.memberRepository = memberRepository;
         this.memberWeightRepository = memberWeightRepository;
         this.memberService = memberService;
         this.memberWeightService = memberWeightService;
         this.passwordEncoder = passwordEncoder;
+        this.todayRepository = todayRepository;
     }
 
     public MyPageInfo getMyPageInfo(long memberId) {
@@ -113,5 +123,21 @@ public class MyPageService {
         findMember.setPassword(passwordEncoder.encode(newPassword));
 
         memberRepository.save(findMember);
+    }
+
+    public MyPage findMyPage(long memberId) {
+        // memberId를 통해 member객체 조회
+        Member findMember = memberService.findVerified(memberId);
+
+        // 사용자의 한달 총 운동 기록 최근 6개월 단위로 조회
+        List<MonthlyRecord> monthlyRecords = todayRepository.findRecentSixMonthsRecordByMemberId(memberId);
+        // 사용자의 한달 몸무게 평균 최근 6개월 단위로 조회
+        List<MonthlyWeight> monthlyWeights = memberWeightRepository.findRecentSixMonthWeightByMemberId(memberId);
+
+        // 운동 기록 합과 몸무게 평균을 MyPage 객체로 변환 후 반환
+        return MyPage.builder()
+                .monthlyRecords(monthlyRecords)
+                .monthlyWeights(monthlyWeights)
+                .build();
     }
 }
