@@ -1,44 +1,13 @@
-import { useState } from "react";
-import Map from "./Map";
+import React,{ useState } from "react";
 import styled from "styled-components/macro";
+import Map from "./Map";
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  height: auto;
 `;
-
-// const Input = styled.input`
-//   width: 280px;
-//   height: 28px;
-//   border: 1px solid #babfc4;
-//   border-radius: 4px;
-//   font-size: 15px;
-//   margin-left: 70px;
-//   outline: none;
-//   &:focus {
-//     border: 1px solid #0995fd;
-//     box-shadow: 0 0 0 3.3px #ddeaf7;
-//     outline: none;
-//   }
-// `;
-
-// const SerchButton = styled.button`
-//   margin-bottom: 25px;
-//   margin-left: 10px;
-//   width: 3em;
-//   background-color: #747bf2;
-//   border: 2px solid #737bf2;
-//   border-radius: 4px;
-//   cursor: pointer;
-//   :hover {
-//     background-color: #4c53bf;
-//     border: 2px solid #3c53bf;
-//   }
-// `;
 
 const SearchPlace = () => {
   const [inputText, setInputText] = useState("");
