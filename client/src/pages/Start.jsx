@@ -67,7 +67,6 @@ width: 100%;
 height: 800px;
 `;
 
-
 const Start = () => {
   return (
     <>

@@ -1,6 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
 
-
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
@@ -99,36 +98,95 @@ export default function InformationContainer() {
     formState: { errors },
     handleSubmit,
   } = useForm({ mode: onchange });
-  const onLogin = async (data) => {
-    console.log(data);
-    // 회원가입 api 자리
-    // try {
-    //   axios.post("#", { ...data });
-    // } catch (err) {
-    //   setError(err);
-    // }
-  };
+  
+  // const onInformation = async (data) => {
+  //   console.log(data);
+  //   // 회원가입 api 자리
+  //   // try {
+  //   //   axios.post("#", { ...data });
+  //   // } catch (err) {
+  //   //   setError(err);
+  //   // }
+  // };
 
-  const [account, setAccount] = useState({
-    height: "",
-    // weight: "",
-    // age: "",
-  });
+  // const [account, setAccount] = useState({
+  //   height: "",
+  //   // weight: "",
+  //   // age: "",
+  // });
 
   //input에 입력될 때마다 account state값 변경되게 하는 함수
-  const onChangeAccount = (e) => {
-    setAccount({
-      ...account,
-      [e.target.name]: e.target.value,
-    });
+  // const onChangeAccount = (e) => {
+  //   setAccount({
+  //     ...account,
+  //     [e.target.name]: e.target.value,
+  //   });
+  // };
+  // // console.log(account);
+
+
+
+
+
+  const onInformation = async (data) => {
+    // console.log(data);
+    // console.log(data.email+": 이메일");
+    // console.log(data.password+": 이메일");
+
+    try {
+      // 응답 성공
+      // const res = await axios.post("http://13.209.190.35:8080/users/login", {
+      const res = await axios.post(`${url}/users/info`, {
+        // 보내고자 하는 데이터
+        height: data.height,
+        age: data.age,
+        // gender: ,
+        weight: data.weight
+
+      });
+
+      // status가 200이면 세션스토리지에 jwt-token 저장
+      if (res.status === 200) {
+
+        // 토근 저장 후 메인 페이지로 이동 
+        navigate("/");
+
+        // console.log(res);
+        // console.log("성공 로그인 ~~~~~~~~~~~~~~~~");
+
+        // console.log("응답 전체",res)
+        // console.log("응답.headers", res.headers.InitialLogin)
+        // console.log("응답.headers", res.headers.initialLogin)
+        // console.log("응답.headers", res.headers.initiallogin)
+        
+        // InitialLogin이 false면 처음 로그인으로
+        // if(res.InitialLogin === false){
+        //   navigate("/startinginformation");
+        //   sessionStorage.setItem('jwt-token', res.headers.authorization);
+        //   // InitialLogin이 true면 main 페이지로
+        // } else if(res.InitialLogin === ture){
+        //   navigate("/");
+        // }
+        
+      } 
+      
+    } catch (err) {
+      // 응답 실패
+      console.log(err);
+      // console.log("로그인 실패")
+
+      // 로그인 실패시 
+      alert("정보 입력에 실패하였습니다.");
+    }
   };
-  // console.log(account);
+  
 
   return (
     <MainContainer>
       <div>
         <Container>
-          <Form onSubmit={handleSubmit(onLogin)} onChange={onChangeAccount}>
+          <Form onSubmit={handleSubmit(onInformation)} >
+            {/* onChange={onChangeAccount} */}
             <InputContainer>
               <Label htmlFor="height">height(키)</Label>
               <Input

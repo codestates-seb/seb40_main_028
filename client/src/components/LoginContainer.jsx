@@ -147,7 +147,7 @@ export default function LoginContainer() {
   const navigate = useNavigate();
   const [error, setError] = useState("");
 
-  // const [isdata, setData] = useState("");
+  const url = "http://13.209.190.35:8080";
 
   const {
     register,
@@ -155,37 +155,36 @@ export default function LoginContainer() {
     handleSubmit,
   } = useForm({ mode: onchange });
 
-
   const onLogin = async (data) => {
     console.log(data);
     // console.log(data.email+": 이메일");
     // console.log(data.password+": 이메일");
-    // setDada(data)
 
-    // 이메일과 패스워드 post
+
     try {
       // 응답 성공
-
-      const res = await axios.post("http://13.209.190.35:8080/users/login", {
+      // const res = await axios.post("http://13.209.190.35:8080/users/login", {
+      const res = await axios.post(`${url}/users/login`, {
         // 보내고자 하는 데이터
         username: data.email,
         password: data.password,
       });
 
-      /*
-      
-      {
-		  "username" : "test@test.com", 
-		  "password" : "test123!@#"	
-}
-      
-      */
-
       // status가 200이면 세션스토리지에 jwt-token 저장
       if (res.status === 200) {
         sessionStorage.setItem("jwt-token", res.headers.authorization);
+
+        // 토근 저장 후 메인 페이지로 이동 
         navigate("/");
 
+        // console.log(res);
+        // console.log("성공 로그인 ~~~~~~~~~~~~~~~~");
+
+        // console.log("응답 전체",res)
+        // console.log("응답.headers", res.headers.InitialLogin)
+        // console.log("응답.headers", res.headers.initialLogin)
+        // console.log("응답.headers", res.headers.initiallogin)
+        
         // InitialLogin이 false면 처음 로그인으로
         // if(res.InitialLogin === false){
         //   navigate("/startinginformation");
@@ -195,20 +194,17 @@ export default function LoginContainer() {
         //   navigate("/");
         // }
         
-      }
+      } 
+      
     } catch (err) {
       // 응답 실패
       console.log(err);
+      // console.log("로그인 실패")
 
-      // setError(err.response.data.message);
-      // 2초 후 error 초기화
-      // setTimeout(() => {
-      //   setError("");
-      // }, 2000);
+      // 로그인 실패시 
+      alert("Email or Password를 확인하세요");
     }
   };
-
-  // console.log(`이메일 : ${isdada.email} 패스워드 : ${isdada.password}`);
 
   return (
     <MainContainer>

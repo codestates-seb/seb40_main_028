@@ -7,8 +7,6 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 
 
-
-
 const Container = styled.div`
   width: 300px;
   margin-bottom: 40px;
@@ -114,6 +112,7 @@ export default function RegisterContainer() {
 
   const navigate = useNavigate();
 
+  const url = "http://13.209.190.35:8080";
  
   const {
     register,
@@ -128,21 +127,16 @@ export default function RegisterContainer() {
   // 실시간 입력 값 확인
   // console.log(watch("email"));
   
+
   const onRegister = async (data) => {
 
-    console.log("data", data)
-    console.log("이메일", data.email)
-    console.log("닉네임", data.Nickname)
-    console.log("패스워드", data.password)
+    // console.log("data", data)
+    // console.log("이메일", data.email)
+    // console.log("닉네임", data.nickname)
+    // console.log("패스워드", data.password)
+    // console.log("패스워드", data.passwordConfirm)
 
-    /*
-    api
-    {
-		  "email" : "test@test.com", 
-	    "nickname" : "testnick", 
-		  "password" : "test123!@#"	
-    }
-    */
+
 
     // let userData = {
     //   email: data.email,
@@ -150,71 +144,83 @@ export default function RegisterContainer() {
     //   password: data.password,
     // };
 
-
-    return axios
-      .post("/13.209.190.35:8080/users/info", {
-      // .post('13.209.190.35:8080/users/info', {
+    try {
+      // 응답 성공
+      // const res = await axios.post("http://13.209.190.35:8080/users/login", {
+      const res = await axios.post(`${url}/users/signup`, {
         // 보내고자 하는 데이터
         email: data.email,
-        nickname: data.displayName,
-        password: data.password,
-      })
-      .then((res) => {
-        navigate("/login");
-      })
-      .catch((err) => {
-        console.log(err);
-
-        // setError(err.response.data.message);
-        // setTimeout(() => {
-        //   setError('');
-        // }, 2000);
+        nickname: data.nickname,
+        password: data.password
       });
 
+      // 응답코드 201이면 회원가입 성공
+      if (res.status === 201) {
+        // 토근 저장 후 메인 페이지로 이동 
+        // navigate("/");
 
+        // console.log(res);
+        console.log("회원가입 성공 로그인 ~~~~~~~~~~~~~~~~");
+        // console.log("응답 전체",res)
 
-        
+      } 
 
+    } catch (err) {
+      // 응답 실패
+      // console.log(err);
 
+      // 에러 상세 메세지
+      // console.log(err.response.data.message)
 
+      // 에러 코드 409
+      // console.log(err.response.status)
 
+      // console.log("에러메세지: ", err.message)
 
-
+      // 회원가입 실패시 
+      // alert("Email or Password를 확인하세요");
+      if(err.response.status === 409){
+        // 서버에서 넘어온 에러메세지 출력
+        alert(`${err.response.data.message}`);
+      }
+      // 409이외 에러처리
+      else {
+        alert("Email or Password를 확인하세요");
+      }
+    }
 
   };
 
   return (
     <MainContainer>
-      {/* 왼쪽 내용 */}
-      {/* <Description /> */}
       <div>
         <Container>
           <Form onSubmit={handleSubmit(onRegister)}>
             <InputContainer>
-              <Label htmlFor="Nickname">Nickname</Label>
+              <Label htmlFor="nickname">Nickname</Label>
               <Input
                 type="text"
-                id="Nickname"
-                {...register("Nickname", {
+                id="nickname"
+                {...register("nickname", {
                   required: true,
                   minLength: 2,
                   maxLength: 10,
-                  // 공백없는 숫자와 대소문자만 가능 * 숫자만도 가능해서 수정해야될것 같음
+                  // 공백없는 숫자, 영문대소문자, 한글 가능
                   // pattern: /^[a-zA-Z0-9]*$/,
                   // pattern: /^([a-zA-Z가-힣]){1,8}$/,
                   pattern: /^([a-zA-Z0-9가-힣])*$/,
                 })}
               />
-              {errors.Nickname && errors.Nickname.type === "required" && (
+              {errors.nickname && errors.nickname.type === "required" && (
                 <Errormsg>닉네임을 입력해주세요.</Errormsg>
               )}
-              {errors.Nickname && errors.Nickname.type === "pattern" && (
+              {errors.nickname && errors.nickname.type === "pattern" && (
                 <Errormsg>한글, 영문, 숫자을 사용하세요.</Errormsg>
               )}
-              {errors.Nickname && errors.Nickname.type === "minLength" && (
+              {errors.nickname && errors.nickname.type === "minLength" && (
                 <Errormsg>최소 길이는 2자 이상여야 합니다.</Errormsg>
               )}
-              {errors.Nickname && errors.Nickname.type === "maxLength" && (
+              {errors.nickname && errors.nickname.type === "maxLength" && (
                 <Errormsg>최대 길이는 10자 이하여야 합니다.</Errormsg>
               )}
             </InputContainer>
@@ -240,9 +246,6 @@ export default function RegisterContainer() {
                 <Errormsg>최대 길이는 50자 이하여야 합니다.</Errormsg>
               )}
             </InputContainer>
-
-
-
             <InputContainer>
               <Label htmlFor="password">Password</Label>
               <Input
@@ -253,7 +256,6 @@ export default function RegisterContainer() {
                   minLength: 10,
                   // 최소 10자리 이상 영문 대소문자, 숫자, 특수문자가 각각 1개 이상
                   pattern:/^(?=.*?[a-zA-Z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{10,}$/,
-                  // pattern:/^(?=.*?[a-zA-Z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).$/,
                 })}
               />
               {errors.password && errors.password.type === "required" && (
@@ -270,7 +272,7 @@ export default function RegisterContainer() {
             <InputContainer>
               <Label htmlFor="passwordConfirm">passwordConfirm</Label>
               <Input
-                // type를 패스워드로 입력 시 화면에 안보임 어떤 값을 입력하는지
+                // type를 패스워드로 입력 시 어떤 값을 입력하는지 화면에 안보임 ****로 처리
                 type="password"
                 id="passwordConfirm"
                 {...register("passwordConfirm", {
