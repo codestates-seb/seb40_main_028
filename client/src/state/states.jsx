@@ -58,37 +58,37 @@ export const workoutlistState = atom({
             {  
               "weight" : 30, 
               "count" : 6,
-              "eachTimer" : 13,
+              "timer" : 13,
               "eachCompleted" : false, 
             }, 
             { 
               "weight" : 30, 
               "count" : 6, 
-              "eachTimer" : 23,
+              "timer" : 23,
               "eachCompleted" : false, 
             },   
             { 
               "weight" : 30, 
               "count" : 6, 
-              "eachTimer" : 33,
+              "timer" : 33,
               "eachCompleted" : false, 
             },   
             { 
               "weight" : 30, 
               "count" : 6, 
-              "eachTimer" : 33,
+              "timer" : 33,
               "eachCompleted" : false, 
             }	,   
             { 
               "weight" : 30, 
               "count" : 6, 
-              "eachTimer" : 33,
+              "timer" : 33,
               "eachCompleted" : false, 
             }	,   
             { 
               "weight" : 30, 
               "count" : 6, 
-              "eachTimer" : 33,
+              "timer" : 33,
               "eachCompleted" : false, 
             }			
           ]
@@ -102,19 +102,19 @@ export const workoutlistState = atom({
             {  
               "weight" : 30, 
               "count" : 6,
-              "eachTimer" : 30,
+              "timer" : 30,
               "eachCompleted" :false, 
             }, 
             { 
               "weight" : 30, 
               "count" : 6, 
-              "eachTimer" : 30,
+              "timer" : 30,
               "eachCompleted" : false, 
             }, 
             { 
               "weight" : 30, 
               "count" : 6, 
-              "eachTimer" : 30,
+              "timer" : 30,
               "eachCompleted" : false, 
             }		
           ]
@@ -128,19 +128,19 @@ export const workoutlistState = atom({
             {  
               "weight" : 30, 
               "count" : 6,
-              "eachTimer" : 30,
+              "timer" : 30,
               "eachCompleted" :false, 
             }, 
             { 
               "weight" : 30, 
               "count" : 6, 
-              "eachTimer" : 30,
+              "timer" : 30,
               "eachCompleted" : false, 
             }, 
             { 
               "weight" : 30, 
               "count" : 6, 
-              "eachTimer" : 30,
+              "timer" : 30,
               "eachCompleted" : false, 
             }		
           ]

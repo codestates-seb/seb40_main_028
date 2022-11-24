@@ -106,7 +106,7 @@ function Workout() {
     const liidx = workoutdata.data.exercises[specificset].eachRecords.length;
     for(let i=0; i<liidx; i+=1) {
       if(workoutdata.data.exercises[specificset].eachRecords[i].eachCompleted === false) {
-        setclicked(workoutdata.data.exercises[specificset].eachRecords[i].eachTimer, specificset, i);
+        setclicked(workoutdata.data.exercises[specificset].eachRecords[i].timer, specificset, i);
         return;
       }
     }
@@ -176,7 +176,7 @@ function Workout() {
             count={x.count} 
             idx={idx}
             iscompleted={x.eachCompleted} 
-            fn={()=>setclicked(x.eachTimer, specificset, idx)} 
+            fn={()=>setclicked(x.timer, specificset, idx)} 
             restfn={setIsrestmodalon} />)
         }
       </div>
