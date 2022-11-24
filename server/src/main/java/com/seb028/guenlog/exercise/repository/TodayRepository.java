@@ -3,6 +3,7 @@ package com.seb028.guenlog.exercise.repository;
 
 import com.seb028.guenlog.exercise.dto.CalendarResponseDto;
 import com.seb028.guenlog.exercise.entity.Today;
+import com.seb028.guenlog.member.util.MonthlyRecord;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -32,6 +33,13 @@ public interface TodayRepository extends JpaRepository<Today, Long> {
             "group by t.today_id", nativeQuery = true)
     List<CalendarResponseDto> findByLikeDateAndMemberId(@Param("date") String date, @Param("memberId")  Long memberId);
 
-
+    // 사용자의 한달동안 운동기록을 세서 최근 6개월 단위로 조회
+    @Query(value = "SELECT MID(t.due_date,1,7) AS dates , (SUM(CASE WHEN r.is_completed = TRUE THEN 1 ELSE 0 END)) AS record FROM Today as t \n" +
+            "LEFT JOIN Record as r \n" +
+            "ON t.today_id = r.today_id \n" +
+            "WHERE t.member_id = :memberId \n" +
+            "GROUP BY t.due_date \n" +
+            "HAVING dates >  MID((now() - interval 6 month),1,7))", nativeQuery = true)
+    List<MonthlyRecord> findRecentSixMonthsRecordByMemberId(@Param("memberId") Long memberId);
 
 }
