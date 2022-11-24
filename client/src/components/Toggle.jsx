@@ -2,11 +2,15 @@
 import React, {useState} from "react";
 import "./Toggle.css";
 
-const Toggle = () => { 
+const Toggle = (props) => { 
   const [isOpen, setIsOpen] = useState(false);
   const openModalHandler = () => {
     setIsOpen(!isOpen);
+    // isOpen이 true면 "M", flase면 "W"
+    props.setGender(isOpen ? "W" : "M")
   };
+  
+
 
   return(
     <>
