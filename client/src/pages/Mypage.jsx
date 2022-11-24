@@ -1,8 +1,8 @@
 /* eslint-disable */
-import Layout from "../../components/Layout";
-import MyPageFirst from "../../components/MyPageFirst";
+import Layout from "../components/Layout";
+import MyPageFirst from "../components/Mypage/MyPageFirst";
 import styled from 'styled-components/macro';
-import MyPageSecont from "../../components/MyPageSecond";
+import MyPageSecont from "../components/Mypage/MyPageSecond";
 import React,{ useState } from "react";
 // import { Link } from 'react-router-dom';
 
