@@ -1,9 +1,11 @@
 /* eslint-disable */
 import styled from "styled-components/macro";
 import Toggle from "./Toggle";
-import React,{ useRef } from 'react';
+import React,{ useRef,useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
+import PwModal from "./PwModal";
+import SecessionModal from "./SecessionModal";
 
 const MyPageForm = styled.div`
   display: flex;
@@ -20,20 +22,25 @@ const DisplayText = styled.div`
   font-weight: 600;
   text-align: left;
   color: white;
-  margin-bottom: 0.6em;
+  margin-bottom: 0.5em;
 `;
 const DisplayText2 = styled.div`
   font-size: 20px;
   text-align: left;
   color: white;
-  margin-top:-1.5em;
+  margin-top:-1.45em;
   margin-left: 3em;
+`;
+const DisplayText3= styled.div`
+  font-size: 20px;
+  text-align: left;
+  color: white;
+  margin-top:0.6em;
 `;
 
 const InputInfo = styled.div`
   display: flex;
   flex-direction: column;
-  height: 90px;
   width: 262px;
   margin: 5px 0px 1px;
   color: black;
@@ -74,7 +81,7 @@ const Input3 = styled.input`
 `;
 
 const Input4 = styled.input`
-  width: 50px;
+  width: 55px;
   height: 28px;
   border: 1px solid #babfc4;
   border-radius: 5px;
@@ -85,7 +92,7 @@ const Input4 = styled.input`
   }
 `;
 const ToggleDiv = styled.div`
-margin: 0em 0em -0.2em -2em;
+margin: -1.3em 0em -1em -2.1em;
 `;
 
 const MyPageButton = styled.button`
@@ -158,6 +165,22 @@ const MyPageSecond = () => {
   const nameInputRef = useRef();
   const ageInputRef = useRef();
 
+
+  const [name, setName] = useState('');
+  const [sex, setSex] = useState('');
+  const [age, setAge] = useState('');
+  const [height, setHeight] = useState('');
+  const [weight, setWeight] = useState('');
+
+  axios
+  .get('/users/mypages/info',{
+      name:name,
+      age:age,
+      height:height,
+      weight:weight
+    })
+    
+
   const handleOnClick = (event) => {
     event.preventDefault();
     const enteredName = nameInputRef.current.value;
@@ -166,88 +189,89 @@ const MyPageSecond = () => {
     const enteredAge = ageInputRef.current.value;
 
     if (enteredName.length < 3) {
-      alert('이름은 3자 이상으로 입력하세요!');
+      alert('닉네임은 3자 이상으로 입력하세요!');
     }else
-      axios({
-          method: 'POST',
-          url:``,
-          data:{
-            username: enteredName,
-            height: enteredHeight,
-            weight: enteredWeight,
-            age:enteredAge
-            // returnSecureToken: true,
-          },
-          headers: { "Authorization" : localStorage.getItem('access_token') },
-          responseType:`json`,
-        }
-      ).then((res) => {
-        if (res.ok) {
-          return (
-            alert(`${enteredName}님 수정완료.`),
-            navigate('/Mypage')
-          );
-        } else {
-          return (
-            alert('내 정보 수정을 실패하셨습니다. '),
-            res.JSON().then((data) => {
-              console.log(data), navigate('/');
-            })
-          );
-        }
-      });
+      axios
+      .patch(`/users/mypages/info`,{
+        nickname: enteredName,
+        height: enteredHeight,
+        weight: enteredWeight,
+        age:enteredAge,
+      },
+      {
+        headers: {
+          Authorization: `${localStorage.getItem('login-token')}`,
+      },
+      },
+      )
+      // .then(() => {
+      //   if (res.ok) {
+      //     return (
+      //       alert(`${enteredName}님 정보수정 완료!`),
+      //       navigate('/Mypage')
+      //     );
+      //   } else {
+      //     return (
+      //       alert('내 정보 수정을 실패하셨습니다. '),
+      //       navigate('/')
+      //   );
+      // }
+      // })
   };
-  const handleOnClick2 = () => {
-    
-    
-  }
+ 
 
-  const handleOnClick3 = () => {
-    axios.delete("").then(function(response){
-      console.log(response);
-        })
-  
-}
-
-  
+  const [PwModalOn,setPwModalOn] = useState(false);
+  const [SeModalOn,setSeModalOn] = useState(false);
   return (
+    <>
     <form onSubmit={handleOnClick}>
       <MyPageForm>
         <PageText>정보수정</PageText>
-        <MyPageButton2 type="button" onClick={handleOnClick3}>회원탈퇴</MyPageButton2>
+        <MyPageButton2 type="button" onClick={() => setSeModalOn(true)}
+          className='modalButton2'>회원탈퇴</MyPageButton2>
+          <SecessionModal open={SeModalOn} 
+          onClose={() => setSeModalOn(false)} />
         <InputInfo className="displayName">
           <DisplayText>닉네임</DisplayText>
-          <Input type="text" id="displayname"  required ref={nameInputRef} />
+          <Input type="text" id="displayname" value={name} required ref={nameInputRef} />
         </InputInfo>
         <InputInfo className="displayMail">
           <DisplayText>이메일</DisplayText>
-          <Input2  type="mail" id="displayMail" readOnly/>
+          <Input2  type="mail" id="displayMail"  placeholder="이메일은 변경 불가능합니다." readOnly/>
         </InputInfo>
         <InputInfo className="password">
           <DisplayText>패스워드</DisplayText>
           <Input3 type="password" id="password" readOnly />
-          <SerchButton type="button" onClick={handleOnClick2}>변경</SerchButton>
+          <SerchButton type="button" onClick={() => setPwModalOn(true)}
+          className='modalButton'>변경</SerchButton>
+          <PwModal open={PwModalOn} 
+          onClose={() => setPwModalOn(false)} />
         </InputInfo>
+        <InputInfo className="displayWidth">
+          <DisplayText>생년월일</DisplayText>
+          <Input type="date" id="birthday" name="birthday" value={age}required ref={ageInputRef} />
+          <DisplayText3>성별</DisplayText3>
+          </InputInfo>
         <ToggleDiv>
+        
         <Toggle />
         </ToggleDiv>
+        
         <InputInfo className="displayHeight">
           <DisplayText>신장</DisplayText>
-          <Input4 type="number" id="displayHeight" required ref={heightInputRef}  />
+          <Input4 type="number" id="displayHeight" value={height} required ref={heightInputRef}  />
           <DisplayText2 className="h1">CM</DisplayText2>
         </InputInfo>
         <InputInfo className="displayWidth">
           <DisplayText>몸무게</DisplayText>
-          <Input4 type="number" id="displayweight"  required ref={weightInputRef}/>
+          <Input4 type="number" id="displayweight" value={weight} required ref={weightInputRef}/>
           <DisplayText2 className="h1">KG</DisplayText2>
         </InputInfo>
-        <InputInfo className="displayWidth">
-          <DisplayText>나이</DisplayText>
-          <Input4 type="number" id="displayAge" required ref={ageInputRef} />
-        </InputInfo>
+      
         <MyPageButton type="button" onClick={handleOnClick}>저장</MyPageButton>
       </MyPageForm>
       </form>
+      </>
   )
 }
 

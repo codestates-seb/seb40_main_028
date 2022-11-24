@@ -1,13 +1,13 @@
-import styled from "styled-components/macro";
+/* eslint-disable */
+import React from 'react';
+import styled from 'styled-components/macro';
 import { Line } from "react-chartjs-2";
-import Chart from "chart.js/auto";
-// import axios from "axios";
-import React from "react";
-import MyPageText from "./MyPageText";
+import Chart from 'chart.js/auto';
+import MyPageText from './MyPageText';
+import axios from 'axios';
 
 const MyPageForm = styled.form`
   display: flex;
-  width: 25em;
   height: 40em;
   flex-direction: column;
   justify-content: center;
@@ -19,7 +19,8 @@ const Container = styled.div`
 display: flex;
 align-items: center;
 justify-content: center;
-width: 25rem;
+max-width: 27em;
+width: 25em;
 margin-bottom: 2em;
 margin-top: 3em;
 `;
@@ -55,19 +56,19 @@ const data = {
       label: "몸무게",
       data: KgData,
       fill: true,
-      borderColor: ["rgba(82, 209, 229, 0.2)"],
-      backgroundColor: ["rgba(82, 209, 229, 0.2)"],
-      pointBackgroundColor: ["rgba(82, 208, 255, 1)"],
-      pointBorderColor: ["rgba(83, 85, 255, 0.2)"]
+      borderColor: ['rgba(82, 209, 229, 0.2)'],
+      backgroundColor: ['rgba(82, 209, 229, 0.2)'],
+      pointBackgroundColor: ['rgba(82, 208, 255, 1)'],
+      pointBorderColor: ['rgba(83, 85, 255, 0.2)']
     },
     {
       label: "운동횟수",
       data: GymCheck,
       fill: true,
-      borderColor: ["rgba(24, 206, 83, 0.6)"],
-      backgroundColor: ["rgba(24, 206, 83, 0.6)"],
-      pointBackgroundColor: ["rgba(24, 206, 83, 1)"],
-      pointBorderColor: ["rgba(24, 206, 83, 1)"]
+      borderColor: ['rgba(24, 206, 83, 0.6)'],
+      backgroundColor: ['rgba(24, 206, 83, 0.6)'],
+      pointBackgroundColor: ['rgba(24, 206, 83, 1)'],
+      pointBorderColor: ['rgba(24, 206, 83, 1)']
     }
   ]
 };
@@ -100,34 +101,29 @@ const options = {
 // }
 
 const MyPageFirst = () => {
-  // axios({
-  //   method: "get", 
-  //   url: "", 
-  // })
-  //   .then((data) => {
-  //     for (let i = 0; i < 6; i++) {
-  //       Month.push(Month.data);
-  //       KgData.push(KgData.data);
-  //       GymCheck.push(GymCheck.data);
-  //       console.log(data)
-  //     }
-  //   },
-  //   null
-  //   );
-      
- 
+  
+   
 
+  axios.get("/users/mypages").then((res) => {
+    const chart = res.data;
+    chart.forEach(data=> {
+      Month.push(date.data);
+      KgData.push(weight.data);
+      GymCheck.push(record.data);
+      console.log(data)
 
+      });
+    });
   return (
     <MyPageForm>
       <PageText>운동그래프</PageText>
-      <Container>
+        <Container>
         <Line data={data} options={options}/>
-      </Container>
-      <Container2>
+        </Container>
+        <Container2>
         <MyPageText />
-      </Container2>
-    </MyPageForm>
+        </Container2>
+        </MyPageForm>
   )
 }
 
