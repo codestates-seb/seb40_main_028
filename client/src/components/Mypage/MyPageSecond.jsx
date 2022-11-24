@@ -1,9 +1,9 @@
 /* eslint-disable */
+import axios from "axios";
+import React, { useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from "styled-components/macro";
 import Toggle from "../Toggle";
-import React,{ useRef,useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from "axios";
 import PwModal from "./PwModal";
 import SecessionModal from "./SecessionModal.jsx";
 
@@ -155,6 +155,7 @@ font-size: 1.5em;
 width: 25rem;
 margin-top: 0.7em;
 margin-left: -1em;
+font-weight: 400;
 `;
 
 
