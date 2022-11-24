@@ -27,9 +27,9 @@ const proverb = [
   "기초운동은 필수다",
   "필수적인 운동은 기초운동이다",
 ];
-const random = Math.floor(Math.random() * proverb.length);
 
 export default function RandomMessage({ large }) {
+  const random = Math.floor(Math.random() * proverb.length);
   return (
     <div
       className={cls(
