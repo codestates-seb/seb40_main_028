@@ -1,4 +1,4 @@
-// import Layout from '../components/Layout';
+import React from "react";
 import styled from "styled-components";
 import LoginContainer from "../components/LoginContainer";
 import Logo from "../assets/img/Logo.png";
@@ -26,7 +26,7 @@ const Login = () => {
         <Container>
           {/* 로고 */}
           <LogoPng src={Logo} />
-          <LoginContainer></LoginContainer>
+          <LoginContainer />
         </Container>
       </div>
     </>
