@@ -2,10 +2,9 @@ package com.seb028.guenlog.member.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.hibernate.validator.constraints.Range;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.*;
 
 public class MemberDto {
 
@@ -17,8 +16,8 @@ public class MemberDto {
         private String email;
 
         @NotBlank(message = "닉네임은 필수 입력 항목입니다")
-        @Pattern(regexp = "^([a-zA-Z가-힣]){1,8}$",
-                message = "닉네임은 한글 최대 8글자까지 입력 가능합니다.")
+        @Pattern(regexp = "^([a-zA-Z0-9가-힣]){2,10}$",
+                message = "닉네임은 영문자, 한글, 숫자를 포함해 2자~10자 까지 입력 가능합니다.")
         private String nickname;
 
         @NotBlank(message = "비밀번호를 필수 입력 항목입니다")
@@ -27,5 +26,26 @@ public class MemberDto {
         private String password;
     }
 
+    @AllArgsConstructor
+    @Getter
+    public static class patch {
+        private Long Id;
+        @Pattern(regexp = "^(\\d){4}+-(\\d){2}+-(\\d){2}$",
+                message = "생년월일은 8자리를 입력해 주세요")
+        private String age;
+        private String gender;
+
+        @Range(min = 0, max = 1000)
+        private Integer height;
+
+        @Range(min = 0, max = 1000)
+        private Integer weight;
+        //최초 로그인하는 사용자인지 판별하기 위한 필드값
+        private Boolean initialLogin;
+
+        public void setId(long Id) {
+            this.Id = Id;
+        }
+    }
 }
 

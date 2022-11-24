@@ -4,7 +4,9 @@ import com.seb028.guenlog.config.auth.jwt.filter.JwtVerificationFilter;
 import com.seb028.guenlog.exception.BusinessLogicException;
 import com.seb028.guenlog.exception.ExceptionCode;
 import com.seb028.guenlog.member.entity.Member;
+import com.seb028.guenlog.member.entity.MemberWeight;
 import com.seb028.guenlog.member.repository.MemberRepository;
+import com.seb028.guenlog.member.repository.MemberWeightRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,8 +22,10 @@ import java.util.Optional;
 public class MemberService {
     private final MemberRepository memberRepository;
     private final JwtVerificationFilter jwtVerificationFilter;
-
     private final PasswordEncoder passwordEncoder;
+    private final MemberWeightService memberWeightService;
+
+    private final MemberWeightRepository memberWeightRepository;
 
 
     /**
@@ -34,6 +38,37 @@ public class MemberService {
         member.setPassword(passwordEncoder.encode(member.getPassword()));
 
         return memberRepository.save(member);
+    }
+
+    public Member initialMember(Member member, Integer infoWeight) {
+        Member initialMember = findVerified(member.getId());
+
+        //성별 저장
+        Optional.ofNullable(member.getGender())
+                .ifPresent(gender -> initialMember.setGender(gender));
+        //나이 저장
+        Optional.ofNullable(member.getAge())
+                .ifPresent(age -> initialMember.setAge(age));
+        //키 저장
+        Optional.ofNullable(member.getHeight())
+                .ifPresent(height -> initialMember.setHeight(height));
+
+        //MemberWeight 객체 생성
+        MemberWeight memberWeight = new MemberWeight();
+        //몸무게 테이블 생성
+        Optional.ofNullable(memberWeight.getWeight())
+                .ifPresent(weight-> memberWeightService.createMemberWeight(memberWeight));
+        //MemberWeight 객체에 사용자 몸무게, 추가 입력 사항 저장
+        MemberWeight newWeight = MemberWeight.builder()
+                .weight(infoWeight)
+                .member(initialMember)
+                .build();
+        memberWeightRepository.save(newWeight);
+
+        //최초 로그인 정보입력 완료
+        initialMember.setInitialLogin(true);
+        //Repository에 추가 입력 사항 저장
+        return memberRepository.save(initialMember);
     }
 
     public void deleteMember(Long memberId) {
