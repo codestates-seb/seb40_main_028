@@ -21,6 +21,5 @@ module.exports = {
     "no-shadow": "warn",
     "no-unused-expression": "off",
     "optional-chaining": "off",
-    "react/jsx-props-no-spreading": "off",
   },
 };

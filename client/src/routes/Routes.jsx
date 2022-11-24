@@ -4,7 +4,7 @@ import Main from "../pages/Main";
 import Mappage from "../pages/Mappage";
 import Plan from "../pages/Plan";
 import Workout from "../pages/Workout";
-import Mypage from "../pages/MyPage/Mypage";
+import Mypage from "../pages/Mypage";
 import NotFound from "../pages/NotFound";
 import Login from "../pages/Login";
 import Start from "../pages/Start";
