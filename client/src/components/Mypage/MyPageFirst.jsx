@@ -1,10 +1,11 @@
 /* eslint-disable */
-import React from 'react';
+
 import styled from 'styled-components/macro';
 import { Line } from "react-chartjs-2";
 import Chart from 'chart.js/auto';
 import MyPageText from './MyPageText';
 import axios from 'axios';
+import React,{useState } from 'react';
 
 const MyPageForm = styled.form`
   display: flex;
@@ -44,7 +45,7 @@ width: 25rem;
 
 
 
-const Month = ["1월","2월","3월", "4월", "5월","6월"]
+const Month = ["2022-01","2022-02","2022-03","2022-04","2022-05","2022-06"]
 const KgData = ["87", "88", 91,105, 90, 110]
 const GymCheck = [10, 15, 20, 15, 17, 10]
 Chart.register();
@@ -101,19 +102,24 @@ const options = {
 // }
 
 const MyPageFirst = () => {
-  
-   
+  const [KgData, setKgData] = useState('');
+  const [GymData, setGymCheck] = useState('');
 
-  axios.get("/users/mypages").then((res) => {
+  axios.
+  get("/users/mypages").then((res) => {
     const chart = res.data;
     chart.forEach(data=> {
+      for (let i = 0; i < 6; i++){
       Month.push(date.data);
       KgData.push(weight.data);
       GymCheck.push(record.data);
       console.log(data)
-
+      }
       });
+      setGymCheck(GymCheck)
+      setKgData(KgData)
     });
+
   return (
     <MyPageForm>
       <PageText>운동그래프</PageText>
@@ -121,7 +127,7 @@ const MyPageFirst = () => {
         <Line data={data} options={options}/>
         </Container>
         <Container2>
-        <MyPageText />
+        <MyPageText setGymCheck={setGymCheck} setKgData={setKgData}/>
         </Container2>
         </MyPageForm>
   )
