@@ -1,6 +1,6 @@
 /* eslint-disable */
-import styled from "styled-components/macro";
 import React from "react";
+import styled from "styled-components/macro";
 
 const Container = styled.div`
 display: flex;
@@ -20,23 +20,79 @@ width: 10em;
 font-size: 15px;
 color: white;
 margin-left: -1em;
-
+margin-bottom: 1em;
+font-weight: 500;
 `
+const Text2 = styled.div`
+display: flex;
+justify-content: space-between;
+width: 2.6em;
+font-size: 18px;
+color: white;
+margin-left: 0.8em;
+margin-right: 3.3em;
+margin-bottom:-7.3em;
+z-index: 10;
+`
+
 const TextForm = styled.div`
 display: flex;
 justify-content:center;
 align-items: center;
-background-color: #547BF2;
 width: 7em;
 height: 7em;
 margin-left: -1em;
-margin-right: 2em;
-border-radius:90px;
+margin-right: 2.2em;
 font-size: 15px;
 color: white;
-box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.2);
 margin-top: 1em;
+border: solid 2px #373A3F;
+	border-top: solid 2px #1249ed;
+	border-radius: 50%;  
+	animation: spin 3s linear infinite;
+	-webkit-animation: spin 2s linear infinite;
+  animation-iteration-count :5;
+  @keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+@-webkit-keyframes spin {
+	
+}
 `
+const TextForm2 = styled.div`
+display: flex;
+justify-content:center;
+align-items: center;
+width: 7em;
+height: 7em;
+margin-left: -1em;
+margin-right: 2.2em;
+font-size: 15px;
+margin-top: 1em;
+border: solid 2px #373A3F;
+	border-top: solid 2px #97a4ff;
+	border-radius: 50%;  
+	animation: spin 5s linear infinite;
+	-webkit-animation: spin 2s linear infinite;
+  animation-iteration-count :5;
+  @keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+@-webkit-keyframes spin {
+	
+}
+`
+
 
 const MyPageText = () => {
   return (
@@ -48,8 +104,14 @@ const MyPageText = () => {
         <Text>
             저번달 운동 횟수 차이
         </Text>
-        <TextForm>-12Kg</TextForm>
-        <TextForm>+11</TextForm>
+        <Text2>
+           +2KG
+        </Text2>
+        <Text2>
+            +11회
+        </Text2>
+        <TextForm2/>
+        <TextForm/>
       </Container>
     </>
   )

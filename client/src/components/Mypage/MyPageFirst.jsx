@@ -1,11 +1,11 @@
 /* eslint-disable */
 
-import styled from 'styled-components/macro';
-import { Line } from "react-chartjs-2";
-import Chart from 'chart.js/auto';
-import MyPageText from './MyPageText';
 import axios from 'axios';
-import React,{useState } from 'react';
+import Chart from 'chart.js/auto';
+import React, { useState } from 'react';
+import { Line } from "react-chartjs-2";
+import styled from 'styled-components/macro';
+import MyPageText from './MyPageText';
 
 const MyPageForm = styled.form`
   display: flex;
@@ -41,6 +41,7 @@ align-items: center;
 justify-content: center;
 font-size: 1.5em;
 width: 25rem;
+font-weight: 400;
 `;
 
 
@@ -57,19 +58,19 @@ const data = {
       label: "몸무게",
       data: KgData,
       fill: true,
-      borderColor: ['rgba(82, 209, 229, 0.2)'],
-      backgroundColor: ['rgba(82, 209, 229, 0.2)'],
-      pointBackgroundColor: ['rgba(82, 208, 255, 1)'],
-      pointBorderColor: ['rgba(83, 85, 255, 0.2)']
+      borderColor: ['rgba(151, 164, 255, 0.3)'],
+      backgroundColor: ['rgba(151, 164, 255, 0.3)'],
+      pointBackgroundColor: ['#ffffff'],
+      pointBorderColor: ['#ffffff']
     },
     {
       label: "운동횟수",
       data: GymCheck,
       fill: true,
-      borderColor: ['rgba(24, 206, 83, 0.6)'],
-      backgroundColor: ['rgba(24, 206, 83, 0.6)'],
-      pointBackgroundColor: ['rgba(24, 206, 83, 1)'],
-      pointBorderColor: ['rgba(24, 206, 83, 1)']
+      borderColor: ['rgba(18, 73, 237, 1)'],
+      backgroundColor: ['rgba(18, 73, 237, 1)'],
+      pointBackgroundColor: ['#ffffff'],
+      pointBorderColor: ['#ffffff']
     }
   ]
 };
@@ -122,7 +123,7 @@ const MyPageFirst = () => {
 
   return (
     <MyPageForm>
-      <PageText>운동그래프</PageText>
+      <PageText>나만의 운동 일지</PageText>
         <Container>
         <Line data={data} options={options}/>
         </Container>
