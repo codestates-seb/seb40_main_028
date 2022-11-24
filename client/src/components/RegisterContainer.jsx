@@ -111,13 +111,14 @@ export default function RegisterContainer() {
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
+
+ 
   const {
     register,
     formState: { errors },
     handleSubmit,
     watch,
-  } = useForm();
-  // } = useForm({ mode: onchange });
+  } = useForm({ mode: onchange });
   
   const password = useRef();
   password.current = watch("password");
@@ -125,8 +126,56 @@ export default function RegisterContainer() {
   // 실시간 입력 값 확인
   // console.log(watch("email"));
   
-  const onSubmit = (data) => {
+  const onRegister = async (data) => {
+
     console.log("data", data)
+    console.log("이메일", data.email)
+    console.log("닉네임", data.Nickname)
+    console.log("패스워드", data.password)
+
+    /*
+    api
+    {
+		  "email" : "test@test.com", 
+	    "nickname" : "testnick", 
+		  "password" : "test123!@#"	
+    }
+    */
+
+    // let userData = {
+    //   email: data.email,
+    //   nickname: data.displayName,
+    //   password: data.password,
+    // };
+
+
+    return axios
+      .post('13.209.190.35:8080/users/info', {
+        // 보내고자 하는 데이터
+        email: data.email,
+        nickname: data.displayName,
+        password: data.password,
+      })
+      .then((res) => {
+        navigate('/login');
+      })
+      .catch((err) => {
+        console.log(err);
+
+        // setError(err.response.data.message);
+        // setTimeout(() => {
+        //   setError('');
+        // }, 2000);
+      });
+
+
+
+        
+
+
+
+
+
 
 
   };
@@ -137,7 +186,7 @@ export default function RegisterContainer() {
       {/* <Description /> */}
       <div>
         <Container>
-          <Form onSubmit={handleSubmit(onSubmit)}>
+          <Form onSubmit={handleSubmit(onRegister)}>
             <InputContainer>
               <Label htmlFor="Nickname">Nickname</Label>
               <Input

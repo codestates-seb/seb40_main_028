@@ -4,6 +4,10 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import axios from 'axios';
+
+// import { Flag } from "heroicons-react";
+
 
 const Container = styled.div`
   width: 300px;
@@ -139,21 +143,74 @@ const MainContainer = styled.div`
 `;
 
 export default function LoginContainer() {
-  const [error, setError] = useState("");
   const navigate = useNavigate();
+  const [error, setError] = useState("");
+
+  // const [isdata, setData] = useState("");
+
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm({ mode: onchange });
+
+
   const onLogin = async (data) => {
     console.log(data);
-    // try {
-    //   console.log(data);
-    // } catch (err) {
-    //   setError(err);
-    // }
+    // console.log(data.email+": 이메일");
+    // console.log(data.password+": 이메일");
+    // setDada(data)
+
+    // 이메일과 패스워드 post
+    try {
+      // 응답 성공
+
+      let res = await axios.post('13.209.190.35:8080/users/login', {
+        // 보내고자 하는 데이터
+        username: data.email,
+        password: data.password,
+      });
+
+      /*
+      
+      {
+		  "username" : "test@test.com", 
+		  "password" : "test123!@#"	
+}
+      
+      
+      */
+
+      // status가 200이면 세션스토리지에 jwt-token 저장
+      if (res.status === "200") {
+        sessionStorage.setItem('jwt-token', res.headers.authorization);
+        sessionStorage.setItem('user', JSON.stringify({ ...res.data.data }));
+        navigate("/");
+
+        // InitialLogin이 false면 처음 로그인으로
+        // if(res.InitialLogin === false){
+        //   navigate("/startinginformation");
+        //   sessionStorage.setItem('jwt-token', res.headers.authorization);
+        //   // InitialLogin이 true면 main 페이지로
+        // } else if(res.InitialLogin === ture){
+        //   navigate("/");
+        // }
+        
+      }
+    } catch (err) {
+      // 응답 실패
+      console.log(err);
+
+      // setError(err.response.data.message);
+      // 2초 후 error 초기화
+      // setTimeout(() => {
+      //   setError("");
+      // }, 2000);
+    }
   };
+
+  // console.log(`이메일 : ${isdada.email} 패스워드 : ${isdada.password}`);
+
   return (
     <MainContainer>
       <Container>
@@ -196,8 +253,11 @@ export default function LoginContainer() {
               <Errormsg>⚠ 최소 길이는 10자 이상이여야 합니다</Errormsg>
             )}
           </InputContainer>
+
+          {/* 로그인 버튼 */}
           <SubmitBtn type="submit" value="Login" />
           {error && <Errormsg>⚠ {error}</Errormsg>}
+
         </Form>
       </Container>
       <BtnContainer>
