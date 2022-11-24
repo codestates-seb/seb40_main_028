@@ -9,7 +9,7 @@ import org.mapstruct.ReportingPolicy;
 public interface MemberMapper {
     Member memberPostDtoToMember(MemberDto.post requestBody);
 
-//    Member memberPatchDtoToMember(MemberDto.patch requestBody);
+    Member memberPatchDtoToMember(MemberDto.patch requestBody);
 
 //    MemberDto.response memberToMemberResponseDto(Member member);
 }
