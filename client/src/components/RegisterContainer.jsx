@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+/* eslint-disable */
+
+import React, { useState, useRef } from "react";
 import styled from "styled-components";
-// import { BiLinkExternal } from 'react-icons/bi';
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-// import Description from './Description';
 import axios from "axios";
+
+
+
 
 const Container = styled.div`
   width: 300px;
@@ -105,36 +108,79 @@ const MainContainer = styled.div`
   justify-content: center;
 `;
 
-// const Checkbox = styled.div`
-//   padding: 0 18px;
-//   margin-bottom: 14px;
-//   display: flex;
-//   align-items: flex-start;
-//   & input {
-//     margin-right: 4px;
-//   }
-//   & div {
-//     margin: 2px 0 0 0;
-//     font-size: 12px;
-//   }
-// `;
 
 export default function RegisterContainer() {
   const [error, setError] = useState("");
+
   const navigate = useNavigate();
+
+ 
   const {
     register,
     formState: { errors },
     handleSubmit,
+    watch,
   } = useForm({ mode: onchange });
-  const onLogin = async (data) => {
-    // console.log(data);
-    // 회원가입 api 자리
-    try {
-      axios.post("#", { ...data });
-    } catch (err) {
-      setError(err);
+  
+  const password = useRef();
+  password.current = watch("password");
+
+  // 실시간 입력 값 확인
+  // console.log(watch("email"));
+  
+  const onRegister = async (data) => {
+
+    console.log("data", data)
+    console.log("이메일", data.email)
+    console.log("닉네임", data.Nickname)
+    console.log("패스워드", data.password)
+
+    /*
+    api
+    {
+		  "email" : "test@test.com", 
+	    "nickname" : "testnick", 
+		  "password" : "test123!@#"	
     }
+    */
+
+    // let userData = {
+    //   email: data.email,
+    //   nickname: data.displayName,
+    //   password: data.password,
+    // };
+
+
+    return axios
+      .post("/13.209.190.35:8080/users/info", {
+      // .post('13.209.190.35:8080/users/info', {
+        // 보내고자 하는 데이터
+        email: data.email,
+        nickname: data.displayName,
+        password: data.password,
+      })
+      .then((res) => {
+        navigate("/login");
+      })
+      .catch((err) => {
+        console.log(err);
+
+        // setError(err.response.data.message);
+        // setTimeout(() => {
+        //   setError('');
+        // }, 2000);
+      });
+
+
+
+        
+
+
+
+
+
+
+
   };
 
   return (
@@ -143,127 +189,114 @@ export default function RegisterContainer() {
       {/* <Description /> */}
       <div>
         <Container>
-          <Form onSubmit={handleSubmit(onLogin)}>
+          <Form onSubmit={handleSubmit(onRegister)}>
             <InputContainer>
-              <Label htmlFor={"Nickname"}>Nickname</Label>
+              <Label htmlFor="Nickname">Nickname</Label>
               <Input
-                type={"text"}
+                type="text"
                 id="Nickname"
                 {...register("Nickname", {
                   required: true,
                   minLength: 2,
-                  maxLength: 16,
+                  maxLength: 10,
+                  // 공백없는 숫자와 대소문자만 가능 * 숫자만도 가능해서 수정해야될것 같음
+                  // pattern: /^[a-zA-Z0-9]*$/,
+                  // pattern: /^([a-zA-Z가-힣]){1,8}$/,
+                  pattern: /^([a-zA-Z0-9가-힣])*$/,
                 })}
               />
               {errors.Nickname && errors.Nickname.type === "required" && (
-                <Errormsg>⚠ 닉네임을 입력해주세요.</Errormsg>
+                <Errormsg>닉네임을 입력해주세요.</Errormsg>
+              )}
+              {errors.Nickname && errors.Nickname.type === "pattern" && (
+                <Errormsg>한글, 영문, 숫자을 사용하세요.</Errormsg>
               )}
               {errors.Nickname && errors.Nickname.type === "minLength" && (
-                <Errormsg>⚠ 최소 길이는 2자 이상여야 합니다</Errormsg>
+                <Errormsg>최소 길이는 2자 이상여야 합니다.</Errormsg>
               )}
               {errors.Nickname && errors.Nickname.type === "maxLength" && (
-                <Errormsg>⚠ 최대 길이는 16자 이하여야 합니다</Errormsg>
+                <Errormsg>최대 길이는 10자 이하여야 합니다.</Errormsg>
               )}
             </InputContainer>
 
             <InputContainer>
-              <Label htmlFor={"Email"}>Email</Label>
+              <Label htmlFor="email">Email</Label>
               <Input
-                type={"email"}
-                id="Email"
+                type="email"
+                id="email"
                 {...register("email", {
                   required: true,
-                  pattern: /^\S+@\S+$/i,
+                  pattern: /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/,
                   maxLength: 50,
                 })}
               />
               {errors.email && errors.email.type === "required" && (
-                <Errormsg>⚠ 이메일을 입력해주세요.</Errormsg>
+                <Errormsg>이메일을 입력해주세요.</Errormsg>
               )}
               {errors.email && errors.email.type === "pattern" && (
-                <Errormsg>⚠ 이메일 형식이여야 합니다.</Errormsg>
+                <Errormsg>이메일 형식이여야 합니다.</Errormsg>
               )}
               {errors.email && errors.email.type === "maxLength" && (
-                <Errormsg>⚠ 최대 길이는 50자 이하여야 합니다</Errormsg>
+                <Errormsg>최대 길이는 50자 이하여야 합니다.</Errormsg>
               )}
             </InputContainer>
+
+
+
             <InputContainer>
-              <Label htmlFor={"password"}>Password</Label>
+              <Label htmlFor="password">Password</Label>
               <Input
-                type={"password"}
+                type="password"
                 id="password"
                 {...register("password", {
                   required: true,
                   minLength: 10,
+                  // 최소 10자리 이상 영문 대소문자, 숫자, 특수문자가 각각 1개 이상
+                  pattern:/^(?=.*?[a-zA-Z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{10,}$/,
+                  // pattern:/^(?=.*?[a-zA-Z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).$/,
                 })}
               />
               {errors.password && errors.password.type === "required" && (
-                <Errormsg>⚠ 패스워드를 입력해주세요</Errormsg>
+                <Errormsg>패스워드를 입력해주세요</Errormsg>
               )}
               {errors.password && errors.password.type === "minLength" && (
-                <Errormsg>⚠ 최소 길이는 10자 이상이여야 합니다</Errormsg>
+                <Errormsg> 최소 길이는 10자 이상이어야 합니다</Errormsg>
+              )}
+              {errors.password &&
+                errors.password.type === "pattern" && (
+                <Errormsg>영문, 특수문자, 숫자 포함하세요</Errormsg>
               )}
             </InputContainer>
-            {/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */}
             <InputContainer>
-              <Label htmlFor={"passwordcheck"}>Password Check</Label>
+              <Label htmlFor="passwordConfirm">passwordConfirm</Label>
               <Input
                 // type를 패스워드로 입력 시 화면에 안보임 어떤 값을 입력하는지
-                type={"password"}
-                id="passwordcheck"
-                {...register("passwordcheck", {
+                type="password"
+                id="passwordConfirm"
+                {...register("passwordConfirm", {
                   required: true,
-                  minLength: 10,
+                  validate: (value) =>
+                    value === password.current
                 })}
               />
-              {errors.passwordcheck &&
-                errors.passwordcheck.type === "required" && (
-                <Errormsg>⚠ 패스워드를 입력해주세요</Errormsg>
-              )}
-              {errors.passwordcheck &&
-                errors.passwordcheck.type === "minLength" && (
-                <Errormsg>⚠ 최소 길이는 10자 이상이여야 합니다{console.log(errors.password)}</Errormsg>
-                
-              )}
-              {/* 비밀번호 확인 */}
-              {errors.passwordcheck &&
-                errors.passwordcheck.type !== errors.password && (
-                <Errormsg>⚠ 비밀번호가 다르다고~~~</Errormsg>
-              )}
-
-              {/* {errors.passwordcheck &&
-                errors.passwordcheck. !== errors.password.id && (
-                  <div>⚠ 비밀번호가 다르다</div>
-                )} */}
+              {errors.passwordConfirm && errors.passwordConfirm.type === "required"
+                      && <Errormsg>패스워드를 입력해주세요.</Errormsg>}
+              {errors.passwordConfirm && errors.passwordConfirm.type === "validate"
+                      && <Errormsg>패스워드가 일치하지 않습니다. </Errormsg>}          
             </InputContainer>
-
             {/* 비밀번호 안내문구 */}
             <RegisterMent>
-              비밀번호는 최소 1개의 문자와 1개의 숫자를 포함하여 최소 8자
-              이상이어야 합니다.
+              비밀번호는 10자 이상의 영문대소문자, 특수문자, 숫자를 각각1개 이상 포함해야합니다. 
             </RegisterMent>
-            {/* <Checkbox>
-              <input type={'checkbox'} />
-              <div>
-                Opt-in to receive occasional product updates, user research
-                invitations, company announcements, and digests.
-              </div>
-            </Checkbox> */}
             {/* 회원가입 버튼 */}
-            <SubmitBtn type="submit" value={"Sign up"}></SubmitBtn>
-            {error && <Errormsg>⚠ {error}</Errormsg>}
+            <SubmitBtn type="submit" value="Sign up" />
+            {error && <Errormsg>{error}</Errormsg>}
           </Form>
         </Container>
         <MentDiv>
           이미 계정이 있습니까?
           <MentSpan onClick={() => navigate("/login")}> Log in</MentSpan>
         </MentDiv>
-        {/* <MentDiv>
-          Are you an employer?{' '}
-          <MentSpan onClick={() => navigate('/login')}>
-            Sign up on Talent <BiLinkExternal />
-          </MentSpan>
-        </MentDiv> */}
       </div>
     </MainContainer>
   );

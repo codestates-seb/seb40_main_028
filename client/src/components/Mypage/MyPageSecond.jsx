@@ -1,11 +1,11 @@
 /* eslint-disable */
 import styled from "styled-components/macro";
-import Toggle from "./Toggle";
+import Toggle from "../Toggle";
 import React,{ useRef,useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import PwModal from "./PwModal";
-import SecessionModal from "./SecessionModal";
+import SecessionModal from "./SecessionModal.jsx";
 
 const MyPageForm = styled.div`
   display: flex;

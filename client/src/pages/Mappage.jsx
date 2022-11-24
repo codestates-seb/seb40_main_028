@@ -1,6 +1,6 @@
 import React from "react";
 import Layout from "../components/Layout";
-import SearchPlace from "../components/SearchPlace";
+import SearchPlace from "../components/Map/SearchPlace";
 // import Loading from '../components/Loding';
 // import { useState } from 'react';
 
