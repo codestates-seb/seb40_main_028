@@ -1,9 +1,9 @@
 /* eslint-disable */
+import React, { useState } from "react";
+import styled from 'styled-components/macro';
 import Layout from "../components/Layout";
 import MyPageFirst from "../components/Mypage/MyPageFirst";
-import styled from 'styled-components/macro';
 import MyPageSecont from "../components/Mypage/MyPageSecond";
-import React,{ useState } from "react";
 // import { Link } from 'react-router-dom';
 
 const MyPageContainer = styled.div`

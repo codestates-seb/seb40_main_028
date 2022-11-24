@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import useInterval from "../assets/Interval";
 import { workoutlistState, worktimeState } from "../state/states";
-import Congrats from "../components/Congrats";
+import Congrats from "../components/exercise/Congrats";
 import {Smallbutton, EachRecordbutton, Timebutton, Worklistbutton} from "../components/exercise/ExerciseButton";
 import Restmodal from "../components/exercise/Restmodal";
 
@@ -25,7 +25,7 @@ function Workout() {
   const goback = () => setSpecificset("list");
   const gonext = () => setSpecificset(specificset+1);
   const finished = () => setWorkoutdone(true);
-  setWorkoutdata(cur => cur);
+  
 
   const timeonscreen = (time) => {
     const hours = Math.floor(time/3600).toLocaleString("en-US",{minimumIntegerDigits:2});
@@ -167,7 +167,7 @@ function Workout() {
       {/* 여기에서 onclick 이벤트로 setState 넣어두면 무한반복되어버림=>useRef사용예정 */}
       <div className='flex-col w-full h-[25rem] xs:h-[40rem] max-h-[58rem] mx-auto overflow-scroll' >
         {specificset === "list"?
-          workoutdata.data.exercises.map((x, idx)  => <Worklistbutton key={`${x.exerciseId}`} id={x.exerciseId} name={x.exerciseName} idx={idx} iscompleted={x.isCompleted} setState={setSpecificset} hoverchangepic={x.imageUrl} setpic={setSpecificpic} />)
+          workoutdata.data.exercises.map((x, idx)  => <Worklistbutton key={`${x.exerciseId}${idx}`} id={x.exerciseId} name={x.exerciseName} idx={idx} iscompleted={x.isCompleted} setState={setSpecificset} hoverchangepic={x.imageUrl} setpic={setSpecificpic} />)
           : 
           workoutdata.data.exercises[specificset].eachRecords.map((x,idx) => <EachRecordbutton 
             key={idx} 
