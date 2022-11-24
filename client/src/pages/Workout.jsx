@@ -1,5 +1,4 @@
-// 운동진행리스트 state 업데이트 문제
-// useref로 리스트 파악 문제
+// axios로 연결 필요
 
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
