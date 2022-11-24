@@ -42,11 +42,14 @@ export function EachRecordbutton ({kg, count, idx, iscompleted, fn}) {
 };
 
 
-export function Worklistbutton ({id, name, idx, setState}) {
-  console.log(id);
+export function Worklistbutton ({id, name, idx, setState, iscompleted, hoverchangepic, setpic}) {
   return(
     <div role="button" id={idx} className="flex z-10 my-[0.6em] h-[3rem] xs:h-[4rem] mx-[1.5em] border-none text-[1.5em] bg-gradient-to-b from-[#4E525A] to-[#36393F] drop-shadow-2xl hover:from-d-hover border-2 rounded-lg justify-center items-center font-bold text-white overflow-x-hidden whitespace-nowrap" 
-      onClick={()=>setState(idx)} onKeyDown={()=>setState} tabIndex={idx}>{name}</div>
+      onClick={()=>setState(idx)} onKeyDown={()=>setState} onMouseEnter={()=>setpic(hoverchangepic)} tabIndex={idx}>
+      <span className={iscompleted?"text-green-700":""}>
+        {name}
+      </span>
+    </div>
   );
 }
 
