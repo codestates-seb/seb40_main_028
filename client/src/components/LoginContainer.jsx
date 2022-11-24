@@ -1,10 +1,11 @@
-/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable */
+
 
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import axios from 'axios';
+import axios from "axios";
 
 // import { Flag } from "heroicons-react";
 
@@ -165,7 +166,7 @@ export default function LoginContainer() {
     try {
       // 응답 성공
 
-      let res = await axios.post('13.209.190.35:8080/users/login', {
+      const res = await axios.post("http://13.209.190.35:8080/users/login", {
         // 보내고자 하는 데이터
         username: data.email,
         password: data.password,
@@ -178,13 +179,11 @@ export default function LoginContainer() {
 		  "password" : "test123!@#"	
 }
       
-      
       */
 
       // status가 200이면 세션스토리지에 jwt-token 저장
-      if (res.status === "200") {
-        sessionStorage.setItem('jwt-token', res.headers.authorization);
-        sessionStorage.setItem('user', JSON.stringify({ ...res.data.data }));
+      if (res.status === 200) {
+        sessionStorage.setItem("jwt-token", res.headers.authorization);
         navigate("/");
 
         // InitialLogin이 false면 처음 로그인으로

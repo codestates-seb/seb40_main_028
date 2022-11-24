@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
@@ -150,14 +152,15 @@ export default function RegisterContainer() {
 
 
     return axios
-      .post('13.209.190.35:8080/users/info', {
+      .post("/13.209.190.35:8080/users/info", {
+      // .post('13.209.190.35:8080/users/info', {
         // 보내고자 하는 데이터
         email: data.email,
         nickname: data.displayName,
         password: data.password,
       })
       .then((res) => {
-        navigate('/login');
+        navigate("/login");
       })
       .catch((err) => {
         console.log(err);
@@ -259,7 +262,7 @@ export default function RegisterContainer() {
               {errors.password && errors.password.type === "minLength" && (
                 <Errormsg> 최소 길이는 10자 이상이어야 합니다</Errormsg>
               )}
-                {errors.password &&
+              {errors.password &&
                 errors.password.type === "pattern" && (
                 <Errormsg>영문, 특수문자, 숫자 포함하세요</Errormsg>
               )}

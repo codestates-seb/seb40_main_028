@@ -1,4 +1,7 @@
 module.exports = {
+  parserOptions: {
+    ecmaVersion: 2022,
+  },
   extends: ["airbnb", "prettier"],
   rules: {
     quotes: ["warn", "double", { avoidEscape: false }],
@@ -16,5 +19,8 @@ module.exports = {
     "consistent-return": "off",
     "no-alert": "off",
     "no-shadow": "warn",
+    "no-unused-expression": "off",
+    "optional-chaining": "off",
+    "react/jsx-props-no-spreading": "off",
   },
 };
