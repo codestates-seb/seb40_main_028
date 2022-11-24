@@ -1,10 +1,13 @@
+/* eslint-disable react/jsx-props-no-spreading */
+
+
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 
-import Toggle from "../components/Toggle";
+import Toggle from "./Toggle";
 
 const Container = styled.div`
   width: 300px;
@@ -53,6 +56,13 @@ const Input = styled.input`
   height: 35px;
   padding: 0;
   border: 2px solid rgb(88 101 242) ;
+
+  // 화살표 제거
+  // ::-webkit-outer-spin-button;
+  ::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 `;
 
 const SubmitBtn = styled.input`
@@ -81,88 +91,104 @@ const MainContainer = styled.div`
 
 export default function InformationContainer() {
   const [error, setError] = useState("");
+  
   const navigate = useNavigate();
+
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm({ mode: onchange });
   const onLogin = async (data) => {
-    // console.log(data);
+    console.log(data);
     // 회원가입 api 자리
-    try {
-      axios.post("#", { ...data });
-    } catch (err) {
-      setError(err);
-    }
+    // try {
+    //   axios.post("#", { ...data });
+    // } catch (err) {
+    //   setError(err);
+    // }
   };
+
+  const [account, setAccount] = useState({
+    height: "",
+    // weight: "",
+    // age: "",
+  });
+
+  //input에 입력될 때마다 account state값 변경되게 하는 함수
+  const onChangeAccount = (e) => {
+    setAccount({
+      ...account,
+      [e.target.name]: e.target.value,
+    });
+  };
+  // console.log(account);
 
   return (
     <MainContainer>
       <div>
         <Container>
-          <Form onSubmit={handleSubmit(onLogin)}>
+          <Form onSubmit={handleSubmit(onLogin)} onChange={onChangeAccount}>
             <InputContainer>
-              <Label htmlFor={"height"}>height(키)</Label>
+              <Label htmlFor="height">height(키)</Label>
               <Input
-                type={"text"}
-                id="height"
+                type="number"
+                id="height"              
                 {...register("height", {
                   required: true,
-                  minLength: 2,
-                  maxLength: 3,
+                  min: 50,
+                  max: 250,
                 })}
               />
               {errors.height && errors.height.type === "required" && (
                 <Errormsg>⚠ 키를 입력해주세요.</Errormsg>
               )}
-              {errors.height && errors.height.type === "minLength" && (
+              {errors.height && errors.height.type === "min" && (
                 <Errormsg>⚠ 올바른 키를 입력하세요</Errormsg>
               )}
-              {errors.height && errors.height.type === "maxLength" && (
+              {errors.height && errors.height.type === "max" && (
                 <Errormsg>⚠ 올바른 키를 입력하세요</Errormsg>
               )}
             </InputContainer>
             <InputContainer>
-              <Label htmlFor={"weight"}>weight(몸무게)</Label>
+              <Label htmlFor="weight">weight(몸무게)</Label>
               <Input
-                type={"text"}
+                type="number"
                 id="weight"
                 {...register("weight", {
                   required: true,
-                  minLength: 2,
-                  maxLength: 3,
+                  min: 1,
+                  max: 700,
                 })}
               />
               {errors.weight && errors.weight.type === "required" && (
                 <Errormsg>⚠ 몸무게를 입력해주세요.</Errormsg>
               )}
-              {errors.weight && errors.weight.type === "minLength" && (
+              {errors.weight && errors.weight.type === "min" && (
                 <Errormsg>⚠ 올바른 몸무게를 입력하세요</Errormsg>
               )}
-              {errors.weight && errors.weight.type === "maxLength" && (
+              {errors.weight && errors.weight.type === "max" && (
                 <Errormsg>⚠ 올바른 몸무게를 입력하세요</Errormsg>
               )}
             </InputContainer>
             <InputContainer>
-              <Label htmlFor={"age"}>age(나이)</Label>
+              <Label htmlFor="age">age(생년월일)</Label>
               <Input
-                type={"text"}
+                type="text"
                 id="age"
+                placeholder= "2000-01-01"
                 {...register("age", {
                   required: true,
-                  minLength: 2,
-                  maxLength: 3,
+                  // min: 1,
+                  // max: 200,
+                  pattern: /\d{4}-\d{2}-\d{2}/,
                 })}
               />
               {errors.age && errors.age.type === "required" && (
                 <Errormsg>⚠ 나이를 입력해주세요.</Errormsg>
               )}
-              {errors.age && errors.age.type === "minLength" && (
-                <Errormsg>⚠ 올바른 나이를 입력하세요</Errormsg>
-              )}
-              {errors.age && errors.age.type === "maxLength" && (
-                <Errormsg>⚠ 올바른 나이를 입력하세요</Errormsg>
+              {errors.age && errors.age.type === "pattern" && (
+                <Errormsg>⚠ 2000-01-01 형식을 맞춰주세요</Errormsg>
               )}
             </InputContainer>
             <Toggle />
@@ -170,8 +196,8 @@ export default function InformationContainer() {
             {/* 완료 클릭 시 메인 페이지로 이동 */}
             <SubmitBtn 
             // onClick={() => navigate('/')} 
-              type="submit" value={"완료"}                              
-            ></SubmitBtn>
+              type="submit" value="완료"                              
+            />
             {error && <Errormsg>⚠ {error}</Errormsg>}
           </Form>
         </Container>
