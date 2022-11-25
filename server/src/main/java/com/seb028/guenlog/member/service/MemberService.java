@@ -24,7 +24,6 @@ public class MemberService {
     private final JwtVerificationFilter jwtVerificationFilter;
     private final PasswordEncoder passwordEncoder;
     private final MemberWeightService memberWeightService;
-
     private final MemberWeightRepository memberWeightRepository;
 
 
@@ -33,8 +32,8 @@ public class MemberService {
      * @return MemberRepository -> dataBase에 member 객체 저장
      */
     public Member createMember(Member member) {
-        verifyExistMember(member.getEmail());
-        verifyExistMember(member.getNickname());
+        verifyExistEmail(member.getEmail());
+        verifyExistNickname(member.getNickname());
         member.setPassword(passwordEncoder.encode(member.getPassword()));
 
         return memberRepository.save(member);
@@ -42,7 +41,6 @@ public class MemberService {
 
     public Member initialMember(Member member, Integer infoWeight) {
         Member initialMember = findVerified(member.getId());
-
         //성별 저장
         Optional.ofNullable(member.getGender())
                 .ifPresent(gender -> initialMember.setGender(gender));
@@ -89,16 +87,18 @@ public class MemberService {
     }
 
     /**
-     * @param attributes -> email or nickname
+     * @param email or nickname -> email or nickname
      *                   email 또는 nickname을 입력 받았을 때 dataBase에 동일한 email 또는 nickname이 존재하는지
      *                   판단 후 존재할 경우 errorResponse 발생
      */
-    private void verifyExistMember(String attributes) {
-        Optional<Member> memberEmail = memberRepository.findByEmail(attributes);
-        Optional<Member> memberNickname = memberRepository.findByNickname(attributes);
+    private void verifyExistEmail(String email) {
+        Optional<Member> memberEmail = memberRepository.findByEmail(email);
         if (memberEmail.isPresent()) {
             throw new BusinessLogicException(ExceptionCode.USER_EMAIL_EXIST);
         }
+    }
+    private void verifyExistNickname(String nickname) {
+        Optional<Member> memberNickname = memberRepository.findByNickname(nickname);
         if (memberNickname.isPresent()) {
             throw new BusinessLogicException(ExceptionCode.USER_NICKNAME_EXIST);
         }
