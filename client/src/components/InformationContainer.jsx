@@ -183,11 +183,11 @@ export default function InformationContainer() {
       }
       );
 
-      // let a = {height: data.height,
-      //   age: data.age,
-      //   gender: gender,
-      //   weight: data.weight}
-      console.log("정보입력 성공! 데이터값~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+      let a = {height: data.height,
+        age: data.age,
+        gender: gender,
+        weight: data.weight}
+      console.log(a, "정보입력 성공! 데이터값~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 
 
       // status가 200이면 세션스토리지에 jwt-token 저장
