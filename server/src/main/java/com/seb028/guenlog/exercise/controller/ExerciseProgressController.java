@@ -1,8 +1,10 @@
 package com.seb028.guenlog.exercise.controller;
 
+import com.seb028.guenlog.exercise.dto.ExerciseProgressPatchDto;
 import com.seb028.guenlog.exercise.mapper.ExerciseProgressMapper;
 import com.seb028.guenlog.exercise.service.ExerciseProgressService;
 import com.seb028.guenlog.exercise.util.ExerciseProgress;
+import com.seb028.guenlog.member.entity.Member;
 import com.seb028.guenlog.member.service.MemberService;
 import com.seb028.guenlog.response.SingleResponseDto;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -11,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.time.LocalDate;
 
 @RestController
@@ -49,6 +53,32 @@ public class ExerciseProgressController {
         // ExerciseProgress 객체를 ResponseDto로 변환 후 반환
         return new ResponseEntity<> (
                 new SingleResponseDto(mapper.exerciseProgressToExerciseProgressResponseDto(exerciseProgress)),
+                HttpStatus.OK
+        );
+    }
+
+    /**
+     * 오늘 하루 운동 진행 후 운동 완료
+     * @param todayId : 오늘 하루 운동 ID
+     * @param exerciseProgressPatchDto : 운동시간, 운동 목록들의 완료여부가 담긴 Patch DTO
+     * @param request  : 클라이언트 요청(헤더에 토큰 포함)
+     * @return ResponseEntity 리턴
+     */
+    @PatchMapping("/{today-id")
+    public ResponseEntity patchExerciseProgress (   @RequestParam("today-id") @Positive @NotNull long todayId,
+                                                    @RequestBody ExerciseProgressPatchDto exerciseProgressPatchDto,
+                                                    HttpServletRequest request) {
+        // Http request의 JWT로부터 사용자 아이디 추출
+        long memberId = memberService.findMemberId(request);
+
+        // PatchDTO를 ExerciseProgress 객체로 변환 후 ExerciseProgress Service에서 수정 후 반환
+        ExerciseProgress exerciseProgress =
+                exerciseProgressService.updateExerciseProgress(todayId,
+                        mapper.exerciseProgressPatchDtoToExerciseProgress(exerciseProgressPatchDto));
+
+        // 추가적인 객체 반환없이 ResponseEntity로 HTTP Status OK 반환
+        return new ResponseEntity<> (
+                new SingleResponseDto<>(null),
                 HttpStatus.OK
         );
     }

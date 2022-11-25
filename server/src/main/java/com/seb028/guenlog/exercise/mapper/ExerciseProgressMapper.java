@@ -1,7 +1,11 @@
 package com.seb028.guenlog.exercise.mapper;
 
 
+import com.seb028.guenlog.exercise.dto.ExerciseProgressPatchDto;
 import com.seb028.guenlog.exercise.dto.ExerciseProgressResponseDto;
+import com.seb028.guenlog.exercise.entity.Exercise;
+import com.seb028.guenlog.exercise.entity.Record;
+import com.seb028.guenlog.exercise.entity.Today;
 import com.seb028.guenlog.exercise.util.ExerciseProgress;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
@@ -42,6 +46,34 @@ public interface ExerciseProgressMapper {
                 .todayId(todayId)               // 오늘 하루 운동 내역 ID
                 .totalTime(totalTime)           // 오늘 하루 운동 내역 총 운동 시간
                 .exercises(exercises)           // 오늘 하루 운동 기록 목록
+                .build();
+    }
+
+    default ExerciseProgress exerciseProgressPatchDtoToExerciseProgress(ExerciseProgressPatchDto exerciseProgressPatchDto) {
+
+        // 오늘 하루 운동 내역 객체 생성
+        Today today = Today.builder()
+                .totalTime(exerciseProgressPatchDto.getTotalTime())     //  오늘 하루 운동 내역 총 운동시간 설정
+                .build();
+
+        // 오늘 하루 운동 기록 목록 객체 리스트 생성
+        List<Record> records = exerciseProgressPatchDto.getExercises().stream()
+                .map(exercise -> {
+                    Exercise todayExercise = Exercise.builder()
+                            .id(exercise.getExerciseId())
+                            .build();
+                    Record record = Record.builder()
+                            .exercise(todayExercise)
+                            .isCompleted(exercise.isCompleted())
+                            .eachRecords(exercise.getEachRecords())
+                            .build();
+                    return record;
+                }).collect(Collectors.toList());
+
+        // ExerciseProgress 객체 생성하여 저장 후 반환
+        return ExerciseProgress.builder()
+                .today(today)
+                .records(records)
                 .build();
     }
 }
