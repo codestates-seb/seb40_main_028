@@ -5,11 +5,11 @@ import RandomMessage from "./RandomMessage";
 export default function PlanList({ data, setData }) {
   return (
     <div className="flex flex-col items-center w-full text-gray-700 text-medium text-xl text-center mt-5">
-      {data.map((item) => (
+      {data.map((item, idx) => (
         <div
           className="flex relative shadow-sm justify-between py-4  ease-out duration-150 p-1 rounded-lg mb-2
     w-[80%] border-[#2C2F33] bg-[#4E525A] hover:border-b-d-light hover:bg-[#2f3136] hover:rounded-lg  text-white text-base text-medium"
-          key={item.id}
+          key={idx}
         >
           <img
             src={icons}

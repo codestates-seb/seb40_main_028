@@ -22,14 +22,10 @@ input[type=number].noappearance::-webkit-inner-spin-button {
 }
 
 .noappearance {
-    width: 3em;
+    width: 3.5em;
+    height: 2em;
     background-color: #40444b;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    color: white;
     outline: none;
-    border-bottom: 2.5px solid #202225;
 }
 
 ::-webkit-scrollbar {

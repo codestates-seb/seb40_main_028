@@ -1,6 +1,6 @@
 import React from "react";
 import Modal from "react-modal";
-import Button from "./Button";
+import Button from "../Button";
 
 export default function Congrats({workoutdone}) {
   const style = {

@@ -38,7 +38,7 @@ const DetailContent = ({
         <img src={imgsss} alt="icons" />
 
         {/* 세트 표 상단 */}
-        <div className="w-full h-[3em] rounded-lg px-2 flex justify-between items-center">
+        <div className="w-full h-[3em] rounded-lg px-4 flex justify-between items-center">
           <div className="text-white font-semibold text-[0.8em]">세트</div>
           <div className="text-white font-semibold text-[0.8em]">무게</div>
           <div className="text-white font-semibold text-[0.8em]">횟수</div>
@@ -46,21 +46,21 @@ const DetailContent = ({
           <div className="text-white font-semibold text-[0.8em]">삭제</div>
         </div>
 
-        <div className="h-[17rem] p-1 w-full flex flex-col justify-center items-center overflow-scroll">
-          <div className="w-full h-[3em]  mt-[-15em]   justify-center items-center">
+        <div className="h-[17rem] w-full flex flex-col justify-center items-center overflow-scroll">
+          <div className="w-full h-[3em]  mt-[-15em]  justify-center items-center">
             {detailExercise.map((item, idx) => {
               return (
                 <div
                   key={idx}
-                  className="w-full  h-[3em] rounded-lg px-4 flex justify-between items-center"
+                  className="w-full h-[3em] rounded-lg px-4 flex justify-between items-center"
                 >
                   <div className="text-white  w-[1em] font-semibold text-[0.8em] text-right">
                     {idx + 1}
                   </div>
 
-                  <div className="text-black font-semibold text-[0.8em]">
+                  <div className="text-[#dcddde] font-semibold text-[0.8em]">
                     <input
-                      className="noappearance w-[3em]] text-center"
+                      className="noappearance w-[3em]] text-center rounded-md"
                       onChange={(e) => onChange(e, idx)}
                       name="weight"
                       value={item.weight || ""}
@@ -69,9 +69,9 @@ const DetailContent = ({
                       type="number"
                     />
                   </div>
-                  <div className="text-black  font-semibold text-[0.8em]">
+                  <div className="text-[#dcddde]  font-semibold text-[0.8em]">
                     <input
-                      className="noappearance w-[3em] text-center"
+                      className="noappearance w-[3em] text-center rounded-md"
                       onChange={(e) => onChange(e, idx)}
                       name="count"
                       value={item.count || ""}
@@ -80,9 +80,9 @@ const DetailContent = ({
                       type="number"
                     />
                   </div>
-                  <div className="text-black font-semibold text-[0.8em]">
+                  <div className="text-[#dcddde] font-semibold text-[0.8em] ">
                     <input
-                      className="noappearance w-[3em] text-center"
+                      className="noappearance w-[3em] text-center rounded-md"
                       onChange={(e) => onChange(e, idx)}
                       value={item.timer || ""}
                       name="timer"

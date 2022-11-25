@@ -136,7 +136,7 @@ const MainCalendar = () => {
   }, [currentMonth]);
 
   return (
-    <div className="pt-5 min-w-[20em] max-w-[20em]">
+    <div className="mt-9 min-w-[20em] max-w-[20em]">
       <div className=" px-4 mx-auto ">
         <div>
           <div className="flex items-center">
