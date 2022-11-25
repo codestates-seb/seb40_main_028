@@ -14,7 +14,9 @@ public enum ExceptionCode {
     RECORD_NOT_FOUND(419, "Record not found"),
 
     EXERCISE_NOT_FOUND(420, "Exercise not found"),
-    TODAY_NOT_FOUND(421, "Today not found");
+    TODAY_NOT_FOUND(421, "Today not found"),
+
+    EXERCISE_NOT_MATCH(422, "Exercise Not Match");
 
 
     @Getter
