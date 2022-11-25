@@ -130,7 +130,7 @@ export default function RegisterContainer() {
 
   const onRegister = async (data) => {
 
-    // console.log("data", data)
+    console.log("data", data)
     // console.log("이메일", data.email)
     // console.log("닉네임", data.nickname)
     // console.log("패스워드", data.password)
@@ -154,6 +154,8 @@ export default function RegisterContainer() {
         password: data.password
       });
 
+      console.log("받아온데이터", res);
+
       // 응답코드 201이면 회원가입 성공
       if (res.status === 201) {
         // 토근 저장 후 메인 페이지로 이동 
@@ -167,7 +169,7 @@ export default function RegisterContainer() {
 
     } catch (err) {
       // 응답 실패
-      // console.log(err);
+      console.log(err);
 
       // 에러 상세 메세지
       // console.log(err.response.data.message)

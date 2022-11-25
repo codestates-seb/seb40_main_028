@@ -138,10 +138,10 @@ export default function InformationContainer() {
     // console.log(data.password+": 이메일");
 
     // 키랑 몸무게는 number타입
-    console.log(`height: ${Number(data.height)}`)
-    console.log(`age: ${data.age}`)
-    console.log(`gender: ${gender}`)
-    console.log(`weight: ${Number(data.weight)}`)
+    // console.log(`height: ${Number(data.height)}`)
+    // console.log(`age: ${data.age}`)
+    // console.log(`gender: ${gender}`)
+    // console.log(`weight: ${Number(data.weight)}`)
 
 
 
@@ -154,14 +154,22 @@ export default function InformationContainer() {
     
     // 세션에 저장된 토큰 가져오기
     let token = sessionStorage.getItem('jwt-token');
-    // console.log(`토큰: ${token}`)
+    console.log(`토큰: ${token}`)
+
+    // 토큰이 없는경우 로그인 x로 판단하고 login 페이지로 이동
+    if(token === null) {
+      alert("로그인이 안 되어 있습니다.");
+      navigate("/login");
+    }
 
     try {
       // 응답 성공
-      // const res = await axios.post("http://13.209.190.35:8080/users/login", {
-      const res = await axios.post(`${url}/users/info`, 
+      // const res = await axios.post("http://13.209.190.35:8080/users/info", {
+      // const res = await axios.patch(`${url}/users/info`, 
+      const res = await axios.patch(`http://13.209.190.35:8080/users/info`, 
       {
         // 보내고자 하는 데이터
+        // 키 몸무게만 숫자형으로
         height: data.height,
         age: data.age,
         gender: gender,
@@ -174,6 +182,13 @@ export default function InformationContainer() {
       },
       }
       );
+
+      // let a = {height: data.height,
+      //   age: data.age,
+      //   gender: gender,
+      //   weight: data.weight}
+      console.log("정보입력 성공! 데이터값~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+
 
       // status가 200이면 세션스토리지에 jwt-token 저장
       if (res.status === 200) {
@@ -203,10 +218,19 @@ export default function InformationContainer() {
     } catch (err) {
       // 응답 실패
       console.log(err);
+      console.log(err.response);
+      console.log(err.response.request);
+      console.log(err.response.request.status);
       // console.log("로그인 실패")
 
+      // 세션에 토큰이 없을경우
+      // if(err.response.request.status === 403) {
+      //   alert("먼저 로그인을 해주세요.");
+      // }
+
       // 로그인 실패시 
-      alert("정보 입력에 실패하였습니다 다시 입력하여 주세요.");
+      alert("정보 입력에 실패하였습니다.");
+
     }
   };
   
