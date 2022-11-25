@@ -223,7 +223,7 @@ export default function InformationContainer() {
       console.log(err.response.request.status);
       // console.log("로그인 실패")
 
-      // 세션에 토큰이 없을경우
+      // 세션에 토큰이 없을경우??
       // if(err.response.request.status === 403) {
       //   alert("먼저 로그인을 해주세요.");
       // }
