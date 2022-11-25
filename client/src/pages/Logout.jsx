@@ -5,26 +5,26 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 
-// 모달 로그아웃 버튼
-const L = styled.button`
-  width: 100px;
-  height: 100px;
-  padding: 10px;
-  color: white;
-  font-size: 13px;
-  background: rgb(88 101 242);
-  border-radius: 10px;
-`;
+// // 모달 로그아웃 버튼
+// const L = styled.button`
+//   width: 80px;
+//   height: 15px;
+//   padding: 10px;
+//   color: white;
+//   font-size: 13px;
+//   background: rgb(88 101 242);
+//   border-radius: 10px;
+// `;
 
-// 모달 실행시 배경이미지
-const ModalBackdrop = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  width: 100vw;
-  height: 100vh;
-`;
+// // 모달 실행시 배경이미지
+// const ModalBackdrop = styled.div`
+//   position: fixed;
+//   top: 0;
+//   left: 0;
+//   background-color: rgba(0, 0, 0, 0.5);
+//   width: 100vw;
+//   height: 100vh;
+// `;
 
 const BtnContainer = styled.div`
 // 화면 중앙 고정
@@ -87,19 +87,46 @@ const CancleBtn = styled.button`
 
 
 const Container = styled.div`
-  height: 100%;
   display: flex;
-	flex-direction : column;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+  width: 25em;
+  color: black;
+  .modalButton {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10000;
+  padding: 12px 24px;
+}
+.overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  width: 120em;
+  height: 120em;
+  z-index: 100000;;
+}
+
+.modalContainer {
+  max-width: 600px;
+  width: 20em;
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  background-color: #ffffff;
+  box-shadow: 0px 0px 18px 0px rgba(0, 0, 0, 0.75);
+  border-radius: 8px;
+}
 `;
 
-const Logout = () => {
+const Logout = ({ open, onClose }) => {
+  if (!open) return null;
   const navigate = useNavigate();
-  const [isOpen, setIsOpen] = useState(false);
-  const openModalHandler = () => {
-    setIsOpen(!isOpen);
-  };
+ 
 
 
 
@@ -149,24 +176,26 @@ const Logout = () => {
 
 
   return (
-    <>
-      <div className="bg-d-dark w-full z-[1] h-12 max-w-lg justify-center text-lg px-10 font-medium fixed text-white border-b border-[#2C2F33] top-0  flex items-center">근로그</div>
-      <div className="h-screen bg-d-lighter pt-14">
-        <Container>
-          <L onClick={openModalHandler}>logout</L>
-          {isOpen ? (<ModalBackdrop onClick={openModalHandler}>
+      <Container>
+    <div onClick={onClose} className='overlay'>
+    <div
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+          className='modalContainer'
+        >
+          <div className='modalRight'>
             <BtnContainer>
               {/* 로그인 버튼 클릭 시 홈으로 페이지 이동 수정하고 지우기*/}
               <LogoutBtn  
                 onClick={logoutHandler} 
               >Logout</LogoutBtn>
-              <CancleBtn >Cancle</CancleBtn>
+              <CancleBtn onClick={onClose}>Cancle</CancleBtn>
             </BtnContainer>
-          </ModalBackdrop>
-          ) : null}
+        </div>
+        </div>
+        </div>
         </Container>
-      </div>
-    </>
   );
 };
 export default Logout;
