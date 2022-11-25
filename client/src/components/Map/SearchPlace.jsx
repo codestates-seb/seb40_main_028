@@ -33,7 +33,7 @@ const SearchPlace = () => {
         <form className="inputForm flex" onSubmit={handleSubmit}>
           <input
             className="w-72 h-10 mb-3 border-2 border-d-light  border-r-0 text-center rounded-tl-md rounded-bl-md pl-2 outline-none"
-            placeholder="근처 지역을 입력해주세요"
+            placeholder="근처 역 또는 지역을 입력해주세요"
             onChange={onChange}
             value={inputText}
           />

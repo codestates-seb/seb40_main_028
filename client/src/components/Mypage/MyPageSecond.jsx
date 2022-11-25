@@ -23,18 +23,19 @@ const DisplayText = styled.div`
   font-weight: 600;
   text-align: left;
   color: white;
-  margin-bottom: 0.5em;
+  margin-bottom: 0.2em;
   margin-top: 1em;
 `;
 const DisplayText2 = styled.div`
   font-size: 20px;
   text-align: left;
   color: white;
-  margin-top:-1.45em;
+  margin-top:-1.36em;
   margin-left: 3em;
 `;
 const DisplayText3= styled.div`
-  font-size: 20px;
+  font-size: 15px;
+  font-weight: 600;
   text-align: left;
   color: white;
   margin-top:0.6em;
@@ -94,7 +95,7 @@ const Input4 = styled.input`
   }
 `;
 const ToggleDiv = styled.div`
-margin: -1.3em 0em -1em -2.1em;
+margin: -1.8em 0em 1.7em -2.1em;
 `;
 
 const MyPageButton = styled.button`
@@ -103,10 +104,9 @@ const MyPageButton = styled.button`
   align-items: center;
   width: 5em;
   height: 2em;
-  padding:12px;
+  padding:10px;
   font-size: 15px;
   border: 0.01px solid #43549f;
-  color: white;
   margin-left: 9.5em;
   margin-top: -3em;
   :hover {
@@ -123,8 +123,8 @@ const MyPageButton2 = styled.button`
   justify-content: center;
   align-items: center;
   width: 80px;
-  height: 13px;
-  padding:13px;
+  height: 15px;
+  padding:15px;
   font-size: 2px;
   margin-left: 275px;
   :hover {
@@ -193,17 +193,17 @@ const MyPageSecond = () => {
   const [gender, setGender] = useState("W") //토글
 //get해올 값들
   const [name, setName] = useState('');
-  const [sex, setSex] = useState('');
+  // const [sex, setSex] = useState('');
   const [age, setAge] = useState('');
   const [height, setHeight] = useState('');
   const [weight, setWeight] = useState('');
 
   axios
   .get('/users/mypages/info',{
-      name:name,
-      age:age,
-      height:height,
-      weight:weight
+      name:setName,
+      age:setAge,
+      height:setHeight,
+      weight:setWeight
     })
     
 
@@ -260,7 +260,7 @@ const MyPageSecond = () => {
       <MyPageForm>
         <PageText>정보수정</PageText>
         <MyPageButton2 type="button" onClick={() => setIsOpen(true)}
-          className='modalButton'>로그아웃</MyPageButton2>
+          className='modalButton'>Logout</MyPageButton2>
           <Logout open={isOpen} 
           onClose={() => setIsOpen(false)} />
         <MyPageButton3 type="button" onClick={() => setSeModalOn(true)}
@@ -268,40 +268,40 @@ const MyPageSecond = () => {
           <SecessionModal open={SeModalOn} 
           onClose={() => setSeModalOn(false)} />
         <InputInfo className="displayName">
-          <DisplayText>닉네임</DisplayText>
+          <DisplayText>Nickname</DisplayText>
           <Input type="text" id="displayname"  required ref={nameInputRef} />
         </InputInfo>
         <InputInfo className="displayMail">
-          <DisplayText>이메일</DisplayText>
+          <DisplayText>Email</DisplayText>
           <Input2  type="mail" id="displayMail"  placeholder="이메일은 변경 불가능합니다." readOnly/>
         </InputInfo>
         <InputInfo className="password">
-          <DisplayText>패스워드</DisplayText>
-          <Input3 type="password" id="password" readOnly />
+          <DisplayText>Password</DisplayText>
+          <Input3 type="password" id="password" placeholder= "변경을 눌러주세요." readOnly />
           <SerchButton type="button" onClick={() => setPwModalOn(true)}
           className='modalButton'>변경</SerchButton>
           <PwModal open={PwModalOn} 
           onClose={() => setPwModalOn(false)} />
         </InputInfo>
         <InputInfo className="displayWidth">
-          <DisplayText>생년월일</DisplayText>
+          <DisplayText>Age</DisplayText>
           <Input type="date" id="birthday" name="birthday" required ref={ageInputRef} />
           </InputInfo>
           <InputInfo className="displayHeight">
-          <DisplayText>신장</DisplayText>
+          <DisplayText>Height</DisplayText>
           <Input4 type="number" id="displayHeight"  required ref={heightInputRef}  />
           <DisplayText2 className="h1">CM</DisplayText2>
         </InputInfo>
         <InputInfo className="displayWidth">
-          <DisplayText>몸무게</DisplayText>
+          <DisplayText>Weight</DisplayText>
           <Input4 type="number" id="displayweight" required ref={weightInputRef}/>
           <DisplayText2 className="h1">KG</DisplayText2>
-          <DisplayText3>성별</DisplayText3>
+          <DisplayText3>Sex</DisplayText3>
         </InputInfo>
         <ToggleDiv>
         <Toggle setGender={setGender}  />
         </ToggleDiv>
-        <MyPageButton type="button" onClick={handleOnClick}>저장</MyPageButton>
+        <MyPageButton type="button" onClick={handleOnClick}>Save</MyPageButton>
       </MyPageForm>
       </form>
       </>

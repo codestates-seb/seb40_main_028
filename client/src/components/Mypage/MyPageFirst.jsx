@@ -22,6 +22,7 @@ align-items: center;
 justify-content: center;
 max-width: 27em;
 width: 25em;
+height: 15em;
 margin-bottom: 2em;
 margin-top: 3em;
 `;
@@ -107,7 +108,8 @@ const MyPageFirst = () => {
   const [GymData, setGymCheck] = useState('');
 
   axios.
-  get("/users/mypages").then((res) => {
+  get("/users/mypages")
+  .then((res) => {
     const chart = res.data;
     chart.forEach(data=> {
       for (let i = 0; i < 6; i++){
@@ -119,6 +121,9 @@ const MyPageFirst = () => {
       });
       setGymCheck(GymCheck)
       setKgData(KgData)
+    })
+    .catch((err)=>{
+      console.log(err);
     });
 
   return (
