@@ -29,7 +29,7 @@ const Container = styled.form`
   max-width: 600px;
   width: 20em;
   position: fixed;
-  top: 30%;
+  top: 39.4%;
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
@@ -61,7 +61,8 @@ const DisplayText = styled.div`
   font-weight: 600;
   text-align: left;
   color: red;
-  margin-bottom: 0.5em;
+  margin-bottom: 0.2em;
+  
 `;
 
 const Input = styled.input`
