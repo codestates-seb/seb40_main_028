@@ -63,17 +63,18 @@ public class ExercisePlanController {
         Long id = memberService.findMemberId(request);
         List<Record> record = exercisePlanService.findTodo(date,id);
 
+        System.out.println(record);
         
         // 날짜에 운동이 있는지 확인하기 위한 널처리 응답
         Object result;
         if(record == null){
-            result = record;
+            result = new SingleResponseDto<>(record);
         }else{
-            result = exercisePlanMapper.recordToRecordBaseResponseDto(record);
+            result = new MultiResponseDto<>(exercisePlanMapper.recordToRecordBaseResponseDto(record));
         }
         
         
-        return new ResponseEntity<>(new SingleResponseDto<>(result),
+        return new ResponseEntity<>(result,
                     HttpStatus.OK);
     }
 

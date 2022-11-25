@@ -13,7 +13,7 @@ public interface ExerciseMainMapper {
     default List<ExerciseMainResponseDto.ExerciseDto> recordToExerciseDto(List<Record> records){
         return records.stream().map(record -> {
             ExerciseMainResponseDto.ExerciseDto exerciseDto = new ExerciseMainResponseDto.ExerciseDto();
-            exerciseDto.setExerciseId(record.getId());
+            exerciseDto.setExerciseId(record.getExercise().getId());
             exerciseDto.setExerciseName(record.getExercise().getName());
             exerciseDto.setIsComleted(record.getIsCompleted());
             return exerciseDto;
