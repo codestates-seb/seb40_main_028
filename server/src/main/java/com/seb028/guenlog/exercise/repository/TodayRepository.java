@@ -26,16 +26,16 @@ public interface TodayRepository extends JpaRepository<Today, Long> {
     @EntityGraph(attributePaths = {"member"})
     Optional<Today> findById(Long todayId);
 
-    @Query(value = "SELECT t.today_id as todayId, t.due_date as dueDate,(CASE WHEN(SUM(CASE WHEN r.is_completed = TRUE THEN 1 ELSE 0 END))>=1 THEN 1 ELSE 0 END) AS completed FROM Today as t \n" +
-            "LEFT JOIN Record as r \n" +
+    @Query(value = "SELECT t.today_id as todayId, t.due_date as dueDate,(CASE WHEN(SUM(CASE WHEN r.is_completed = TRUE THEN 1 ELSE 0 END))>=1 THEN 1 ELSE 0 END) AS completed FROM today as t \n" +
+            "LEFT JOIN record as r \n" +
             "ON t.today_id = r.today_id\n" +
             "WHERE t.due_date LIKE %:date% and t.member_id = :memberId \n" +
             "group by t.today_id", nativeQuery = true)
     List<CalendarResponseDto> findByLikeDateAndMemberId(@Param("date") String date, @Param("memberId")  Long memberId);
 
     // 사용자의 한달동안 운동기록을 세서 최근 6개월 단위로 조회
-    @Query(value = "SELECT MID(t.due_date,1,7) AS dates , (SUM(CASE WHEN r.is_completed = TRUE THEN 1 ELSE 0 END)) AS record FROM Today as t \n" +
-            "LEFT JOIN Record as r \n" +
+    @Query(value = "SELECT MID(t.due_date,1,7) AS dates , (SUM(CASE WHEN r.is_completed = TRUE THEN 1 ELSE 0 END)) AS record FROM today as t \n" +
+            "LEFT JOIN record as r \n" +
             "ON t.today_id = r.today_id \n" +
             "WHERE t.member_id = :memberId \n" +
             "GROUP BY t.due_date \n" +
