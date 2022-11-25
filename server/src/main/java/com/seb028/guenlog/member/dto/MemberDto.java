@@ -33,6 +33,7 @@ public class MemberDto {
         @Pattern(regexp = "^(\\d){4}+-(\\d){2}+-(\\d){2}$",
                 message = "생년월일은 8자리를 입력해 주세요")
         private String age;
+        @Pattern(regexp = "[WM]")
         private String gender;
 
         @Range(min = 0, max = 1000)
