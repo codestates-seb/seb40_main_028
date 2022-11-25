@@ -5,6 +5,8 @@ import com.seb028.guenlog.config.auth.handler.MemberAuthenticationSuccessHandler
 import com.seb028.guenlog.config.auth.jwt.filter.JwtAuthenticationFilter;
 import com.seb028.guenlog.config.auth.jwt.filter.JwtVerificationFilter;
 import com.seb028.guenlog.config.auth.utils.CustomAuthorityUtils;
+import com.seb028.guenlog.member.repository.MemberRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,16 +25,13 @@ import java.util.Arrays;
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
-//@RequiredArgsConstructor
+@RequiredArgsConstructor
 //@EnableWebSecurity
 public class SecurityConfig {
     private final JwtTokenizer tokenizer;
     private final CustomAuthorityUtils authorityUtils;
 
-    public SecurityConfig(JwtTokenizer tokenizer, CustomAuthorityUtils authorityUtils) {
-        this.tokenizer = tokenizer;
-        this.authorityUtils = authorityUtils;
-    }
+    private final MemberRepository memberRepository;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -70,7 +69,7 @@ public class SecurityConfig {
             AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class); //authentication 객체를 얻음
             JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(tokenizer, authenticationManager);
             jwtAuthenticationFilter.setFilterProcessesUrl("/users/login");//로그인 url 설정
-            jwtAuthenticationFilter.setAuthenticationSuccessHandler(new MemberAuthenticationSuccessHandler());
+            jwtAuthenticationFilter.setAuthenticationSuccessHandler(new MemberAuthenticationSuccessHandler(memberRepository));//MemberRespository 주입
 
             JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(tokenizer, authorityUtils);
 
