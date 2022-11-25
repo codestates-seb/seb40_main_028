@@ -16,7 +16,7 @@ public interface MemberWeightRepository extends JpaRepository<MemberWeight, Long
     @Query(value = "SELECT  MID(mw.created_at,1,7) AS dates , ROUND(AVG(mw.weight), 1)as weight \n" +
                     "FROM member_weight mw \n " +
                     "WHERE mw.member_id = :memberId \n" +
-                    "GROUP BY mw.created_at \n" +
+                    "GROUP BY MID(mw.created_at,1,7)  \n" +
                     "HAVING dates >  MID((now() - interval 6 month),1,7) \n",
                     nativeQuery = true)
     List<MonthlyWeight> findRecentSixMonthWeightByMemberId(@Param("memberId") Long memberId);
