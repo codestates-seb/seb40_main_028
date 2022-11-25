@@ -1,5 +1,5 @@
+/* eslint-disable */
 /* eslint-disable react/jsx-props-no-spreading */
-
 
 import React, { useState } from "react";
 import styled from "styled-components";
@@ -91,6 +91,9 @@ const MainContainer = styled.div`
 
 export default function InformationContainer() {
   const [error, setError] = useState("");
+
+
+  const [gender, setGender] = useState("W")
   
   const navigate = useNavigate();
 
@@ -99,41 +102,151 @@ export default function InformationContainer() {
     formState: { errors },
     handleSubmit,
   } = useForm({ mode: onchange });
-  const onLogin = async (data) => {
-    console.log(data);
-    // 회원가입 api 자리
-    // try {
-    //   axios.post("#", { ...data });
-    // } catch (err) {
-    //   setError(err);
-    // }
-  };
+  
+  // const onInformation = async (data) => {
+  //   console.log(data);
+  //   // 회원가입 api 자리
+  //   // try {
+  //   //   axios.post("#", { ...data });
+  //   // } catch (err) {
+  //   //   setError(err);
+  //   // }
+  // };
 
-  const [account, setAccount] = useState({
-    height: "",
-    // weight: "",
-    // age: "",
-  });
+  // const [account, setAccount] = useState({
+  //   height: "",
+  //   // weight: "",
+  //   // age: "",
+  // });
 
   //input에 입력될 때마다 account state값 변경되게 하는 함수
-  const onChangeAccount = (e) => {
-    setAccount({
-      ...account,
-      [e.target.name]: e.target.value,
-    });
+  // const onChangeAccount = (e) => {
+  //   setAccount({
+  //     ...account,
+  //     [e.target.name]: e.target.value,
+  //   });
+  // };
+  // // console.log(account);
+
+  // 성별체크
+  // console.log(gender, "성별!!!!!")
+
+
+  const onInformation = async (data) => {
+    console.log(data);
+    // console.log(data.email+": 이메일");
+    // console.log(data.password+": 이메일");
+
+    // 키랑 몸무게는 number타입
+    // console.log(`height: ${Number(data.height)}`)
+    // console.log(`age: ${data.age}`)
+    // console.log(`gender: ${gender}`)
+    // console.log(`weight: ${Number(data.weight)}`)
+
+
+
+
+
+
+
+
+
+    
+    // 세션에 저장된 토큰 가져오기
+    let token = sessionStorage.getItem('jwt-token');
+    console.log(`토큰: ${token}`)
+
+    // 토큰이 없는경우 로그인 x로 판단하고 login 페이지로 이동
+    if(token === null) {
+      alert("로그인이 안 되어 있습니다.");
+      navigate("/login");
+    }
+
+    try {
+      // 응답 성공
+      // const res = await axios.post("http://13.209.190.35:8080/users/info", {
+      // const res = await axios.patch(`${url}/users/info`, 
+      const res = await axios.patch(`http://13.209.190.35:8080/users/info`, 
+      {
+        // 보내고자 하는 데이터
+        // 키 몸무게만 숫자형으로
+        height: data.height,
+        age: data.age,
+        gender: gender,
+        weight: data.weight
+      },
+      {
+        // 헤더에 토큰값 넣어서 보내기 
+        headers: {
+        Authorization: `${token}`,
+      },
+      }
+      );
+
+      let a = {height: data.height,
+        age: data.age,
+        gender: gender,
+        weight: data.weight}
+      console.log(a, "정보입력 성공! 데이터값~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+
+
+      // status가 200이면 세션스토리지에 jwt-token 저장
+      if (res.status === 200) {
+
+        // 정보 입력 완료하면 메인페이지로 이동 
+        navigate("/");
+
+        // console.log(res);
+        // console.log("성공 로그인 ~~~~~~~~~~~~~~~~");
+
+        // console.log("응답 전체",res)
+        // console.log("응답.headers", res.headers.InitialLogin)
+        // console.log("응답.headers", res.headers.initialLogin)
+        // console.log("응답.headers", res.headers.initiallogin)
+        
+        // InitialLogin이 false면 처음 로그인으로
+        // if(res.InitialLogin === false){
+        //   navigate("/startinginformation");
+        //   sessionStorage.setItem('jwt-token', res.headers.authorization);
+        //   // InitialLogin이 true면 main 페이지로
+        // } else if(res.InitialLogin === ture){
+        //   navigate("/");
+        // }
+        
+      } 
+      
+    } catch (err) {
+      // 응답 실패
+      console.log(err);
+      console.log(err.response);
+      console.log(err.response.request);
+      console.log(err.response.request.status);
+      // console.log("로그인 실패")
+
+      // 세션에 토큰이 없을경우??
+      // if(err.response.request.status === 403) {
+      //   alert("먼저 로그인을 해주세요.");
+      // }
+
+      // 로그인 실패시 
+      alert("정보 입력에 실패하였습니다.");
+
+    }
   };
-  // console.log(account);
+  
 
   return (
     <MainContainer>
       <div>
         <Container>
-          <Form onSubmit={handleSubmit(onLogin)} onChange={onChangeAccount}>
+          <Form onSubmit={handleSubmit(onInformation)} >
+            {/* onChange={onChangeAccount} */}
             <InputContainer>
               <Label htmlFor="height">height(키)</Label>
               <Input
                 type="number"
-                id="height"              
+                id="height"   
+                placeholder= "165"           
                 {...register("height", {
                   required: true,
                   min: 50,
@@ -141,13 +254,13 @@ export default function InformationContainer() {
                 })}
               />
               {errors.height && errors.height.type === "required" && (
-                <Errormsg>⚠ 키를 입력해주세요.</Errormsg>
+                <Errormsg>키를 입력해주세요.</Errormsg>
               )}
               {errors.height && errors.height.type === "min" && (
-                <Errormsg>⚠ 올바른 키를 입력하세요</Errormsg>
+                <Errormsg>올바른 키를 입력하세요</Errormsg>
               )}
               {errors.height && errors.height.type === "max" && (
-                <Errormsg>⚠ 올바른 키를 입력하세요</Errormsg>
+                <Errormsg>올바른 키를 입력하세요</Errormsg>
               )}
             </InputContainer>
             <InputContainer>
@@ -155,6 +268,7 @@ export default function InformationContainer() {
               <Input
                 type="number"
                 id="weight"
+                placeholder= "65"
                 {...register("weight", {
                   required: true,
                   min: 1,
@@ -162,13 +276,13 @@ export default function InformationContainer() {
                 })}
               />
               {errors.weight && errors.weight.type === "required" && (
-                <Errormsg>⚠ 몸무게를 입력해주세요.</Errormsg>
+                <Errormsg>몸무게를 입력해주세요.</Errormsg>
               )}
               {errors.weight && errors.weight.type === "min" && (
-                <Errormsg>⚠ 올바른 몸무게를 입력하세요</Errormsg>
+                <Errormsg>올바른 몸무게를 입력하세요</Errormsg>
               )}
               {errors.weight && errors.weight.type === "max" && (
-                <Errormsg>⚠ 올바른 몸무게를 입력하세요</Errormsg>
+                <Errormsg>올바른 몸무게를 입력하세요</Errormsg>
               )}
             </InputContainer>
             <InputContainer>
@@ -179,26 +293,24 @@ export default function InformationContainer() {
                 placeholder= "2000-01-01"
                 {...register("age", {
                   required: true,
-                  // min: 1,
-                  // max: 200,
                   pattern: /\d{4}-\d{2}-\d{2}/,
                 })}
               />
               {errors.age && errors.age.type === "required" && (
-                <Errormsg>⚠ 나이를 입력해주세요.</Errormsg>
+                <Errormsg>나이를 입력해주세요.</Errormsg>
               )}
               {errors.age && errors.age.type === "pattern" && (
-                <Errormsg>⚠ 2000-01-01 형식을 맞춰주세요</Errormsg>
+                <Errormsg>2000-01-01 형식을 맞춰주세요</Errormsg>
               )}
             </InputContainer>
-            <Toggle />
+            <Toggle setGender={setGender} />
             {/* 완료 버튼 */}
             {/* 완료 클릭 시 메인 페이지로 이동 */}
             <SubmitBtn 
             // onClick={() => navigate('/')} 
               type="submit" value="완료"                              
             />
-            {error && <Errormsg>⚠ {error}</Errormsg>}
+            {error && <Errormsg>{error}</Errormsg>}
           </Form>
         </Container>
       </div>

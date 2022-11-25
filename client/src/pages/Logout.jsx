@@ -1,7 +1,9 @@
+/* eslint-disable */
 
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import axios from "axios";
 
 // 모달 로그아웃 버튼
 const L = styled.button`
@@ -99,6 +101,53 @@ const Logout = () => {
     setIsOpen(!isOpen);
   };
 
+
+
+  const logoutHandler = async () => {
+
+    const url = "http://13.209.190.35:8080";
+
+    const token = sessionStorage.getItem("jwt-token");
+    // const res = await axios.post(`${url}/users/signup`)
+    // const res = await axios.post(`${url}/users/signup`, {
+    // 보내고자 하는 데이터
+    //   email: data.email,
+    //   nickname: data.nickname,
+    //   password: data.password
+    // });
+    try {
+      const res = await axios.delete(`${url}/logout`, {
+        headers: {
+          Authorization: `${token}`,
+        },
+      });
+
+      // 세션에 있는 jwt 토큰 삭제
+     
+      if (res.status === 200) {
+
+ sessionStorage.removeItem("jwt-token");
+        // 정보 입력 완료하면 메인페이지로 이동 
+        navigate("/login");
+      }
+      
+
+    } catch (err) {
+    // 응답 실패
+      console.log(err);
+      // console.log("로그아웃 실패")
+
+      // 로그아웃 실패시 
+      alert("로그아웃 실패");
+    }
+
+
+
+
+  };
+
+
+
   return (
     <>
       <div className="bg-d-dark w-full z-[1] h-12 max-w-lg justify-center text-lg px-10 font-medium fixed text-white border-b border-[#2C2F33] top-0  flex items-center">근로그</div>
@@ -107,8 +156,10 @@ const Logout = () => {
           <L onClick={openModalHandler}>logout</L>
           {isOpen ? (<ModalBackdrop onClick={openModalHandler}>
             <BtnContainer>
-              {/* 로그인 버튼 클릭 시 홈으로 페이지 이동 */}
-              <LogoutBtn  onClick={() => navigate("/login")} >Logout</LogoutBtn>
+              {/* 로그인 버튼 클릭 시 홈으로 페이지 이동 수정하고 지우기*/}
+              <LogoutBtn  
+                onClick={logoutHandler} 
+              >Logout</LogoutBtn>
               <CancleBtn >Cancle</CancleBtn>
             </BtnContainer>
           </ModalBackdrop>
