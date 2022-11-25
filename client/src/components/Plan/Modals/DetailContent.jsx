@@ -145,8 +145,7 @@ const DetailContent = ({
       <div className="bottom-[0rem] px-3 h-[5rem] absolute left-[-0.65rem]  items-center flex flex-col justify-center space-y-3 bg-[#303030]">
         <div className="flex items-center justify-center">
           <div className="flex justify-center ml-[2rem] space-x-10 items-center whitespace-nowrap">
-            <button
-              type="button"
+            <div
               onClick={() => {
                 setDetailExercise([
                   {
@@ -164,7 +163,7 @@ const DetailContent = ({
                 setDetailExercise={setDetailExercise}
                 detailExercise={detailExercise}
               />
-            </button>
+            </div>
             <Button text="저장하기" onClick={handleSubmit} />
           </div>
         </div>
