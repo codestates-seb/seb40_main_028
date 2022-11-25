@@ -93,14 +93,7 @@ const Container = styled.div`
   align-items: center;
   width: 25em;
   color: black;
-  .modalButton {
-  position: fixed;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 10000;
-  padding: 12px 24px;
-}
+
 .overlay {
   background-color: rgba(0, 0, 0, 0.5);
   position: fixed;
