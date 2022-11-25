@@ -135,9 +135,9 @@ const SecessionModal = ({ open, onClose }) => {
           <p className='closeBtn' onClick={onClose}>
             X
           </p>
-          <InputInfo className="password">
+          <InputInfo>
           <DisplayText>정말로 탈퇴하시겠습니까?</DisplayText>
-          <Input type="text" id="password" ref={byeRef}  placeholder='"회원탈퇴" 를 입력해주세요.' />
+          <Input type="text"  ref={byeRef}  placeholder='"회원탈퇴" 를 입력해주세요.' />
           <MyPageButton className='btnContainer' onClick={handleOnClick}>회원탈퇴</MyPageButton>
           </InputInfo>
           </div>
