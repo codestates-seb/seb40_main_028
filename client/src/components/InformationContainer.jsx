@@ -156,6 +156,8 @@ export default function InformationContainer() {
     let token = sessionStorage.getItem('jwt-token');
     console.log(`토큰: ${token}`)
 
+    const url = "http://13.209.190.35:8080";
+
     // 토큰이 없는경우 로그인 x로 판단하고 login 페이지로 이동
     if(token === null) {
       alert("로그인이 안 되어 있습니다.");
@@ -164,9 +166,8 @@ export default function InformationContainer() {
 
     try {
       // 응답 성공
-      // const res = await axios.post("http://13.209.190.35:8080/users/info", {
-      // const res = await axios.patch(`${url}/users/info`, 
-      const res = await axios.patch(`http://13.209.190.35:8080/users/info`, 
+      // const res = await axios.post("http://13.209.190.35:8080/users/info",
+      const res = await axios.patch(`${url}/users/info`, 
       {
         // 보내고자 하는 데이터
         // 키 몸무게만 숫자형으로
@@ -242,6 +243,24 @@ export default function InformationContainer() {
           <Form onSubmit={handleSubmit(onInformation)} >
             {/* onChange={onChangeAccount} */}
             <InputContainer>
+              <Label htmlFor="age">age(생년월일)</Label>
+              <Input
+                type="text"
+                id="age"
+                placeholder= "2000-01-01"
+                {...register("age", {
+                  required: true,
+                  pattern: /\d{4}-\d{2}-\d{2}/,
+                })}
+              />
+              {errors.age && errors.age.type === "required" && (
+                <Errormsg>나이를 입력해주세요.</Errormsg>
+              )}
+              {errors.age && errors.age.type === "pattern" && (
+                <Errormsg>2000-01-01 형식을 맞춰주세요</Errormsg>
+              )}
+            </InputContainer>
+            <InputContainer>
               <Label htmlFor="height">height(키)</Label>
               <Input
                 type="number"
@@ -285,24 +304,7 @@ export default function InformationContainer() {
                 <Errormsg>올바른 몸무게를 입력하세요</Errormsg>
               )}
             </InputContainer>
-            <InputContainer>
-              <Label htmlFor="age">age(생년월일)</Label>
-              <Input
-                type="text"
-                id="age"
-                placeholder= "2000-01-01"
-                {...register("age", {
-                  required: true,
-                  pattern: /\d{4}-\d{2}-\d{2}/,
-                })}
-              />
-              {errors.age && errors.age.type === "required" && (
-                <Errormsg>나이를 입력해주세요.</Errormsg>
-              )}
-              {errors.age && errors.age.type === "pattern" && (
-                <Errormsg>2000-01-01 형식을 맞춰주세요</Errormsg>
-              )}
-            </InputContainer>
+            
             <Toggle setGender={setGender} />
             {/* 완료 버튼 */}
             {/* 완료 클릭 시 메인 페이지로 이동 */}

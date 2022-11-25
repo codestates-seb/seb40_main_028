@@ -175,10 +175,21 @@ export default function LoginContainer() {
         sessionStorage.setItem("jwt-token", res.headers.authorization);
 
         // 토근 저장 후 메인 페이지로 이동 
-        navigate("/");
+        // navigate("/");
 
-        // console.log(res);
         // console.log("성공 로그인 ~~~~~~~~~~~~~~~~");
+        console.log(res);
+        console.log("바디데이터 ", res.data)
+        // console.log("바디 이니셜로그인 값 확인 ", res.data.initialLogin)
+
+        // 이니셜로그인 false면 초기정보 입력 페이지로
+        if(res.data.initialLogin === false) {
+          navigate("/startinginformation");
+        }
+        // 이니셜로그인이 true면 메인페이지로
+        else {
+          navigate("/")
+        }
 
         // console.log("응답 전체",res)
         // console.log("응답.headers", res.headers.InitialLogin)
