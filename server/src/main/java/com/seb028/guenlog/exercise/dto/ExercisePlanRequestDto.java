@@ -16,7 +16,7 @@ public class ExercisePlanRequestDto {
 
         private Integer timer;
 
-        private Boolean earchCompleted;
+        private Boolean eachCompleted;
 
     }
 
