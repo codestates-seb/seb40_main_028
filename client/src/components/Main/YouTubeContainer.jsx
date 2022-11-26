@@ -1,15 +1,18 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
 import { Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
 import "swiper/swiper.min.css";
+import { TokenValue } from "../../state/states";
 import Loading from "../Loading";
 
 const YouTubeContainer = () => {
   const API = process.env.REACT_APP_YOUTUBE_API_KEY;
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [videos, setVideos] = useState(null);
+  const [token, setToken] = useRecoilState(TokenValue);
 
   useEffect(() => {
     axios
