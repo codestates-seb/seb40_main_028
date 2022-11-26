@@ -57,6 +57,36 @@ const MainCalendar = () => {
           exerciseName: "데드리프트",
           isComleted: false,
         },
+        {
+          exerciseId: 4,
+          exerciseName: "벤치프레스",
+          isComleted: true,
+        },
+        {
+          exerciseId: 5,
+          exerciseName: "스쿼트",
+          isComleted: false,
+        },
+        {
+          exerciseId: 6,
+          exerciseName: "데드리프트",
+          isComleted: false,
+        },
+        {
+          exerciseId: 7,
+          exerciseName: "벤치프레스",
+          isComleted: true,
+        },
+        {
+          exerciseId: 8,
+          exerciseName: "스쿼트",
+          isComleted: false,
+        },
+        {
+          exerciseId: 9,
+          exerciseName: "데드리프트",
+          isComleted: false,
+        },
       ],
     },
   ]);
@@ -224,14 +254,14 @@ const MainCalendar = () => {
           </div>
         </div>
 
-        <section className="mt-4 px-12">
+        <section className="mt-4 px-12 ">
           <h2 className="font-semibold text-white">
             이날의 운동{" "}
             <time dateTime={format(selectedDay, "yyyy-MM-dd")}>
               {format(selectedDay, "MMM dd, yyy")}
             </time>
           </h2>
-          <ol className="mt-4 text-sm leading-6 text-gray-500">
+          <ol className="mt-4 text-sm leading-6 text-gray-500 ">
             {boolean ? (
               <CalendarContent todos={todos} />
             ) : (

@@ -19,11 +19,10 @@
     "primereact": "^8.7.2",
     "react": "^18.2.0",
     "react-chartjs-2": "^4.3.1",
-    "react-datepicker": "^4.8.0",
+
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.39.4",
     "react-icons": "^4.6.0",
-    "react-indiana-drag-scroll": "^2.2.0",
     "react-kakao-maps-sdk": "^1.1.5",
     "react-loader-spinner": "^5.3.4",
     "react-modal": "^3.16.1",
@@ -33,6 +32,7 @@
     "recoil": "^0.7.6",
     "recoil-persist": "^4.2.0",
     "styled-components": "^5.3.6",
+    "swiper": "^8.4.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

@@ -1,6 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import ScrollContainer from "react-indiana-drag-scroll";
+import { Pagination } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/swiper-bundle.min.css";
+import "swiper/swiper.min.css";
 import Loading from "../Loading";
 
 const YouTubeContainer = () => {
@@ -21,65 +24,83 @@ const YouTubeContainer = () => {
       });
   }, []);
 
+  useEffect(() => {
+    const handleUnSelected = () => {
+      setSelectedVideo(null);
+    };
+    window.addEventListener("click", handleUnSelected);
+    return () => {
+      window.removeEventListener("click", handleUnSelected);
+    };
+  }, []);
+
   return (
-    <div className="w-full min-h-[13.5em] py-4 overflow-x-scroll mb-[5em] pr-4">
-      <ScrollContainer>
-        <div className="flex w-full">
+    <div className="w-full flex items-center justify-between max-h-[15em] min-h-[15em] py-4 overflow-x-scroll overflow-y-hidden">
+      <Swiper
+        slidesPerView={1.3}
+        speed={400}
+        spaceBetween={30}
+        centeredSlides={false}
+        modules={[Pagination]}
+        className="mySwiper"
+      >
+        <div className="flex w-full ">
           {videos ? (
             videos.map((video, idx) => {
               const videoUrl = video.url;
               return (
-                <div
-                  role="presentation"
-                  onClick={() => {
-                    setSelectedVideo(idx);
-                  }}
-                  className="image-div flex flex-col text-sm font-semibold min-w-[30em] h-full mr-4 text-center first:ml-4"
-                  key={idx}
-                >
-                  {selectedVideo === idx ? (
-                    <div className="w-full h-[20em] relative">
+                <SwiperSlide key={videoUrl}>
+                  <div
+                    role="presentation"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedVideo(idx);
+                    }}
+                    className="image-div pl-[4em] flex flex-col text-sm font-semibold min-w-[25em] h-full text-center first:ml-[-2em] "
+                  >
+                    {selectedVideo === idx ? (
+                      <div className="w-full relative ">
+                        <img
+                          src={video.thumbnails[0].url}
+                          className="thumnails w-[28em] object-contain rounded-md aspect-video overflow-hidden blur-[0.1em] "
+                          alt="video-thumbnails"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => {
+                            window.open(videoUrl);
+                          }}
+                          className=" absolute left-[40%] ease-out duration-150 top-[40%] font-semibold text-white bg-d-button hover:bg-d-button-hover rounded-md p-2"
+                        >
+                          보러가기
+                        </button>
+                      </div>
+                    ) : (
                       <img
                         src={video.thumbnails[0].url}
-                        className="thumnails w-full max-h-inital object-contain rounded-md aspect-video overflow-hidden blur-[0.15em]"
+                        className="thumnails max-h-inital w-[28em] object-contain rounded-md aspect-video overflow-hidden "
                         alt="video-thumbnails"
                       />
-                      <button
-                        type="button"
-                        onClick={() => {
-                          window.open(videoUrl);
-                        }}
-                        className="absolute left-[42.5%] top-[35.5%] font-semibold text-white bg-d-button hover:bg-d-button-hover rounded-md p-2"
-                      >
-                        보러가기
-                      </button>
-                    </div>
-                  ) : (
-                    <img
-                      src={video.thumbnails[0].url}
-                      className="thumnails w-full max-h-inital  object-contain rounded-md aspect-video overflow-hidden "
-                      alt="video-thumbnails"
-                    />
-                  )}
-                </div>
+                    )}
+                  </div>
+                </SwiperSlide>
               );
             })
           ) : (
-            <div className="image-div flex text-sm font-semibold min-w-[30em] h-full mr-4 text-center first:ml-4">
-              {Array(10)
+            <div>
+              {Array(5)
                 .fill(0)
                 .map((_, idx) => (
-                  <div
-                    key={idx}
-                    className="thumnails min-w-[420px] min-h-[236.25px] max-h-inital object-contain rounded-md aspect-video mr-4 overflow-hidden bg-d-light"
-                  >
-                    <Loading />
-                  </div>
+                  <SwiperSlide key={idx}>
+                    <div className="max-h-inital min-w-[359px] min-h-[202px] rounded-md pb-3 overflow-hidden bg-d-light flex items-center justify-center first:ml-[2em]">
+                      <Loading />
+                    </div>
+                  </SwiperSlide>
                 ))}
             </div>
           )}
         </div>
-      </ScrollContainer>
+      </Swiper>
     </div>
   );
 };

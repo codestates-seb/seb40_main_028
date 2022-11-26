@@ -8,10 +8,10 @@ import YouTubeContainer from "../components/Main/YouTubeContainer";
 const Main = () => {
   return (
     <Layout title="근로그" hasTabBar>
-      <div className="text-gray-700 h-fit text-medium text-xl text-center bg-d-lighter flex flex-col items-center">
+      <div className="text-gray-700 text-medium text-xl text-center bg-d-lighter flex flex-col items-center mb-[-2em]">
         <MainCalendar />
 
-        <div>
+        <div className="mb-[-1.75em]">
           <div className="w-full h-1 rounded-md bg-gray-200 mt-12 mb-2" />
           <h2 className="text-white text-center font-semibold mb-1">
             추천 운동 영상
