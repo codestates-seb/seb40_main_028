@@ -4,7 +4,6 @@ import com.seb028.guenlog.exercise.dto.ExerciseProgressPatchDto;
 import com.seb028.guenlog.exercise.mapper.ExerciseProgressMapper;
 import com.seb028.guenlog.exercise.service.ExerciseProgressService;
 import com.seb028.guenlog.exercise.util.ExerciseProgress;
-import com.seb028.guenlog.member.entity.Member;
 import com.seb028.guenlog.member.service.MemberService;
 import com.seb028.guenlog.response.SingleResponseDto;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -52,7 +51,7 @@ public class ExerciseProgressController {
 
         // ExerciseProgress 객체를 ResponseDto로 변환 후 반환
         return new ResponseEntity<> (
-                new SingleResponseDto(mapper.exerciseProgressToExerciseProgressResponseDto(exerciseProgress)),
+                new SingleResponseDto<>(mapper.exerciseProgressToExerciseProgressResponseDto(exerciseProgress)),
                 HttpStatus.OK
         );
     }
@@ -64,7 +63,7 @@ public class ExerciseProgressController {
      * @param request  : 클라이언트 요청(헤더에 토큰 포함)
      * @return ResponseEntity 리턴
      */
-    @PatchMapping("/{today-id")
+    @PatchMapping("/{today-id}")
     public ResponseEntity patchExerciseProgress (   @RequestParam("today-id") @Positive @NotNull long todayId,
                                                     @RequestBody ExerciseProgressPatchDto exerciseProgressPatchDto,
                                                     HttpServletRequest request) {
