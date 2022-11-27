@@ -39,7 +39,7 @@ public interface TodayRepository extends JpaRepository<Today, Long> {
             "ON t.today_id = r.today_id \n" +
             "WHERE t.member_id = :memberId \n" +
             "GROUP BY MID(t.due_date,1,7) \n" +
-            "HAVING dates >  MID((now() - interval 6 month),1,7))", nativeQuery = true)
+            "HAVING dates >  MID((now() - interval 6 month),1,7)", nativeQuery = true)
     List<MonthlyRecord> findRecentSixMonthsRecordByMemberId(@Param("memberId") Long memberId);
 
 }

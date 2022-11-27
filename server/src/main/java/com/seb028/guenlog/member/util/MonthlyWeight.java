@@ -1,18 +1,8 @@
 package com.seb028.guenlog.member.util;
 
-import lombok.Builder;
-import lombok.Getter;
+// 한달 몸무게 평균 클래스
+public interface MonthlyWeight {
+    String getDates();      // 한달의 날짜
 
-import java.sql.Date;
-
-@Getter
-@Builder
-public class MonthlyWeight {
-    private Date dates;
-    private double weight;
-
-
-    public void setWeight(double weight) {
-        this.weight = weight;
-    }
+    Double getWeight();     // 한달 평균 몸무게
 }

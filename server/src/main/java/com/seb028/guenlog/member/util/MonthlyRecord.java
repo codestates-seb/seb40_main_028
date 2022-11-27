@@ -1,17 +1,9 @@
 package com.seb028.guenlog.member.util;
 
-import lombok.Builder;
-import lombok.Getter;
+// 한 달 운동 횟수 기록 클래스
+public interface MonthlyRecord {
 
-import java.sql.Date;
+    String getDates();      //  한달 날짜
 
-@Getter
-@Builder
-public class MonthlyRecord {
-    private Date date;
-    private int record;
-
-    public void setRecord(int record) {
-        this.record = record;
-    }
+    Integer getRecord();    // 운동 횟수
 }
