@@ -11,8 +11,8 @@ import java.util.List;
 @Builder
 // 오늘 하루 운동 내역, 운동 기록 목록 저장한 ExerciseProgress의 응답용 객체
 public class ExerciseProgressResponseDto {
-    private long todayId;                       // 오늘 하루 운동 내역의 ID
-    private int totalTime;                      // 오늘 하루 운동 내역의 총 운동 시간
+    private Long todayId;                       // 오늘 하루 운동 내역의 ID
+    private Integer totalTime;                      // 오늘 하루 운동 내역의 총 운동 시간
     List<TodayExerciseDto> exercises;           // 운동 기록 목록 리스트
 
     @Getter
@@ -20,8 +20,8 @@ public class ExerciseProgressResponseDto {
     @Builder
     // 하루 운동 기록 응답용 객체
     public static class TodayExerciseDto {
-        private long exerciseId;                // 운동 ID
-        private boolean isCompleted;            // 완료 여부
+        private Long exerciseId;                // 운동 ID
+        private Boolean isCompleted;            // 완료 여부
         private String exerciseName;            // 운동 이름
         private String imageUrl;                // 이미지 UR
         private List<ExercisePlanRequestDto.EachRecords> eachRecords;   // 각 세트 (횟수, 무게, 타이머, 완료 여부)

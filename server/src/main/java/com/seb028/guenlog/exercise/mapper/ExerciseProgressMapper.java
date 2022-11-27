@@ -64,7 +64,7 @@ public interface ExerciseProgressMapper {
                             .build();
                     Record record = Record.builder()
                             .exercise(todayExercise)
-                            .isCompleted(exercise.isCompleted())
+                            .isCompleted(exercise.getIsCompleted())
                             .eachRecords(exercise.getEachRecords())
                             .build();
                     return record;

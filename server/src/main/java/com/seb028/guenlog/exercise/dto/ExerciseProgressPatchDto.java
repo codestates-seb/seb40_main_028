@@ -14,8 +14,8 @@ public class ExerciseProgressPatchDto {
     @Getter
     // 하루 운동 기록 응답용 객체
     public static class TodayExerciseDto {
-        private long exerciseId;        // 운동 ID
-        private boolean isCompleted;    // 완료 여부
+        private Long exerciseId;        // 운동 ID
+        private Boolean isCompleted;    // 완료 여부
         private List<ExercisePlanRequestDto.EachRecords> eachRecords;     // 각 세트 (횟수, 무게, 타이머, 완료여부)
     }
 }

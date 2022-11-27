@@ -64,7 +64,7 @@ public class ExerciseProgressController {
      * @return ResponseEntity 리턴
      */
     @PatchMapping("/{today-id}")
-    public ResponseEntity patchExerciseProgress (   @RequestParam("today-id") @Positive @NotNull long todayId,
+    public ResponseEntity patchExerciseProgress (   @PathVariable("today-id") @Positive @NotNull long todayId,
                                                     @RequestBody ExerciseProgressPatchDto exerciseProgressPatchDto,
                                                     HttpServletRequest request) {
         // Http request의 JWT로부터 사용자 아이디 추출

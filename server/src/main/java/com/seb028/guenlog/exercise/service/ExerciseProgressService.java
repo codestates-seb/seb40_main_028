@@ -68,7 +68,7 @@ public class ExerciseProgressService {
 
         // --- 오늘 하루 운동 기록 목록 수정 ---
         List<Record> records = exerciseProgress.getRecords();           // 수정을 원하는 오늘 하루 운동 목록 리스트
-        List<Record> findRecords = recordRepository.findByTodayId(today.getId());       // RecordRepository에 저장된 운동 기록 목록 조회ㅣ
+        List<Record> findRecords = recordRepository.findByTodayId(todayId);       // RecordRepository에 저장된 운동 기록 목록 조회ㅣ
 
         // 수정 원하는 운동 기록 목록 길이와 저장된 운동 기록 목록 길이가 다르면 예외 발생
         if (records.size() != findRecords.size()){
