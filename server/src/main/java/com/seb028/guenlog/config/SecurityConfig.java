@@ -1,32 +1,22 @@
 package com.seb028.guenlog.config;
 
 import com.seb028.guenlog.config.auth.JwtTokenizer;
-import com.seb028.guenlog.config.auth.handler.MemberAccessDeniedHandler;
-import com.seb028.guenlog.config.auth.handler.MemberAuthenticationEntryPoint;
-import com.seb028.guenlog.config.auth.handler.MemberAuthenticationSuccessHandler;
-//import com.seb028.guenlog.config.auth.handler.Oauth2MemberSuccessHandler;
-//import com.seb028.guenlog.config.auth.handler.Oauth2MemberSuccessHandler;
-import com.seb028.guenlog.config.auth.handler.Oauth2MemberSuccessHandler;
+import com.seb028.guenlog.config.auth.handler.*;
 import com.seb028.guenlog.config.auth.jwt.filter.JwtAuthenticationFilter;
 import com.seb028.guenlog.config.auth.jwt.filter.JwtVerificationFilter;
 import com.seb028.guenlog.config.auth.service.CustomOauth2UserService;
 import com.seb028.guenlog.config.auth.utils.CustomAuthorityUtils;
 import com.seb028.guenlog.member.repository.MemberRepository;
-import com.seb028.guenlog.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -37,14 +27,12 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @RequiredArgsConstructor
-//@EnableWebSecurity
 public class SecurityConfig {
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
     private final MemberRepository memberRepository;
     private final CustomOauth2UserService customOAuth2UserService;
     private final Oauth2MemberSuccessHandler oauth2MemberSuccessHandler;
-//    private final MemberService memberService;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -73,15 +61,12 @@ public class SecurityConfig {
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/users/login")
                 .and()
-                .oauth2Login()
-                .userInfoEndpoint()
-                .userService(customOAuth2UserService);
+                .oauth2Login()//OAuth2 로그인 시작
+                .userInfoEndpoint()//로그인 성공시 사용자 정보를 가져옴
+                .userService(customOAuth2UserService); //로그인 성공 후 oauth2userservice 호출
         http
                 .oauth2Login()
-                .successHandler(oauth2MemberSuccessHandler)
-        ;
-
-
+                .successHandler(oauth2MemberSuccessHandler);//oauth2 인증 성공 후처리 handler 호출
         return http.build();
     }
 
@@ -96,7 +81,9 @@ public class SecurityConfig {
             AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class); //authentication 객체를 얻음
             JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(jwtTokenizer, authenticationManager);
             jwtAuthenticationFilter.setFilterProcessesUrl("/users/login");//로그인 url 설정
-            jwtAuthenticationFilter.setAuthenticationSuccessHandler(new MemberAuthenticationSuccessHandler(memberRepository));//MemberRespository 주입
+            jwtAuthenticationFilter.setAuthenticationSuccessHandler(new MemberAuthenticationSuccessHandler(memberRepository));//인증 성공시 로직
+            jwtAuthenticationFilter.setAuthenticationFailureHandler(new MemberAuthenticationFailureHandler());//인증 실패시 에러 출력
+
             JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils);
 
             builder.addFilter(jwtAuthenticationFilter)
