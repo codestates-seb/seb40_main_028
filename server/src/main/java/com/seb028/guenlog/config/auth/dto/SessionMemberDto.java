@@ -6,11 +6,11 @@ import lombok.Getter;
 import java.io.Serializable;
 
 @Getter
-public class SessionMember implements Serializable {
+public class SessionMemberDto implements Serializable { //세션을 직렬화 하기 위한 Dto
     private String name;
     private String email;
 
-    public SessionMember(Member member) {
+    public SessionMemberDto(Member member) {
         this.email = member.getEmail();
         this.name = member.getNickname();
     }

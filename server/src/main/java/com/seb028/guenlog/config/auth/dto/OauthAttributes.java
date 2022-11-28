@@ -28,11 +28,11 @@ public class OauthAttributes {
         this.name = name;
         this.email = email;
     }
-
+    //registrationID를 통해 OAuth2 써드파티 구분
     public static OauthAttributes of(String registrationId, String userNameAttributeName, Map<String, Object> attributes) {
         return ofGoogle(userNameAttributeName, attributes);
     }
-
+    //google 사용자 정보
     private static OauthAttributes ofGoogle(String userNameAttributeName, Map<String, Object> attributes) {
         return OauthAttributes.builder()
                 .name((String) attributes.get("name"))
@@ -41,7 +41,7 @@ public class OauthAttributes {
                 .nameAttributeKey(userNameAttributeName)
                 .build();
     }
-
+    //Member 엔티티 생성
     public Member toEntity() {
         return Member.builder()
                 .email(email)
