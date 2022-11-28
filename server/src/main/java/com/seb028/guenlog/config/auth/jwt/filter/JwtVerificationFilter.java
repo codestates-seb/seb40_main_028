@@ -2,6 +2,8 @@ package com.seb028.guenlog.config.auth.jwt.filter;
 
 import com.seb028.guenlog.config.auth.JwtTokenizer;
 import com.seb028.guenlog.config.auth.utils.CustomAuthorityUtils;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.security.SignatureException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -29,10 +31,18 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        Map<String, Object> claims = verifyJws(request); //request header에서 jwt 가져옴
-        setAuthenticationToContext(claims);//authentication 객체를 SecurityContext에 저장
+        try {
+            Map<String, Object> claims = verifyJws(request);  //request에서 token을 디코딩
+            setAuthenticationToContext(claims);  //claims를 context에 저장
+        } catch (SignatureException se) {  //signature 불일치 에러
+            request.setAttribute("exception", se);
+        } catch (ExpiredJwtException ee) {  //token expired 에러
+            request.setAttribute("exception", ee);
+        } catch (Exception e) {
+            request.setAttribute("exception", e);
+        }
 
-        filterChain.doFilter(request, response); //다음 필터로 이동
+        filterChain.doFilter(request, response);
     }
 
     @Override
@@ -51,7 +61,6 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
 
         return claims;
     }
-
     private void setAuthenticationToContext(Map<String, Object> claims) {
         //파싱한 claims에서 username을 얻음
         String username = (String) claims.get("username");
