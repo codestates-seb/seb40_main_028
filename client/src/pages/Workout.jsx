@@ -1,3 +1,5 @@
+//AXIOS 테스트완료. 커버페이지 붙이고 토큰이랑 API 수정하면 완료
+
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
