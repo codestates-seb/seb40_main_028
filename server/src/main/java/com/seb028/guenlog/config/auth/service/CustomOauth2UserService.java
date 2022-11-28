@@ -1,13 +1,13 @@
 package com.seb028.guenlog.config.auth.service;
 
 import com.seb028.guenlog.config.auth.dto.OauthAttributes;
-import com.seb028.guenlog.config.auth.dto.SessionMember;
+import com.seb028.guenlog.config.auth.dto.SessionMemberDto;
 import com.seb028.guenlog.member.entity.Member;
 import com.seb028.guenlog.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -27,26 +27,33 @@ public class CustomOauth2UserService implements OAuth2UserService<OAuth2UserRequ
     private final MemberRepository memberRepository;
     private final HttpSession httpSession;
 
+    @Bean
+    public PasswordEncoder getPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
     @Override
     public OAuth2User loadUser(OAuth2UserRequest request) throws OAuth2AuthenticationException {
         OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
         OAuth2User oAuth2User = delegate.loadUser(request);
-
+        //현재 사용 OAuth2를 구분.
         String registrationId = request.getClientRegistration().getRegistrationId();
+        //OAuth2 로그인 진행 시 키가 되는 필드값
         String usernameAttributeName = request.getClientRegistration().getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
-
+        //OAuth2UserService를 통해 가져온 OAuth2User의 attribute를 담을 클래스
         OauthAttributes attributes = OauthAttributes.of(registrationId, usernameAttributeName, oAuth2User.getAttributes());
+        //DB에서 이메일을 통해 사용자 탐색
         Optional<Member> repository = memberRepository.findByEmail(attributes.getEmail());
         Member member;
         if(repository.isEmpty()){
+            //사용자가 존재하지 않으면 회원가입 처리
             member = saveMember(attributes);
         }
         else {
+            //존재하면 업데이트
             member = saveOrUpdate(attributes);
         }
-        System.out.println(member.getInitialLogin());
-//        Member member = saveOrUpdate(attributes);
-        httpSession.setAttribute("user", new SessionMember(member));
+        //세션에 사용자 정보를 저장하기 위한 dto클래스
+        httpSession.setAttribute("user", new SessionMemberDto(member));
 
         return new DefaultOAuth2User(Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")), attributes.getAttributes(), attributes.getNameAttributeKey());
     }
@@ -61,7 +68,7 @@ public class CustomOauth2UserService implements OAuth2UserService<OAuth2UserRequ
         Member member = Member.builder()
                 .email(attributes.getEmail())
                 .nickname(attributes.getName())
-                .password("oauth2member!!")
+                .password(getPasswordEncoder().encode("oauth2member!!"))
                 .build();
         return memberRepository.save(member);
     }

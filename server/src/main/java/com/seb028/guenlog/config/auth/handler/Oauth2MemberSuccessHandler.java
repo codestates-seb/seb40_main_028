@@ -7,12 +7,8 @@ import com.seb028.guenlog.exception.BusinessLogicException;
 import com.seb028.guenlog.exception.ExceptionCode;
 import com.seb028.guenlog.member.entity.Member;
 import com.seb028.guenlog.member.repository.MemberRepository;
-import com.seb028.guenlog.member.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -36,39 +32,26 @@ public class Oauth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         this.memberRepository = memberRepository;
     }
 
-    @Bean
-    public PasswordEncoder getPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
             throws IOException, ServletException {
-
+        //OAuth2 로그인 사용자 정보
         var oauth2User = (OAuth2User)authentication.getPrincipal();
         String email = String.valueOf(oauth2User.getAttributes().get("email"));
         List<String> authority = customAuthorityUtils.createRoles(email);
         String nickname = String.valueOf(oauth2User.getAttributes().get("name"));
         String password = "oauth2user!";
 
-
-
-//        log.info("loginUser -> {}", oauth2Member);
-//        if(!memberRepository.findByEmail(email).isEmpty()) {
-//            memberRepository.save(oauth2Member);  //저장을 하면 중복 에러가 발생하고, 저장을 안하면 아래에서 nullpoint에러가 뜨고
-//        }
-//                saveMember(email, nickname, password);
+        //DB에서 email를 통해 사용자 정보 확인
         Optional<Member> optionalMember = memberRepository.findByEmail(email);
         Member findMember = optionalMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
-        System.out.println("member email : " + findMember.getEmail() + "member Id : " + findMember.getId());
-        System.out.println("member initial Login status : " + findMember.getInitialLogin());
-        System.out.println("member nickname : " + findMember.getNickname());
+        //임시 객체 생성
         Member oauth2Member = Member.builder()
                 .email(email)
                 .nickname(nickname)
-                .password(getPasswordEncoder().encode(password))
                 .initialLogin(findMember.getInitialLogin())
                 .build();
+        //사용자가 최초 로그인을 시도하면 responseBody에 사용자 임시 정보를 출력
         if(!findMember.getInitialLogin()) {
             String result = objectMapper.writeValueAsString(oauth2Member);
             //프론트에서 initialLogin : false 상태를 확인하는 로직 구현
