@@ -38,6 +38,7 @@ public class Member extends BaseEntity {
     private Character gender;
     //최초 로그인 판별을 위한 필드 추가
     private Boolean initialLogin;
+    //회원 가입시 initialLogin을 false로 디폴트 생성
     @PrePersist
     public void prePersist(){
         this.initialLogin = false;
