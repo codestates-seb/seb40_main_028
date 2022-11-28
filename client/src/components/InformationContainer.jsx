@@ -140,7 +140,7 @@ export default function InformationContainer() {
   // console.log(gender, "성별!!!!!")
 
   const onInformation = async (data) => {
-    console.log(data);
+    // console.log(data);
     // console.log(data.email+": 이메일");
     // console.log(data.password+": 이메일");
 
@@ -215,10 +215,10 @@ export default function InformationContainer() {
       }
     } catch (err) {
       // 응답 실패
-      console.log(err);
-      console.log(err.response);
-      console.log(err.response.request);
-      console.log(err.response.request.status);
+      // console.log(err);
+      // console.log(err.response);
+      // console.log(err.response.request);
+      // console.log(err.response.request.status);
       // console.log("로그인 실패")
 
       // 세션에 토큰이 없을경우??

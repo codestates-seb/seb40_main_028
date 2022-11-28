@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 
-import { useRecoilState, useResetRecoilState } from "recoil";
+import { useRecoilValue, useResetRecoilState } from "recoil";
 import { LoginState, TokenState } from "../state/UserState";
 
 // // 모달 로그아웃 버튼
@@ -121,50 +121,46 @@ const Logout = ({ open, onClose }) => {
   if (!open) return null;
   const navigate = useNavigate();
 
-  // const [isLogin, setIsLogin] = useRecoilState(LoginState);
-  // const [isToken, setToken] = useRecoilState(TokenState);
+  // 로그인 상태
+  const login = useRecoilValue(LoginState);
+  // 토큰
+  const token = useRecoilValue(TokenState);
+  // url주소
+  const url = "http://13.209.190.35:8080";
+
+  // 로그인 리셋 -> false
+  const resetlogout = useResetRecoilState(LoginState);
+  // 토근 리셋 - > null
+  const resettoken = useResetRecoilState(TokenState);
 
   const logoutHandler = async () => {
-    const url = "http://13.209.190.35:8080";
-
-    // const token = sessionStorage.getItem("jwt-token");
-    // const res = await axios.post(`${url}/users/signup`)
-    // const res = await axios.post(`${url}/users/signup`, {
-    // 보내고자 하는 데이터
-    //   email: data.email,
-    //   nickname: data.nickname,
-    //   password: data.password
-    // });
-
-    // try {
-    //   const res = await axios.delete(`${url}/logout`, {
-    //     headers: {
-    //       Authorization: `${token}`,
-    //     },
-    //   });
-
-    //   // 세션에 있는 jwt 토큰 삭제
-
-    //   if (res.status === 200) {
-    //     sessionStorage.removeItem("jwt-token");
-    //     // 정보 입력 완료하면 메인페이지로 이동
-    //     navigate("/login");
-    //   }
-    // } catch (err) {
-    //   // 응답 실패
-    //   console.log(err);
-    //   // console.log("로그아웃 실패")
-
-    //   // 로그아웃 실패시
-    //   alert("로그아웃 실패");
-    // }
-    if (TokenState !== null) {
-      useResetRecoilState(TokenState);
-      console.log(useRecoilValue(TokenState), "토큰 리셋");
+    if (login === false) {
+      alert("로그인이 안 되어 있습니다.");
+      navigate("/login");
     }
-    if (TokenState === null) {
-      useResetRecoilState(LoginState);
-      console.log(useRecoilValue(LoginState), "로그인 리셋");
+
+    try {
+      // 응답 성공
+      // const res = await axios.post("http://13.209.190.35:8080/users/info",
+      const res = await axios.delete(`${url}/logout`, {
+        // 헤더에 토큰값 넣어서 보내기
+        headers: {
+          Authorization: `${token}`,
+        },
+      });
+
+      if (res.status === 200) {
+        // 로그인상태 및 토큰 초기값으로 리셋
+        resetlogout();
+        resettoken();
+        console.log("LoginState, token 초기값으로 변경완료!");
+
+        // 로그인 페이지로 이동
+        navigate("/login");
+      }
+    } catch (err) {
+      // 로그아웃 실패시
+      alert("로그아웃에 실패하였습니다.");
     }
   };
 
