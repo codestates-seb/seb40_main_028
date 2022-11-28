@@ -29,7 +29,7 @@ const Container = styled.form`
   max-width: 600px;
   width: 20em;
   position: fixed;
-  top: 30%;
+  top: 39.4%;
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
@@ -61,7 +61,8 @@ const DisplayText = styled.div`
   font-weight: 600;
   text-align: left;
   color: red;
-  margin-bottom: 0.5em;
+  margin-bottom: 0.2em;
+  
 `;
 
 const Input = styled.input`
@@ -135,9 +136,9 @@ const SecessionModal = ({ open, onClose }) => {
           <p className='closeBtn' onClick={onClose}>
             X
           </p>
-          <InputInfo className="password">
+          <InputInfo>
           <DisplayText>정말로 탈퇴하시겠습니까?</DisplayText>
-          <Input type="text" id="password" ref={byeRef}  placeholder='"회원탈퇴" 를 입력해주세요.' />
+          <Input type="text"  ref={byeRef}  placeholder='"회원탈퇴" 를 입력해주세요.' />
           <MyPageButton className='btnContainer' onClick={handleOnClick}>회원탈퇴</MyPageButton>
           </InputInfo>
           </div>

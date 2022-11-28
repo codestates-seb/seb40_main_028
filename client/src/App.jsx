@@ -4,7 +4,7 @@ import Router from "./routes/Routes";
 
 function App() {
   return (
-    <div className="w-full max-w-lg mx-auto bg-d-lighter">
+    <div className="w-full h-screen max-w-lg mx-auto bg-d-lighter overflow-y-scroll">
       <BrowserRouter>
         <Router />
       </BrowserRouter>

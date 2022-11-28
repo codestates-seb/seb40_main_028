@@ -6,6 +6,7 @@ import styled from "styled-components/macro";
 import Toggle from "../Toggle";
 import PwModal from "./PwModal";
 import SecessionModal from "./SecessionModal.jsx";
+import Logout from "../../pages/Logout";
 
 const MyPageForm = styled.div`
   display: flex;
@@ -18,21 +19,23 @@ const MyPageForm = styled.div`
 `;
 
 const DisplayText = styled.div`
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 600;
   text-align: left;
   color: white;
-  margin-bottom: 0.5em;
+  margin-bottom: 0.2em;
+  margin-top: 1em;
 `;
 const DisplayText2 = styled.div`
   font-size: 20px;
   text-align: left;
   color: white;
-  margin-top:-1.45em;
+  margin-top:-1.36em;
   margin-left: 3em;
 `;
 const DisplayText3= styled.div`
-  font-size: 20px;
+  font-size: 15px;
+  font-weight: 600;
   text-align: left;
   color: white;
   margin-top:0.6em;
@@ -42,13 +45,13 @@ const InputInfo = styled.div`
   display: flex;
   flex-direction: column;
   width: 262px;
-  margin: 5px 0px 1px;
+  margin: 1px 0px 1px;
   color: black;
 `;
 
 const Input = styled.input`
   width: 130px;
-  height: 28px;
+  height: 25px;
   border: 1px solid #babfc4;
   border-radius: 5px;
   &:focus {
@@ -59,7 +62,7 @@ const Input = styled.input`
 `;
 const Input2 = styled.input`
   width: 250px;
-  height: 28px;
+  height: 25px;
   border: 1px solid #babfc4;
   border-radius: 5px;
   &:focus {
@@ -71,7 +74,7 @@ const Input2 = styled.input`
 
 const Input3 = styled.input`
   width: 200px;
-  height: 28px;
+  height: 26px;
   border: 1px solid #babfc4;
   border-radius: 5px 0px 0px 5px;
   &:focus {
@@ -82,7 +85,7 @@ const Input3 = styled.input`
 
 const Input4 = styled.input`
   width: 55px;
-  height: 28px;
+  height: 25px;
   border: 1px solid #babfc4;
   border-radius: 5px;
   display: flex;
@@ -92,7 +95,7 @@ const Input4 = styled.input`
   }
 `;
 const ToggleDiv = styled.div`
-margin: -1.3em 0em -1em -2.1em;
+margin: -1.8em 0em 1.7em -2.1em;
 `;
 
 const MyPageButton = styled.button`
@@ -101,11 +104,11 @@ const MyPageButton = styled.button`
   align-items: center;
   width: 5em;
   height: 2em;
-  padding:12px;
+  padding:10px;
   font-size: 15px;
   border: 0.01px solid #43549f;
-  color: white;
   margin-left: 9.5em;
+  margin-top: -3em;
   :hover {
     background-color: #4C53BF;
     border: 2px solid #3C53BF;
@@ -122,10 +125,29 @@ const MyPageButton2 = styled.button`
   width: 80px;
   height: 15px;
   padding:15px;
+  font-size: 2px;
+  margin-left: 275px;
+  :hover {
+    background-color: #4C53BF;
+    border: 2px solid #3C53BF;
+  }
+  background-color: #747BF2;
+  border: 2px solid #737BF2;
+  border-radius: 4px;
+  cursor: pointer;
+`;
+const MyPageButton3 = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+  height: 15px;
+  padding:15px;
   font-size: 1px;
   color: black;
-  margin-left: 270px;
-  margin-top: 11em;
+  margin-left: 275px;
+  margin-top: 5em;
+  margin-bottom: -20em;
   :hover {
     background-color: #2C53BF;
   }
@@ -133,52 +155,55 @@ const MyPageButton2 = styled.button`
   border-radius: 4px;
   cursor: pointer;
 `;
+
 const SerchButton = styled.button`
-  margin-top: -1.75em;
+  margin-top: -1.64em;
   margin-left: 12.5em;
   width: 50px;
   background-color: #747BF2;
-  border: 2px solid #737BF2;
+  border: 1px solid #737BF2;
   border-radius: 0px 5px 5px 0px;
   color: white;
   cursor: pointer;
   :hover {
     background-color: #4C53BF;
-    border: 2px solid #3C53BF;
+    border: 1px solid #3C53BF;
   }
 `;
 const PageText = styled.div`
 display: flex;
 align-items: center;
 justify-content: center;
-font-size: 1.5em;
+font-size: 1.2em;
 width: 25rem;
-margin-top: 0.7em;
 margin-left: -1em;
 font-weight: 400;
 `;
 
 
 const MyPageSecond = () => {
+
   const navigate = useNavigate();
+  //인풋값들
   const heightInputRef = useRef();
   const weightInputRef = useRef();
   const nameInputRef = useRef();
   const ageInputRef = useRef();
 
-
+  const [gender, setGender] = useState("W") //토글
+//get해올 값들
   const [name, setName] = useState('');
-  const [sex, setSex] = useState('');
+  // const [sex, setSex] = useState('');
   const [age, setAge] = useState('');
   const [height, setHeight] = useState('');
   const [weight, setWeight] = useState('');
 
   axios
   .get('/users/mypages/info',{
-      name:name,
-      age:age,
-      height:height,
-      weight:weight
+      name:setName,
+      age:setAge,
+      height:setHeight,
+      weight:setWeight
     })
     
 
@@ -193,11 +218,12 @@ const MyPageSecond = () => {
       alert('닉네임은 3자 이상으로 입력하세요!');
     }else
       axios
-      .patch(`/users/mypages/info`,{
+      .post(`http://localhost:8080/posts`,{
         nickname: enteredName,
         height: enteredHeight,
         weight: enteredWeight,
         age:enteredAge,
+        gender:gender
       },
       {
         headers: {
@@ -219,57 +245,63 @@ const MyPageSecond = () => {
       // }
       // })
   };
+
+  const handleOnClick2 = () => {
+    event.preventDefault();
+  };
  
 
   const [PwModalOn,setPwModalOn] = useState(false);
   const [SeModalOn,setSeModalOn] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <>
     <form onSubmit={handleOnClick}>
       <MyPageForm>
         <PageText>정보수정</PageText>
-        <MyPageButton2 type="button" onClick={() => setSeModalOn(true)}
-          className='modalButton2'>회원탈퇴</MyPageButton2>
+        <MyPageButton2 type="button" onClick={() => setIsOpen(true)}
+          className='modalButton'>Logout</MyPageButton2>
+          <Logout open={isOpen} 
+          onClose={() => setIsOpen(false)} />
+        <MyPageButton3 type="button" onClick={() => setSeModalOn(true)}
+          className='modalButton2'>회원탈퇴</MyPageButton3>
           <SecessionModal open={SeModalOn} 
           onClose={() => setSeModalOn(false)} />
         <InputInfo className="displayName">
-          <DisplayText>닉네임</DisplayText>
-          <Input type="text" id="displayname" value={name} required ref={nameInputRef} />
+          <DisplayText>Nickname</DisplayText>
+          <Input type="text" id="displayname"  required ref={nameInputRef} />
         </InputInfo>
         <InputInfo className="displayMail">
-          <DisplayText>이메일</DisplayText>
+          <DisplayText>Email</DisplayText>
           <Input2  type="mail" id="displayMail"  placeholder="이메일은 변경 불가능합니다." readOnly/>
         </InputInfo>
         <InputInfo className="password">
-          <DisplayText>패스워드</DisplayText>
-          <Input3 type="password" id="password" readOnly />
+          <DisplayText>Password</DisplayText>
+          <Input3 type="password" id="password" placeholder= "변경을 눌러주세요." readOnly />
           <SerchButton type="button" onClick={() => setPwModalOn(true)}
           className='modalButton'>변경</SerchButton>
           <PwModal open={PwModalOn} 
           onClose={() => setPwModalOn(false)} />
         </InputInfo>
         <InputInfo className="displayWidth">
-          <DisplayText>생년월일</DisplayText>
-          <Input type="date" id="birthday" name="birthday" value={age}required ref={ageInputRef} />
-          <DisplayText3>성별</DisplayText3>
+          <DisplayText>Age</DisplayText>
+          <Input type="date" id="birthday" name="birthday" required ref={ageInputRef} />
           </InputInfo>
-        <ToggleDiv>
-        
-        <Toggle />
-        </ToggleDiv>
-        
-        <InputInfo className="displayHeight">
-          <DisplayText>신장</DisplayText>
-          <Input4 type="number" id="displayHeight" value={height} required ref={heightInputRef}  />
+          <InputInfo className="displayHeight">
+          <DisplayText>Height</DisplayText>
+          <Input4 type="number" id="displayHeight"  required ref={heightInputRef}  />
           <DisplayText2 className="h1">CM</DisplayText2>
         </InputInfo>
         <InputInfo className="displayWidth">
-          <DisplayText>몸무게</DisplayText>
-          <Input4 type="number" id="displayweight" value={weight} required ref={weightInputRef}/>
+          <DisplayText>Weight</DisplayText>
+          <Input4 type="number" id="displayweight" required ref={weightInputRef}/>
           <DisplayText2 className="h1">KG</DisplayText2>
+          <DisplayText3>Sex</DisplayText3>
         </InputInfo>
-      
-        <MyPageButton type="button" onClick={handleOnClick}>저장</MyPageButton>
+        <ToggleDiv>
+        <Toggle setGender={setGender}  />
+        </ToggleDiv>
+        <MyPageButton type="button" onClick={handleOnClick}>Save</MyPageButton>
       </MyPageForm>
       </form>
       </>
