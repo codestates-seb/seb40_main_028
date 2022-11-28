@@ -111,14 +111,13 @@ const PwModal = ({ open, onClose }) => {
     else
       axios({
         method: "patch",
-        url:"/users/mypages/password",
+        url:"http://13.209.190.35:8080/users/mypages/password",
         data:{
           password: enteredPassword,
           newPassword: enteredNewPassword,
           // returnSecureToken: true,
         },
         headers: { "Authorization" : localStorage.getItem("access_token") },
-        responseType:"json",
       }
       ).then((res) => {
         if (res.ok) {
@@ -155,11 +154,11 @@ const PwModal = ({ open, onClose }) => {
           
             <InputInfo className="password">
               <DisplayText>Current Password</DisplayText>
-              <Input type="password" id="password" required ref={passwordInputRef} />
+              <Input type="password" id="password" required ref={passwordInputRef} autoComplete="off" />
               <DisplayText>New Password</DisplayText>
-              <Input type="password" id="newpassword" required ref={newPasswordInpitRef} />
+              <Input type="password" id="newpassword" required ref={newPasswordInpitRef} autoComplete="off" />
               <DisplayText>Confirm New Password</DisplayText>
-              <Input type="password" id="newpassword2"  required ref={newPassword2InpitRef}/>
+              <Input type="password" id="newpassword2"  required ref={newPassword2InpitRef} autoComplete="off" />
             </InputInfo>
             <MyPageButton className='btnContainer' onClick={handleOnClick} >Save</MyPageButton>
          
