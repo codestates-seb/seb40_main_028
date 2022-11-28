@@ -77,38 +77,32 @@ const MyPageFirst = () => {
 
     axios
     .get('http://13.209.190.35:8080/users/mypages',
-    { 'headers': {'Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6W10sInVzZXJJZCI6MTEsInN1YiI6Imd1ZW5sb2dAdGVzdC5jb20iLCJpYXQiOjE2Njk2MTE2MzgsImV4cCI6MTY2OTYyNjAzOH0.JESpB2rhBuaqnIvbN5OjGZfbHFKTOtS0h1LSQEY8Uo-FdeENke4yz_AflclVvWeGIQl7iehSy_568Gwn1HHMQg',} })
+    { 'headers': {'Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6W10sInVzZXJJZCI6MTEsInN1YiI6Imd1ZW5sb2dAdGVzdC5jb20iLCJpYXQiOjE2Njk2MjYwODYsImV4cCI6MTY2OTY0MDQ4Nn0.Mmy59dvxUJs4q8cj1Qs26grJDr0rWDwzNPMK_AXp2BrT_g6Em9Azx5FJspwUPS8SBgMIQ30QF-mbCImLcHgZ5g',} })
     .then((res => {
-      console.log(res.data.data)
       let a = []
-      // for(let i =0; i<6; i++){
-      //   if(res.data.data.monthlyWeights[i].weight)
-      //   a.push(res.data.data.monthlyWeights[i].weight);
-      // }
-      a.push(res.data.data.monthlyWeights[0].weight);
-      a.push(res.data.data.monthlyWeights[1].weight);
-      a.push(res.data.data.monthlyWeights[2].weight);
-      a.push(res.data.data.monthlyWeights[3].weight);
-      a.push(res.data.data.monthlyWeights[4].weight);
+      for(let i = 0; i<6; i++){
+      if(res.data.data.monthlyWeights[i]){
+      a.push(res.data.data.monthlyWeights[i].weight);
+      }  
+    }
       setKgData(a)
       
-      let b=[]
-      b.push(res.data.data.monthlyRecords[0].record);
-      b.push(res.data.data.monthlyRecords[1].record);
-      b.push(res.data.data.monthlyRecords[2].record);
-      b.push(res.data.data.monthlyRecords[3].record);
-      b.push(res.data.data.monthlyRecords[4].record);
-      b.push(res.data.data.monthlyRecords[5].record);
+      let b = []
+      for(let i = 0; i<6; i++){
+      if(res.data.data.monthlyRecords[i]){
+      b.push(res.data.data.monthlyRecords[i].record);
+      }  
+    }
       setGymCheck(b)
 
-      let c=[]
-      c.push(res.data.data.monthlyRecords[0].date);
-      c.push(res.data.data.monthlyRecords[1].date);
-      c.push(res.data.data.monthlyRecords[2].date);
-      c.push(res.data.data.monthlyRecords[3].date);
-      c.push(res.data.data.monthlyRecords[4].date);
-      c.push(res.data.data.monthlyRecords[5].date);
+      let c = []
+      for(let i = 0; i<6; i++){
+      if(res.data.data.monthlyRecords[i]){
+      c.push(res.data.data.monthlyRecords[i].date);
+      }  
+    }
       setMonth(c)
+
       }))
     },[])
 

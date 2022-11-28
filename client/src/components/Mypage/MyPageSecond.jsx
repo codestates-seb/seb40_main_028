@@ -7,6 +7,7 @@ import Toggle from "../Toggle";
 import PwModal from "./PwModal";
 import SecessionModal from "./SecessionModal.jsx";
 import Logout from "../../pages/Logout";
+import { get } from "react-hook-form";
 
 const MyPageForm = styled.div`
   display: flex;
@@ -200,11 +201,11 @@ const MyPageSecond = () => {
   
   useEffect(()=>{
 
-  axios
-  .get('http://13.209.190.35:8080/users/mypages/info',
-  { 'headers': {'Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6W10sInVzZXJJZCI6MTEsInN1YiI6Imd1ZW5sb2dAdGVzdC5jb20iLCJpYXQiOjE2Njk2MTE2MzgsImV4cCI6MTY2OTYyNjAzOH0.JESpB2rhBuaqnIvbN5OjGZfbHFKTOtS0h1LSQEY8Uo-FdeENke4yz_AflclVvWeGIQl7iehSy_568Gwn1HHMQg',} })
+  axios({
+    method: "get",
+    url:'http://13.209.190.35:8080/users/mypages/info',
+  headers: {Authorization: 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6W10sInVzZXJJZCI6MTEsInN1YiI6Imd1ZW5sb2dAdGVzdC5jb20iLCJpYXQiOjE2Njk2MjYwODYsImV4cCI6MTY2OTY0MDQ4Nn0.Mmy59dvxUJs4q8cj1Qs26grJDr0rWDwzNPMK_AXp2BrT_g6Em9Azx5FJspwUPS8SBgMIQ30QF-mbCImLcHgZ5g',} })
   .then((res => {
-    console.log(res.data)
    setName(res.data.data.nickname);
    setAge(res.data.data.age);
     setWeight(res.data.data.weight);
@@ -213,13 +214,6 @@ const MyPageSecond = () => {
     setGender(res.data.data.gender)
     }))
   },[])
-  
-
-
-    console.log(setName)
-    
-
-  
 
   const handleOnClick = (event) => {
     event.preventDefault();
@@ -228,38 +222,68 @@ const MyPageSecond = () => {
     const enteredWeight = weightInputRef.current.value;
     const enteredAge = ageInputRef.current.value;
 
+    
     if (enteredName.length < 3) {
       alert('닉네임은 3자 이상으로 입력하세요!');
     }else
-      axios
-      .patch(`http://13.209.190.35:8080//users/mypages/info`,
-      {
-        nickname: enteredName,
-        height: enteredHeight,
-        weight: enteredWeight,
-        age:enteredAge,
-        gender:gender
-      },
-      {
-        'headers': {
-          'Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6W10sInVzZXJJZCI6MTEsInN1YiI6Imd1ZW5sb2dAdGVzdC5jb20iLCJpYXQiOjE2Njk2MTE2MzgsImV4cCI6MTY2OTYyNjAzOH0.JESpB2rhBuaqnIvbN5OjGZfbHFKTOtS0h1LSQEY8Uo-FdeENke4yz_AflclVvWeGIQl7iehSy_568Gwn1HHMQg',
-      }
-      },
-      )
-      .then(() => {
-        if (res.ok) {
-          return (
-            alert(`${enteredName}님 정보수정 완료!`),
-            navigate('/Mypage')
-          );
-        } else {
-          return (
-            alert('내 정보 수정을 실패하셨습니다. '),
-            navigate('/')
-        );
-      }
+  //     axios({
+  //       method: "patch",
+  //       url:"http://13.209.190.35:8080/users/mypages/info",
+  //       body:{
+  //       nickname: enteredName,
+  //       height: enteredHeight,
+  //       weight: enteredWeight,
+  //       age:enteredAge,
+  //       gender:gender
+  //     }, 
+  //     headers: {"Authorization": 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6W10sInVzZXJJZCI6MTEsInN1YiI6Imd1ZW5sb2dAdGVzdC5jb20iLCJpYXQiOjE2Njk2MjYwODYsImV4cCI6MTY2OTY0MDQ4Nn0.Mmy59dvxUJs4q8cj1Qs26grJDr0rWDwzNPMK_AXp2BrT_g6Em9Azx5FJspwUPS8SBgMIQ30QF-mbCImLcHgZ5g'}, })
+  //     .then((res) => {
+  //       if (res.ok) {
+  //         return (
+  //           alert(`${enteredName}님 정보수정 완료!`),
+  //           navigate('/Mypage')
+  //         );
+  //       } else {
+  //         return (
+  //           alert('내 정보 수정을 실패하셨습니다. '),
+  //           navigate('/')
+  //       );
+  //     }
+  //     })
+  //     .catch((err)=>{
+  //           console.log(err);
+  //         })
+  // };
+  axios({
+    method: "patch",
+    url:"http://13.209.190.35:8080/users/mypages/info",
+    body:{
+    nickname: enteredName,
+    height: enteredHeight,
+    weight: enteredWeight,
+    age:enteredAge,
+    gender:gender
+  }, 
+  headers: {"Authorization": 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6W10sInVzZXJJZCI6MTEsInN1YiI6Imd1ZW5sb2dAdGVzdC5jb20iLCJpYXQiOjE2Njk2MjYwODYsImV4cCI6MTY2OTY0MDQ4Nn0.Mmy59dvxUJs4q8cj1Qs26grJDr0rWDwzNPMK_AXp2BrT_g6Em9Azx5FJspwUPS8SBgMIQ30QF-mbCImLcHgZ5g'}, })
+  .then((res) => {
+    if (res.ok) {
+      return (
+        alert(`${enteredName}님 정보수정 완료!`),
+        navigate('/Mypage')
+      );
+    } else {
+      return (
+        alert('내 정보 수정을 실패하셨습니다. '),
+        navigate('/')
+    );
+  }
+  })
+  .catch((err)=>{
+    if(err.res){
+        console.log(err.res.data);
+    }
       })
-  };
+};
 
 
 
