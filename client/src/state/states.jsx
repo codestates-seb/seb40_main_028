@@ -148,3 +148,110 @@ export const workoutlistState = atom({
   },
   effects_UNSTABLE: [persistAtom],
 });
+
+
+// {
+//   success: true,
+//   data: {
+//     today_id: 1,
+//     totalTime: 0,
+//     exercises: [
+//       {
+//         exerciseId: 1,
+//         isCompleted: false,
+//         exerciseName: "벤치프레스",
+//         imageUrl: "s3.somewhere.somewhere1",
+//         eachRecords: [
+//           {
+//             weight: 30,
+//             count: 6,
+//             timer: 13,
+//             eachCompleted: false,
+//           },
+//           {
+//             weight: 30,
+//             count: 6,
+//             timer: 23,
+//             eachCompleted: false,
+//           },
+//           {
+//             weight: 30,
+//             count: 6,
+//             timer: 33,
+//             eachCompleted: false,
+//           },
+//           {
+//             weight: 30,
+//             count: 6,
+//             timer: 33,
+//             eachCompleted: false,
+//           },
+//           {
+//             weight: 30,
+//             count: 6,
+//             timer: 33,
+//             eachCompleted: false,
+//           },
+//           {
+//             weight: 30,
+//             count: 6,
+//             timer: 33,
+//             eachCompleted: false,
+//           },
+//         ],
+//       },
+//       {
+//         exerciseId: 2,
+//         isCompleted: false,
+//         exerciseName: "스쿼트",
+//         imageUrl: "s3.somewhere.somewhere2",
+//         eachRecords: [
+//           {
+//             weight: 30,
+//             count: 6,
+//             timer: 30,
+//             eachCompleted: false,
+//           },
+//           {
+//             weight: 30,
+//             count: 6,
+//             timer: 30,
+//             eachCompleted: false,
+//           },
+//           {
+//             weight: 30,
+//             count: 6,
+//             timer: 30,
+//             eachCompleted: false,
+//           },
+//         ],
+//       },
+//       {
+//         exerciseId: 3,
+//         isCompleted: false,
+//         exerciseName: "스쿼트",
+//         imageUrl: "s3.somewhere.somewhere3",
+//         eachRecords: [
+//           {
+//             weight: 30,
+//             count: 6,
+//             timer: 30,
+//             eachCompleted: false,
+//           },
+//           {
+//             weight: 30,
+//             count: 6,
+//             timer: 30,
+//             eachCompleted: false,
+//           },
+//           {
+//             weight: 30,
+//             count: 6,
+//             timer: 30,
+//             eachCompleted: false,
+//           },
+//         ],
+//       },
+//     ],
+//   },
+// },

@@ -9,7 +9,7 @@ export function Exitbutton ({name, fn, ifnext}) {
 
 export function Smallerbutton ({name, fn}) {
   return (
-    <button type="button" className="flex justify-center items-center rounded-lg w-28 h-[2em] bg-gradient-to-b from-[#b8b9bf] to-[#808185] hover:from-d-hover drop-shadow-2xl text-[#4E525A] font-bold" onClick={fn}>{name}</button>  
+    <button type="button" className="flex justify-center items-center rounded-lg w-28 h-[3em] bg-gradient-to-b from-[#b8b9bf] to-[#808185] hover:from-d-hover drop-shadow-2xl text-[#4E525A] font-bold" onClick={fn}>{name}</button>  
   );
 };
 

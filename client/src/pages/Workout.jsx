@@ -1,8 +1,9 @@
 // axios로 연결 필요
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
+import axios from "axios";
 import useInterval from "../assets/Interval";
 import { workoutlistState, worktimeState } from "../state/states";
 import Congrats from "../components/exercise/Congrats";
@@ -18,6 +19,22 @@ function Workout() {
   const [workoutdone, setWorkoutdone] = useState(false);
   const [worktime, setWorktime] = useRecoilState(worktimeState);
   const [workoutdata, setWorkoutdata] = useRecoilState(workoutlistState);
+
+  // useEffect(async ()=>{
+  //   await axios.get("http://13.209.190.35:8080/exercises/progress?date=2022-11-05",{
+  //     headers:{
+  //       "Authorization" : "Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6W10sInVzZXJJZCI6Miwic3ViIjoidGVzdEB0ZXN0LmNvbSIsImlhdCI6MTY2OTM1NzIwMiwiZXhwIjoxNjY5MzcxNjAyfQ.BT0-vHAHfNIJwrfKTQmGkBXV1ZDNpn4ooJt_jX9eeEKKb_JYERK9XI3hFB4u9cj2LCgKqcd5mjLR4xmw_9y2jg"},
+  //   })
+  //     // .then(data => JSON.stringify(data))
+  //     // .then(el => setWorkoutdata(el))
+  //     .then(alert("completed"))
+  //     .catch((error) => {
+  //       alert("catch에 왔습니다");
+  //     })
+  // },[])
+
+
+ 
   
   const navigate = useNavigate();
   // gohome에 axios 걸고 진행상황 넘겨주고 초기화해야함.
@@ -116,33 +133,6 @@ function Workout() {
   // 이 날짜는 처음 눌렀을 때 날짜를 저장해야겠다. recoil로 state 저장
   // let datenow = new Date();
   // let senddate = `${datenow.getFullYear()}-${datenow.getMonth()+1}-${datenow.getDate()}`
-
-  // useHover: Hover되면 ref와 상태값을 반환한다.
-  // function useHover() {
-  //   const [value, setValue] = useState(false);
-  //   const ref = useRef(null);
-  //   const handleMouseOver = () => setValue(true);
-  //   const handleMouseOut = () => setValue(false);
-  //   useEffect(
-  //     () => {
-  //       const node = ref.current;
-  //       if (node) {
-  //         node.addEventListener("mouseover", handleMouseOver);
-  //         node.addEventListener("mouseout", handleMouseOut);
-  //         return () => {
-  //           node.removeEventListener("mouseover", handleMouseOver);
-  //           node.removeEventListener("mouseout", handleMouseOut);
-  //         };
-  //       }
-  //     },
-  //     [ref.current] // Recall only if ref changes
-  //   );
-
-  //   return [ref, value];
-  // }
-  // const [hoverRef, isHovered] = useHover();
-  
-
   
   return (
     <div className="flex flex-col bg-d-light text-gray-700 max-w-lg h-screen text-center">
