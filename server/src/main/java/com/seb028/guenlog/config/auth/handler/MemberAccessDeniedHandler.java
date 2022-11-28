@@ -14,9 +14,10 @@ import java.io.IOException;
 
 @Slf4j
 @Component
-public class MemberAccessDeniedHandler implements AccessDeniedHandler {
+public class MemberAccessDeniedHandler implements AccessDeniedHandler { //적절한 권한이 없는 경우 호출
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
+        //FORBIDDEM 403 에러 출력
         ErrorResponder.sendErrorResponse(response, HttpStatus.FORBIDDEN);
         log.warn("Forbidden error happened: {}", accessDeniedException.getMessage());
     }

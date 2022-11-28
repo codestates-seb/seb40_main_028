@@ -2,9 +2,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/exercise?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    username: root
-    password: climbercode
+    url: jdbc:mysql://localhost:3306/guenlog?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username:
+    password:
 
 
 
@@ -43,5 +43,5 @@ logging:
 
 jwt:
   secret-key: asdfweqrzxcvfdghtuiytyrtywerfsdzgbfgyjuer5tszdfgfgjt7uyijhbnsdafgsertewrtsdfgdfvbcvbsdfgertsdfgsdfgergertewrtewrt
-  access-token-expiration-minutes: 60*24*7
+  access-token-expiration-minutes: 10080  #access 토큰 유효 기간 7일
   refresh-token-expiration-minutes: 420

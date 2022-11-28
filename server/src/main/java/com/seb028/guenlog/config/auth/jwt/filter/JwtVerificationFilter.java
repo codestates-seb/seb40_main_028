@@ -61,7 +61,6 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
 
         return claims;
     }
-
     private void setAuthenticationToContext(Map<String, Object> claims) {
         //파싱한 claims에서 username을 얻음
         String username = (String) claims.get("username");
