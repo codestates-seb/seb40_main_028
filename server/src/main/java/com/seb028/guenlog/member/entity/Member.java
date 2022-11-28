@@ -37,8 +37,11 @@ public class Member extends BaseEntity {
 
     private Character gender;
     //최초 로그인 판별을 위한 필드 추가
-    @Column(columnDefinition = "TINYINT(0)")
-    private Boolean initialLogin = false;
+    private Boolean initialLogin;
+    @PrePersist
+    public void prePersist(){
+        this.initialLogin = false;
+    }
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles;

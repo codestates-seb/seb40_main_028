@@ -50,14 +50,12 @@ public class Oauth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         List<String> authority = customAuthorityUtils.createRoles(email);
         String nickname = String.valueOf(oauth2User.getAttributes().get("name"));
         String password = "oauth2user!";
-        Member oauth2Member = Member.builder()
-                .email(email)
-                .nickname(nickname)
-                .password(getPasswordEncoder().encode(password))
-                .build();
-        log.info("loginUser -> {}", oauth2Member);
+
+
+
+//        log.info("loginUser -> {}", oauth2Member);
 //        if(!memberRepository.findByEmail(email).isEmpty()) {
-            memberRepository.save(oauth2Member);  //저장을 하면 중복 에러가 발생하고, 저장을 안하면 아래에서 nullpoint에러가 뜨고
+//            memberRepository.save(oauth2Member);  //저장을 하면 중복 에러가 발생하고, 저장을 안하면 아래에서 nullpoint에러가 뜨고
 //        }
 //                saveMember(email, nickname, password);
         Optional<Member> optionalMember = memberRepository.findByEmail(email);
@@ -65,13 +63,20 @@ public class Oauth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         System.out.println("member email : " + findMember.getEmail() + "member Id : " + findMember.getId());
         System.out.println("member initial Login status : " + findMember.getInitialLogin());
         System.out.println("member nickname : " + findMember.getNickname());
+        Member oauth2Member = Member.builder()
+                .email(email)
+                .nickname(nickname)
+                .password(getPasswordEncoder().encode(password))
+                .initialLogin(findMember.getInitialLogin())
+                .build();
         if(!findMember.getInitialLogin()) {
             String result = objectMapper.writeValueAsString(oauth2Member);
             //프론트에서 initialLogin : false 상태를 확인하는 로직 구현
             response.getWriter().write(result);
         }
-        String accessToken = delegateAccessToken(oauth2Member);
-        String refreshToken = delegateRefreshToken(oauth2Member);
+        //사용자 생성 정보로 토큰 생성
+        String accessToken = delegateAccessToken(findMember);
+        String refreshToken = delegateRefreshToken(findMember);
 
         response.setHeader("Authorization", "Bearer " + accessToken);
         response.setHeader("RefreshToken", refreshToken);
