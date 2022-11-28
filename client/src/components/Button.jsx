@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import cls from "../assets/utils";
-import { ModalNum, isModal} from "../state/states";
+import { ModalNum, isModal } from "../state/states";
 
 export default function Button({
   text,
@@ -11,8 +11,8 @@ export default function Button({
   onGoMain,
   beforeModal,
   saveModal,
-  workoutodone,
   onClick,
+  exercisedone,
 }) {
   const setIsModalOpen = useSetRecoilState(isModal);
   const [modalNum, setModalNum] = useRecoilState(ModalNum);
@@ -30,8 +30,8 @@ export default function Button({
     setIsModalOpen(false);
     setModalNum(0);
   };
-  const finishworkout = () => {
-    navigate("/");
+  const done = () => {
+    exercisedone();
   };
   return (
     <button
@@ -42,7 +42,7 @@ export default function Button({
         (onGoMain && goMain) ||
         (beforeModal && goBeforeModal) ||
         (saveModal && goSaveModal) ||
-        (workoutodone && finishworkout) ||
+        (exercisedone && done) ||
         undefined
       }
       className={cls(
