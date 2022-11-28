@@ -2,7 +2,7 @@
 
 import axios from 'axios';
 import Chart from 'chart.js/auto';
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Line } from "react-chartjs-2";
 import styled from 'styled-components/macro';
 import MyPageText from './MyPageText';
@@ -47,17 +47,77 @@ font-weight: 400;
 
 
 
-const Month = ["2022-01","2022-02","2022-03","2022-04","2022-05","2022-06"]
-const KgData = ["87", "88", 91,105, 90, 110]
-const GymCheck = [10, 15, 20, 15, 17, 10]
+
+// function minMaxData() {
+//   ajaxCall(
+//       "GET",
+//       "url",
+//       null,
+//       function (data) {
+//           for (let i = 0; i < 6; i++) {
+//              set.push(set.data);
+//               KgData.push(KgData.data);
+//               Gym.push(Gym.data);
+
+//           }
+//       },
+//       null,
+//       null
+//   );
+// }
+
+
+
+const MyPageFirst = () => {
+  const [KgData, setKgData] = useState('');
+  const [GymData, setGymCheck] = useState('');
+  const [month,setMonth]=useState([]);
+
+  useEffect(()=>{
+
+    axios
+    .get('http://13.209.190.35:8080/users/mypages',
+    { 'headers': {'Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6W10sInVzZXJJZCI6MTEsInN1YiI6Imd1ZW5sb2dAdGVzdC5jb20iLCJpYXQiOjE2Njk2MjYwODYsImV4cCI6MTY2OTY0MDQ4Nn0.Mmy59dvxUJs4q8cj1Qs26grJDr0rWDwzNPMK_AXp2BrT_g6Em9Azx5FJspwUPS8SBgMIQ30QF-mbCImLcHgZ5g',} })
+    .then((res => {
+      let a = []
+      for(let i = 0; i<6; i++){
+      if(res.data.data.monthlyWeights[i]){
+      a.push(res.data.data.monthlyWeights[i].weight);
+      }  
+    }
+      setKgData(a)
+      
+      let b = []
+      for(let i = 0; i<6; i++){
+      if(res.data.data.monthlyRecords[i]){
+      b.push(res.data.data.monthlyRecords[i].record);
+      }  
+    }
+      setGymCheck(b)
+
+      let c = []
+      for(let i = 0; i<6; i++){
+      if(res.data.data.monthlyRecords[i]){
+      c.push(res.data.data.monthlyRecords[i].date);
+      }  
+    }
+      setMonth(c)
+
+      }))
+    },[])
+
+    const Kg = KgData;
+    const GymCheck = GymData;
+    const GymMonth = month
+
 Chart.register();
 const data = {
   responsive: false,
-  labels: Month,
+  labels: GymMonth,
   datasets: [
     {
       label: "몸무게",
-      data: KgData,
+      data: Kg,
       fill: true,
       borderColor: ['rgba(151, 164, 255, 0.3)'],
       backgroundColor: ['rgba(151, 164, 255, 0.3)'],
@@ -85,46 +145,40 @@ const options = {
     },
   },
 };
-// function minMaxData() {
-//   ajaxCall(
-//       "GET",
-//       "url",
-//       null,
-//       function (data) {
-//           for (let i = 0; i < 6; i++) {
-//              set.push(set.data);
-//               KgData.push(KgData.data);
-//               Gym.push(Gym.data);
 
-//           }
-//       },
-//       null,
-//       null
-//   );
-// }
+ 
 
-const MyPageFirst = () => {
-  const [KgData, setKgData] = useState('');
-  const [GymData, setGymCheck] = useState('');
 
-  axios.
-  get("/users/mypages")
-  .then((res) => {
-    const chart = res.data;
-    chart.forEach(data=> {
-      for (let i = 0; i < 6; i++){
-      Month.push(date.data);
-      KgData.push(weight.data);
-      GymCheck.push(record.data);
-      console.log(data)
-      }
-      });
-      setGymCheck(GymCheck)
-      setKgData(KgData)
-    })
-    .catch((err)=>{
-      console.log(err);
-    });
+  // .then((response) => response.json())
+  // .then((data) => console.log(data));
+
+  // axios.
+  // get("http://13.209.190.35:8080/users/mypages"),
+  // {
+  //   headers: {
+  //     Authorization: `${localStorage.getItem('login-token')}`,
+  // }
+  // .then((res) => {
+  //   console.log(res)
+    
+  //   })
+  //   .catch((err)=>{
+  //     console.log(err);
+  //   })
+  // };
+
+  // const chart = res.data;
+  //   chart.forEach(data=> {
+  //     for (let i = 0; i < 6; i++){
+  //     Month.push(monthlyRecords.date);
+  //     KgData.push(monthlyWeights.weight);
+  //     GymCheck.push(monthlyRecords.record);
+  //     console.log(data)
+  //     }
+      
+  //     });
+  //     setGymCheck(GymCheck)
+  //     setKgData(KgData)
 
   return (
     <MyPageForm>
@@ -133,7 +187,7 @@ const MyPageFirst = () => {
         <Line data={data} options={options}/>
         </Container>
         <Container2>
-        <MyPageText setGymCheck={setGymCheck} setKgData={setKgData}/>
+        <MyPageText setGymCheck={GymData} setKgData={KgData} />
         </Container2>
         </MyPageForm>
   )
