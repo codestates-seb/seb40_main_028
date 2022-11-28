@@ -15,6 +15,11 @@ export const selectedDays = atom({
   },
 });
 
+export const TokenValue = atom({
+  key: "TokenValue",
+  default: ".",
+});
+
 export const categorie = atom({
   key: "categorie",
   default: [],

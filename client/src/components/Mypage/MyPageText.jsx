@@ -94,7 +94,7 @@ border: solid 2px #36393F;
 `
 
 
-const MyPageText = () => {
+const MyPageText = ({setGymcheck,setKgData}) => {
   return (
     <>
       <Container >

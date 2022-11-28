@@ -10,14 +10,7 @@ const Container = styled.form`
   align-items: center;
   width: 25em;
   color: black;
-  .modalButton {
-  position: fixed;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 10000;
-  padding: 12px 24px;
-}
+ 
 .overlay {
   background-color: rgba(0, 0, 0, 0.5);
   position: fixed;
@@ -30,7 +23,7 @@ const Container = styled.form`
   max-width: 600px;
   width: 20em;
   position: fixed;
-  top: 30%;
+  top: 43%;
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
@@ -60,7 +53,8 @@ const DisplayText = styled.div`
   font-weight: 600;
   text-align: left;
   color: black;
-  margin-bottom: 0.5em;
+  margin-bottom: 0.2em;
+  margin-top: 0.2em;
 `;
 
 const InputInfo = styled.div`
@@ -160,14 +154,14 @@ const PwModal = ({ open, onClose }) => {
             </p>
           
             <InputInfo className="password">
-              <DisplayText>현재 패스워드</DisplayText>
+              <DisplayText>Current Password</DisplayText>
               <Input type="password" id="password" required ref={passwordInputRef} />
-              <DisplayText>새로운 패스워드</DisplayText>
+              <DisplayText>New Password</DisplayText>
               <Input type="password" id="newpassword" required ref={newPasswordInpitRef} />
-              <DisplayText>새로운 패스워드 확인</DisplayText>
+              <DisplayText>Confirm New Password</DisplayText>
               <Input type="password" id="newpassword2"  required ref={newPassword2InpitRef}/>
             </InputInfo>
-            <MyPageButton className='btnContainer' onClick={handleOnClick} >변경완료</MyPageButton>
+            <MyPageButton className='btnContainer' onClick={handleOnClick} >Save</MyPageButton>
          
          
             

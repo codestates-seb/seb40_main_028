@@ -16,6 +16,8 @@ import {
 } from "date-fns";
 import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
+import { TokenValue } from "../../state/states";
 import CalendarContent from "./CalendarContent";
 
 const MainCalendar = () => {
@@ -32,52 +34,15 @@ const MainCalendar = () => {
   const getDetail = (date) => {
     const day = format(date, "yyyy-MM-dd");
     const res = axios.get("http://localhost:5000/api/today/");
-    console.log(res);
     return res;
   };
   const today = startOfToday();
   const [selectedDay, setSelectedDay] = useState(today);
   const [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
-  const [todos, setTodos] = useState([
-    {
-      totalTime: 0,
-      exercise: [
-        {
-          exerciseId: 1,
-          exerciseName: "벤치프레스",
-          isComleted: true,
-        },
-        {
-          exerciseId: 2,
-          exerciseName: "스쿼트",
-          isComleted: false,
-        },
-        {
-          exerciseId: 3,
-          exerciseName: "데드리프트",
-          isComleted: false,
-        },
-      ],
-    },
-  ]);
+  const [todos, setTodos] = useState([]);
   const [boolean, setBoolean] = useState(false);
-  const [meetings, setMeetings] = useState([
-    {
-      success: true,
-      data: [
-        {
-          dueDate: "2022-11-20",
-          todayId: 1,
-          completed: 1,
-        },
-        {
-          dueDate: "2022-11-22",
-          todayId: 2,
-          completed: 0,
-        },
-      ],
-    },
-  ]);
+  const [meetings, setMeetings] = useState([]);
+  const [token, setToken] = useRecoilState(TokenValue);
   const firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
   const days = eachDayOfInterval({
     start: firstDayCurrentMonth,
@@ -101,31 +66,39 @@ const MainCalendar = () => {
   // const selectedDayMeetings = meetings[0].data.filter((meeting) =>
   //   isSameDay(parseISO(meeting.dueDate), selectedDay)
   // );
-
+  const URL = process.env.REACT_APP_BASE_URL;
   const getApi = async () => {
     // 달력 월 바뀔때 api 호출
     const month = dayjs(currentMonth).format("YYYY-MM");
     await axios
-      .get(`http://localhost:5000/exercises/calendar?date=${month}`)
+      .get(URL + `/exercises/calendar?date=${month}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => {
-        // setMeetings(res.data);
+        setMeetings(res.data.data);
       });
   };
 
   const onDateClick = async (day) => {
     const selectDay = dayjs(day).format("YYYY-MM-DD");
-    const todayId = meetings[0].data.find(
+    const todayId = meetings.find(
       (item) => item.dueDate === selectDay
     )?.todayId;
 
     if (todayId) {
       setBoolean(true);
 
-      // await axios
-      //   .get(`http://localhost:5000/exercises/calendar/detail/${todayId}`)
-      //   .then((res) => {
-      //     setTodos(res.data);
-      //   });
+      await axios
+        .get(URL + `/exercises/calendar/detail/${todayId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          setTodos(res.data.data);
+        });
     } else {
       setBoolean(false);
     }
@@ -213,9 +186,8 @@ const MainCalendar = () => {
                     {format(day, "d")}
                   </time>
                 </button>
-
                 <div className="w-1 h-1 mx-auto mt-1">
-                  {meetings[0].data.some((meeting) =>
+                  {meetings.some((meeting) =>
                     isSameDay(parseISO(meeting.dueDate), day)
                   ) && <div className="w-1 h-1 rounded-full bg-sky-500" />}
                 </div>
@@ -224,18 +196,18 @@ const MainCalendar = () => {
           </div>
         </div>
 
-        <section className="mt-4 px-12">
+        <section className="mt-4 px-12 ">
           <h2 className="font-semibold text-white">
             이날의 운동{" "}
             <time dateTime={format(selectedDay, "yyyy-MM-dd")}>
               {format(selectedDay, "MMM dd, yyy")}
             </time>
           </h2>
-          <ol className="mt-4 text-sm leading-6 text-gray-500">
+          <ol className="mt-4 text-sm leading-6 text-gray-500 ">
             {boolean ? (
               <CalendarContent todos={todos} />
             ) : (
-              <p className="whitespace-nowrap">
+              <p className="whitespace-nowrap mb-[10.15em]">
                 해당 날짜에는 운동을 진행하지 않았습니다.
               </p>
             )}
