@@ -94,7 +94,35 @@ border: solid 2px #36393F;
 `
 
 
-const MyPageText = ({setGymcheck,setKgData}) => {
+const MyPageText = ({setGymCheck,setKgData}) => {
+  const a = setGymCheck;
+  const b = setKgData;
+
+  console.log(a)
+   if(a.length===1)
+   {
+    a;
+  }
+  else if (a.length===2){
+  a[1]-a[0]
+  }else if (a.length===3){
+    a[2]-a[1]
+  }
+  else if (a.length===4){
+    a[3]-a[2]
+  }
+  else if (a.length===5){
+   a[4]-a[3]
+  }
+  else if (a.length===6){
+     a[5]-a[4]
+  }
+
+  
+  
+ 
+
+  
   return (
     <>
       <Container >
@@ -105,10 +133,10 @@ const MyPageText = ({setGymcheck,setKgData}) => {
             저번달 운동 횟수 차이
         </Text>
         <Text2>
-           +2KG
+           +{a}
         </Text2>
         <Text2>
-            +11회
+            +{b}
         </Text2>
         <TextForm2/>
         <TextForm/>
