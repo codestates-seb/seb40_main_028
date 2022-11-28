@@ -20,18 +20,17 @@ function Workout() {
   const [worktime, setWorktime] = useRecoilState(worktimeState);
   const [workoutdata, setWorkoutdata] = useRecoilState(workoutlistState);
 
-  // useEffect(async ()=>{
-  //   await axios.get("http://13.209.190.35:8080/exercises/progress?date=2022-11-05",{
-  //     headers:{
-  //       "Authorization" : "Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6W10sInVzZXJJZCI6Miwic3ViIjoidGVzdEB0ZXN0LmNvbSIsImlhdCI6MTY2OTM1NzIwMiwiZXhwIjoxNjY5MzcxNjAyfQ.BT0-vHAHfNIJwrfKTQmGkBXV1ZDNpn4ooJt_jX9eeEKKb_JYERK9XI3hFB4u9cj2LCgKqcd5mjLR4xmw_9y2jg"},
-  //   })
-  //     // .then(data => JSON.stringify(data))
-  //     // .then(el => setWorkoutdata(el))
-  //     .then(alert("completed"))
-  //     .catch((error) => {
-  //       alert("catch에 왔습니다");
-  //     })
-  // },[])
+  useEffect( ()=>{
+    axios.get("http://13.209.190.35:8080/exercises/progress?date=2022-11-05",{
+      headers:{
+        Authorization : "Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6W10sInVzZXJJZCI6Miwic3ViIjoidGVzdEB0ZXN0LmNvbSIsImlhdCI6MTY2OTYwMjQ4MSwiZXhwIjoxNjY5NjE2ODgxfQ.jPxczWRySquzx_gkux-0g91RO725pkF-TPX3-ZRKnk7wEsKHE0lNMQI-AoZe6I4lSeFs2guc_OJRmfGyHvGMPQ"},
+    })
+      .then(data => setWorkoutdata(data.data))
+      .then(alert("completed"))
+      .catch((error) => {
+        alert("에러가 발생했습니다.");
+      })
+  },[])
 
 
  
@@ -150,9 +149,9 @@ function Workout() {
         </button>
       </div>
       {/* <hr className='flex items-center first-letter:mx-2 pb-[1vh]'></hr> */}
-      <div className='flex h-[8rem] xs:h-[15rem] border-none mx-[2.4em] justify-center items-center text-white'> 
+      <div className='flex max-w:100% h-[8rem] xs:h-[15rem] border-none mx-[2.4em] justify-center items-center text-white'> 
         
-        <img src={specificset} alt={specificpic}/>
+        <img src={specificpic} alt={specificpic}/>
       </div>
       {/* 여기에서 onclick 이벤트로 setState 넣어두면 무한반복되어버림=>useRef사용예정 */}
       <div className='flex-col w-full h-[25rem] xs:h-[40rem] max-h-[58rem] mx-auto overflow-scroll' >
