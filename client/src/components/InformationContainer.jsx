@@ -9,6 +9,9 @@ import axios from "axios";
 
 import Toggle from "./Toggle";
 
+import { useRecoilValue } from "recoil";
+import { LoginState, TokenState } from "../state/UserState";
+
 const Container = styled.div`
   width: 300px;
   margin-bottom: 40px;
@@ -55,7 +58,7 @@ const Input = styled.input`
   width: 260px;
   height: 35px;
   padding: 0;
-  border: 2px solid rgb(88 101 242) ;
+  border: 2px solid rgb(88 101 242);
 
   // 화살표 제거
   // ::-webkit-outer-spin-button;
@@ -92,17 +95,22 @@ const MainContainer = styled.div`
 export default function InformationContainer() {
   const [error, setError] = useState("");
 
+  const [gender, setGender] = useState("W");
 
-  const [gender, setGender] = useState("W")
-  
   const navigate = useNavigate();
+
+  // 로그인 상태
+  const login = useRecoilValue(LoginState);
+
+  // 토큰
+  const token = useRecoilValue(TokenState);
 
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm({ mode: onchange });
-  
+
   // const onInformation = async (data) => {
   //   console.log(data);
   //   // 회원가입 api 자리
@@ -131,7 +139,6 @@ export default function InformationContainer() {
   // 성별체크
   // console.log(gender, "성별!!!!!")
 
-
   const onInformation = async (data) => {
     console.log(data);
     // console.log(data.email+": 이메일");
@@ -143,23 +150,14 @@ export default function InformationContainer() {
     // console.log(`gender: ${gender}`)
     // console.log(`weight: ${Number(data.weight)}`)
 
-
-
-
-
-
-
-
-
-    
     // 세션에 저장된 토큰 가져오기
-    let token = sessionStorage.getItem('jwt-token');
-    console.log(`토큰: ${token}`)
+    // let token = sessionStorage.getItem("jwt-token");
+    console.log(`토큰: ${token}`);
 
     const url = "http://13.209.190.35:8080";
 
-    // 토큰이 없는경우 로그인 x로 판단하고 login 페이지로 이동
-    if(token === null) {
+    // 로그인상태가 아닌경우 login 페이지로 이동
+    if (login === false) {
       alert("로그인이 안 되어 있습니다.");
       navigate("/login");
     }
@@ -167,34 +165,35 @@ export default function InformationContainer() {
     try {
       // 응답 성공
       // const res = await axios.post("http://13.209.190.35:8080/users/info",
-      const res = await axios.patch(`${url}/users/info`, 
-      {
-        // 보내고자 하는 데이터
-        // 키 몸무게만 숫자형으로
+      const res = await axios.patch(
+        `${url}/users/info`,
+        {
+          // 보내고자 하는 데이터
+          // 키 몸무게만 숫자형으로
+          height: data.height,
+          age: data.age,
+          gender: gender,
+          weight: data.weight,
+        },
+        {
+          // 헤더에 토큰값 넣어서 보내기
+          headers: {
+            Authorization: `${token}`,
+          },
+        }
+      );
+
+      let a = {
         height: data.height,
         age: data.age,
         gender: gender,
-        weight: data.weight
-      },
-      {
-        // 헤더에 토큰값 넣어서 보내기 
-        headers: {
-        Authorization: `${token}`,
-      },
-      }
-      );
-
-      let a = {height: data.height,
-        age: data.age,
-        gender: gender,
-        weight: data.weight}
-      console.log(a, "정보입력 성공! 데이터값~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-
+        weight: data.weight,
+      };
+      console.log(a, "정보입력 성공! 데이터값~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
       // status가 200이면 세션스토리지에 jwt-token 저장
       if (res.status === 200) {
-
-        // 정보 입력 완료하면 메인페이지로 이동 
+        // 정보 입력 완료하면 메인페이지로 이동
         navigate("/");
 
         // console.log(res);
@@ -204,7 +203,7 @@ export default function InformationContainer() {
         // console.log("응답.headers", res.headers.InitialLogin)
         // console.log("응답.headers", res.headers.initialLogin)
         // console.log("응답.headers", res.headers.initiallogin)
-        
+
         // InitialLogin이 false면 처음 로그인으로
         // if(res.InitialLogin === false){
         //   navigate("/startinginformation");
@@ -213,9 +212,7 @@ export default function InformationContainer() {
         // } else if(res.InitialLogin === ture){
         //   navigate("/");
         // }
-        
-      } 
-      
+      }
     } catch (err) {
       // 응답 실패
       console.log(err);
@@ -229,25 +226,23 @@ export default function InformationContainer() {
       //   alert("먼저 로그인을 해주세요.");
       // }
 
-      // 로그인 실패시 
+      // 로그인 실패시
       alert("정보 입력에 실패하였습니다.");
-
     }
   };
-  
 
   return (
     <MainContainer>
       <div>
         <Container>
-          <Form onSubmit={handleSubmit(onInformation)} >
+          <Form onSubmit={handleSubmit(onInformation)}>
             {/* onChange={onChangeAccount} */}
             <InputContainer>
               <Label htmlFor="age">age(생년월일)</Label>
               <Input
                 type="text"
                 id="age"
-                placeholder= "2000-01-01"
+                placeholder="2000-01-01"
                 {...register("age", {
                   required: true,
                   pattern: /\d{4}-\d{2}-\d{2}/,
@@ -264,8 +259,8 @@ export default function InformationContainer() {
               <Label htmlFor="height">height(키)</Label>
               <Input
                 type="number"
-                id="height"   
-                placeholder= "165"           
+                id="height"
+                placeholder="165"
                 {...register("height", {
                   required: true,
                   min: 50,
@@ -287,7 +282,7 @@ export default function InformationContainer() {
               <Input
                 type="number"
                 id="weight"
-                placeholder= "65"
+                placeholder="65"
                 {...register("weight", {
                   required: true,
                   min: 1,
@@ -304,13 +299,14 @@ export default function InformationContainer() {
                 <Errormsg>올바른 몸무게를 입력하세요</Errormsg>
               )}
             </InputContainer>
-            
+
             <Toggle setGender={setGender} />
             {/* 완료 버튼 */}
             {/* 완료 클릭 시 메인 페이지로 이동 */}
-            <SubmitBtn 
-            // onClick={() => navigate('/')} 
-              type="submit" value="완료"                              
+            <SubmitBtn
+              // onClick={() => navigate('/')}
+              type="submit"
+              value="완료"
             />
             {error && <Errormsg>{error}</Errormsg>}
           </Form>

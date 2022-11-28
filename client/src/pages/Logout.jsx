@@ -158,9 +158,10 @@ const Logout = ({ open, onClose }) => {
     //   // 로그아웃 실패시
     //   alert("로그아웃 실패");
     // }
-
-    useResetRecoilState(TokenState);
-    console.log(useRecoilValue(TokenState), "토큰 리셋");
+    if (TokenState !== null) {
+      useResetRecoilState(TokenState);
+      console.log(useRecoilValue(TokenState), "토큰 리셋");
+    }
     if (TokenState === null) {
       useResetRecoilState(LoginState);
       console.log(useRecoilValue(LoginState), "로그인 리셋");

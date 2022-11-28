@@ -184,23 +184,20 @@ export default function LoginContainer() {
 
         console.log(isToken, "토큰저장 전~~~~~~~");
 
-        // 토큰이 있으면 토큰을 저장
+        // 토큰이 있으면
         if (token) {
+          // 토큰 저장
           setToken(token);
-          console.log("토큰 확인됐음 토큰 저장");
-        }
-        if (isToken !== null) {
-          console.log(isToken, "토큰저장 후~~~~~~~~~~~");
-
-          // 로그인하면 로그인상태 false에서 true로
+          // 로그인 상태 true
           setIsLogin(true);
+          console.log("토큰 확인됐음 로컬에 토큰 저장");
         }
 
-        console.log(isLogin, "로그인 성공 시 트루로 바꾼 값~~~");
+        // console.log(isLogin, "로그인 성공 시 트루로 바꾼 값~~~");
 
-        console.log("성공 로그인 ~~~~~~~~~~~~~~~~");
-        console.log(res);
-        console.log("바디데이터 ", res.data);
+        // console.log("성공 로그인 ~~~~~~~~~~~~~~~~");
+        // console.log(res);
+        // console.log("바디데이터 ", res.data);
         // console.log("바디 이니셜로그인 값 확인 ", res.data.initialLogin)
 
         // 이니셜로그인 false면 초기정보 입력 페이지로
@@ -209,7 +206,7 @@ export default function LoginContainer() {
         }
         // 이니셜로그인이 true면 메인페이지로
         else {
-          // navigate("/");
+          navigate("/");
         }
 
         // console.log("응답 전체",res)
