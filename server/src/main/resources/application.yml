@@ -23,8 +23,8 @@ spring:
       client:
         registration:
           google:
-            clientId: 1060196469380-hne4s93omce8sqaatqkvrf039v1opa98.apps.googleusercontent.com
-            clientSecret: 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
+            clientId: 
+            clientSecret: 
             scope:
               - email
               - profile
