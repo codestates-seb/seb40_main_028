@@ -112,7 +112,7 @@ const SecessionModal = ({ open, onClose }) => {
       }else{
       axios
       .delete("http://13.209.190.35:8080/users",{
-        headers: { Refresh: `${localStorage.getItem('login-refresh')}` },
+        headers: { "Authorization" : `${localStorage.getItem('login-refresh')}` },
       })
       .then(() => {
         localStorage.removeItem('login-token');
