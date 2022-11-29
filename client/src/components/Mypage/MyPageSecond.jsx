@@ -204,7 +204,7 @@ const MyPageSecond = () => {
   axios({
     method: "get",
     url:'http://13.209.190.35:8080/users/mypages/info',
-  headers: {Authorization: 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6W10sInVzZXJJZCI6MTEsInN1YiI6Imd1ZW5sb2dAdGVzdC5jb20iLCJpYXQiOjE2Njk2MjYwODYsImV4cCI6MTY2OTY0MDQ4Nn0.Mmy59dvxUJs4q8cj1Qs26grJDr0rWDwzNPMK_AXp2BrT_g6Em9Azx5FJspwUPS8SBgMIQ30QF-mbCImLcHgZ5g',} })
+  headers: {Authorization: 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6W10sInVzZXJJZCI6MTEsInN1YiI6Imd1ZW5sb2dAdGVzdC5jb20iLCJpYXQiOjE2Njk3MDQyMTcsImV4cCI6MTY3MDMwOTAxN30.GsrS7S84Dj-wtFxHu2Q7AfbIV1zVpnXhmQY9LeTSXelJsphjEkwrO7p-GCPupGwz4c2x_jrlp_FRtbuwHvUThw',} })
   .then((res => {
    setName(res.data.data.nickname);
    setAge(res.data.data.age);
@@ -220,70 +220,64 @@ const MyPageSecond = () => {
     const enteredName = nameInputRef.current.value;
     const enteredHeight= heightInputRef.current.value;
     const enteredWeight = weightInputRef.current.value;
-    const enteredAge = ageInputRef.current.value;
+    const enteredAge = ageInputRef.current.value
+   
 
-    
-    if (enteredName.length < 3) {
-      alert('닉네임은 3자 이상으로 입력하세요!');
-    }else
-  //     axios({
-  //       method: "patch",
-  //       url:"http://13.209.190.35:8080/users/mypages/info",
-  //       body:{
-  //       nickname: enteredName,
-  //       height: enteredHeight,
-  //       weight: enteredWeight,
-  //       age:enteredAge,
-  //       gender:gender
-  //     }, 
-  //     headers: {"Authorization": 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6W10sInVzZXJJZCI6MTEsInN1YiI6Imd1ZW5sb2dAdGVzdC5jb20iLCJpYXQiOjE2Njk2MjYwODYsImV4cCI6MTY2OTY0MDQ4Nn0.Mmy59dvxUJs4q8cj1Qs26grJDr0rWDwzNPMK_AXp2BrT_g6Em9Azx5FJspwUPS8SBgMIQ30QF-mbCImLcHgZ5g'}, })
-  //     .then((res) => {
-  //       if (res.ok) {
-  //         return (
-  //           alert(`${enteredName}님 정보수정 완료!`),
-  //           navigate('/Mypage')
-  //         );
-  //       } else {
-  //         return (
-  //           alert('내 정보 수정을 실패하셨습니다. '),
-  //           navigate('/')
-  //       );
-  //     }
-  //     })
-  //     .catch((err)=>{
-  //           console.log(err);
-  //         })
-  // };
-  axios({
-    method: "patch",
-    url:"http://13.209.190.35:8080/users/mypages/info",
-    body:{
-    nickname: enteredName,
-    height: enteredHeight,
-    weight: enteredWeight,
-    age:enteredAge,
-    gender:gender
-  }, 
-  headers: {"Authorization": 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6W10sInVzZXJJZCI6MTEsInN1YiI6Imd1ZW5sb2dAdGVzdC5jb20iLCJpYXQiOjE2Njk2MjYwODYsImV4cCI6MTY2OTY0MDQ4Nn0.Mmy59dvxUJs4q8cj1Qs26grJDr0rWDwzNPMK_AXp2BrT_g6Em9Azx5FJspwUPS8SBgMIQ30QF-mbCImLcHgZ5g'}, })
-  .then((res) => {
-    if (res.ok) {
-      return (
-        alert(`${enteredName}님 정보수정 완료!`),
-        navigate('/Mypage')
-      );
-    } else {
-      return (
-        alert('내 정보 수정을 실패하셨습니다. '),
-        navigate('/')
-    );
+   if(enteredName && enteredName.length <2 )
+   {
+    alert("닉네임은 2글자 이상이여야 합니다.")
+   }
+    else if(enteredHeight && enteredHeight<0 )
+   {
+    alert("신장은 230이상 0이하로는 불가능 합니다.")
   }
-  })
-  .catch((err)=>{
-    if(err.res){
-        console.log(err.res.data);
+  else if(enteredHeight && enteredHeight>229 )
+  {
+   alert("신장은 230이상 0이하로는 불가능 합니다.")
+ }
+  else if(enteredWeight && enteredWeight<0)
+   {
+    alert("체중은 150이상 0이하로는 불가능 합니다.")
+   }
+   else if(enteredWeight && enteredWeight>149)
+   {
+    alert("체중은 150이상 0이하로는 불가능 합니다.")
+   }
+    else{
+ axios
+
+  .patch(
+    "http://13.209.190.35:8080/users/mypages/info",
+    
+    {
+    nickname: enteredName,
+    age: enteredAge,
+    gender: gender,
+    height: enteredHeight,
+    weight: enteredWeight
+  },
+  { 
+    headers: {
+      Authorization: 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6W10sInVzZXJJZCI6MTEsInN1YiI6Imd1ZW5sb2dAdGVzdC5jb20iLCJpYXQiOjE2Njk3MDQyMTcsImV4cCI6MTY3MDMwOTAxN30.GsrS7S84Dj-wtFxHu2Q7AfbIV1zVpnXhmQY9LeTSXelJsphjEkwrO7p-GCPupGwz4c2x_jrlp_FRtbuwHvUThw',
+    },
+  }
+  )
+  .then(() => {
+    if(enteredName){
+      alert(`${enteredName}님 정보수정 완료!`)
+      navigate('/')
     }
-      })
+    else if(!enteredName){
+      alert(`${name}님 정보수정 완료!`)
+      navigate('/')
+    }
+    })
+  .catch((data)=>{
+    console.log(enteredAge)
+        console.log(data);
+      });
 };
+  }
 
 
 
@@ -321,7 +315,7 @@ const MyPageSecond = () => {
         </InputInfo>
         <InputInfo className="displayWidth">
           <DisplayText>Age</DisplayText>
-          <Input type="date" id="birthday" name="birthday" placeholder={age} required ref={ageInputRef} />
+          <Input type="date" id="birthday" name="birthday"  required ref={ageInputRef} />
           </InputInfo>
           <InputInfo className="displayHeight">
           <DisplayText>Height</DisplayText>
