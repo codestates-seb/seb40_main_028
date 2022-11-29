@@ -7,31 +7,48 @@ display: flex;
 align-items: center;
 justify-content: space-between;
 flex-direction: row;
-width: 20em;
+width: 23em;
 flex-wrap: wrap;
 height: 20px;
-margin-top: 2em;
+margin-top: 1em;
+`;
+
+const Container2 = styled.div`
+display: flex;
+align-items: center;
+justify-content: center;
+flex-direction: row;
+width: 8em;
+flex-wrap: wrap;
 `;
 
 const Text = styled.div`
 display: flex;
 justify-content: space-between;
 width: 10em;
+margin-left: -0.3em;
+margin-right: 0.7em;
 font-size: 15px;
 color: white;
-margin-left: -1em;
 margin-bottom: 1em;
 font-weight: 500;
 `
 const Text2 = styled.div`
 display: flex;
 justify-content: space-between;
-width: 4em;
+width: 5em;
 font-size: 18px;
 color: white;
-margin-left: 0.3em;
-margin-right: 1.9em;
-margin-bottom:-7.8em;
+margin-bottom:-11.2em;
+z-index: 10;
+`
+const Text3 = styled.div`
+display: flex;
+justify-content: space-between;
+width: 5em;
+font-size: 18px;
+color: white;
+margin-bottom:-11.2em;
 z-index: 10;
 `
 
@@ -39,12 +56,12 @@ const TextForm = styled.div`
 display: flex;
 justify-content:center;
 align-items: center;
-width: 8em;
-height: 8em;
-margin-right: 1.7em;
+width: 12em;
+height: 12em;
 font-size: 15px;
 color: white;
 margin-top: 1em;
+margin-right: 0.3em;
 border: solid 2px #36393F;
 	border-top: solid 2px #1249ed;
 	border-radius: 50%;  
@@ -67,9 +84,9 @@ const TextForm2 = styled.div`
 display: flex;
 justify-content:center;
 align-items: center;
-width: 8em;
-height: 8em;
-margin-left: -1.2em;
+width: 12em;
+height: 12em;
+margin-left: -2.6em;
 font-size: 15px;
 margin-top: 1em;
 border: solid 2px #36393F;
@@ -93,7 +110,7 @@ border: solid 2px #36393F;
 
 
 const MyPageText = ({setGymCheck,setKgData}) => {
-  const a = setGymCheck
+  const a = setGymCheck;
   const b = setKgData;
   let c = 0;
   let d = 0;
@@ -124,12 +141,16 @@ const MyPageText = ({setGymCheck,setKgData}) => {
         <Text>
             직전달 운동 횟수 차이
         </Text>
+        <Container2>
         <Text2>
            {d} KG
         </Text2>
-        <Text2>
+        </Container2>
+        <Container2>
+        <Text3>
             {c} 번
-        </Text2>
+        </Text3>
+        </Container2>
         <TextForm2/>
         <TextForm/>
       </Container>

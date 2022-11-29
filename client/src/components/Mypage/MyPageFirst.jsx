@@ -24,7 +24,7 @@ max-width: 27em;
 width: 25em;
 height: 15em;
 margin-bottom: 2em;
-margin-top: 3em;
+margin-top: 2em;
 `;
 
 const Container2 = styled.div`
@@ -77,7 +77,7 @@ const MyPageFirst = () => {
 
     axios
     .get('http://13.209.190.35:8080/users/mypages',
-    { 'headers': {'Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6W10sInVzZXJJZCI6MTEsInN1YiI6Imd1ZW5sb2dAdGVzdC5jb20iLCJpYXQiOjE2Njk2MjYwODYsImV4cCI6MTY2OTY0MDQ4Nn0.Mmy59dvxUJs4q8cj1Qs26grJDr0rWDwzNPMK_AXp2BrT_g6Em9Azx5FJspwUPS8SBgMIQ30QF-mbCImLcHgZ5g',} })
+    { headers: {Authorization: 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6W10sInVzZXJJZCI6MTEsInN1YiI6Imd1ZW5sb2dAdGVzdC5jb20iLCJpYXQiOjE2Njk3MDQyMTcsImV4cCI6MTY3MDMwOTAxN30.GsrS7S84Dj-wtFxHu2Q7AfbIV1zVpnXhmQY9LeTSXelJsphjEkwrO7p-GCPupGwz4c2x_jrlp_FRtbuwHvUThw',} })
     .then((res => {
       let a = []
       for(let i = 0; i<6; i++){
