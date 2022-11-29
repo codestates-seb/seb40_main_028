@@ -10,6 +10,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -20,6 +21,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+//@Component
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final JwtTokenizer tokenizer;
     private final AuthenticationManager authenticationManager;
@@ -53,7 +55,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);
     }
 
-    private String delegateAccessToken(Member member) {
+    public String delegateAccessToken(Member member) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("username", member.getNickname());
         claims.put("roles", member.getRoles());
@@ -64,14 +66,13 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         Date expiration = tokenizer.getExpiration(tokenizer.getAccessTokenExpirationMinutes());
         //secret-key 설정
         String base64EncodedSecretKey = tokenizer.encodeBase64SecretKey(tokenizer.getSecretKey());
-
         //AccessToken 생성
         String accessToken = tokenizer.generateAccessToken(claims, subject, expiration, base64EncodedSecretKey);
 
         return accessToken;
     }
 
-    private String delegateRefreshToken(Member member) {
+    public String delegateRefreshToken(Member member) {
         String subject = member.getEmail();
         Date expiration = tokenizer.getExpiration(tokenizer.getRefreshTokenExpirationMinutes());
         String base64EncodedSecretKey = tokenizer.encodeBase64SecretKey(tokenizer.getSecretKey());

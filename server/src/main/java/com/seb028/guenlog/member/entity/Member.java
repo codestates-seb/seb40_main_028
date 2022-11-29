@@ -3,9 +3,11 @@ package com.seb028.guenlog.member.entity;
 
 import com.seb028.guenlog.base.BaseEntity;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -13,7 +15,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-//@Builder
+@Builder
 public class Member extends BaseEntity {
 
     @Id
@@ -34,11 +36,30 @@ public class Member extends BaseEntity {
 
     private Integer height;
 
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<MemberWeight> weights = new ArrayList<>();
+
     private Character gender;
     //최초 로그인 판별을 위한 필드 추가
-    private Boolean initialLogin = false;
+    private Boolean initialLogin;
+    //회원 가입시 initialLogin을 false로 디폴트 생성
+    @PrePersist
+    public void prePersist(){
+        this.initialLogin = false;
+    }
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles;
 
+    public Member(String email, String nickname, String password) {
+        this.email = email;
+        this.nickname = nickname;
+        this.password = password;
+    }
+    public Member update(String email, String name){
+        this.email = email;
+        this.nickname = name;
+
+        return this;
+    }
 }

@@ -1,9 +1,10 @@
 package com.seb028.guenlog.config;
 
 import com.seb028.guenlog.config.auth.JwtTokenizer;
-import com.seb028.guenlog.config.auth.handler.MemberAuthenticationSuccessHandler;
+import com.seb028.guenlog.config.auth.handler.*;
 import com.seb028.guenlog.config.auth.jwt.filter.JwtAuthenticationFilter;
 import com.seb028.guenlog.config.auth.jwt.filter.JwtVerificationFilter;
+import com.seb028.guenlog.config.auth.service.CustomOauth2UserService;
 import com.seb028.guenlog.config.auth.utils.CustomAuthorityUtils;
 import com.seb028.guenlog.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,12 +27,12 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @RequiredArgsConstructor
-//@EnableWebSecurity
 public class SecurityConfig {
-    private final JwtTokenizer tokenizer;
+    private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
-
     private final MemberRepository memberRepository;
+    private final CustomOauth2UserService customOAuth2UserService;
+    private final Oauth2MemberSuccessHandler oauth2MemberSuccessHandler;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -45,6 +46,8 @@ public class SecurityConfig {
                 .formLogin().disable()
                 .httpBasic().disable()
                 .exceptionHandling()
+                .authenticationEntryPoint(new MemberAuthenticationEntryPoint())
+                .accessDeniedHandler(new MemberAccessDeniedHandler())
                 .and()
                 .apply(new CustomFilterConfigurer())
                 .and()
@@ -53,8 +56,17 @@ public class SecurityConfig {
                         .antMatchers("/exercises/**").authenticated()
                         .antMatchers("/users/info").authenticated()
                         .antMatchers("/users/mypages/**").authenticated()//------
-                        .anyRequest().permitAll());//그 외 모든 사용자 접근 가능
-
+                        .anyRequest().permitAll())//그 외 모든 사용자 접근 가능
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/users/login")
+                .and()
+                .oauth2Login()//OAuth2 로그인 시작
+                .userInfoEndpoint()//로그인 성공시 사용자 정보를 가져옴
+                .userService(customOAuth2UserService); //로그인 성공 후 oauth2userservice 호출
+        http
+                .oauth2Login()
+                .successHandler(oauth2MemberSuccessHandler);//oauth2 인증 성공 후처리 handler 호출
         return http.build();
     }
 
@@ -67,14 +79,17 @@ public class SecurityConfig {
         @Override
         public void configure(HttpSecurity builder) throws Exception {
             AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class); //authentication 객체를 얻음
-            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(tokenizer, authenticationManager);
+            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(jwtTokenizer, authenticationManager);
             jwtAuthenticationFilter.setFilterProcessesUrl("/users/login");//로그인 url 설정
-            jwtAuthenticationFilter.setAuthenticationSuccessHandler(new MemberAuthenticationSuccessHandler(memberRepository));//MemberRespository 주입
+            jwtAuthenticationFilter.setAuthenticationSuccessHandler(new MemberAuthenticationSuccessHandler(memberRepository));//인증 성공시 로직
+            jwtAuthenticationFilter.setAuthenticationFailureHandler(new MemberAuthenticationFailureHandler());//인증 실패시 에러 출력
 
-            JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(tokenizer, authorityUtils);
+            JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils);
 
             builder.addFilter(jwtAuthenticationFilter)
-                    .addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class);
+                    .addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class)
+//                    .addFilterAfter(jwtVerificationFilter, OAuth2LoginAuthenticationFilter.class)
+            ;
         }
     }
 

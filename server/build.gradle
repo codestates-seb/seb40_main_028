@@ -47,6 +47,8 @@ dependencies {
 	implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.28'
 	//json 형식을 넣기위해서 추가
 	implementation 'com.vladmihalcea:hibernate-types-52:2.16.2'
+	//Oauth2 사용하기 위한 의존성 추가
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
 	// spring restdocs 의존 라이브러리 추가
 	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
@@ -54,7 +56,6 @@ dependencies {
 	asciidoctorExtensions 'org.springframework.restdocs:spring-restdocs-asciidoctor'
 
 	implementation 'com.google.code.gson:gson'	// json 변환 라이브러리
-
 }
 
 tasks.named('test') {

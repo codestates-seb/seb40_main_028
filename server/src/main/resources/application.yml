@@ -18,6 +18,16 @@ spring:
 
   main:
     allow-circular-references: true
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: 
+            clientSecret: 
+            scope:
+              - email
+              - profile
 #  jwt:
 #    secret: asasa
 #  mvc:
@@ -33,5 +43,5 @@ logging:
 
 jwt:
   secret-key: asdfweqrzxcvfdghtuiytyrtywerfsdzgbfgyjuer5tszdfgfgjt7uyijhbnsdafgsertewrtsdfgdfvbcvbsdfgertsdfgsdfgergertewrtewrt
-  access-token-expiration-minutes: 240
+  access-token-expiration-minutes: 10080  #access 토큰 유효 기간 7일
   refresh-token-expiration-minutes: 420
