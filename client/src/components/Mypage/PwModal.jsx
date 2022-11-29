@@ -3,6 +3,8 @@ import axios from "axios";
 import React, { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { LoginState, TokenState } from "../../state/UserState";
+import { useRecoilValue } from "recoil";
 
 const Container = styled.div`
   display: flex;
@@ -97,6 +99,15 @@ const PwModal = ({ open, onClose }) => {
   const newPasswordInpitRef = useRef();
   const newPassword2InpitRef = useRef();
 
+  const login = useRecoilValue(LoginState);
+  // 토큰
+  const token = useRecoilValue(TokenState);
+  // url주소
+  const url = "http://13.209.190.35:8080";
+  if (login === false) {
+    alert("로그인이 안 되어 있습니다.");
+    navigate("/login");
+  }
   if (!open) return null;
   const handleOnClick = (event) => {
     event.preventDefault();
@@ -110,24 +121,24 @@ const PwModal = ({ open, onClose }) => {
       alert("최소길이는 10자이상, 특수문자,영문대소문자,숫자를 포함하세요")
     }
     else if (!(enteredNewPassword === enteredNewPassword2)) {
-      alert("새로운 비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+      alert("새로운 패스워드와 패스워드 확인이 일치하지 않습니다.");
     } else if (enteredPassword === enteredNewPassword) {
-      alert("새로운 비밀번호와 현재 비밀번호가 일치합니다.");
+      alert("새로운 패스워드와 현재 패스워드가 일치합니다.");
     }
     else{
      axios
-     .patch("http://13.209.190.35:8080/users/mypages/password",
+     .patch(`${url}/users/mypages/password`,
         {
           password: enteredPassword,
           newPassword: enteredNewPassword
           // returnSecureToken: true,
         },
         {
-        headers: { Authorization : "Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6W10sInVzZXJJZCI6MTEsInN1YiI6Imd1ZW5sb2dAdGVzdC5jb20iLCJpYXQiOjE2Njk3MDQyMTcsImV4cCI6MTY3MDMwOTAxN30.GsrS7S84Dj-wtFxHu2Q7AfbIV1zVpnXhmQY9LeTSXelJsphjEkwrO7p-GCPupGwz4c2x_jrlp_FRtbuwHvUThw"},
+        headers: { Authorization : `${token}`},
       }
       )
       .then(() => {
-            alert("변경완료"),
+            alert("패스워드 변경완료"),
             navigate("/");
 
         // else {
@@ -140,7 +151,7 @@ const PwModal = ({ open, onClose }) => {
         // }
       })
       .catch((data) => {
-        alert("현재 비밀번호가 다릅니다.")
+        alert("현재 패스워드가 일치하지 않습니다.")
         console.log(data);
       });
   };

@@ -7,7 +7,8 @@ import Toggle from "../Toggle";
 import PwModal from "./PwModal";
 import SecessionModal from "./SecessionModal.jsx";
 import Logout from "../../pages/Logout";
-import { get } from "react-hook-form";
+import { LoginState, TokenState } from "../../state/UserState";
+import { useRecoilValue } from "recoil";
 
 const MyPageForm = styled.div`
   display: flex;
@@ -180,6 +181,17 @@ const PageText = styled.div`
 `;
 
 const MyPageSecond = () => {
+// 로그인 상태
+const login = useRecoilValue(LoginState);
+// 토큰
+const token = useRecoilValue(TokenState);
+// url주소
+const url = "http://13.209.190.35:8080";
+  if (login === false) {
+    alert("로그인이 안 되어 있습니다.");
+    navigate("/login");
+  }
+
   const navigate = useNavigate();
   //인풋값들
   const heightInputRef = useRef();
@@ -198,10 +210,10 @@ const MyPageSecond = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: "http://13.209.190.35:8080/users/mypages/info",
+      url: `${url}/users/mypages/info`,
       headers: {
         Authorization:
-          "Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6W10sInVzZXJJZCI6MTEsInN1YiI6Imd1ZW5sb2dAdGVzdC5jb20iLCJpYXQiOjE2Njk3MDQyMTcsImV4cCI6MTY3MDMwOTAxN30.GsrS7S84Dj-wtFxHu2Q7AfbIV1zVpnXhmQY9LeTSXelJsphjEkwrO7p-GCPupGwz4c2x_jrlp_FRtbuwHvUThw",
+        `${token}`,
       },
     }).then((res) => {
       setName(res.data.data.nickname);
@@ -234,7 +246,7 @@ const MyPageSecond = () => {
       axios
 
         .patch(
-          "http://13.209.190.35:8080/users/mypages/info",
+          `${url}/users/mypages/info`,
 
           {
             nickname: enteredName || name,
@@ -246,12 +258,11 @@ const MyPageSecond = () => {
           {
             headers: {
               Authorization:
-                "Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6W10sInVzZXJJZCI6MTEsInN1YiI6Imd1ZW5sb2dAdGVzdC5jb20iLCJpYXQiOjE2Njk3MDQyMTcsImV4cCI6MTY3MDMwOTAxN30.GsrS7S84Dj-wtFxHu2Q7AfbIV1zVpnXhmQY9LeTSXelJsphjEkwrO7p-GCPupGwz4c2x_jrlp_FRtbuwHvUThw",
+              `${token}`,
             },
           }
         )
         .then(() => {
-          이;
           if (enteredName) {
             alert(`${enteredName}님 정보수정 완료!`);
             navigate("/");

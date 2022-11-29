@@ -1,7 +1,10 @@
 /* eslint-disable */
+import axios from "axios";
 import React, { useRef } from "react";
 import { useNavigate } from 'react-router-dom';
+import { useRecoilValue, useResetRecoilState } from "recoil";
 import styled from 'styled-components';
+import { LoginState, TokenState } from "../../state/UserState";
 
 const Container = styled.form`
   display: flex;
@@ -100,7 +103,20 @@ const MyPageButton = styled.button`
 
 const SecessionModal = ({ open, onClose }) => {
   if (!open) return null;
- 
+  const login = useRecoilValue(LoginState);
+  // 토큰
+  const token = useRecoilValue(TokenState);
+  // url주소
+  const url = "http://13.209.190.35:8080";
+  if (login === false) {
+    alert("로그인이 안 되어 있습니다.");
+    navigate("/login");
+  }
+  // 로그인 리셋 -> false
+  const resetlogout = useResetRecoilState(LoginState);
+  // 토근 리셋 - > null
+  const resettoken = useResetRecoilState(TokenState);
+
   const byeRef = useRef();
   const navigate = useNavigate();
 
@@ -111,15 +127,22 @@ const SecessionModal = ({ open, onClose }) => {
         alert('정확한 "회원탈퇴" 글자가 입력되지 않았습니다.')
       }else{
       axios
-      .delete("http://13.209.190.35:8080/users",{
-        headers: { Authorization : `${localStorage.getItem('login-refresh')}` },
+      .delete(`${url}/users`,{
+        headers: { 
+          Authorization : `${token}`},
       })
       .then(() => {
-        localStorage.removeItem('login-token');
+        resetlogout();
+        resettoken();
+        alert('회원탈퇴 완료! 그동안 근로그를 사랑해주셔서 감사합니다.')
         navigate("/");
-      });
-        };
-      };
+      })
+        
+        .catch((err)=>{
+          alert('회원탈퇴 실패')
+        })
+      }
+    };
     
 
 
