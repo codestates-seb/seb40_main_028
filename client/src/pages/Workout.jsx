@@ -1,11 +1,13 @@
 //AXIOS 테스트완료. 커버페이지 붙이고 토큰이랑 API 수정하면 완료
+//운동id 1번부터 40번까지 존재함
 
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import axios from "axios";
 import useInterval from "../assets/Interval";
 import { workoutlistState, worktimeState } from "../state/states";
+import { TokenState } from "../state/UserState";
 import Congrats from "../components/exercise/Congrats";
 import {
   Smallbutton,
@@ -24,16 +26,16 @@ function Workout() {
   const [workoutdone, setWorkoutdone] = useState(false);
   const [worktime, setWorktime] = useRecoilState(worktimeState);
   const [workoutdata, setWorkoutdata] = useRecoilState(workoutlistState);
+  const token = useRecoilValue(TokenState);
   const navigate = useNavigate();
 
   async function getdata(today) {
     await axios
-      // .get(`http://13.209.190.35:8080/exercises/progress?date=${today}`, {
-      //test용
-      .get("http://13.209.190.35:8080/exercises/progress?date=2022-11-05", {
+      .get(`http://13.209.190.35:8080/exercises/progress?date=${today}`, {
+        // test용
+        // .get("http://13.209.190.35:8080/exercises/progress?date=2022-11-05", {
         headers: {
-          Authorization:
-            "Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6W10sInVzZXJJZCI6Miwic3ViIjoidGVzdEB0ZXN0LmNvbSIsImlhdCI6MTY2OTY1NTU5MCwiZXhwIjoxNjY5NjY5OTkwfQ.uGcIEXm4PWmCdIIWGEDmR_Y0qHWqQN9jk_RmsC_8sakeI_YyofPoZAtAMEiBWrSAdjp2Jd9xWXoYPpF1ullxkw",
+          Authorization: token,
         },
       })
       // .then(data => console.log(data))
@@ -154,10 +156,13 @@ function Workout() {
     }
   };
 
-  const reset = async () => {
-    console.log("clicked");
-    console.log(workoutdata.todayId);
-    console.log(worktime);
+  const reset = async (weight) => {
+    if (weight <= 10 || weight > 1000) {
+      alert("입력 가능한 몸무게의 범위는 10-1000입니다.");
+      setWorkoutdone(false);
+      return setStopped(false);
+    }
+
     await axios
       .patch(
         `http://13.209.190.35:8080/exercises/progress/${workoutdata.todayId}`,
@@ -167,10 +172,22 @@ function Workout() {
         },
         {
           headers: {
-            Authorization:
-              "Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6W10sInVzZXJJZCI6Miwic3ViIjoidGVzdEB0ZXN0LmNvbSIsImlhdCI6MTY2OTY1NTU5MCwiZXhwIjoxNjY5NjY5OTkwfQ.uGcIEXm4PWmCdIIWGEDmR_Y0qHWqQN9jk_RmsC_8sakeI_YyofPoZAtAMEiBWrSAdjp2Jd9xWXoYPpF1ullxkw",
+            Authorization: token,
           },
         }
+      )
+      .then(
+        axios.patch(
+          "http://13.209.190.35:8080/users/mypages/info",
+          {
+            Weight: weight,
+          },
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        )
       )
       .then(() => {
         setWorkoutdata({});
@@ -188,6 +205,10 @@ function Workout() {
       pausefunction();
       reset();
     }
+  };
+
+  const recordweight = (event) => {
+    console.log(event);
   };
 
   return (
@@ -288,7 +309,9 @@ function Workout() {
             {isrestmodalon[0] ? (
               <Restmodal data={isrestmodalon} fn={setIsrestmodalon} />
             ) : null}
-            {workoutdone ? <Congrats workoutdone reset={reset} /> : null}
+            {workoutdone ? (
+              <Congrats workoutdone reset={reset} recordweight={recordweight} />
+            ) : null}
           </div>
         </div>
       </Layout>
