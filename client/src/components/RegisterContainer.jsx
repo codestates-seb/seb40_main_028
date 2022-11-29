@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 
-
 const Container = styled.div`
   width: 300px;
   margin-bottom: 40px;
@@ -26,7 +25,6 @@ const MentDiv = styled.div`
   padding: ${({ padding }) => padding || 0};
   margin-top: ${({ mt }) => mt || 0};
   text-align: center;
-  
 `;
 
 const MentSpan = styled.span`
@@ -72,7 +70,7 @@ const Input = styled.input`
   width: 260px;
   height: 35px;
   padding: 0;
-  border: 2px solid rgb(88 101 242) ;
+  border: 2px solid rgb(88 101 242);
 `;
 
 const SubmitBtn = styled.input`
@@ -106,37 +104,32 @@ const MainContainer = styled.div`
   justify-content: center;
 `;
 
-
 export default function RegisterContainer() {
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
   const url = "http://13.209.190.35:8080";
- 
+
   const {
     register,
     formState: { errors },
     handleSubmit,
     watch,
   } = useForm({ mode: onchange });
-  
+
   const password = useRef();
   password.current = watch("password");
 
   // 실시간 입력 값 확인
   // console.log(watch("email"));
-  
 
   const onRegister = async (data) => {
-
-    console.log("data", data)
+    console.log("data", data);
     // console.log("이메일", data.email)
     // console.log("닉네임", data.nickname)
     // console.log("패스워드", data.password)
     // console.log("패스워드", data.passwordConfirm)
-
-
 
     // let userData = {
     //   email: data.email,
@@ -151,22 +144,21 @@ export default function RegisterContainer() {
         // 보내고자 하는 데이터
         email: data.email,
         nickname: data.nickname,
-        password: data.password
+        password: data.password,
       });
 
-      console.log("받아온데이터", res);
+      // console.log("받아온데이터", res);
 
       // 응답코드 201이면 회원가입 성공
       if (res.status === 201) {
-        // 토근 저장 후 메인 페이지로 이동 
-        // navigate("/");
+        // 로그인 페이지로 이동
+        alert("회원가입 성공!");
+        navigate("/login");
 
         // console.log(res);
         console.log("회원가입 성공 로그인 ~~~~~~~~~~~~~~~~");
         // console.log("응답 전체",res)
-
-      } 
-
+      }
     } catch (err) {
       // 응답 실패
       console.log(err);
@@ -179,9 +171,9 @@ export default function RegisterContainer() {
 
       // console.log("에러메세지: ", err.message)
 
-      // 회원가입 실패시 
+      // 회원가입 실패시
       // alert("Email or Password를 확인하세요");
-      if(err.response.status === 409){
+      if (err.response.status === 409) {
         // 서버에서 넘어온 에러메세지 출력
         alert(`${err.response.data.message}`);
       }
@@ -190,7 +182,6 @@ export default function RegisterContainer() {
         alert("Email or Password를 확인하세요");
       }
     }
-
   };
 
   return (
@@ -257,7 +248,8 @@ export default function RegisterContainer() {
                   required: true,
                   minLength: 10,
                   // 최소 10자리 이상 영문 대소문자, 숫자, 특수문자가 각각 1개 이상
-                  pattern:/^(?=.*?[a-zA-Z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{10,}$/,
+                  pattern:
+                    /^(?=.*?[a-zA-Z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{10,}$/,
                 })}
               />
               {errors.password && errors.password.type === "required" && (
@@ -266,8 +258,7 @@ export default function RegisterContainer() {
               {errors.password && errors.password.type === "minLength" && (
                 <Errormsg> 최소 길이는 10자 이상이어야 합니다</Errormsg>
               )}
-              {errors.password &&
-                errors.password.type === "pattern" && (
+              {errors.password && errors.password.type === "pattern" && (
                 <Errormsg>영문, 특수문자, 숫자 포함하세요</Errormsg>
               )}
             </InputContainer>
@@ -279,18 +270,22 @@ export default function RegisterContainer() {
                 id="passwordConfirm"
                 {...register("passwordConfirm", {
                   required: true,
-                  validate: (value) =>
-                    value === password.current
+                  validate: (value) => value === password.current,
                 })}
               />
-              {errors.passwordConfirm && errors.passwordConfirm.type === "required"
-                      && <Errormsg>패스워드를 입력해주세요.</Errormsg>}
-              {errors.passwordConfirm && errors.passwordConfirm.type === "validate"
-                      && <Errormsg>패스워드가 일치하지 않습니다. </Errormsg>}          
+              {errors.passwordConfirm &&
+                errors.passwordConfirm.type === "required" && (
+                  <Errormsg>패스워드를 입력해주세요.</Errormsg>
+                )}
+              {errors.passwordConfirm &&
+                errors.passwordConfirm.type === "validate" && (
+                  <Errormsg>패스워드가 일치하지 않습니다. </Errormsg>
+                )}
             </InputContainer>
             {/* 비밀번호 안내문구 */}
             <RegisterMent>
-              비밀번호는 10자 이상의 영문대소문자, 특수문자, 숫자를 각각1개 이상 포함해야합니다. 
+              비밀번호는 10자 이상의 영문대소문자, 특수문자, 숫자를 각각1개 이상
+              포함해야합니다.
             </RegisterMent>
             {/* 회원가입 버튼 */}
             <SubmitBtn type="submit" value="Sign up" />
