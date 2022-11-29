@@ -1,12 +1,11 @@
 import React from "react";
 import { Pagination } from "swiper";
-import dayjs from "dayjs";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
 import "swiper/swiper.min.css";
+import icons from "../../assets/icons.png";
 import time from "../../assets/time";
 import Loading from "../Loading";
-import icons from "../../assets/icons.png";
 
 const CalendarContent = ({ todos }) => {
   if (todos.length === 0) {

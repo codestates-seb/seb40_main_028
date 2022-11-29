@@ -33,10 +33,10 @@ export default function RandomMessage({ large }) {
   return (
     <div
       className={cls(
-        " text-white font-medium",
+        " text-white font-medium shadow-sm",
         large
-          ? "text-[1em]"
-          : "text-[0.8em] rounded-lg bg-d-button px-1  text-left"
+          ? "text-[1em] text-d-point rounded-md bg-d-light p-1 px-2"
+          : "text-[0.8em] rounded-lg bg-d-button px-1  text-left "
       )}
     >
       {proverb[random]}

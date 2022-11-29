@@ -52,7 +52,7 @@ const YouTubeContainer = () => {
             videos.map((video, idx) => {
               const videoUrl = video.url;
               return (
-                <SwiperSlide key={videoUrl}>
+                <SwiperSlide key={idx}>
                   <div
                     role="presentation"
                     onClick={(e) => {

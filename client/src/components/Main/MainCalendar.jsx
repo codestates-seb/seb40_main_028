@@ -105,6 +105,7 @@ const MainCalendar = () => {
   };
 
   useEffect(() => {
+    console.log(meetings);
     getApi();
   }, [currentMonth]);
 

@@ -17,7 +17,8 @@ export const selectedDays = atom({
 
 export const TokenValue = atom({
   key: "TokenValue",
-  default: ".",
+  default:
+    "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6W10sInVzZXJJZCI6MTEsInN1YiI6Imd1ZW5sb2dAdGVzdC5jb20iLCJpYXQiOjE2Njk2OTg1ODEsImV4cCI6MTY3MDMwMzM4MX0.EJ-9ad12trI4oboM_ea7vXainX7gLXJySnGk5Y0IKs6bu12XeKQs8c5RslmeZd7Z_HeDazFXn0GzXcO7AKKuCQ",
 });
 
 export const categorie = atom({

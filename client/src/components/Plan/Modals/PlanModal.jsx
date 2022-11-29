@@ -7,7 +7,7 @@ import CategorieContent from "./CategorieContent";
 import DetailContent from "./DetailContent";
 import DetailListModal from "./DetailListContent";
 
-const PlanModal = ({ isModalOpen, setIsModalOpen }) => {
+const PlanModal = ({ isModalOpen, setIsModalOpen, data, setData }) => {
   const style = {
     overlay: {
       position: "fixed",
@@ -113,6 +113,7 @@ const PlanModal = ({ isModalOpen, setIsModalOpen }) => {
                 Modals={Modals}
                 setModals={setModals}
                 setSelectedExercise={setSelectedExercise}
+                selectedCategory={selectedCategory}
               />
             ) : (
               // 상세 운동 설정 Modal
@@ -121,6 +122,9 @@ const PlanModal = ({ isModalOpen, setIsModalOpen }) => {
                 selectedExercise={selectedExercise}
                 detailExercise={detailExercise}
                 setDetailExercise={setDetailExercise}
+                selectedDay={selectedDay}
+                data={data}
+                setData={setData}
               />
             )}
           </div>

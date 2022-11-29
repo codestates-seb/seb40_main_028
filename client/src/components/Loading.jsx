@@ -8,19 +8,30 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const Loding = () => {
+const Loading = ({ small }) => {
   return (
     <Container>
-      <div>
-        <BallTriangle
-          height="100"
-          width="100"
-          color="#747BF2"
-          ariaLabel="Loding"
-        />
-      </div>
+      {small ? (
+        <div>
+          <BallTriangle
+            height="50"
+            width="50"
+            color="#747BF2"
+            ariaLabel="Loding"
+          />
+        </div>
+      ) : (
+        <div>
+          <BallTriangle
+            height="100"
+            width="100"
+            color="#747BF2"
+            ariaLabel="Loding"
+          />
+        </div>
+      )}
     </Container>
   );
 };
 
-export default Loding;
+export default Loading;
