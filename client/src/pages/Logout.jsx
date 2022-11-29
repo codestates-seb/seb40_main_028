@@ -162,6 +162,11 @@ const Logout = ({ open, onClose }) => {
       // 로그아웃 실패시
       alert("로그아웃에 실패하였습니다.");
     }
+
+    // 백엔드 로그아웃 로직 구현시 삭제할 것
+    resetlogout();
+    resettoken();
+    console.log(login, token, " ===== LoginState, token 초기값으로 변경완료!");
   };
 
   return (
