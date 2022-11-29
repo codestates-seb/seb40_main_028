@@ -2,6 +2,10 @@ package com.seb028.guenlog.restdocs.exercise;
 
 import com.google.gson.Gson;
 import com.seb028.guenlog.GuenLogApplication;
+import com.seb028.guenlog.config.SecurityConfig;
+import com.seb028.guenlog.config.auth.JwtTokenizer;
+import com.seb028.guenlog.config.auth.jwt.filter.JwtAuthenticationFilter;
+import com.seb028.guenlog.config.auth.jwt.filter.JwtVerificationFilter;
 import com.seb028.guenlog.exercise.controller.ExerciseProgressController;
 import com.seb028.guenlog.exercise.dto.ExercisePlanRequestDto;
 import com.seb028.guenlog.exercise.dto.ExerciseProgressResponseDto;
@@ -19,11 +23,15 @@ import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDoc
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.JsonFieldType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -34,15 +42,25 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.seb028.util.ApiDocumentUtils.getRequestPreprocessor;
+import static com.seb028.util.ApiDocumentUtils.getResponsePreProcessor;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(ExerciseProgressController.class)
+@WebMvcTest(controllers = ExerciseProgressController.class,
+    excludeFilters = {
+        @ComponentScan.Filter(
+                type = FilterType.ASSIGNABLE_TYPE,
+                classes = {SecurityConfig.class, JwtTokenizer.class,
+                        JwtAuthenticationFilter.class, JwtVerificationFilter.class}
+        )})
 @MockBean(JpaMetamodelMappingContext.class)
 @AutoConfigureRestDocs
 public class ExerciseProgressControllerRestDocsTest {
@@ -62,6 +80,7 @@ public class ExerciseProgressControllerRestDocsTest {
     private Gson gson;
 
     @Test
+    @WithMockUser()
     public void getExerciseProgressTest() throws Exception {
         // given
         // 테스트 데이터
@@ -72,6 +91,7 @@ public class ExerciseProgressControllerRestDocsTest {
         eachRecord.setEachCompleted(false);
 
         List<ExercisePlanRequestDto.EachRecords> eachRecords = new ArrayList<ExercisePlanRequestDto.EachRecords>();
+        eachRecords.add(eachRecord);
 
         ExerciseProgressResponseDto.TodayExerciseDto todayExerciseDto = ExerciseProgressResponseDto.TodayExerciseDto.builder()
                 .exerciseName("스쿼트 ")
@@ -90,11 +110,9 @@ public class ExerciseProgressControllerRestDocsTest {
                 .exercises(exercises)
                 .build();
 
-        SingleResponseDto response = new SingleResponseDto(responseDto);
-
         Today today = Today.builder()
                 .id(1L)
-                .totalTime(60)
+                .totalTime(600)
                 .build();
 
         Record record = Record.builder()
@@ -125,6 +143,10 @@ public class ExerciseProgressControllerRestDocsTest {
                 Mockito.any(LocalDate.class), Mockito.anyLong()))
                 .willReturn(exerciseProgress);
 
+        given(mapper.exerciseProgressToExerciseProgressResponseDto(
+                Mockito.any(ExerciseProgress.class)))
+                .willReturn(responseDto);
+
         // when
         ResultActions actions =
                 mockMvc.perform(
@@ -133,23 +155,38 @@ public class ExerciseProgressControllerRestDocsTest {
                                     .accept(MediaType.APPLICATION_JSON));
 
         // then
-        actions
+        MvcResult result =  actions
                 .andExpect(status().isOk())
                 .andDo(
-                        document(
-                                "get-exerciseProgress",
-                                preprocessResponse(prettyPrint()),
+                document(
+                    "get-exerciseProgress",
+                                getRequestPreprocessor(),
+                                getResponsePreProcessor(),
+                    requestParameters(
+                                        parameterWithName("date").description("운동 진행 날짜 (오늘)")
+                                ),
                                 responseFields(
                                         Arrays.asList(
-                                                fieldWithPath("data").type(JsonFieldType.OBJECT).description("결과 데이터").optional(),
-                                                fieldWithPath("data.todayUd").type(JsonFieldType.NUMBER).description("오늘 하루 운동 식별자"),
+                                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("응답 성공 여부"),
+                                                fieldWithPath("data").type(JsonFieldType.OBJECT).description("응답 데이터"),
+                                                fieldWithPath("data.todayId").type(JsonFieldType.NUMBER).description("오늘 하루 운동 식별자"),
                                                 fieldWithPath("data.totalTime").type(JsonFieldType.NUMBER).description("오늘 하루 운동 총 시간"),
-                                                fieldWithPath("data.exercises").type(JsonFieldType.OBJECT).description("오늘 하루 운동 종류")
+                                                fieldWithPath("data.exercises[]").type(JsonFieldType.ARRAY).description("오늘 하루 운동 목록"),
+                                                fieldWithPath("data.exercises[].exerciseId").type(JsonFieldType.NUMBER).description("운동 ID"),
+                                                fieldWithPath("data.exercises[].isCompleted").type(JsonFieldType.BOOLEAN).description("운동 완료 여부"),
+                                                fieldWithPath("data.exercises[].exerciseName").type(JsonFieldType.STRING).description("운동 이름"),
+                                                fieldWithPath("data.exercises[].imageUrl").type(JsonFieldType.STRING).description("운동 이미지 URL"),
+                                                fieldWithPath("data.exercises[].eachRecords").type(JsonFieldType.ARRAY).description("각 세트"),
+                                                fieldWithPath("data.exercises[].eachRecords[].weight").type(JsonFieldType.NUMBER).description("무게"),
+                                                fieldWithPath("data.exercises[].eachRecords[].count").type(JsonFieldType.NUMBER).description("횟수"),
+                                                fieldWithPath("data.exercises[].eachRecords[].timer").type(JsonFieldType.NUMBER).description("휴식 시간"),
+                                                fieldWithPath("data.exercises[].eachRecords[].eachCompleted").type(JsonFieldType.BOOLEAN).description("세트 완료 여부")
                                         )
                                 )
-
                         )
                 )
                 .andReturn();
+
+        System.out.println(result.getResponse().getContentAsString());
     }
 }
