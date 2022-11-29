@@ -2,7 +2,7 @@ import React from "react";
 import Modal from "react-modal";
 import Button from "../Button";
 
-export default function Congrats({workoutdone}) {
+export default function Congrats({ workoutdone, reset }) {
   const style = {
     overlay: {
       position: "fixed",
@@ -41,27 +41,28 @@ export default function Congrats({workoutdone}) {
       preventScroll={false}
       isOpen={workoutdone}
       ariaHideApp={false}
-      onRequestClose={() =>{}}
+      onRequestClose={() => {}}
       style={style}
     >
-
       <div className="flex justify-center items-center">
         {/* <div className="flex fixed inset-0 bg-d-dark bg-opacity-90 h-full max-w-lg mx-auto z-40 justify-center items-center"> */}
         <form className="flex flex-col justify-center items-center">
           <div className="bg-d-light text-white h-[1em]" />
-          <div className="relative text-white text-[3em] py-[1em]">축하합니다</div>
-          <span className="relative flex justify-center text-white text-[1.8em]">Optional: 오늘의 몸무게</span>
-          <span className="relative flex justify-center text-white text-[1.8em]">입력해주세요</span>
+          <div className="relative text-white text-[3em] py-[1em]">
+            축하합니다
+          </div>
+          <span className="relative flex justify-center text-white text-[1.8em]">
+            Optional: 오늘의 몸무게
+          </span>
+          <span className="relative flex justify-center text-white text-[1.8em]">
+            입력해주세요
+          </span>
           <input className="relative rounded-xl h-[4em] my-[2rem]" />
           <div className="relative flex justify-center items-center">
-            <Button workoutodone text="홈으로" />
+            <Button exercisedone={() => reset()} text="홈으로" />
           </div>
-        </form>      
+        </form>
       </div>
-      
     </Modal>
   );
-    
-};
-
-
+}

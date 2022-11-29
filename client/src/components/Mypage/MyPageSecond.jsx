@@ -1,12 +1,13 @@
 /* eslint-disable */
 import axios from "axios";
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from "styled-components/macro";
 import Toggle from "../Toggle";
 import PwModal from "./PwModal";
 import SecessionModal from "./SecessionModal.jsx";
 import Logout from "../../pages/Logout";
+import { get } from "react-hook-form";
 
 const MyPageForm = styled.div`
   display: flex;
@@ -23,7 +24,7 @@ const DisplayText = styled.div`
   font-weight: 600;
   text-align: left;
   color: white;
-  margin-bottom: 0.2em;
+  margin-bottom: 0.3em;
   margin-top: 1em;
 `;
 const DisplayText2 = styled.div`
@@ -51,7 +52,7 @@ const InputInfo = styled.div`
 
 const Input = styled.input`
   width: 130px;
-  height: 25px;
+  height: 26px;
   border: 1px solid #babfc4;
   border-radius: 5px;
   &:focus {
@@ -62,7 +63,7 @@ const Input = styled.input`
 `;
 const Input2 = styled.input`
   width: 250px;
-  height: 25px;
+  height: 26px;
   border: 1px solid #babfc4;
   border-radius: 5px;
   &:focus {
@@ -85,7 +86,7 @@ const Input3 = styled.input`
 
 const Input4 = styled.input`
   width: 55px;
-  height: 25px;
+  height: 26px;
   border: 1px solid #babfc4;
   border-radius: 5px;
   display: flex;
@@ -95,7 +96,7 @@ const Input4 = styled.input`
   }
 `;
 const ToggleDiv = styled.div`
-margin: -1.8em 0em 1.7em -2.1em;
+margin: -1.7em 0em 1.8em -2.1em;
 `;
 
 const MyPageButton = styled.button`
@@ -157,7 +158,7 @@ const MyPageButton3 = styled.button`
 `;
 
 const SerchButton = styled.button`
-  margin-top: -1.64em;
+  margin-top: -1.63em;
   margin-left: 12.5em;
   width: 50px;
   background-color: #747BF2;
@@ -193,19 +194,26 @@ const MyPageSecond = () => {
   const [gender, setGender] = useState("W") //토글
 //get해올 값들
   const [name, setName] = useState('');
-  // const [sex, setSex] = useState('');
   const [age, setAge] = useState('');
   const [height, setHeight] = useState('');
   const [weight, setWeight] = useState('');
+  const [email, setEmail] = useState('');
+  
+  useEffect(()=>{
 
-  axios
-  .get('/users/mypages/info',{
-      name:setName,
-      age:setAge,
-      height:setHeight,
-      weight:setWeight
-    })
-    
+  axios({
+    method: "get",
+    url:'http://13.209.190.35:8080/users/mypages/info',
+  headers: {Authorization: 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6W10sInVzZXJJZCI6MTEsInN1YiI6Imd1ZW5sb2dAdGVzdC5jb20iLCJpYXQiOjE2Njk2MjYwODYsImV4cCI6MTY2OTY0MDQ4Nn0.Mmy59dvxUJs4q8cj1Qs26grJDr0rWDwzNPMK_AXp2BrT_g6Em9Azx5FJspwUPS8SBgMIQ30QF-mbCImLcHgZ5g',} })
+  .then((res => {
+   setName(res.data.data.nickname);
+   setAge(res.data.data.age);
+    setWeight(res.data.data.weight);
+    setHeight(res.data.data.height);
+    setEmail(res.data.data.email);
+    setGender(res.data.data.gender)
+    }))
+  },[])
 
   const handleOnClick = (event) => {
     event.preventDefault();
@@ -214,42 +222,70 @@ const MyPageSecond = () => {
     const enteredWeight = weightInputRef.current.value;
     const enteredAge = ageInputRef.current.value;
 
+    
     if (enteredName.length < 3) {
       alert('닉네임은 3자 이상으로 입력하세요!');
     }else
-      axios
-      .post(`http://localhost:8080/posts`,{
-        nickname: enteredName,
-        height: enteredHeight,
-        weight: enteredWeight,
-        age:enteredAge,
-        gender:gender
-      },
-      {
-        headers: {
-          Authorization: `${localStorage.getItem('login-token')}`,
-      },
-      },
-      )
-      // .then(() => {
-      //   if (res.ok) {
-      //     return (
-      //       alert(`${enteredName}님 정보수정 완료!`),
-      //       navigate('/Mypage')
-      //     );
-      //   } else {
-      //     return (
-      //       alert('내 정보 수정을 실패하셨습니다. '),
-      //       navigate('/')
-      //   );
-      // }
-      // })
-  };
+  //     axios({
+  //       method: "patch",
+  //       url:"http://13.209.190.35:8080/users/mypages/info",
+  //       body:{
+  //       nickname: enteredName,
+  //       height: enteredHeight,
+  //       weight: enteredWeight,
+  //       age:enteredAge,
+  //       gender:gender
+  //     }, 
+  //     headers: {"Authorization": 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6W10sInVzZXJJZCI6MTEsInN1YiI6Imd1ZW5sb2dAdGVzdC5jb20iLCJpYXQiOjE2Njk2MjYwODYsImV4cCI6MTY2OTY0MDQ4Nn0.Mmy59dvxUJs4q8cj1Qs26grJDr0rWDwzNPMK_AXp2BrT_g6Em9Azx5FJspwUPS8SBgMIQ30QF-mbCImLcHgZ5g'}, })
+  //     .then((res) => {
+  //       if (res.ok) {
+  //         return (
+  //           alert(`${enteredName}님 정보수정 완료!`),
+  //           navigate('/Mypage')
+  //         );
+  //       } else {
+  //         return (
+  //           alert('내 정보 수정을 실패하셨습니다. '),
+  //           navigate('/')
+  //       );
+  //     }
+  //     })
+  //     .catch((err)=>{
+  //           console.log(err);
+  //         })
+  // };
+  axios({
+    method: "patch",
+    url:"http://13.209.190.35:8080/users/mypages/info",
+    body:{
+    nickname: enteredName,
+    height: enteredHeight,
+    weight: enteredWeight,
+    age:enteredAge,
+    gender:gender
+  }, 
+  headers: {"Authorization": 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6W10sInVzZXJJZCI6MTEsInN1YiI6Imd1ZW5sb2dAdGVzdC5jb20iLCJpYXQiOjE2Njk2MjYwODYsImV4cCI6MTY2OTY0MDQ4Nn0.Mmy59dvxUJs4q8cj1Qs26grJDr0rWDwzNPMK_AXp2BrT_g6Em9Azx5FJspwUPS8SBgMIQ30QF-mbCImLcHgZ5g'}, })
+  .then((res) => {
+    if (res.ok) {
+      return (
+        alert(`${enteredName}님 정보수정 완료!`),
+        navigate('/Mypage')
+      );
+    } else {
+      return (
+        alert('내 정보 수정을 실패하셨습니다. '),
+        navigate('/')
+    );
+  }
+  })
+  .catch((err)=>{
+    if(err.res){
+        console.log(err.res.data);
+    }
+      })
+};
 
-  const handleOnClick2 = () => {
-    event.preventDefault();
-  };
- 
+
 
   const [PwModalOn,setPwModalOn] = useState(false);
   const [SeModalOn,setSeModalOn] = useState(false);
@@ -269,15 +305,15 @@ const MyPageSecond = () => {
           onClose={() => setSeModalOn(false)} />
         <InputInfo className="displayName">
           <DisplayText>Nickname</DisplayText>
-          <Input type="text" id="displayname"  required ref={nameInputRef} />
+          <Input type="text" id="displayname" placeholder={name} required ref={nameInputRef} />
         </InputInfo>
         <InputInfo className="displayMail">
-          <DisplayText>Email</DisplayText>
-          <Input2  type="mail" id="displayMail"  placeholder="이메일은 변경 불가능합니다." readOnly/>
+          <DisplayText>Email (변경 불가)</DisplayText>
+          <Input2  type="mail" id="displayMail"  placeholder={email} readOnly/>
         </InputInfo>
         <InputInfo className="password">
           <DisplayText>Password</DisplayText>
-          <Input3 type="password" id="password" placeholder= "변경을 눌러주세요." readOnly />
+          <Input3 type="password" id="password" placeholder= "변경을 눌러주세요." autoComplete="oㄹㄹ" readOnly />
           <SerchButton type="button" onClick={() => setPwModalOn(true)}
           className='modalButton'>변경</SerchButton>
           <PwModal open={PwModalOn} 
@@ -285,21 +321,21 @@ const MyPageSecond = () => {
         </InputInfo>
         <InputInfo className="displayWidth">
           <DisplayText>Age</DisplayText>
-          <Input type="date" id="birthday" name="birthday" required ref={ageInputRef} />
+          <Input type="date" id="birthday" name="birthday" placeholder={age} required ref={ageInputRef} />
           </InputInfo>
           <InputInfo className="displayHeight">
           <DisplayText>Height</DisplayText>
-          <Input4 type="number" id="displayHeight"  required ref={heightInputRef}  />
+          <Input4 type="number" id="displayHeight" placeholder={height} required ref={heightInputRef}  />
           <DisplayText2 className="h1">CM</DisplayText2>
         </InputInfo>
         <InputInfo className="displayWidth">
           <DisplayText>Weight</DisplayText>
-          <Input4 type="number" id="displayweight" required ref={weightInputRef}/>
+          <Input4 type="number" id="displayweight" placeholder={weight} required ref={weightInputRef}/>
           <DisplayText2 className="h1">KG</DisplayText2>
           <DisplayText3>Sex</DisplayText3>
         </InputInfo>
         <ToggleDiv>
-        <Toggle setGender={setGender}  />
+        <Toggle setGender={setGender} value={gender} />
         </ToggleDiv>
         <MyPageButton type="button" onClick={handleOnClick}>Save</MyPageButton>
       </MyPageForm>

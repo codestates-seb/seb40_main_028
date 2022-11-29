@@ -70,7 +70,7 @@ function Restmodal({data, fn}) {
         <div className="flex pt-[1rem] text-[2rem] text-white">휴식시간측정기</div>
         <div className={`flex justify-center items-center text-[4rem] ${data[1]!==0? "text-green-700":"text-red-700"}`}>{timeonscreen(data[1])}</div>
         {categories.map((item) => (
-          <div className="flex flex-wrap basis-1/2 justify-center items-center m-[1em]">
+          <div className="flex flex-wrap basis-1/2 justify-center items-center m-[0.5em]">
             <Smallerbutton key={item} name={timeonscreen(item, "minutes")} fn={() => {fn([true, item])}}/>
           </div>
         ))}

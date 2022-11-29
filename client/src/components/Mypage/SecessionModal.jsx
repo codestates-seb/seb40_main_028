@@ -111,8 +111,8 @@ const SecessionModal = ({ open, onClose }) => {
         alert('정확한 "회원탈퇴" 글자가 입력되지 않았습니다.')
       }else{
       axios
-      .delete("/users",{
-        headers: { Refresh: `${localStorage.getItem('login-refresh')}` },
+      .delete("http://13.209.190.35:8080/users",{
+        headers: { "Authorization" : `${localStorage.getItem('login-refresh')}` },
       })
       .then(() => {
         localStorage.removeItem('login-token');

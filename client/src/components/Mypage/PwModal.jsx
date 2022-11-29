@@ -1,9 +1,10 @@
 /* eslint-disable */
+import axios from "axios";
 import React, { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-const Container = styled.form`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -111,14 +112,13 @@ const PwModal = ({ open, onClose }) => {
     else
       axios({
         method: "patch",
-        url:"/users/mypages/password",
-        data:{
+        url:"http://13.209.190.35:8080/users/mypages/password",
+        body:{
           password: enteredPassword,
           newPassword: enteredNewPassword,
           // returnSecureToken: true,
         },
-        headers: { "Authorization" : localStorage.getItem("access_token") },
-        responseType:"json",
+        headers: { "Authorization" : 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6W10sInVzZXJJZCI6MTEsInN1YiI6Imd1ZW5sb2dAdGVzdC5jb20iLCJpYXQiOjE2Njk2MjYwODYsImV4cCI6MTY2OTY0MDQ4Nn0.Mmy59dvxUJs4q8cj1Qs26grJDr0rWDwzNPMK_AXp2BrT_g6Em9Azx5FJspwUPS8SBgMIQ30QF-mbCImLcHgZ5g' },
       }
       ).then((res) => {
         if (res.ok) {
@@ -126,14 +126,15 @@ const PwModal = ({ open, onClose }) => {
             alert("변경완료"),
             navigate("/Mypage")
           );
-        } else {
-          return (
-            alert("비밀번호 변경을 실패하셨습니다. "),
-            res.JSON().then((data) => {
-              console.log(data), navigate("/");
-            })
-          );
-        }
+        } 
+        // else {
+        //   return (
+        //     alert("비밀번호 변경을 실패하셨습니다. "),
+        //     res.JSON().then((data) => {
+        //       console.log(data), navigate("/");
+        //     })
+        //   );
+        // }
       });
   };
  
@@ -155,11 +156,11 @@ const PwModal = ({ open, onClose }) => {
           
             <InputInfo className="password">
               <DisplayText>Current Password</DisplayText>
-              <Input type="password" id="password" required ref={passwordInputRef} />
+              <Input type="password" id="password" required ref={passwordInputRef} autoComplete="off" />
               <DisplayText>New Password</DisplayText>
-              <Input type="password" id="newpassword" required ref={newPasswordInpitRef} />
+              <Input type="password" id="newpassword" required ref={newPasswordInpitRef} autoComplete="off" />
               <DisplayText>Confirm New Password</DisplayText>
-              <Input type="password" id="newpassword2"  required ref={newPassword2InpitRef}/>
+              <Input type="password" id="newpassword2"  required ref={newPassword2InpitRef} autoComplete="off" />
             </InputInfo>
             <MyPageButton className='btnContainer' onClick={handleOnClick} >Save</MyPageButton>
          
