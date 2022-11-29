@@ -16,7 +16,7 @@ v0.0.1 2022.11.30
 include::{snippets}/get-exerciseProgress/curl-request.adoc[]
 
 .http-request
-include::{snippets}/get-exerciseProgress/curl-request.adoc[]
+include::{snippets}/get-exerciseProgress/http-request.adoc[]
 
 .request-parameters
 include::{snippets}/get-exerciseProgress/request-parameters.adoc[]
