@@ -4,8 +4,7 @@ import React from "react";
 import { useRecoilState } from "recoil";
 import { selectedDays } from "../../state/states";
 
-export default function PlanCalendar() {
-  const [selectedDay, setSelectedDay] = useRecoilState(selectedDays);
+export default function PlanCalendar({ selectedDay, setSelectedDay }) {
   const renderCustomInput = ({ ref }) => (
     <label
       htmlFor="my-custom-input-class"

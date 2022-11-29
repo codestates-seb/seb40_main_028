@@ -1,15 +1,16 @@
 import React from "react";
+import { redirect } from "react-router-dom";
 import icons from "../../assets/icons.png";
 import RandomMessage from "./RandomMessage";
 
-export default function PlanList({ data, setData }) {
+export default function PlanList({ data, setData, deletePlan }) {
   return (
     <div className="flex flex-col bg-d-lighter items-center w-full text-gray-700 text-medium text-xl text-center mt-5">
       {data.map((item, idx) => (
         <div
+          key={idx}
           className="flex relative shadow-sm justify-between py-4  ease-out duration-150 p-1 rounded-lg mb-2
     w-[80%] border-[#2C2F33] bg-[#4E525A] hover:border-b-d-light hover:bg-[#2f3136] hover:rounded-lg  text-white text-base text-medium"
-          key={idx}
         >
           <img
             src={icons}
@@ -18,7 +19,7 @@ export default function PlanList({ data, setData }) {
           />
           <div className="flex flex-col text-left ml-[5.5em]  space-y-2">
             <div className="font-semibold text-[1em] text-[#dcddde]">
-              {item.title}
+              {item.name}
             </div>
             <RandomMessage />
           </div>
@@ -30,10 +31,9 @@ export default function PlanList({ data, setData }) {
               strokeWidth="1.5"
               stroke="currentColor"
               className="w-6 h-6 text-red-400 hover:text-red-600 hover:scale-125 ease-out duration-150"
-              onClick={() => {
+              onClick={async () => {
                 if (window.confirm("삭제하시겠습니까?")) {
-                  setData(data.filter((datas) => datas.id !== item.id));
-                  // axios delete 요청
+                  await deletePlan(item.recordId);
                 }
               }}
             >

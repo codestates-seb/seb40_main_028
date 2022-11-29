@@ -1,41 +1,94 @@
+import axios from "axios";
 import React from "react";
-import imgsss from "../../../assets/11.png";
+import { useRecoilState } from "recoil";
+import { categorie, TokenValue, isModal } from "../../../state/states";
 import Button from "../../Button";
+import Loading from "../../Loading";
 
 const DetailContent = ({
   selectedCategory,
   selectedExercise,
   detailExercise,
   setDetailExercise,
+  selectedDay,
+  data,
+  setData,
 }) => {
-  const handleSubmit = (e) => {
-    console.log(detailExercise);
+  const URL = process.env.REACT_APP_BASE_URL;
+  const [isModalOpen, setIsModalOpen] = useRecoilState(isModal);
+  const [token, setToken] = useRecoilState(TokenValue);
+  const [categories, setCategories] = useRecoilState(categorie);
+  const List = categories[selectedCategory].exercises[selectedExercise];
+  const date = `${selectedDay.year}-${selectedDay.month}-${selectedDay.day}`;
+  const ExercisesRecords = [
+    // 운동 세부 기록 데이터 배열화
+    detailExercise.map((item) => ({
+      ...item,
+      eachCompleted: false,
+    })),
+  ];
+
+  const result = {
+    // 운동 세부 기록과 아이디를 서버에 보낼 수 있게 데이터 객체화
+    exerciseId: Number(List.id),
+    eachRecords: [...ExercisesRecords[0]],
+  };
+
+  const newData = {
+    recordId: List.id,
+    name: List.name,
+  };
+
+  const handleSubmit = async (e) => {
     const isValid = detailExercise.every((item) =>
       Object.values(item).every((value) => value.trim().length)
     );
-
     if (!isValid) {
       alert("빈칸을 전부 채워주세요!");
+    } else {
+      await axios.post(URL + `/exercises/records?date=${date}`, result, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (data) {
+        setData([...data, newData]);
+      } else {
+        setData([newData]);
+      }
+
+      setIsModalOpen(false);
     }
   };
+
   const onChange = (e, idx) => {
     const newObject = [...detailExercise];
     newObject[idx][e.target.name] = e.target.value;
     setDetailExercise(newObject);
   };
 
+  if (!List)
+    return (
+      <div className="flex justify-center items-center h-[29em]">
+        <Loading />
+      </div>
+    );
   return (
     <>
       <div>
         <div className="flex flex-col items-end mt-[-1.15em]">
           <div className="text-[0.9em] text-d-point font-semibold">
-            {selectedCategory}
+            {categories[selectedCategory].name} 운동
           </div>
-          <div className="text-[0.75em] font-light">
-            {selectedExercise.name}
-          </div>
+          <div className="text-[0.75em] font-light">{List.name}</div>
         </div>
-        <img src={imgsss} alt="icons" />
+        <div className="min-h-[11em] max-h-[11em] mt-5 mb-5 flex items-center justify-center object-contain aspect-video">
+          {List.imageUrl ? (
+            <img src={List.imageUrl} alt="icons" />
+          ) : (
+            <Loading />
+          )}
+        </div>
 
         {/* 세트 표 상단 */}
         <div className="w-full h-[3em] rounded-lg px-4 flex justify-between items-center">

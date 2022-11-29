@@ -1,85 +1,53 @@
 import React from "react";
-import imgss from "../../../assets/1111.png";
+import { useRecoilState } from "recoil";
+import { categorie } from "../../../state/states";
 import Button from "../../Button";
+import Loading from "../../Loading";
 
-const data = [
-  {
-    id: 1,
-    name: "윗몸 일으윗몸 일으윗몸 일으윗",
-  },
-  {
-    id: 2,
-    name: "윗몸 일으키기2",
-  },
-  {
-    id: 3,
-    name: "윗몸 일으키기3",
-  },
-  {
-    id: 4,
-    name: "윗몸 일으키기4",
-  },
-  {
-    id: 5,
-    name: "윗몸 일으키기5",
-  },
-  {
-    id: 6,
-    name: "윗몸 일으키기6",
-  },
-  {
-    id: 7,
-    name: "윗몸 일으키기7",
-  },
-  {
-    id: 8,
-    name: "윗몸 일으키기2",
-  },
-  {
-    id: 9,
-    name: "윗몸 일으키기3",
-  },
-  {
-    id: 10,
-    name: "윗몸 일으키기4",
-  },
-  {
-    id: 11,
-    name: "윗몸 일으키기5",
-  },
-  {
-    id: 12,
-    name: "윗몸 일으키기6",
-  },
-  {
-    id: 13,
-    name: "윗몸 일으키기7",
-  },
-];
+const DetailListModal = ({
+  Modals,
+  setModals,
+  selectedExercise,
+  setSelectedExercise,
+  selectedCategory,
+}) => {
+  const [categories, setCategories] = useRecoilState(categorie);
+  const List = categories[selectedCategory].exercises;
 
-const DetailListModal = ({ Modals, setModals, setSelectedExercise }) => {
+  if (!List)
+    return (
+      <div className="flex justify-center items-center h-[29em]">
+        <Loading />
+      </div>
+    );
   return (
     <>
-      <div className="flex flex-wrap overflow-scroll h-[30em] items-center justify-center">
-        {data.map((item, idx) => {
+      <div className="flex flex-wrap overflow-scroll justify-center max-h-[30em]">
+        {List.map((item, idx) => {
           return (
             <button
               type="button"
               key={idx}
               onClick={() => {
+                setSelectedExercise(idx);
                 setModals(Modals + 1);
-                setSelectedExercise(item);
               }}
               className="flex flex-col mb-3 items-center justify-center w-[7em] h-[7em]"
             >
-              <div className="w-16 h-16 hover:bg-d-button-hover pt-1 bg-[#d9d9d9] scale-[4em] rounded-lg ease-out duration-150">
-                <img
-                  src={imgss}
-                  alt="hi"
-                  className=" top-0 left-0 bg-left-top"
-                />
+              <div className="w-16 h-16 hover:bg-d-button-hover pt-1 bg-[#d9d9d9] scale-[4em] rounded-lg ease-out duration-150 flex items-center justify-center">
+                {item.imageUrl ? (
+                  <img
+                    src={item.imageUrl}
+                    alt="ExercisesImage"
+                    className=" top-0 left-0 bg-left-top"
+                  />
+                ) : (
+                  <div className="mb-3">
+                    <Loading small />
+                  </div>
+                )}
               </div>
-              <div className="font-medium text-[0.8em] mt-[0.6em] h-5">
+              <div className="font-medium text-[0.8em] mt-[0.6em] h-5 w-[7em] break-keep">
                 {item.name}
               </div>
             </button>
