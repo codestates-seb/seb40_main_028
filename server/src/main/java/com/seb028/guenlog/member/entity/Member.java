@@ -7,6 +7,7 @@ import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -34,6 +35,9 @@ public class Member extends BaseEntity {
     private LocalDate age;
 
     private Integer height;
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<MemberWeight> weights = new ArrayList<>();
 
     private Character gender;
     //최초 로그인 판별을 위한 필드 추가
