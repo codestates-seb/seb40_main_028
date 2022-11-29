@@ -1,0 +1,34 @@
+= GuenLog
+:sectnums:
+:toc: left
+:toclevels: 4
+:toc-title: Table of Contents
+:source-highlighter: prettify
+
+Kim Young Min
+
+v0.0.1 2022.11.30
+
+***
+== ExerciseProgressController
+=== 운동 진행  조회
+.curl-request
+include::{snippets}/get-exerciseProgress/curl-request.adoc[]
+
+.http-request
+include::{snippets}/get-exerciseProgress/http-request.adoc[]
+
+.request-parameters
+include::{snippets}/get-exerciseProgress/request-parameters.adoc[]
+
+.request-header
+include::{snippets}/get-exerciseProgress/request-headers.adoc[]
+
+.http-response
+include::{snippets}/get-exerciseProgress/http-response.adoc[]
+
+.response-body
+include::{snippets}/get-exerciseProgress/response-body.adoc[]
+
+.response-fields
+include::{snippets}/get-exerciseProgress/response-fields.adoc[]
