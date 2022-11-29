@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import Modal from "react-modal";
 import Button from "../Button";
 
-export default function Congrats({ workoutdone, reset }) {
+export default function Congrats({ workoutdone, reset, recordweight }) {
+  const [weight, setWeight] = useState("");
+
   const style = {
     overlay: {
       position: "fixed",
@@ -34,7 +36,10 @@ export default function Congrats({ workoutdone, reset }) {
         "rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px",
     },
   };
-
+  const onChange = (el) => {
+    setWeight(el.target.value);
+    console.log(el);
+  };
   return (
     <Modal
       overlayClassName="w-full max-w-lg mx-auto"
@@ -48,18 +53,21 @@ export default function Congrats({ workoutdone, reset }) {
         {/* <div className="flex fixed inset-0 bg-d-dark bg-opacity-90 h-full max-w-lg mx-auto z-40 justify-center items-center"> */}
         <form className="flex flex-col justify-center items-center">
           <div className="bg-d-light text-white h-[1em]" />
-          <div className="relative text-white text-[3em] py-[1em]">
-            축하합니다
-          </div>
-          <span className="relative flex justify-center text-white text-[1.8em]">
+          <div className="text-white text-[3em] py-[1em]">축하합니다</div>
+          <span className="flex justify-center text-white text-[1.8em]">
             Optional: 오늘의 몸무게
           </span>
-          <span className="relative flex justify-center text-white text-[1.8em]">
+          <span className="flex justify-center text-white text-[1.8em]">
             입력해주세요
           </span>
-          <input className="relative rounded-xl h-[4em] my-[2rem]" />
-          <div className="relative flex justify-center items-center">
-            <Button exercisedone={() => reset()} text="홈으로" />
+          <input
+            placeholder="몸무게"
+            className="flex rounded-xl h-[3.5rem] w-[10rem] my-[2rem] py-0 text-2xl placeholder:text-2xl placeholder:text-center text-center"
+            onChange={onChange}
+            value={weight}
+          />
+          <div className="flex justify-center items-center">
+            <Button exercisedone={() => reset(weight)} text="홈으로" />
           </div>
         </form>
       </div>
