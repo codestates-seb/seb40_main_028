@@ -32,6 +32,8 @@ public class ExercisePlanResponseDto {
     @Data
     public static class RecordPostResponseDto {
 
+        private Long recordId;
+
         private Long exerciseId;
 
         private String name;

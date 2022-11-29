@@ -13,6 +13,7 @@ public interface ExercisePlanMapper {
 
     default ExercisePlanResponseDto.RecordPostResponseDto recordToRecordPostResponseDto(Record record){
         ExercisePlanResponseDto.RecordPostResponseDto postDto = new ExercisePlanResponseDto.RecordPostResponseDto();
+        postDto.setRecordId(record.getId());
         postDto.setExerciseId(record.getExercise().getId());
         postDto.setName(record.getExercise().getName());
         postDto.setRecords(record.getEachRecords());
