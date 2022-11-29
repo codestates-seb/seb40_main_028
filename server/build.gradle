@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '2.7.5'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+	id "org.asciidoctor.jvm.convert" version "3.3.2"		// AsciiDoc 문서 생성하는 AsciiDoctor 플러그인 추가
 }
 
 group = 'com.seb028'
@@ -12,6 +13,14 @@ configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
+}
+
+ext {
+	set('snippetsDir', file("build/generated-snippets"))		// API 문서 스니핏 생성 경로 지정
+}
+
+configurations {		// AsciiDoctor에서 사용되는 의존 그룹 지정
+	asciidoctorExtensions
 }
 
 repositories {
@@ -41,9 +50,43 @@ dependencies {
 	//Oauth2 사용하기 위한 의존성 추가
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
-	implementation 'com.google.code.gson:gson'
+	// spring restdocs 의존 라이브러리 추가
+	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+	// spring restdocs asciidoctor 의존 라이브러리 추가
+	asciidoctorExtensions 'org.springframework.restdocs:spring-restdocs-asciidoctor'
+
+	implementation 'com.google.code.gson:gson'	// json 변환 라이브러리
 }
 
 tasks.named('test') {
+	// test Task 실행시 API 문서 생성 스니핏 디렉토리 경로 설정
+	outputs.dir snippetsDir
 	useJUnitPlatform()
+}
+
+// asciidoctor task 실행시 assciidoctor 기능 사용
+tasks.named('asciidoctor') {
+	configurations "asciidoctorExtensions"
+	inputs.dir snippetsDir
+	dependsOn test
+}
+
+// build task 실행 전 index.html 파일 copy 실행 API 문서를 파일 형태로 외부에 제공
+task copyDocument(type: Copy) {
+	dependsOn asciidoctor
+	from file("${asciidoctor.outputDir}")
+	into file("src/main/resources/static/docs")
+}
+
+// build task 실행 전 copyDocument task 먼저 수행
+build {
+	dependsOn copyDocument
+}
+
+// bootJar task 설정
+bootJar {
+	dependsOn copyDocument    // bootJar task 실행 전 copyDocument task 실행
+	from ("${asciidoctor.outputDir}") {  // index.html 파일을 jar 파일 안에 추가
+		into'static/docs'
+	}
 }
