@@ -1,11 +1,12 @@
 /* eslint-disable */
-
 import axios from 'axios';
 import Chart from 'chart.js/auto';
 import React, { useState,useEffect } from 'react';
 import { Line } from "react-chartjs-2";
 import styled from 'styled-components/macro';
 import MyPageText from './MyPageText';
+import { LoginState, TokenState } from "../../state/UserState";
+import { useRecoilValue } from "recoil";
 
 const MyPageForm = styled.form`
   display: flex;
@@ -72,12 +73,22 @@ const MyPageFirst = () => {
   const [KgData, setKgData] = useState('');
   const [GymData, setGymCheck] = useState('');
   const [month,setMonth]=useState([]);
+  const login = useRecoilValue(LoginState);
+  // 토큰
+  const token = useRecoilValue(TokenState);
+  // url주소
+  const url = "http://13.209.190.35:8080";
+  if (login === false) {
+    alert("로그인이 안 되어 있습니다.");
+    navigate("/login");
+  }
 
   useEffect(()=>{
 
     axios
-    .get('http://13.209.190.35:8080/users/mypages',
-    { headers: {Authorization: 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6W10sInVzZXJJZCI6MTEsInN1YiI6Imd1ZW5sb2dAdGVzdC5jb20iLCJpYXQiOjE2Njk3MDQyMTcsImV4cCI6MTY3MDMwOTAxN30.GsrS7S84Dj-wtFxHu2Q7AfbIV1zVpnXhmQY9LeTSXelJsphjEkwrO7p-GCPupGwz4c2x_jrlp_FRtbuwHvUThw',} })
+    .get(`${url}/users/mypages`,
+    { headers: {Authorization: `${token}`,}, 
+   })
     .then((res => {
       let a = []
       for(let i = 0; i<6; i++){

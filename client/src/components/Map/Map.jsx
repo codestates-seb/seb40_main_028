@@ -48,7 +48,7 @@ const Map = ({ searchPlace }) => {
     }
   });
 
-  return <div id="myMap" className="w-full h-[35em]" />;
+  return <div id="myMap" className="w-full h-[38em]" />;
 };
 
 export default Map;

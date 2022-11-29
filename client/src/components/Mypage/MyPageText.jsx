@@ -26,7 +26,7 @@ const Text = styled.div`
 display: flex;
 justify-content: space-between;
 width: 10em;
-margin-left: -0.3em;
+margin-left: -0.2em;
 margin-right: 0.7em;
 font-size: 15px;
 color: white;
@@ -40,6 +40,7 @@ width: 5em;
 font-size: 18px;
 color: white;
 margin-bottom:-11.2em;
+margin-left: 0.6em;
 z-index: 10;
 `
 const Text3 = styled.div`
@@ -47,6 +48,7 @@ display: flex;
 justify-content: space-between;
 width: 5em;
 font-size: 18px;
+margin-right: 0.8em;
 color: white;
 margin-bottom:-11.2em;
 z-index: 10;
@@ -130,8 +132,8 @@ const MyPageText = ({setGymCheck,setKgData}) => {
   
   const roundNum = Math.round(d * 10) / 10;
   d=roundNum;
-  d > 1 ? d= `+${d}`:d 
-  c > 1 ? c= `+${c}`:c 
+  d >= 0 ? d= `+${d}`:d 
+  c >= 0 ? c= `+${c}`:c 
   return (
     <>
       <Container >
