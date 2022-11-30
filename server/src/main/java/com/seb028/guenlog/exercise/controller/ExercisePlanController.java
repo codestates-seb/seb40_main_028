@@ -114,7 +114,6 @@ public class ExercisePlanController {
     @DeleteMapping("/records/{record-id}")
     public ResponseEntity deleteTodo(@PathVariable("record-id") @Positive @NotNull long id){
         exercisePlanService.deleteTodo(id);
-        log.info("id 값은 " +id);
         return new ResponseEntity<>(new SingleResponseDto<>("삭제완료"),
                 HttpStatus.OK);
     }
