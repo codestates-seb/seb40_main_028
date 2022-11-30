@@ -6,7 +6,10 @@ import com.seb028.guenlog.config.auth.JwtTokenizer;
 import com.seb028.guenlog.config.auth.jwt.filter.JwtAuthenticationFilter;
 import com.seb028.guenlog.config.auth.jwt.filter.JwtVerificationFilter;
 import com.seb028.guenlog.member.controller.MyPageController;
+import com.seb028.guenlog.member.dto.MyPageInfoDto;
 import com.seb028.guenlog.member.dto.MyPageResponseDto;
+import com.seb028.guenlog.member.entity.Member;
+import com.seb028.guenlog.member.entity.MemberWeight;
 import com.seb028.guenlog.member.mapper.MyPageInfoMapper;
 import com.seb028.guenlog.member.mapper.MyPageMapper;
 import com.seb028.guenlog.member.service.MemberService;
@@ -15,6 +18,7 @@ import com.seb028.guenlog.member.service.MyPageService;
 import com.seb028.guenlog.member.util.MonthlyRecord;
 import com.seb028.guenlog.member.util.MonthlyWeight;
 import com.seb028.guenlog.member.util.MyPage;
+import com.seb028.guenlog.member.util.MyPageInfo;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +37,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -240,5 +245,129 @@ public class MyPageControllerRestDocsTest {
 
         System.out.println(result.getResponse().getContentAsString());
 
+    }
+
+    @Test
+    @WithMockUser
+    public void getMyPageInfo() throws Exception{
+
+        // <<< given >>>
+        // Service에서 사용하는 엔티티 객체
+        Long memberId = 1L;                         // 사용자 아이디
+        String email = "example@example.com";       // 사용자 이메일
+        String password = "expassword!123";         // 사용자 비밀번호
+        String nickName = "닉네임예시";             // 사용자 닉네임
+        String age = "2000-11-11";                  // 사용자 생년월일
+        Integer height = 185;                       // 사용자 키
+        Character gender = 'M';                     // 사용자 성별
+        List<MemberWeight> weights = new ArrayList<>();     // 사용자 몸무게 기록 리스트
+
+        // 사용자 Member 객체
+        Member member = Member.builder()
+                .id(memberId)       // 아이디 설정
+                .email(email)           // 이메일 설정
+                .password(password)     // 비밀번호 설정
+                .nickname(nickName)     // 닉네임 설정
+                .age(LocalDate.parse(age))  // 생년월일 설정
+                .gender(gender)         // 성별 설정
+                .weights(weights)       // 몸무게 리스트 설정
+                .build();
+
+        Long weightId = 1L;         // 몸무게 기록 객체 아이디
+        Integer weight = 70;        // 몸무게
+        // 사용자 몸무게 기록 MemberWeight 객체
+        MemberWeight memberWeight = MemberWeight.builder()
+                .id(weightId)       // 몸무게 기록 아이디 설정
+                .weight(weight)         // 몸무게 설정
+                .member(member)         // 사용자 설정
+                .build();
+
+        // Member객체에 몸무게 기록 객체 추가
+        member.getWeights().add(memberWeight);
+
+        // MyPageService에서 반환하는 사용자 개인정보 MyPageInfo 객체 생성
+        MyPageInfo myPageInfo = MyPageInfo.builder()
+                .member(member)                 // 사용자 member 설정
+                .memberWeight(memberWeight)     // 사용자 몸무게 설정
+                .build();
+
+        // 사용자 개인정보 객체에 대한 응답용 Response DTO 객체에 필요한 변수들
+        String nickNameDto = "닉네임예시";           // 사용자 닉네임
+        String emailDto = "example@example.com";     // 사용자 이메일
+        String ageDto = "2000-11-11";                // 사용자 생년월일
+        Character genderDto = 'M';                   // 사용자 성별
+        Integer heightDto = 185;                     // 사용자 키
+        Integer weightDto = 70;                      // 사용자 몸무게
+
+        // 사용자 개인정보 MyPageInfo 객체에 대한 응답용 Response DTO 객체
+        MyPageInfoDto.Response myPageInfoResponseDto = MyPageInfoDto.Response.builder()
+                .nickname(nickNameDto)      // 닉네임 설정
+                .email(emailDto)            // 이메일 설정
+                .age(ageDto)                // 생년월일 설정
+                .gender(genderDto)          // 성별 설정
+                .height(heightDto)          // 키 설정
+                .weight(weightDto)          // 몸무게 설정
+                .build();
+
+        // -- Stubbing --
+        // memberService로 사용자 ID찾는 메서드 Stubbing
+        given(memberService.findMemberId(
+                Mockito.any(HttpServletRequest.class)))
+                .willReturn(memberId);
+
+        // MyPageService에서 사용자 개인정보 조회하는 메서드 Stubbing
+        given(myPageService.getMyPageInfo(
+                Mockito.anyLong()))
+                .willReturn(myPageInfo);
+
+        // MyPageInfoMapper가 MyPageInfo객체를 응답용 DTO 객체로 변환하는 메서드 Stubbing
+        given(myPageInfoMapper.myPageInfoToMyPageInfoResponseDto(
+                Mockito.any(MyPageInfo.class)))
+                .willReturn(myPageInfoResponseDto);
+
+        // <<< when >>>
+        ResultActions actions =
+                mockMvc.perform(
+                        RestDocumentationRequestBuilders.get("/users/mypages/info") // GET 요청시
+                            .header("Authorization", "Bearer {AccessToken}")                // 헤더에 토큰 추가
+                            .accept(MediaType.APPLICATION_JSON));
+
+        // <<< then >>>
+        MvcResult result = actions
+                .andExpect(status().isOk())
+                .andDo(
+                        document(
+                                "get-mypagesinfo",
+                                getRequestPreprocessor(),
+                                getResponsePreProcessor(),
+                                requestHeaders(
+                                        headerWithName("Authorization")
+                                                .description("Bearer + {로그인 요청 Access 토큰}")
+                                ),
+                                responseFields(
+                                        Arrays.asList(
+                                                fieldWithPath("success").type(JsonFieldType.BOOLEAN)
+                                                        .description("응답 성공 여부"),
+                                                fieldWithPath("data").type(JsonFieldType.OBJECT)
+                                                        .description("응답 데이터"),
+                                                fieldWithPath("data.nickname").type(JsonFieldType.STRING)
+                                                        .description("사용자 닉네임"),
+                                                fieldWithPath("data.email").type(JsonFieldType.STRING)
+                                                        .description("사용자 이메일"),
+                                                fieldWithPath("data.age").type(JsonFieldType.STRING)
+                                                        .description("사용자 생년월일"),
+                                                fieldWithPath("data.gender").type(JsonFieldType.STRING)
+                                                        .description("사용자 성별"),
+                                                fieldWithPath("data.height").type(JsonFieldType.NUMBER)
+                                                        .description("사용자 키"),
+                                                fieldWithPath("data.weight").type(JsonFieldType.NUMBER)
+                                                        .description("사용자 몸무게")
+                                        )
+                                )
+                        )
+                )
+                .andReturn();
+
+        System.out.println(result.getResponse().getContentAsString());
     }
 }
