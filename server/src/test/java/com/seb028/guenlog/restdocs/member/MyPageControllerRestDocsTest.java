@@ -124,7 +124,7 @@ public class MyPageControllerRestDocsTest {
 
     @Test
     @WithMockUser
-    public void getMyPageTest() throws Exception{
+    public void get_my_page_test() throws Exception{
         // <<< given >>>
         // -- MyPageService에서 리턴하는 운동 기록, 몸무게 기록이 저장된 MyPage객체
         String dates = "2022-11-30";        // 조회하고자 하는 월
@@ -249,7 +249,7 @@ public class MyPageControllerRestDocsTest {
 
     @Test
     @WithMockUser
-    public void getMyPageInfo() throws Exception{
+    public void get_my_page_info() throws Exception{
 
         // <<< given >>>
         // Service에서 사용하는 엔티티 객체
@@ -337,7 +337,7 @@ public class MyPageControllerRestDocsTest {
                 .andExpect(status().isOk())
                 .andDo(
                         document(
-                                "get-mypagesinfo",
+                                "get-mypages-info",
                                 getRequestPreprocessor(),
                                 getResponsePreProcessor(),
                                 requestHeaders(

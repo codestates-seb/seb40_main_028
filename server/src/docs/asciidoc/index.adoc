@@ -7,56 +7,56 @@
 
 Kim Young Min
 
-v0.0.1 2022.11.30
+v0.2.2 2022.12.01
 
 ***
 == ExerciseProgressController
 === 운동 진행  조회
 .curl-request
-include::{snippets}/get-exerciseProgress/curl-request.adoc[]
+include::{snippets}/get-exercise-progress/curl-request.adoc[]
 
 .http-request
-include::{snippets}/get-exerciseProgress/http-request.adoc[]
+include::{snippets}/get-exercise-progress/http-request.adoc[]
 
 .request-parameters
-include::{snippets}/get-exerciseProgress/request-parameters.adoc[]
+include::{snippets}/get-exercise-progress/request-parameters.adoc[]
 
 .request-header
-include::{snippets}/get-exerciseProgress/request-headers.adoc[]
+include::{snippets}/get-exercise-progress/request-headers.adoc[]
 
 .http-response
-include::{snippets}/get-exerciseProgress/http-response.adoc[]
+include::{snippets}/get-exercise-progress/http-response.adoc[]
 
 .response-body
-include::{snippets}/get-exerciseProgress/response-body.adoc[]
+include::{snippets}/get-exercise-progress/response-body.adoc[]
 
 .response-fields
-include::{snippets}/get-exerciseProgress/response-fields.adoc[]
+include::{snippets}/get-exercise-progress/response-fields.adoc[]
 
 === 운동 진행 완료
 .curl-request
-include::{snippets}/patch-exercisesProgress/curl-request.adoc[]
+include::{snippets}/patch-exercises-progress/curl-request.adoc[]
 
 .http-request
-include::{snippets}/patch-exercisesProgress/http-request.adoc[]
+include::{snippets}/patch-exercises-progress/http-request.adoc[]
 
 .request-header
-include::{snippets}/patch-exercisesProgress/request-headers.adoc[]
+include::{snippets}/patch-exercises-progress/request-headers.adoc[]
 
 .path-parameter
-include::{snippets}/patch-exercisesProgress/path-parameters.adoc[]
+include::{snippets}/patch-exercises-progress/path-parameters.adoc[]
 
 .request-fields
-include::{snippets}/patch-exercisesProgress/request-fields.adoc[]
+include::{snippets}/patch-exercises-progress/request-fields.adoc[]
 
 .http-response
-include::{snippets}/patch-exercisesProgress/http-response.adoc[]
+include::{snippets}/patch-exercises-progress/http-response.adoc[]
 
 .response-body
-include::{snippets}/patch-exercisesProgress/response-body.adoc[]
+include::{snippets}/patch-exercises-progress/response-body.adoc[]
 
 .response-fields
-include::{snippets}/patch-exercisesProgress/response-fields.adoc[]
+include::{snippets}/patch-exercises-progress/response-fields.adoc[]
 
 == MyPageController
 === 마이 페이지 조회
@@ -80,19 +80,19 @@ include::{snippets}/get-mypages/response-fields.adoc[]
 
 === 마이 페이지 개인 정보 조회
 .curl-request
-include::{snippets}/get-mypagesInfo/curl-request.adoc[]
+include::{snippets}/get-mypages-info/curl-request.adoc[]
 
 .http-request
-include::{snippets}/get-mypagesInfo/http-request.adoc[]
+include::{snippets}/get-mypages-info/http-request.adoc[]
 
 .request-header
-include::{snippets}/get-mypagesInfo/request-headers.adoc[]
+include::{snippets}/get-mypages-info/request-headers.adoc[]
 
 .http-response
-include::{snippets}/get-mypagesInfo/http-response.adoc[]
+include::{snippets}/get-mypages-info/http-response.adoc[]
 
 .response-body
-include::{snippets}/get-mypagesInfo/response-body.adoc[]
+include::{snippets}/get-mypages-info/response-body.adoc[]
 
 .response-fields
-include::{snippets}/get-mypagesInfo/response-fields.adoc[]
+include::{snippets}/get-mypages-info/response-fields.adoc[]
