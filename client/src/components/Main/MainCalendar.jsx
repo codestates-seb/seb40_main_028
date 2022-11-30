@@ -89,7 +89,6 @@ const MainCalendar = () => {
 
     if (todayId) {
       setBoolean(true);
-
       await axios
         .get(URL + `/exercises/calendar/detail/${todayId}`, {
           headers: {
@@ -105,9 +104,12 @@ const MainCalendar = () => {
   };
 
   useEffect(() => {
-    console.log(meetings);
     getApi();
   }, [currentMonth]);
+
+  useEffect(() => {
+    onDateClick(selectedDay);
+  });
 
   return (
     <div className="mt-9 min-w-[20em] max-w-[20em]">

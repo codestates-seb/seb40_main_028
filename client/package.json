@@ -19,7 +19,6 @@
     "primereact": "^8.7.2",
     "react": "^18.2.0",
     "react-chartjs-2": "^4.3.1",
-
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.39.4",
     "react-icons": "^4.6.0",

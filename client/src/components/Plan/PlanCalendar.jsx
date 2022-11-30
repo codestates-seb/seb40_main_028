@@ -1,8 +1,6 @@
 import DatePicker from "@hassanmojab/react-modern-calendar-datepicker";
 import "@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css";
 import React from "react";
-import { useRecoilState } from "recoil";
-import { selectedDays } from "../../state/states";
 
 export default function PlanCalendar({ selectedDay, setSelectedDay }) {
   const renderCustomInput = ({ ref }) => (
@@ -42,8 +40,9 @@ export default function PlanCalendar({ selectedDay, setSelectedDay }) {
     <DatePicker
       value={selectedDay}
       onChange={setSelectedDay}
+      colorPrimary="#5865f2"
       renderInput={renderCustomInput}
-      calendarClassName="text-[0.8em]"
+      calendarClassName="text-[0.8em]  text-black"
       shouldHighlightWeekends
     />
   );

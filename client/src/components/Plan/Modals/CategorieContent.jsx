@@ -16,7 +16,6 @@ const CategorieContent = ({ Modals, setModals, setSelectedCategory }) => {
     <>
       <div className="flex flex-wrap items-center justify-center ">
         {categories.map((item, idx) => {
-          console.log(categories);
           return (
             <button
               type="button"

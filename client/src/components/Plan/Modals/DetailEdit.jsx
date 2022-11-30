@@ -1,97 +1,139 @@
 import axios from "axios";
 import dayjs from "dayjs";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { categorie, isModal, TokenValue } from "../../../state/states";
 import Button from "../../Button";
 import Loading from "../../Loading";
 
-const DetailContent = ({
-  selectedCategory,
-  selectedExercise,
-  detailExercise,
-  setDetailExercise,
+const DetailEdit = ({
   selectedDay,
-  data,
+  editData,
   setData,
+  setEditData,
+  data,
+  recordId,
+  editRecord,
+  setEditRecord,
+  handleEdit,
 }) => {
   const URL = process.env.REACT_APP_BASE_URL;
   const [isModalOpen, setIsModalOpen] = useRecoilState(isModal);
   const [token, setToken] = useRecoilState(TokenValue);
-  const [categories, setCategories] = useRecoilState(categorie);
+  const [result, setResult] = useState(undefined);
 
-  const List = categories[selectedCategory].exercises[selectedExercise];
-  const date = dayjs(
-    `${selectedDay.year}-${selectedDay.month}-${selectedDay.day}`
-  ).format("YYYY-MM-DD");
+  // 배열의 객체의 값이 모두 존재하는지 확인하는 함수
+  const isAllValue = (arr) => {
+    return arr.every((item) => {
+      return Object.values(item).every((value) => value.trim().length);
+    });
+  };
 
-  const ExercisesRecords = [
-    // 운동 세부 기록 데이터 배열화
-    detailExercise.map((item) => ({
-      ...item,
-      eachCompleted: false,
-    })),
-  ];
+  // 배열의 객체의 값들중 Number 타입의 값들과 boolean 타입의 값들을 ''로 감싸주는 함수
+  const wrapValue = (arr) => {
+    return arr.map((item) => {
+      return Object.entries(item).reduce((acc, [key, value]) => {
+        if (typeof value === "number" || typeof value === "boolean") {
+          return { ...acc, [key]: `'${value}'` };
+        }
+        return { ...acc, [key]: value };
+      }, {});
+    });
+  };
 
-  const result = {
-    // 운동 세부 기록과 아이디를 서버에 보낼 수 있게 데이터 객체화
-    exerciseId: Number(List.id),
-    eachRecords: [...ExercisesRecords[0]],
+  const handleDelete = (id) => {
+    setEditRecord(
+      editRecord.filter((items, index) => {
+        return index !== id;
+      })
+    );
+
+    //삭제된 값 setResult에 반영하기
+    setResult({
+      ...result,
+      eachRecords: wrapValue(
+        editRecord.filter((items, index) => {
+          return index !== id;
+        })
+      ),
+    });
   };
 
   const handleSubmit = async (e) => {
-    const isValid = detailExercise.every((item) =>
-      Object.values(item).every((value) => value.trim().length)
-    );
-    if (!isValid) {
-      alert("빈칸을 전부 채워주세요!");
-    } else {
-      await axios
-        .post(URL + `/exercises/records?date=${date}`, result, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((res) => {
-          const newData = {
-            recordId: res.data.data.recordId,
-            name: List.name,
-          };
-          if (res.data.data.recordId && data) {
-            setData([...data, newData]);
-          } else {
-            setData([newData]);
-          }
-        });
+    if (result) {
+      const isValid = isAllValue(wrapValue(result.eachRecords));
+      if (!isValid) {
+        alert("빈칸을 전부 채워주세요!");
+      } else {
+        await axios
+          .patch(
+            URL + `/exercises/records/${recordId}`,
+            {
+              exerciseId: editData.exerciseId,
+              eachRecords: [...editRecord],
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          )
+          .then((res) => {
+            handleEdit(recordId);
+            setEditData(res.data.data);
+            setEditRecord(res.data.data);
+          });
 
-      setIsModalOpen(false);
+        setIsModalOpen(false);
+      }
     }
   };
 
   const onChange = (e, idx) => {
-    const newObject = [...detailExercise];
+    setResult({
+      exerciseId: editData.exerciseId,
+      eachRecords: [...editRecord],
+    });
+    const newObject = [...editRecord];
     newObject[idx][e.target.name] = e.target.value;
-    setDetailExercise(newObject);
+    setEditRecord(newObject);
   };
 
-  if (!List)
+  const handleAdd = () => {
+    setEditRecord([
+      ...editRecord,
+      { weight: "", count: "", timer: "", eachCompleted: false },
+    ]);
+
+    // 추가된 값 setResult에 반영하기
+    setResult({
+      ...result,
+      eachRecords: wrapValue([
+        ...editRecord,
+        { weight: "", count: "", timer: "", eachCompleted: false },
+      ]),
+    });
+  };
+
+  if (!editRecord) {
     return (
       <div className="flex justify-center items-center h-[29em]">
         <Loading />
       </div>
     );
+  }
   return (
     <>
       <div>
         <div className="flex flex-col items-end mt-[-1.15em]">
           <div className="text-[0.9em] text-d-point font-semibold">
-            {categories[selectedCategory].name} 운동
+            운동이름
           </div>
-          <div className="text-[0.75em] font-light">{List.name}</div>
+          <div className="text-[0.75em] font-light">{editData.name}</div>
         </div>
         <div className="min-h-[11em] max-h-[11em] mt-5 mb-5 flex items-center justify-center object-contain aspect-video">
-          {List.imageUrl ? (
-            <img src={List.imageUrl} alt="icons" />
+          {editData.images ? (
+            <img src={editData.images} alt="icons" />
           ) : (
             <Loading />
           )}
@@ -108,7 +150,7 @@ const DetailContent = ({
 
         <div className="h-[13rem] w-full  flex flex-col justify-center items-center overflow-scroll">
           <div className="w-full h-[3em]  mt-[-11em]  justify-center items-center ">
-            {detailExercise.map((item, idx) => {
+            {editRecord.map((item, idx) => {
               return (
                 <div
                   key={idx}
@@ -160,15 +202,11 @@ const DetailContent = ({
                     stroke="currentColor"
                     className="w-6 h-6 text-[#d9d9d9] cursor-pointer ease-out duration-150 hover:text-red-600"
                     onClick={() => {
-                      if (detailExercise.length === 1) {
+                      if (editRecord.length === 1) {
                         alert("최소 1개의 세트가 필요합니다.");
                         return;
                       }
-                      setDetailExercise(
-                        detailExercise.filter((items, index) => {
-                          return index !== idx;
-                        })
-                      );
+                      handleDelete(idx);
                     }}
                   >
                     <path
@@ -184,14 +222,9 @@ const DetailContent = ({
               <button
                 type="button"
                 onClick={() => {
-                  setDetailExercise([
-                    ...detailExercise,
-                    {
-                      weight: "",
-                      count: "",
-                      timer: "",
-                    },
-                  ]);
+                  //생성하기 눌렀을때 결과 result에 반영
+                  handleAdd();
+                  //세트 추가
                 }}
                 className="flex w-[20%] ease-out duration-150 whitespace-nowrap items-center p-1 mt-[0.5em] justify-center font-medium rounded-lg bg-d-button hover:bg-d-button-hover text-[0.8em]"
               >
@@ -202,34 +235,11 @@ const DetailContent = ({
           </div>
         </div>
       </div>
-      <div className="bottom-[0rem] px-3 h-[5rem] absolute left-[-0.65rem]  items-center flex flex-col justify-center space-y-3 bg-[#303030]">
-        <div className="flex items-center justify-center">
-          <div className="flex justify-center ml-[2rem] space-x-10 items-center whitespace-nowrap">
-            <div
-              onClick={() => {
-                setDetailExercise([
-                  {
-                    weight: "",
-                    count: "",
-                    timer: "",
-                  },
-                ]);
-              }}
-            >
-              <Button
-                text="뒤로가기"
-                beforeModal
-                resetDetails
-                setDetailExercise={setDetailExercise}
-                detailExercise={detailExercise}
-              />
-            </div>
-            <Button text="저장하기" onClick={handleSubmit} />
-          </div>
-        </div>
+      <div className="bottom-[0rem] px-3 h-[5rem] absolute left-[27.5%] items-center flex flex-col justify-center space-y-3 bg-[#303030]">
+        <Button text="수정하기" onClick={handleSubmit} />
       </div>
     </>
   );
 };
 
-export default DetailContent;
+export default DetailEdit;
