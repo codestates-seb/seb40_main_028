@@ -1,13 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
 import { useRecoilState } from "recoil";
 import icons from "../../../assets/icons.png";
 import { ModalNum, selectedDays } from "../../../state/states";
 import CategorieContent from "./CategorieContent";
 import DetailContent from "./DetailContent";
+import DetailEdit from "./DetailEdit";
 import DetailListModal from "./DetailListContent";
 
-const PlanModal = ({ isModalOpen, setIsModalOpen, data, setData }) => {
+const PlanModal = ({
+  isModalOpen,
+  setIsModalOpen,
+  data,
+  setData,
+  editData,
+  setEditData,
+  recordId,
+  editRecord,
+  setEditRecord,
+  handleEdit,
+}) => {
   const style = {
     overlay: {
       position: "fixed",
@@ -43,6 +55,7 @@ const PlanModal = ({ isModalOpen, setIsModalOpen, data, setData }) => {
   const [Modals, setModals] = useRecoilState(ModalNum); //모달 위치 저장
   const [selectedCategory, setSelectedCategory] = useState(null); //선택한 카테고리 요기 저장
   const [selectedExercise, setSelectedExercise] = useState(null); //선택한 운동 요기 저장
+
   const [detailExercise, setDetailExercise] = useState([
     {
       weight: "",
@@ -57,8 +70,11 @@ const PlanModal = ({ isModalOpen, setIsModalOpen, data, setData }) => {
       return "운동 선택";
     } else if (Modals === 2) {
       return "운동 세부 설정";
+    } else if (Modals === 3) {
+      return "운동 수정";
     }
   };
+
   return (
     <>
       <Modal
@@ -102,21 +118,24 @@ const PlanModal = ({ isModalOpen, setIsModalOpen, data, setData }) => {
           </div>
 
           <div className="mt-[1.4em] px-[1em] text-white flex justify-center ">
-            {Modals === 0 ? (
+            {Modals === 0 && (
               <CategorieContent
                 Modals={Modals}
                 setModals={setModals}
                 setSelectedCategory={setSelectedCategory}
               />
-            ) : Modals === 1 ? (
+            )}
+
+            {Modals === 1 && (
               <DetailListModal
                 Modals={Modals}
                 setModals={setModals}
                 setSelectedExercise={setSelectedExercise}
                 selectedCategory={selectedCategory}
               />
-            ) : (
-              // 상세 운동 설정 Modal
+            )}
+
+            {Modals === 2 && (
               <DetailContent
                 selectedCategory={selectedCategory}
                 selectedExercise={selectedExercise}
@@ -125,6 +144,24 @@ const PlanModal = ({ isModalOpen, setIsModalOpen, data, setData }) => {
                 selectedDay={selectedDay}
                 data={data}
                 setData={setData}
+              />
+            )}
+
+            {Modals === 3 && (
+              <DetailEdit
+                selectedCategory={selectedCategory}
+                selectedExercise={selectedExercise}
+                detailExercise={detailExercise}
+                setDetailExercise={setDetailExercise}
+                selectedDay={selectedDay}
+                editData={editData}
+                setEditData={setEditData}
+                data={data}
+                setData={setData}
+                recordId={recordId}
+                editRecord={editRecord}
+                setEditRecord={setEditRecord}
+                handleEdit={handleEdit}
               />
             )}
           </div>
