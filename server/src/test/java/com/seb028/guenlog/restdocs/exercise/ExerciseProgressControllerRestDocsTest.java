@@ -79,7 +79,7 @@ public class ExerciseProgressControllerRestDocsTest {
 
     @Test
     @WithMockUser()
-    public void getExerciseProgressTest() throws Exception {
+    public void get_exercise_progress_test() throws Exception {
         // <<< given >>>
         // 한 운동 세트에 대한 무게, 횟수, 휴식 시간, 세트 완료 여부 응답용 객체
         ExercisePlanRequestDto.EachRecords eachRecord = new ExercisePlanRequestDto.EachRecords();
@@ -170,7 +170,7 @@ public class ExerciseProgressControllerRestDocsTest {
                 .andExpect(status().isOk())
                 .andDo(
                 document(       // rest doc 생성
-                    "get-exerciseProgress",
+                    "get-exercise-progress",
                                 getRequestPreprocessor(),
                                 getResponsePreProcessor(),
                     requestParameters(      // 쿼리 파라미터
@@ -207,7 +207,7 @@ public class ExerciseProgressControllerRestDocsTest {
     @Test
     @WithMockUser()
     // 운동 진행 완료 테스트 메서드
-    public void patchExerciseProgressTest() throws Exception {
+    public void patch_exercise_progress_test() throws Exception {
         // <<< given >>>
         // 한 운동 세트에 대한 무게, 횟수, 휴식 시간, 세트 완료 여부 응답용 객체
         ExercisePlanRequestDto.EachRecords eachRecord = new ExercisePlanRequestDto.EachRecords();
@@ -304,7 +304,7 @@ public class ExerciseProgressControllerRestDocsTest {
                 .andExpect(status().isOk())
                 .andDo(
                         document(   // Rest Docs 생성
-                                "patch-exercisesProgress",
+                                "patch-exercises-progress",
                                 getRequestPreprocessor(),
                                 getResponsePreProcessor(),
                                 pathParameters(        // Path Parameter
