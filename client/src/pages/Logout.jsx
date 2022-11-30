@@ -182,7 +182,7 @@ const Logout = ({ open, onClose }) => {
             <BtnContainer>
               {/* 로그인 버튼 클릭 시 홈으로 페이지 이동 수정하고 지우기*/}
               <LogoutBtn onClick={logoutHandler}>Logout</LogoutBtn>
-              <CancleBtn onClick={onClose}>Cancle</CancleBtn>
+              <CancleBtn onClick={onClose}>Cancel</CancleBtn>
             </BtnContainer>
           </div>
         </div>

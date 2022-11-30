@@ -153,8 +153,6 @@ export default function LoginContainer() {
   /////////////////////////////////////////////
   console.log(isLogin, "처음 이즈로그인 값");
 
-  const url = "http://13.209.190.35:8080";
-
   const {
     register,
     formState: { errors },
@@ -162,6 +160,8 @@ export default function LoginContainer() {
   } = useForm({ mode: onchange });
 
   const onLogin = async (data) => {
+    const url = "http://13.209.190.35:8080";
+
     console.log(data);
     // console.log(data.email+": 이메일");
     // console.log(data.password+": 이메일");
@@ -233,6 +233,13 @@ export default function LoginContainer() {
     }
   };
 
+  const googleLogin = () => {
+    // 구글로그인 주소
+    const googleurl = "http://guenlog.shop/oauth2/authorization/google";
+
+    window.location.href = `${googleurl}`;
+  };
+
   return (
     <MainContainer>
       <Container>
@@ -284,7 +291,7 @@ export default function LoginContainer() {
       <BtnContainer>
         {/* 회원가입 */}
         <SignUp onClick={() => navigate("/register")}>Sign up</SignUp>
-        <GoogleLogin>
+        <GoogleLogin onClick={googleLogin}>
           <svg
             aria-hidden="true"
             className="native svg-icon iconGoogle"
