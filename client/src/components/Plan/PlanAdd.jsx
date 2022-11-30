@@ -1,16 +1,28 @@
-import React, { useEffect } from "react";
+import axios from "axios";
+import React from "react";
 import { useRecoilState } from "recoil";
-import { categorie } from "../../state/states";
-// import axios from "axios";
+import { categorie, TokenValue } from "../../state/states";
 
 export default function PlanAdd({ setIsModalOpen }) {
   const [categories, setCategories] = useRecoilState(categorie);
+  const [token, setToken] = useRecoilState(TokenValue);
+  const URL = process.env.REACT_APP_BASE_URL;
+
+  const getApi = async () => {
+    await axios
+      .get(URL + `/exercises/category`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setCategories(res.data.data);
+      });
+  };
 
   const openModal = () => {
+    getApi();
     setIsModalOpen(true);
-    // axios.get('/api/plan').then((res) => {
-    //   setCategories(res.data);
-    // });
   };
 
   return (
