@@ -233,71 +233,11 @@ export default function LoginContainer() {
     }
   };
 
-  const googleLogin = async (data) => {
-    const url = "http://guenlog.shop/oauth2/authorization/google";
+  const googleLogin = () => {
+    // 구글로그인 주소
+    const googleurl = "http://guenlog.shop/oauth2/authorization/google";
 
-    try {
-      // 응답 성공
-      const res = await axios.get(`${url}`);
-
-      // status가 200일때
-      if (res.status === 200) {
-        // 세션스토리지에 jwt-token 저장
-        // sessionStorage.setItem("jwt-token", res.headers.authorization);
-
-        // const token = res.headers.authorization;
-
-        console.log("구글 로그인 성공!!");
-        console.log(res);
-
-        // 토큰이 있으면
-        // if (token) {
-        //   // 토큰 저장
-        //   setToken(token);
-        //   // 로그인 상태 true
-        //   setIsLogin(true);
-        //   console.log("토큰 확인됐음 로컬에 토큰 저장");
-        // }
-
-        // console.log(isLogin, "로그인 성공 시 트루로 바꾼 값~~~");
-
-        // console.log("성공 로그인 ~~~~~~~~~~~~~~~~");
-        // console.log(res);
-        // console.log("바디데이터 ", res.data);
-        // console.log("바디 이니셜로그인 값 확인 ", res.data.initialLogin)
-
-        // 이니셜로그인 false면 초기정보 입력 페이지로
-
-        // if (res.data.initialLogin === false) {
-        //   navigate("/startinginformation");
-        // }
-        // // 이니셜로그인이 true면 메인페이지로
-        // else {
-        //   navigate("/");
-        // }
-
-        // console.log("응답 전체",res)
-        // console.log("응답.headers", res.headers.InitialLogin)
-        // console.log("응답.headers", res.headers.initialLogin)
-        // console.log("응답.headers", res.headers.initiallogin)
-
-        // InitialLogin이 false면 처음 로그인으로
-        // if(res.InitialLogin === false){
-        //   navigate("/startinginformation");
-        //   sessionStorage.setItem('jwt-token', res.headers.authorization);
-        //   // InitialLogin이 true면 main 페이지로
-        // } else if(res.InitialLogin === ture){
-        //   navigate("/");
-        // }
-      }
-    } catch (err) {
-      // 응답 실패
-      console.log(err);
-      // console.log("로그인 실패")
-
-      // 로그인 실패시
-      alert("google 로그인 실패");
-    }
+    window.location.href = `${googleurl}`;
   };
 
   return (
@@ -350,8 +290,8 @@ export default function LoginContainer() {
       </Container>
       <BtnContainer>
         {/* 회원가입 */}
-        <SignUp onClick={googleLogin}>Sign up</SignUp>
-        <GoogleLogin>
+        <SignUp onClick={() => navigate("/register")}>Sign up</SignUp>
+        <GoogleLogin onClick={googleLogin}>
           <svg
             aria-hidden="true"
             className="native svg-icon iconGoogle"
