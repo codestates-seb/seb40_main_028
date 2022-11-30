@@ -7,12 +7,14 @@ import com.seb028.guenlog.config.auth.jwt.filter.JwtAuthenticationFilter;
 import com.seb028.guenlog.config.auth.jwt.filter.JwtVerificationFilter;
 import com.seb028.guenlog.exercise.controller.ExerciseProgressController;
 import com.seb028.guenlog.exercise.dto.ExercisePlanRequestDto;
+import com.seb028.guenlog.exercise.dto.ExerciseProgressPatchDto;
 import com.seb028.guenlog.exercise.dto.ExerciseProgressResponseDto;
 import com.seb028.guenlog.exercise.entity.Record;
 import com.seb028.guenlog.exercise.entity.Today;
 import com.seb028.guenlog.exercise.mapper.ExerciseProgressMapper;
 import com.seb028.guenlog.exercise.service.ExerciseProgressService;
 import com.seb028.guenlog.exercise.util.ExerciseProgress;
+import com.seb028.guenlog.member.entity.Member;
 import com.seb028.guenlog.member.service.MemberService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -45,10 +47,9 @@ import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = ExerciseProgressController.class,
@@ -196,6 +197,153 @@ public class ExerciseProgressControllerRestDocsTest {
                                                 fieldWithPath("data.exercises[].eachRecords[].eachCompleted").type(JsonFieldType.BOOLEAN).description("세트 완료 여부")
                                         )
                                 )
+                        )
+                )
+                .andReturn();
+
+        System.out.println(result.getResponse().getContentAsString());
+    }
+
+    @Test
+    @WithMockUser()
+    // 운동 진행 완료 테스트 메서드
+    public void patchExerciseProgressTest() throws Exception {
+        // <<< given >>>
+        // 한 운동 세트에 대한 무게, 횟수, 휴식 시간, 세트 완료 여부 응답용 객체
+        ExercisePlanRequestDto.EachRecords eachRecord = new ExercisePlanRequestDto.EachRecords();
+        eachRecord.setWeight(50);           // 무게 설정
+        eachRecord.setCount(12);            // 횟수 설정
+        eachRecord.setTimer(60);            // 휴식 시간 설정
+        eachRecord.setEachCompleted(true);  // 완료 여부에서 완료 설정
+
+        // 한 운동에 대한 각 세트 리스트 응답용 객체
+        List<ExercisePlanRequestDto.EachRecords> eachRecords = new ArrayList<ExercisePlanRequestDto.EachRecords>();
+        eachRecords.add(eachRecord);
+
+        // 오늘 운동 한 종류에 대한 응답용 객체
+        Long exerciseId = 1L;
+        ExerciseProgressPatchDto.TodayExerciseDto todayExerciseDto = ExerciseProgressPatchDto.TodayExerciseDto.builder()
+                .exerciseId(exerciseId)              // 운동 ID 설정
+                .isCompleted(true)      // 완료여부에서 완료 설정
+                .eachRecords(eachRecords)            // 각 세트 설정
+                .build();
+
+        // 오늘 하루 운동 목록들에 대한 응답용 객체
+        List<ExerciseProgressPatchDto.TodayExerciseDto> exercises = new ArrayList<>();
+        exercises.add(todayExerciseDto);
+
+        Integer totalTime = 3600;       // 총 운동 시간
+
+        // 운동 진행 완료에 대한 Patch DTO 객체
+        ExerciseProgressPatchDto exerciseProgressPatchDto = ExerciseProgressPatchDto.builder()
+                .totalTime(totalTime)       // 총 운동시간 설정
+                .exercises(exercises)       // 오늘 하루 운동 목록 설정
+                .build();
+
+        // PatchDto 객체를 JSON으로 변환
+        String content = gson.toJson(exerciseProgressPatchDto);
+
+        // 사용자 설정
+        long memberId = 1L;
+        Member member = Member.builder()
+                .id(memberId)
+                .build();
+
+        // 오늘 하루 운동에 대한 객체
+        Long todayId = 1L;
+        Today today = Today.builder()
+                .id(todayId)                // 오늘 하루 운동 ID
+                .totalTime(3600)     // 총 운동 시간
+                .member(member)                 // 사용자
+                .build();
+
+        // 오늘 하루 운동 기록에 대한 객체
+        Record record = Record.builder()
+                .today(today)                   // 오늘 하루 운동에 대한 객체
+                .isCompleted(true)     // 운동 완료 여부
+                .eachRecords(eachRecords)           // 각 세트 리스트
+                .build();
+
+        // 오늘 하루 운동 기록 리스트에 대한 객체
+        List<Record> records = new ArrayList<Record>();
+        records.add(record);
+
+        // 운동 진행에 대한 객체
+        ExerciseProgress exerciseProgress = ExerciseProgress.builder()
+                .today(today)           // 오늘 하루 객체
+                .records(records)       // 운동 기록 리스트 객체
+                .build();
+
+        // -- Stubbing --
+        // memberService로 사용자 ID찾는 메서드 Stubbing
+        given(memberService.findMemberId(
+                Mockito.any(HttpServletRequest.class)))
+                .willReturn(memberId);
+        // 운동 진행 완료 Patch DTO 객체를 ExerciseProgress객체로 변환 메서드 Stubbing
+        given(mapper.exerciseProgressPatchDtoToExerciseProgress(
+                Mockito.any(ExerciseProgressPatchDto.class)))
+                .willReturn(exerciseProgress);
+        // ExerciseProgressService에서 운동 진행 완료 업데이트하는 메서드 Stubbing
+        given(exerciseProgressService.updateExerciseProgress(
+                Mockito.anyLong(), Mockito.any(ExerciseProgress.class)))
+                .willReturn(exerciseProgress);
+
+        // <<< when >>>
+        ResultActions actions =
+                mockMvc.perform(
+                RestDocumentationRequestBuilders
+                                    .patch("/exercises/progress/{today-id}", todayId)   // PATCH 요청시
+                                    .header("Authorization", "Bearer {AccessToken}")              // 헤더에 토큰 추가
+                                    .accept(MediaType.APPLICATION_JSON)                             // 클라이언트는 JSON 응답 받음
+                                    .contentType(MediaType.APPLICATION_JSON)                        //  서버쪽에서 처리가능한 JSON타입 설정
+                                    .content(content)                                                            // request body 설정
+                                    .with(csrf()));                                                // CSRF 설정
+
+        // <<< then >>>
+        MvcResult result = actions
+                .andExpect(status().isOk())
+                .andDo(
+                        document(   // Rest Docs 생성
+                                "patch-exercisesProgress",
+                                getRequestPreprocessor(),
+                                getResponsePreProcessor(),
+                                pathParameters(        // Path Parameter
+                                        Arrays.asList(parameterWithName("today-id").description("오늘 하루 운동 목록 식별자 ID"))
+                                ),
+                                requestHeaders(                 // 헤더
+                                        headerWithName("Authorization").description("Bearer + {로그인 요청 Access 토큰}")
+                                ),
+                                requestFields(                  // 요청 필드
+                                        Arrays.asList(
+                                                fieldWithPath("totalTime").type(JsonFieldType.NUMBER)
+                                                        .description("오늘 하루 운동 총 시간"),
+                                                fieldWithPath("exercises[]").type(JsonFieldType.ARRAY)
+                                                        .description("오늘 하루 운동 목록"),
+                                                fieldWithPath("exercises[].exerciseId").type(JsonFieldType.NUMBER)
+                                                        .description("운동 ID"),
+                                                fieldWithPath("exercises[].isCompleted").type(JsonFieldType.BOOLEAN)
+                                                        .description("운동 완료 여부"),
+                                                fieldWithPath("exercises[].eachRecords").type(JsonFieldType.ARRAY)
+                                                        .description("각 세트"),
+                                                fieldWithPath("exercises[].eachRecords[].weight").type(JsonFieldType.NUMBER)
+                                                        .description("무게"),
+                                                fieldWithPath("exercises[].eachRecords[].count").type(JsonFieldType.NUMBER)
+                                                        .description("횟수"),
+                                                fieldWithPath("exercises[].eachRecords[].timer").type(JsonFieldType.NUMBER)
+                                                        .description("휴식 시간"),
+                                                fieldWithPath("exercises[].eachRecords[].eachCompleted").type(JsonFieldType.BOOLEAN)
+                                                        .description("세트 완료 여부")
+                                        )
+                                ),
+                                responseFields(                 // 응답 필드
+                                        Arrays.asList(
+                                                fieldWithPath("success").type(JsonFieldType.BOOLEAN)
+                                                        .description("응답 성공 여부"),
+                                                fieldWithPath("data").type(JsonFieldType.NULL)
+                                                        .description("응답 데이터")
+                                        )
+                                )
+
                         )
                 )
                 .andReturn();

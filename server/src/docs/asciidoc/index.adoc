@@ -32,3 +32,28 @@ include::{snippets}/get-exerciseProgress/response-body.adoc[]
 
 .response-fields
 include::{snippets}/get-exerciseProgress/response-fields.adoc[]
+
+=== 운동 진행 완료
+.curl-request
+include::{snippets}/patch-exercisesProgress/curl-request.adoc[]
+
+.http-request
+include::{snippets}/patch-exercisesProgress/http-request.adoc[]
+
+.request-header
+include::{snippets}/patch-exercisesProgress/request-headers.adoc[]
+
+.path-parameter
+include::{snippets}/patch-exercisesProgress/path-parameters.adoc[]
+
+.request-fields
+include::{snippets}/patch-exercisesProgress/request-fields.adoc[]
+
+.http-response
+include::{snippets}/patch-exercisesProgress/http-response.adoc[]
+
+.response-body
+include::{snippets}/patch-exercisesProgress/response-body.adoc[]
+
+.response-fields
+include::{snippets}/patch-exercisesProgress/response-fields.adoc[]
