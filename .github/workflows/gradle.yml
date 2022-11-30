@@ -16,7 +16,7 @@ name: Java CI with Gradle
 
 on:
   push:
-    paths: [ 'server/**' ]
+    paths: [ "server/**" ]
     branches: [ "be_dev" ]
     
 
