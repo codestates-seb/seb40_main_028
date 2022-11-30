@@ -59,7 +59,7 @@ include::{snippets}/patch-exercisesProgress/response-body.adoc[]
 include::{snippets}/patch-exercisesProgress/response-fields.adoc[]
 
 == MyPageController
-=== 마이페이지 조회
+=== 마이 페이지 조회
 .curl-request
 include::{snippets}/get-mypages/curl-request.adoc[]
 
@@ -77,3 +77,22 @@ include::{snippets}/get-mypages/response-body.adoc[]
 
 .response-fields
 include::{snippets}/get-mypages/response-fields.adoc[]
+
+=== 마이 페이지 개인 정보 조회
+.curl-request
+include::{snippets}/get-mypagesInfo/curl-request.adoc[]
+
+.http-request
+include::{snippets}/get-mypagesInfo/http-request.adoc[]
+
+.request-header
+include::{snippets}/get-mypagesInfo/request-headers.adoc[]
+
+.http-response
+include::{snippets}/get-mypagesInfo/http-response.adoc[]
+
+.response-body
+include::{snippets}/get-mypagesInfo/response-body.adoc[]
+
+.response-fields
+include::{snippets}/get-mypagesInfo/response-fields.adoc[]
