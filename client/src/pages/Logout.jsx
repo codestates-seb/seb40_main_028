@@ -126,47 +126,25 @@ const Logout = ({ open, onClose }) => {
   // 토큰
   const token = useRecoilValue(TokenState);
   // url주소
-  const url = "http://13.209.190.35:8080";
+  // const url = "http://13.209.190.35:8080";
 
   // 로그인 리셋 -> false
   const resetlogout = useResetRecoilState(LoginState);
   // 토근 리셋 - > null
   const resettoken = useResetRecoilState(TokenState);
 
-  const logoutHandler = async () => {
-    if (login === false) {
-      alert("로그인이 안 되어 있습니다.");
-      navigate("/login");
+  const logoutHandler = () => {
+    // if (login === false) {
+    //   alert("로그인이 안 되어 있습니다.");
+    //   navigate("/login");
+    // }
+    if (login === true) {
+      resetlogout();
+      resettoken();
+      console.log(login, " ===== LoginState, token 초기값으로 변경완료!");
+      alert("로그아웃 완료");
     }
-
-    try {
-      // 응답 성공
-      // const res = await axios.post("http://13.209.190.35:8080/users/info",
-      const res = await axios.delete(`${url}/logout`, {
-        // 헤더에 토큰값 넣어서 보내기
-        headers: {
-          Authorization: `${token}`,
-        },
-      });
-
-      if (res.status === 200) {
-        // 로그인상태 및 토큰 초기값으로 리셋
-        resetlogout();
-        resettoken();
-        console.log("LoginState, token 초기값으로 변경완료!");
-
-        // 로그인 페이지로 이동
-        navigate("/login");
-      }
-    } catch (err) {
-      // 로그아웃 실패시
-      alert("로그아웃에 실패하였습니다.");
-    }
-
-    // 백엔드 로그아웃 로직 구현시 삭제할 것.
-    resetlogout();
-    resettoken();
-    console.log(login, token, " ===== LoginState, token 초기값으로 변경완료!");
+    navigate("/login");
   };
 
   return (
