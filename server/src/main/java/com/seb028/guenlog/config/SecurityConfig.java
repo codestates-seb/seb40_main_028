@@ -55,12 +55,9 @@ public class SecurityConfig {
                         .antMatchers("/exercises").authenticated()//--------인증된 사용자만 접근 가능
                         .antMatchers("/exercises/**").authenticated()
                         .antMatchers("/users/info").authenticated()
-                        .antMatchers("/users/mypages/**").authenticated()//------
+                        .antMatchers("/users/mypages/**").authenticated()
+                        .antMatchers("/mappage").authenticated()//------
                         .anyRequest().permitAll())//그 외 모든 사용자 접근 가능
-                .logout()
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/users/login")
-                .and()
                 .oauth2Login()//OAuth2 로그인 시작
                 .userInfoEndpoint()//로그인 성공시 사용자 정보를 가져옴
                 .userService(customOAuth2UserService); //로그인 성공 후 oauth2userservice 호출
