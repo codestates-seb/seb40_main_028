@@ -48,8 +48,9 @@ import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = MyPageController.class,
@@ -369,5 +370,155 @@ public class MyPageControllerRestDocsTest {
                 .andReturn();
 
         System.out.println(result.getResponse().getContentAsString());
+    }
+
+    @Test
+    @WithMockUser
+    public void patch_my_page_info() throws Exception {
+
+
+        // patchDTO 가져오기
+        // 사용자 개인정보 수정 Patch DTO 객체에 필요한 변수들 구성성
+        String nickNamePatchDto = "닉네임변경";           // 변경할 사용자 닉네임
+        String agePatchDto = "2022-11-11";                // 변경할 사용자 생년월일
+        Character genderPatchDto = 'W';                   // 변경할 사용자 성별
+        Integer heightPatchDto = 160;                     // 변경할 사용자 키
+        Integer weightPatchDto = 55;                      // 변경할 사용자 몸무게
+
+        MyPageInfoDto.Patch myPageInfoPatchDto = MyPageInfoDto.Patch.builder()
+                .nickname(nickNamePatchDto)
+                .age(agePatchDto)
+                .gender(genderPatchDto)
+                .height(heightPatchDto)
+                .weight(weightPatchDto)
+                .build();
+
+        String content = gson.toJson(myPageInfoPatchDto);
+
+        // MyPageInfo 객체에 필요한 변수 구성
+        long memberId = 1L;                     // 사용자 ID
+        String email = "example@example.com";   // 사용자 이메일
+        // Member 객체 생성
+        Member member = Member.builder()
+                .id(memberId)
+                .email(email)
+                .password("임의의 패스워드")
+                .nickname("기존 닉네임")
+                .build();
+
+        // MyPageInfo 객체 생성
+        MyPageInfo myPageInfo = MyPageInfo.builder()
+                .member(member)
+                .memberWeight(new MemberWeight())
+                .build();
+
+
+        // --- MyPageInfoResponseDTO 구성 ---
+        // 수정된 사용자 개인정보 MyPageInfo 객체에 대한 응답용 Response DTO 객체에 필요한 변수 구성
+        String nickNameResponseDto = "닉네임변경";           // 수정된 사용자 닉네임
+        String emailResponseDto = "example@example.com";     // 사용자 이메일
+        String ageResponseDto = "2022-11-11";                // 수정된 사용자 생년월일
+        Character genderResponseDto = 'W';                   // 수정된 사용자 성별
+        Integer heightResponseDto = 160;                     // 수정된 사용자 키
+        Integer weightResponseDto = 55;                      // 수정된 사용자 몸무게
+
+        // 수정된 사용자 개인정보 MyPageInfo 객체에 대한 응답용 Response DTO 객체
+        MyPageInfoDto.Response myPageInfoResponseDto = MyPageInfoDto.Response.builder()
+                .nickname(nickNameResponseDto)      // 닉네임 설정
+                .email(emailResponseDto)            // 이메일 설정
+                .age(ageResponseDto)                // 생년월일 설정
+                .gender(genderResponseDto)          // 성별 설정
+                .height(heightResponseDto)          // 키 설정
+                .weight(weightResponseDto)          // 몸무게 설정
+                .build();
+
+
+        // memberService로 사용자 ID찾는 메서드 Stubbing
+        given(memberService.findMemberId(
+                Mockito.any(HttpServletRequest.class)))
+                .willReturn(memberId);
+
+        // MyPageInfoPatchDTO 객체를 MyPageInfo 객체로 변환하는 매퍼 클래스의 메서드 Stubbing
+        given(myPageInfoMapper.myPageInfoPatchDtoToMyPageInfo(
+                Mockito.any(MyPageInfoDto.Patch.class)))
+                .willReturn(myPageInfo);
+
+        // myPageService에서 수정 원하는 MyPageInfo 객체 받아서 업데이트하는 메서드 Stubbing
+        given(myPageService.updateMyPageInfo(
+                Mockito.any(MyPageInfo.class)))
+                .willReturn(myPageInfo);
+
+        // MyPageInfoMapper가 MyPageInfo객체를 응답용 DTO 객체로 변환하는 메서드 Stubbing
+        given(myPageInfoMapper.myPageInfoToMyPageInfoResponseDto(
+                Mockito.any(MyPageInfo.class)))
+                .willReturn(myPageInfoResponseDto);
+
+        // <<< when >>>
+        ResultActions actions = mockMvc.perform(
+                RestDocumentationRequestBuilders
+                        .patch("/users/mypages/info")
+                        .header("Authorization", "Bearer {AccessToken}")                // 헤더에 토큰 추가
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(content)
+                        .with(csrf()));
+
+        // <<< then >>>
+        MvcResult result = actions
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.nickname").value(myPageInfoPatchDto.getNickname()))
+                .andExpect(jsonPath("$.data.age").value(myPageInfoPatchDto.getAge()))
+                .andExpect(jsonPath("$.data.gender").value(String.valueOf(myPageInfoPatchDto.getGender())))
+                .andExpect(jsonPath("$.data.height").value(myPageInfoPatchDto.getHeight()))
+                .andExpect(jsonPath("$.data.weight").value(myPageInfoPatchDto.getWeight()))
+                .andDo(
+                        document(
+                                "patch-mypages-info",
+                                getRequestPreprocessor(),
+                                getResponsePreProcessor(),
+                                requestHeaders(
+                                        headerWithName("Authorization")
+                                                .description("Bearer + {로그인 요청 Access 토큰}")
+                                ),
+                                requestFields(
+                                        List.of(
+                                                fieldWithPath("nickname").type(JsonFieldType.STRING)
+                                                        .description("수정할 사용자 닉네임").optional(),
+                                                fieldWithPath("age").type(JsonFieldType.STRING)
+                                                        .description("수정할 사용자 생년월일").optional(),
+                                                fieldWithPath("gender").type(JsonFieldType.STRING)
+                                                        .description("수정할 사용자 성별").optional(),
+                                                fieldWithPath("height").type(JsonFieldType.NUMBER)
+                                                        .description("수정할 사용자 키").optional(),
+                                                fieldWithPath("weight").type(JsonFieldType.NUMBER)
+                                                        .description("수정할 사용자 몸무게").optional()
+                                        )
+                                ),
+                                responseFields(
+                                        Arrays.asList(
+                                                fieldWithPath("success").type(JsonFieldType.BOOLEAN)
+                                                        .description("응답 성공 여부"),
+                                                fieldWithPath("data").type(JsonFieldType.OBJECT)
+                                                        .description("응답 데이터"),
+                                                fieldWithPath("data.nickname").type(JsonFieldType.STRING)
+                                                        .description("수정된 사용자 닉네임"),
+                                                fieldWithPath("data.email").type(JsonFieldType.STRING)
+                                                        .description("사용자 이메일"),
+                                                fieldWithPath("data.age").type(JsonFieldType.STRING)
+                                                        .description("수정된 사용자 생년월일"),
+                                                fieldWithPath("data.gender").type(JsonFieldType.STRING)
+                                                        .description("수정된 사용자 성별"),
+                                                fieldWithPath("data.height").type(JsonFieldType.NUMBER)
+                                                        .description("수정된 사용자 키"),
+                                                fieldWithPath("data.weight").type(JsonFieldType.NUMBER)
+                                                        .description("수정된 사용자 몸무게")
+                                        )
+                                )
+                        )
+                )
+                .andReturn();
+
+        System.out.println(result.getResponse().getContentAsString());
+
     }
 }

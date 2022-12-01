@@ -96,3 +96,25 @@ include::{snippets}/get-mypages-info/response-body.adoc[]
 
 .response-fields
 include::{snippets}/get-mypages-info/response-fields.adoc[]
+
+=== 마이 페이지 개인 정보 수정
+.curl-request
+include::{snippets}/patch-mypages-info/curl-request.adoc[]
+
+.http-request
+include::{snippets}/patch-mypages-info/http-request.adoc[]
+
+.request-header
+include::{snippets}/patch-mypages-info/request-headers.adoc[]
+
+.request-fields
+include::{snippets}/patch-mypages-info/request-fields.adoc[]
+
+.http-response
+include::{snippets}/patch-mypages-info/http-response.adoc[]
+
+.response-body
+include::{snippets}/patch-mypages-info/response-body.adoc[]
+
+.response-fields
+include::{snippets}/patch-mypages-info/response-fields.adoc[]
