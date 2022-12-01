@@ -144,8 +144,9 @@ const MainContainer = styled.div`
 `;
 
 export default function LoginContainer() {
-  const navigate = useNavigate();
   const [error, setError] = useState("");
+  
+  const navigate = useNavigate();
 
   const [isLogin, setIsLogin] = useRecoilState(LoginState);
   const [isToken, setToken] = useRecoilState(TokenState);
@@ -160,7 +161,8 @@ export default function LoginContainer() {
   } = useForm({ mode: onchange });
 
   const onLogin = async (data) => {
-    const url = "http://13.209.190.35:8080";
+    // const url = "http://13.209.190.35:8080";
+    const url = "https://guenlog.shop";
 
     console.log(data);
     // console.log(data.email+": 이메일");
@@ -235,9 +237,8 @@ export default function LoginContainer() {
 
   const googleLogin = () => {
     // 구글로그인 주소
-    const googleurl = "http://guenlog.shop/oauth2/authorization/google";
-
-    window.location.href = `${googleurl}`;
+    const url = "https://guenlog.shop/oauth2/authorization/google";
+    window.location.href = `${url}`;
   };
 
   return (
