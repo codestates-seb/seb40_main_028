@@ -13,6 +13,7 @@ import Startinginformation from "../pages/Startinginformation";
 
 // 지울예정
 import Logout from "../pages/Logout";
+import Oauth from "../pages/Oauth";
 
 export default function Router() {
   const routes = useRoutes([
@@ -59,7 +60,11 @@ export default function Router() {
     {
       path: "/startinginformation",
       element: <Startinginformation />,
-    },      
+    },
+    {
+      path: "/login/oauth",
+      element: <Oauth />,
+    },
   ]);
   return routes;
 }

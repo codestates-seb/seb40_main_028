@@ -10,7 +10,7 @@ import axios from "axios";
 import Toggle from "./Toggle";
 
 import { useRecoilValue } from "recoil";
-import { LoginState, TokenState } from "../state/UserState";
+import { LoginState, TokenState, Googlelogin } from "../state/UserState";
 
 const Container = styled.div`
   width: 300px;
@@ -99,12 +99,16 @@ export default function InformationContainer() {
 
   const navigate = useNavigate();
 
+  // 구글로그인 체크
+  const googlelogincheck = useRecoilValue(Googlelogin);
+
   // 로그인 상태
   const login = useRecoilValue(LoginState);
 
   // 토큰
   const token = useRecoilValue(TokenState);
 
+  Googlelogin;
   const {
     register,
     formState: { errors },
@@ -152,9 +156,11 @@ export default function InformationContainer() {
 
     // 세션에 저장된 토큰 가져오기
     // let token = sessionStorage.getItem("jwt-token");
-    console.log(`토큰: ${token}`);
+    // console.log(`토큰: ${token}`);
 
-    const url = "http://13.209.190.35:8080";
+    // const url = "http://13.209.190.35:8080";
+    const url = "https://guenlog.shop";
+    // https://guenlog.shop/users/info
 
     // 로그인상태가 아닌경우 login 페이지로 이동
     if (login === false) {
@@ -179,21 +185,23 @@ export default function InformationContainer() {
           // 헤더에 토큰값 넣어서 보내기
           headers: {
             Authorization: `${token}`,
+            // Authorization: (`${token}` || `Bearer ${token}` ),
           },
         }
       );
 
-      let a = {
-        height: data.height,
-        age: data.age,
-        gender: gender,
-        weight: data.weight,
-      };
-      console.log(a, "정보입력 성공! 데이터값~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+      // let a = {
+      //   height: data.height,
+      //   age: data.age,
+      //   gender: gender,
+      //   weight: data.weight,
+      // };
+      // console.log(a, "정보입력 성공! 데이터값~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
       // status가 200이면 세션스토리지에 jwt-token 저장
       if (res.status === 200) {
         // 정보 입력 완료하면 메인페이지로 이동
+        alert("정보 입력에 성공하셨습니다!");
         navigate("/");
 
         // console.log(res);
@@ -228,6 +236,7 @@ export default function InformationContainer() {
 
       // 로그인 실패시
       alert("정보 입력에 실패하였습니다.");
+      // console.log(`${token}`)
     }
   };
 

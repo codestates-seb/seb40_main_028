@@ -144,14 +144,15 @@ const MainContainer = styled.div`
 `;
 
 export default function LoginContainer() {
-  const navigate = useNavigate();
   const [error, setError] = useState("");
+
+  const navigate = useNavigate();
 
   const [isLogin, setIsLogin] = useRecoilState(LoginState);
   const [isToken, setToken] = useRecoilState(TokenState);
 
   /////////////////////////////////////////////
-  console.log(isLogin, "처음 이즈로그인 값");
+  // console.log(isLogin, "처음 이즈로그인 값");
 
   const {
     register,
@@ -160,9 +161,10 @@ export default function LoginContainer() {
   } = useForm({ mode: onchange });
 
   const onLogin = async (data) => {
-    const url = "http://13.209.190.35:8080";
+    // const url = "http://13.209.190.35:8080";
+    const url = "https://guenlog.shop";
 
-    console.log(data);
+    // console.log(data);
     // console.log(data.email+": 이메일");
     // console.log(data.password+": 이메일");
 
@@ -182,7 +184,7 @@ export default function LoginContainer() {
 
         const token = res.headers.authorization;
 
-        console.log(isToken, "토큰저장 전~~~~~~~");
+        // console.log(isToken, "토큰저장 전~~~~~~~");
 
         // 토큰이 있으면
         if (token) {
@@ -190,7 +192,7 @@ export default function LoginContainer() {
           setToken(token);
           // 로그인 상태 true
           setIsLogin(true);
-          console.log("토큰 확인됐음 로컬에 토큰 저장");
+          // console.log("토큰 확인됐음 로컬에 토큰 저장");
         }
 
         // console.log(isLogin, "로그인 성공 시 트루로 바꾼 값~~~");
@@ -225,7 +227,7 @@ export default function LoginContainer() {
       }
     } catch (err) {
       // 응답 실패
-      console.log(err);
+      // console.log(err);
       // console.log("로그인 실패")
 
       // 로그인 실패시
@@ -235,9 +237,8 @@ export default function LoginContainer() {
 
   const googleLogin = () => {
     // 구글로그인 주소
-    const googleurl = "http://guenlog.shop/oauth2/authorization/google";
-
-    window.location.href = `${googleurl}`;
+    const url = "https://guenlog.shop/oauth2/authorization/google";
+    window.location.href = `${url}`;
   };
 
   return (

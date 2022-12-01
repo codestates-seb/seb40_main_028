@@ -6,7 +6,7 @@ import styled from "styled-components";
 import axios from "axios";
 
 import { useRecoilValue, useResetRecoilState } from "recoil";
-import { LoginState, TokenState } from "../state/UserState";
+import { LoginState, TokenState, Googlelogin } from "../state/UserState";
 
 // // 모달 로그아웃 버튼
 // const L = styled.button`
@@ -124,7 +124,7 @@ const Logout = ({ open, onClose }) => {
   // 로그인 상태
   const login = useRecoilValue(LoginState);
   // 토큰
-  const token = useRecoilValue(TokenState);
+  // const token = useRecoilValue(TokenState);
   // url주소
   // const url = "http://13.209.190.35:8080";
 
@@ -132,17 +132,22 @@ const Logout = ({ open, onClose }) => {
   const resetlogout = useResetRecoilState(LoginState);
   // 토근 리셋 - > null
   const resettoken = useResetRecoilState(TokenState);
+  // 구글로그인체크 리셋 -> false
+  const resetgoogle = useResetRecoilState(Googlelogin);
 
   const logoutHandler = () => {
     // if (login === false) {
     //   alert("로그인이 안 되어 있습니다.");
     //   navigate("/login");
     // }
+
+    // 로그인 상태일때만 리코일에 있는 정보 초기화
     if (login === true) {
       resetlogout();
       resettoken();
-      console.log(login, " ===== LoginState, token 초기값으로 변경완료!");
-      alert("로그아웃 완료");
+      resetgoogle();
+      // console.log(login, " ===== LoginState, token, 초기값으로 변경완료!");
+      // alert("로그아웃 되었습니다.");
     }
     navigate("/login");
   };
