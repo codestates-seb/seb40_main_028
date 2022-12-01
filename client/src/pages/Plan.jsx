@@ -58,6 +58,8 @@ const Plan = () => {
   };
 
   useEffect(() => {
+    setData(undefined);
+
     axios
       .get(URL + `/exercises/records?date=${dayFormat}`, {
         headers: {
@@ -65,8 +67,8 @@ const Plan = () => {
         },
       })
       .then((res) => {
-        if (res.data?.data?.length === 0) {
-          setData(undefined);
+        if (res.data?.data?.length === 0 || !res.data?.data) {
+          setData([]);
         } else {
           setData(res.data.data);
         }
@@ -106,14 +108,20 @@ const Plan = () => {
           />
         </div>
         <div className="flex justify-center">
-          {data ? (
+          {data === undefined && (
+            <div className="flex flex-col items-center justify-center mt-[16em]">
+              <Loading />
+            </div>
+          )}
+          {Boolean(data && data.length) && (
             <PlanList
               data={data}
               setData={setData}
               deletePlan={deletePlan}
               handleEdit={handleEdit}
             />
-          ) : (
+          )}
+          {Boolean(data && !data.length) && (
             <div className="flex flex-col items-center justify-center mt-[12em]">
               <Loading />
               <div className="text-[#cccccc] font-semibold text-[1.7em] rounded-lg mt-[2em]">

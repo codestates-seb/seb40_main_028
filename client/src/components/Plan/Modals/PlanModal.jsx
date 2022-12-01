@@ -95,7 +95,7 @@ const PlanModal = ({
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="w-6 h-6 text-[#d9d9d9] fixed ml-[10.5em] cursor-pointer ease-out duration-150 hover:text-red-600"
+                className="w-6 h-6 text-[#d9d9d9] fixed ml-[21em] cursor-pointer ease-out duration-150 hover:text-red-600"
                 onClick={() => setIsModalOpen(false)}
               >
                 <path
