@@ -8,6 +8,7 @@ import com.seb028.guenlog.config.auth.jwt.filter.JwtVerificationFilter;
 import com.seb028.guenlog.member.controller.MyPageController;
 import com.seb028.guenlog.member.dto.MyPageInfoDto;
 import com.seb028.guenlog.member.dto.MyPageResponseDto;
+import com.seb028.guenlog.member.dto.PasswordPatchDto;
 import com.seb028.guenlog.member.entity.Member;
 import com.seb028.guenlog.member.entity.MemberWeight;
 import com.seb028.guenlog.member.mapper.MyPageInfoMapper;
@@ -45,6 +46,7 @@ import java.util.List;
 import static com.seb028.util.ApiDocumentUtils.getRequestPreprocessor;
 import static com.seb028.util.ApiDocumentUtils.getResponsePreProcessor;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willDoNothing;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -510,6 +512,80 @@ public class MyPageControllerRestDocsTest {
                                                         .description("수정된 사용자 키"),
                                                 fieldWithPath("data.weight").type(JsonFieldType.NUMBER)
                                                         .description("수정된 사용자 몸무게")
+                                        )
+                                )
+                        )
+                )
+                .andReturn();
+
+        System.out.println(result.getResponse().getContentAsString());
+    }
+
+    @Test
+    @WithMockUser
+    public void patch_password_test() throws Exception{
+
+        // <<< given >>>
+        String password = "example!123";        // 기존 비밀번호
+        String newPassword = "testtest@456";    // 변경할 비밀번호
+
+        // 비밀번호 수정용 PatchDto 객체 생성
+        PasswordPatchDto passwordPatchDto = PasswordPatchDto.builder()
+                .password(password)             // 기존 비밀번호 설정
+                .newPassword(newPassword)       // 변경할 비밀번호 설정
+                .build();
+
+        // 비밀번호 수정용 PatchDto객체를 JSON으로 변환
+        String content = gson.toJson(passwordPatchDto);
+
+        long memberId = 1L;     // 사용자 ID
+
+        // --- Stubbing ---
+        // memberService로 사용자 ID찾는 메서드 Stubbing
+        given(memberService.findMemberId(
+                Mockito.any(HttpServletRequest.class)))
+                .willReturn(memberId);
+
+        // mypageService에서 비밀번호 수정하는 메서드 Stubbing
+        willDoNothing().given(myPageService).updatePassword(passwordPatchDto, memberId);
+
+        // <<< when >>>
+        ResultActions actions = mockMvc.perform(
+                RestDocumentationRequestBuilders
+                        .patch("/users/mypages/password")
+                        .header("Authorization", "Bearer {AccessToken}")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(content)
+                        .with(csrf()));
+
+        // <<< then >>>
+        MvcResult result = actions
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.success").value("true"))
+                .andDo(
+                        document(
+                                "patch-mypages-password",
+                                getRequestPreprocessor(),
+                                getResponsePreProcessor(),
+                                requestHeaders(
+                                        headerWithName("Authorization")
+                                                .description("Bearer + {로그인 요청 Access 토큰}")
+                                ),
+                                requestFields(
+                                        List.of(
+                                                fieldWithPath("password").type(JsonFieldType.STRING)
+                                                        .description("기존 비밀번호"),
+                                                fieldWithPath("newPassword").type(JsonFieldType.STRING)
+                                                        .description("변경할 비밀번호")
+                                        )
+                                ),
+                                responseFields(
+                                        Arrays.asList(
+                                                fieldWithPath("success").type(JsonFieldType.BOOLEAN)
+                                                        .description("응답 성공 여부"),
+                                                fieldWithPath("data").type(JsonFieldType.NULL)
+                                                        .description("응답 데이터")
                                         )
                                 )
                         )
