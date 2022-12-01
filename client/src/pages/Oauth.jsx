@@ -3,11 +3,11 @@ import useEffect from "react";
 // import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
-import { useRecoilState, 
+import {
+  useRecoilState,
   // useSetRecoilState
 } from "recoil";
 import { LoginState, TokenState, Googlelogin } from "../state/UserState";
-
 
 const Oauth = () => {
   const navigate = useNavigate();
@@ -19,37 +19,34 @@ const Oauth = () => {
   // const setIsLogin = useSetRecoilState(LoginState);
   // const setToken = useSetRecoilState(TokenState);
 
-
   // 파리미터값 가져오기
   const query = window.location.search;
   const param = new URLSearchParams(query);
   const getaccessToken = param.get("access_token");
   const initialLogin = param.get("initial_login");
 
-
-  console.log("토큰값 : ", getaccessToken);
-  console.log("로그인 상태: ", initialLogin);
+  // console.log("토큰값 : ", getaccessToken);
+  // console.log("로그인 상태: ", initialLogin);
 
   if (getaccessToken) {
     // 토큰 리코일에 저장
-    setToken(`Bearer ${getaccessToken}`)
+    setToken(`Bearer ${getaccessToken}`);
     // 로그인상태 true
-    setIsLogin(true)
+    setIsLogin(true);
     // 구글로그인인지 체크
-    setgoogle(true)
+    setgoogle(true);
   }
 
   // console.log("토큰값 : ", getaccessToken);
   // console.log("로그인 상태: ", initialLogin);
 
   // 이니셜 로그인 값이 flase면 초기정보 입력 페이지로
-  console.log(initialLogin, "로그인상태값~~~~~")
-  console.log(isgoogle, "구글로그인 맞음~~~~~")
-  
+  // console.log(initialLogin, "로그인상태값~~~~~");
+  // console.log(isgoogle, "구글로그인 맞음~~~~~");
+
   if (initialLogin === "false") {
-    navigate("/startinginformation")
-  } 
-  else ( navigate("/"))
+    navigate("/startinginformation");
+  } else navigate("/");
 
   // 이니셜로그인이 true면 메인페이지로
   // if (initialLogin === true){
@@ -58,7 +55,5 @@ const Oauth = () => {
   // useEffect(() => {
   //   console.log("useEffect!!", isLogin);
   // });
-
-
 };
 export default Oauth;
