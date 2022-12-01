@@ -5,10 +5,10 @@
 :toc-title: Table of Contents
 :source-highlighter: prettify
 
-Kim Young Min
+Kim Young Min,
 Kim Chan Joong
 
-v0.3.3 2022.12.01
+v0.3.4 2022.12.01
 
 ***
 == MemberController
@@ -138,3 +138,25 @@ include::{snippets}/patch-mypages-info/response-body.adoc[]
 
 .response-fields
 include::{snippets}/patch-mypages-info/response-fields.adoc[]
+
+=== 마이 페이지 비밀 번호 수정
+.curl-request
+include::{snippets}/patch-mypages-password/curl-request.adoc[]
+
+.http-request
+include::{snippets}/patch-mypages-password/http-request.adoc[]
+
+.request-header
+include::{snippets}/patch-mypages-password/request-headers.adoc[]
+
+.request-fields
+include::{snippets}/patch-mypages-password/request-fields.adoc[]
+
+.http-response
+include::{snippets}/patch-mypages-password/http-response.adoc[]
+
+.response-body
+include::{snippets}/patch-mypages-password/response-body.adoc[]
+
+.response-fields
+include::{snippets}/patch-mypages-password/response-fields.adoc[]
