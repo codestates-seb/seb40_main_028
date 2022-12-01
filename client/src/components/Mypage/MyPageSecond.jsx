@@ -177,6 +177,7 @@ const PageText = styled.div`
   font-size: 1.2em;
   width: 25rem;
   margin-left: -1em;
+  margin-top: 1.5em;
   font-weight: 400;
 `;
 
@@ -266,13 +267,15 @@ const url = "http://13.209.190.35:8080";
           if (enteredName) {
             alert(`${enteredName}님 정보수정 완료!`);
             navigate("/");
+            console.log(setGender);
           } else if (!enteredName) {
             alert(`${name}님 정보수정 완료!`);
             navigate("/");
+            console.log(gender);
           }
         })
         .catch((data) => {
-          console.log(enteredAge);
+          console.log(gender);
           console.log(data);
         });
     }
@@ -325,7 +328,7 @@ const url = "http://13.209.190.35:8080";
               type="password"
               id="password"
               placeholder="변경을 눌러주세요."
-              autoComplete="oㄹㄹ"
+              autoComplete="off"
               readOnly
             />
             <SerchButton
@@ -371,7 +374,7 @@ const url = "http://13.209.190.35:8080";
             <DisplayText3>Sex</DisplayText3>
           </InputInfo>
           <ToggleDiv>
-            <Toggle setGender={setGender} value={gender} />
+            <Toggle setGender={setGender} value={gender}/>
           </ToggleDiv>
           <MyPageButton type="button" onClick={handleOnClick}>
             Save

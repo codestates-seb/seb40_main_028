@@ -26,7 +26,7 @@ const Text = styled.div`
 display: flex;
 justify-content: space-between;
 width: 10em;
-margin-left: -0.2em;
+margin-left: -0.8em;
 margin-right: 0.7em;
 font-size: 15px;
 color: white;
@@ -40,7 +40,7 @@ width: 5em;
 font-size: 18px;
 color: white;
 margin-bottom:-11.2em;
-margin-left: 0.6em;
+margin-left: 0.2em;
 z-index: 10;
 `
 const Text3 = styled.div`
@@ -138,10 +138,10 @@ const MyPageText = ({setGymCheck,setKgData}) => {
     <>
       <Container >
         <Text>
-            직전달 몸무게 차이
+            직전 달 평균 체중 차이
         </Text>
         <Text>
-            직전달 운동 횟수 차이
+            직전 달 운동 횟수 차이
         </Text>
         <Container2>
         <Text2>
