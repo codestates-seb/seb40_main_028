@@ -59,7 +59,7 @@ export default function Router() {
     {
       path: "/startinginformation",
       element: <Startinginformation />,
-    },      
+    },
   ]);
   return routes;
 }

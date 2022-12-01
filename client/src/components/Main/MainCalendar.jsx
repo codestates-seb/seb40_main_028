@@ -189,10 +189,41 @@ const MainCalendar = () => {
                     {format(day, "d")}
                   </time>
                 </button>
+
                 <div className="w-1 h-1 mx-auto mt-1">
+                  {meetings.map((meeting, idx) => {
+                    if (
+                      isSameDay(parseISO(meeting.dueDate), day) &&
+                      meeting.completed === 0
+                    ) {
+                      return (
+                        <div
+                          key={idx}
+                          className="w-1 h-1 rounded-full bg-red-500 mt-1"
+                        />
+                      );
+                    } else if (
+                      isSameDay(parseISO(meeting.dueDate), day) &&
+                      meeting.completed === 1
+                    ) {
+                      return (
+                        <div
+                          key={idx}
+                          className="w-1 h-1 rounded-full bg-green-500 mt-1"
+                        />
+                      );
+                    }
+                  })}
+
+                  {/* {meetings.some(
+                    (meeting) =>
+                      isSameDay(parseISO(meeting.dueDate), day) &&
+                      meeting.completed >= 1
+                  ) && <div className="w-1 h-1 rounded-full bg-green-500" />}
+
                   {meetings.some((meeting) =>
                     isSameDay(parseISO(meeting.dueDate), day)
-                  ) && <div className="w-1 h-1 rounded-full bg-sky-500" />}
+                  ) && <div className="w-1 h-1 rounded-full bg-red-400" />} */}
                 </div>
               </div>
             ))}

@@ -26,5 +26,6 @@ module.exports = {
     "no-useless-concat": "off",
     "prefer-template": "off",
     radix: "off",
+    "array-callback-return": "off",
   },
 };
