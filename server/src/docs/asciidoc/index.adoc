@@ -6,8 +6,28 @@
 :source-highlighter: prettify
 
 Kim Young Min
+Kim Chan Joong
 
 v0.2.2 2022.12.01
+
+***
+== MemberController
+=== 회원 등록
+.curl-request
+include::{snippets}/post-member/curl-request.adoc[]
+
+.http-request
+include::{snippets}/post-member/http-request.adoc[]
+
+.request-fields
+include::{snippets}/post-member/request-fields.adoc[]
+
+.http-response
+include::{snippets}/post-member/http-response.adoc[]
+
+.response-fields
+include::{snippets}/post-member/response-fields.adoc[]
+
 
 ***
 == ExerciseProgressController
