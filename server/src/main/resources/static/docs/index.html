@@ -448,6 +448,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_membercontroller">1. MemberController</a>
 <ul class="sectlevel2">
 <li><a href="#_회원_등록">1.1. 회원 등록</a></li>
+<li><a href="#_최초_로그인_추가_정보_입력">1.2. 최초 로그인 추가 정보 입력</a></li>
+<li><a href="#_회원_탈퇴">1.3. 회원 탈퇴</a></li>
 </ul>
 </li>
 <li><a href="#_exerciseprogresscontroller">2. ExerciseProgressController</a>
@@ -475,7 +477,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 Kim Chan Joong</p>
 </div>
 <div class="paragraph">
-<p>v0.3.4 2022.12.01</p>
+<p>v0.3.5 2022.12.02</p>
 </div>
 <hr>
 </div>
@@ -488,7 +490,7 @@ Kim Chan Joong</p>
 <div class="listingblock">
 <div class="title">curl-request</div>
 <div class="content">
-<pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/users/signup?_csrf=665f2c71-2cae-44b8-9462-8493eb7ab8ee' -i -X POST \
+<pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/users/signup?_csrf=c0f79ee7-cc0a-4b14-afb2-732edc0936c0' -i -X POST \
     -H 'Content-Type: application/json;charset=UTF-8' \
     -H 'Accept: application/json' \
     -d '{
@@ -501,7 +503,7 @@ Kim Chan Joong</p>
 <div class="listingblock">
 <div class="title">http-request</div>
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">POST /users/signup?_csrf=665f2c71-2cae-44b8-9462-8493eb7ab8ee HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">POST /users/signup?_csrf=c0f79ee7-cc0a-4b14-afb2-732edc0936c0 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json
 Content-Length: 94
@@ -550,7 +552,7 @@ Host: localhost:8080
 <div class="title">http-response</div>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 201 Created
-Content-Type: application/json;charset=UTF-8
+Content-Type: application/json
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
@@ -592,7 +594,245 @@ Content-Length: 42
 </tr>
 </tbody>
 </table>
-<hr>
+</div>
+<div class="sect2">
+<h3 id="_최초_로그인_추가_정보_입력">1.2. 최초 로그인 추가 정보 입력</h3>
+<div class="listingblock">
+<div class="title">curl-request</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/users/info?_csrf=35df247b-7eb5-481f-8777-68981c022bdb' -i -X PATCH \
+    -H 'Content-Type: application/json;charset=UTF-8' \
+    -H 'Authorization: Bearer {AccessToken}' \
+    -H 'Accept: application/json' \
+    -d '{
+  "Id" : 1,
+  "age" : "1999-09-09",
+  "gender" : "M",
+  "height" : 170,
+  "weight" : 70,
+  "initialLogin" : true
+}'</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">http-request</div>
+<div class="content">
+<pre class="prettyprint highlight nowrap"><code data-lang="http">PATCH /users/info?_csrf=35df247b-7eb5-481f-8777-68981c022bdb HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer {AccessToken}
+Accept: application/json
+Content-Length: 123
+Host: localhost:8080
+
+{
+  "Id" : 1,
+  "age" : "1999-09-09",
+  "gender" : "M",
+  "height" : 170,
+  "weight" : 70,
+  "initialLogin" : true
+}</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 3. request-headers</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Authorization</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bearer + {로그인 요청 Access 토큰}</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 4. request-fields</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">회원ID(Token에서 추출)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>age</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">생년월일</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>height</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">키</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>weight</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">몸무게</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>gender</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">성별</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>initialLogin</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">최초 로그인 상태</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="title">http-response</div>
+<div class="content">
+<pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
+Content-Type: application/json
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 42
+
+{
+  "success" : true,
+  "data" : null
+}</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 5. response-fields</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>success</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">결과</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">데이터</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_회원_탈퇴">1.3. 회원 탈퇴</h3>
+<div class="listingblock">
+<div class="title">curl-request</div>
+<div class="content">
+<pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/users?_csrf=baf2f4fc-8117-4d5a-861f-2b03b91362fc' -i -X DELETE \
+    -H 'Content-Type: application/json;charset=UTF-8' \
+    -H 'Authorization: Bearer {AccessToken}' \
+    -H 'Accept: application/json'</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">http-request</div>
+<div class="content">
+<pre class="prettyprint highlight nowrap"><code data-lang="http">DELETE /users?_csrf=baf2f4fc-8117-4d5a-861f-2b03b91362fc HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer {AccessToken}
+Accept: application/json
+Host: localhost:8080</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 6. request-headers</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Authorization</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bearer + {로그인 요청 Access 토큰}</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="title">http-response</div>
+<div class="content">
+<pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 204 No Content
+Content-Type: application/json
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 42
+
+{
+  "success" : true,
+  "data" : null
+}</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 7. response-fields</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>success</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">결과</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">데이터</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
@@ -619,7 +859,7 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 3. request-parameters</caption>
+<caption class="title">Table 8. request-parameters</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -638,7 +878,7 @@ Host: localhost:8080</code></pre>
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 4. request-header</caption>
+<caption class="title">Table 9. request-header</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -660,7 +900,7 @@ Host: localhost:8080</code></pre>
 <div class="title">http-response</div>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
+Content-Type: application/json
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
@@ -715,7 +955,7 @@ Content-Length: 390
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 5. response-fields</caption>
+<caption class="title">Table 10. response-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -807,7 +1047,7 @@ Content-Length: 390
 <div class="listingblock">
 <div class="title">curl-request</div>
 <div class="content">
-<pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/exercises/progress/1?_csrf=3a0124d4-1250-4a66-9f24-95688e9a8423' -i -X PATCH \
+<pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/exercises/progress/1?_csrf=1f6fa431-05a2-4d60-bfc2-e61854e98bb3' -i -X PATCH \
     -H 'Content-Type: application/json;charset=UTF-8' \
     -H 'Authorization: Bearer {AccessToken}' \
     -H 'Accept: application/json' \
@@ -829,7 +1069,7 @@ Content-Length: 390
 <div class="listingblock">
 <div class="title">http-request</div>
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">PATCH /exercises/progress/1?_csrf=3a0124d4-1250-4a66-9f24-95688e9a8423 HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">PATCH /exercises/progress/1?_csrf=1f6fa431-05a2-4d60-bfc2-e61854e98bb3 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: Bearer {AccessToken}
 Accept: application/json
@@ -852,7 +1092,7 @@ Host: localhost:8080
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 6. request-header</caption>
+<caption class="title">Table 11. request-header</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -871,7 +1111,7 @@ Host: localhost:8080
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 7. /exercises/progress/{today-id}</caption>
+<caption class="title">Table 12. /exercises/progress/{today-id}</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -890,7 +1130,7 @@ Host: localhost:8080
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 8. request-fields</caption>
+<caption class="title">Table 13. request-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -955,7 +1195,7 @@ Host: localhost:8080
 <div class="title">http-response</div>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
+Content-Type: application/json
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
@@ -980,7 +1220,7 @@ Content-Length: 42
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 9. response-fields</caption>
+<caption class="title">Table 14. response-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -1032,7 +1272,7 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 10. request-header</caption>
+<caption class="title">Table 15. request-header</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -1054,7 +1294,7 @@ Host: localhost:8080</code></pre>
 <div class="title">http-response</div>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
+Content-Type: application/json
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
@@ -1097,7 +1337,7 @@ Content-Length: 223
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 11. response-fields</caption>
+<caption class="title">Table 16. response-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -1174,7 +1414,7 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 12. request-header</caption>
+<caption class="title">Table 17. request-header</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -1196,7 +1436,7 @@ Host: localhost:8080</code></pre>
 <div class="title">http-response</div>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
+Content-Type: application/json
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
@@ -1235,7 +1475,7 @@ Content-Length: 207
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 13. response-fields</caption>
+<caption class="title">Table 18. response-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -1297,7 +1537,7 @@ Content-Length: 207
 <div class="listingblock">
 <div class="title">curl-request</div>
 <div class="content">
-<pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/users/mypages/info?_csrf=a6adeecf-d844-4768-bda2-6713c0c99a0a' -i -X PATCH \
+<pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/users/mypages/info?_csrf=8ca1bcda-a96c-4fda-8b74-c49b29e36409' -i -X PATCH \
     -H 'Content-Type: application/json;charset=UTF-8' \
     -H 'Authorization: Bearer {AccessToken}' \
     -H 'Accept: application/json' \
@@ -1313,7 +1553,7 @@ Content-Length: 207
 <div class="listingblock">
 <div class="title">http-request</div>
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">PATCH /users/mypages/info?_csrf=a6adeecf-d844-4768-bda2-6713c0c99a0a HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">PATCH /users/mypages/info?_csrf=8ca1bcda-a96c-4fda-8b74-c49b29e36409 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: Bearer {AccessToken}
 Accept: application/json
@@ -1330,7 +1570,7 @@ Host: localhost:8080
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 14. request-header</caption>
+<caption class="title">Table 19. request-header</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -1349,7 +1589,7 @@ Host: localhost:8080
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 15. request-fields</caption>
+<caption class="title">Table 20. request-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -1394,7 +1634,7 @@ Host: localhost:8080
 <div class="title">http-response</div>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
+Content-Type: application/json
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
@@ -1433,7 +1673,7 @@ Content-Length: 207
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 16. response-fields</caption>
+<caption class="title">Table 21. response-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -1495,7 +1735,7 @@ Content-Length: 207
 <div class="listingblock">
 <div class="title">curl-request</div>
 <div class="content">
-<pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/users/mypages/password?_csrf=72cc51a0-547a-47bc-87c8-e6d2734f09f4' -i -X PATCH \
+<pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/users/mypages/password?_csrf=781b6011-971d-40a7-a1f4-91fd71bcfc4a' -i -X PATCH \
     -H 'Content-Type: application/json;charset=UTF-8' \
     -H 'Authorization: Bearer {AccessToken}' \
     -H 'Accept: application/json' \
@@ -1508,7 +1748,7 @@ Content-Length: 207
 <div class="listingblock">
 <div class="title">http-request</div>
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">PATCH /users/mypages/password?_csrf=72cc51a0-547a-47bc-87c8-e6d2734f09f4 HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">PATCH /users/mypages/password?_csrf=781b6011-971d-40a7-a1f4-91fd71bcfc4a HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Authorization: Bearer {AccessToken}
 Accept: application/json
@@ -1522,7 +1762,7 @@ Host: localhost:8080
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 17. request-header</caption>
+<caption class="title">Table 22. request-header</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -1541,7 +1781,7 @@ Host: localhost:8080
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 18. request-fields</caption>
+<caption class="title">Table 23. request-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -1571,7 +1811,7 @@ Host: localhost:8080
 <div class="title">http-response</div>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
+Content-Type: application/json
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
@@ -1596,7 +1836,7 @@ Content-Length: 42
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 19. response-fields</caption>
+<caption class="title">Table 24. response-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -1629,7 +1869,7 @@ Content-Length: 42
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2022-12-01 13:58:53 +0900
+Last updated 2022-12-02 01:38:13 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
