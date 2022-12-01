@@ -8,7 +8,7 @@
 Kim Young Min,
 Kim Chan Joong
 
-v0.3.4 2022.12.01
+v0.3.5 2022.12.02
 
 ***
 == MemberController
@@ -28,8 +28,42 @@ include::{snippets}/post-member/http-response.adoc[]
 .response-fields
 include::{snippets}/post-member/response-fields.adoc[]
 
+=== 최초 로그인 추가 정보 입력
+.curl-request
+include::{snippets}/initial-member/curl-request.adoc[]
 
-***
+.http-request
+include::{snippets}/initial-member/http-request.adoc[]
+
+.request-headers
+include::{snippets}/initial-member/request-headers.adoc[]
+
+.request-fields
+include::{snippets}/initial-member/request-fields.adoc[]
+
+.http-response
+include::{snippets}/initial-member/http-response.adoc[]
+
+.response-fields
+include::{snippets}/initial-member/response-fields.adoc[]
+
+
+=== 회원 탈퇴
+.curl-request
+include::{snippets}/delete-member/curl-request.adoc[]
+
+.http-request
+include::{snippets}/delete-member/http-request.adoc[]
+
+.request-headers
+include::{snippets}/delete-member/request-headers.adoc[]
+
+.http-response
+include::{snippets}/delete-member/http-response.adoc[]
+
+.response-fields
+include::{snippets}/delete-member/response-fields.adoc[]
+
 == ExerciseProgressController
 === 운동 진행  조회
 .curl-request
