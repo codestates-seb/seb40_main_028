@@ -50,6 +50,7 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = ExerciseProgressController.class,
@@ -168,6 +169,26 @@ public class ExerciseProgressControllerRestDocsTest {
         // <<< then >>>
         MvcResult result =  actions
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.success").value(true))
+                .andExpect(jsonPath("$.data.todayId").value(responseDto.getTodayId()))
+                .andExpect(jsonPath("$.data.totalTime").value(responseDto.getTotalTime()))
+                .andExpect(jsonPath("$.data.exercises").isArray())
+                .andExpect(jsonPath("$.data.exercises[0].exerciseId")
+                        .value(responseDto.getExercises().get(0).getExerciseId()))
+                .andExpect(jsonPath("$.data.exercises[0].isCompleted")
+                        .value(responseDto.getExercises().get(0).getIsCompleted()))
+                .andExpect(jsonPath("$.data.exercises[0].exerciseName")
+                        .value(responseDto.getExercises().get(0).getExerciseName()))
+                .andExpect(jsonPath("$.data.exercises[0].imageUrl")
+                        .value(responseDto.getExercises().get(0).getImageUrl()))
+                .andExpect(jsonPath("$.data.exercises[0].eachRecords[0].weight")
+                        .value(responseDto.getExercises().get(0).getEachRecords().get(0).getWeight()))
+                .andExpect(jsonPath("$.data.exercises[0].eachRecords[0].count")
+                        .value(responseDto.getExercises().get(0).getEachRecords().get(0).getCount()))
+                .andExpect(jsonPath("$.data.exercises[0].eachRecords[0].timer")
+                        .value(responseDto.getExercises().get(0).getEachRecords().get(0).getTimer()))
+                .andExpect(jsonPath("$.data.exercises[0].eachRecords[0].eachCompleted")
+                        .value(responseDto.getExercises().get(0).getEachRecords().get(0).getEachCompleted()))
                 .andDo(
                 document(       // rest doc 생성
                     "get-exercise-progress",
@@ -302,6 +323,7 @@ public class ExerciseProgressControllerRestDocsTest {
         // <<< then >>>
         MvcResult result = actions
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.success").value(true))
                 .andDo(
                         document(   // Rest Docs 생성
                                 "patch-exercises-progress",

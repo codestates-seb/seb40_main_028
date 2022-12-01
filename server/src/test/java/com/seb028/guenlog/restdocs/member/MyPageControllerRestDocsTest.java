@@ -214,6 +214,15 @@ public class MyPageControllerRestDocsTest {
         // <<< then >>>
         MvcResult result = actions
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.success").value(true))
+                .andExpect(jsonPath("$.data.monthlyRecords[0].date")
+                        .value(myPageResponseDto.getMonthlyRecords().get(0).getDate()))
+                .andExpect(jsonPath("$.data.monthlyRecords[0].record")
+                        .value(myPageResponseDto.getMonthlyRecords().get(0).getRecord()))
+                .andExpect(jsonPath("$.data.monthlyWeights[0].date")
+                        .value(myPageResponseDto.getMonthlyWeights().get(0).getDate()))
+                .andExpect(jsonPath("$.data.monthlyWeights[0].weight")
+                        .value(myPageResponseDto.getMonthlyWeights().get(0).getWeight()))
                 .andDo(
                         document(       // rest doc 생성
                                 "get-mypages",
@@ -338,6 +347,19 @@ public class MyPageControllerRestDocsTest {
         // <<< then >>>
         MvcResult result = actions
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.success").value(true))
+                .andExpect(jsonPath("$.data.nickname")
+                        .value(myPageInfoResponseDto.getNickname()))
+                .andExpect(jsonPath("$.data.email")
+                        .value(myPageInfoResponseDto.getEmail()))
+                .andExpect(jsonPath("$.data.age")
+                        .value(myPageInfoResponseDto.getAge()))
+                .andExpect(jsonPath("$.data.gender")
+                        .value(String.valueOf(myPageInfoResponseDto.getGender())))
+                .andExpect(jsonPath("$.data.height")
+                        .value(myPageInfoResponseDto.getHeight()))
+                .andExpect(jsonPath("$.data.weight")
+                        .value(myPageInfoResponseDto.getWeight()))
                 .andDo(
                         document(
                                 "get-mypages-info",
@@ -466,6 +488,7 @@ public class MyPageControllerRestDocsTest {
         // <<< then >>>
         MvcResult result = actions
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.success").value(true))
                 .andExpect(jsonPath("$.data.nickname").value(myPageInfoPatchDto.getNickname()))
                 .andExpect(jsonPath("$.data.age").value(myPageInfoPatchDto.getAge()))
                 .andExpect(jsonPath("$.data.gender").value(String.valueOf(myPageInfoPatchDto.getGender())))
