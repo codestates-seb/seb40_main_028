@@ -94,6 +94,21 @@ const Input4 = styled.input`
     box-shadow: 0 0 0 3.3px #ddeaf7;
   }
 `;
+const Input5 = styled.input`
+  width: 18px;
+  height: 20px;
+  border: 1px solid #babfc4;
+  border-radius: 5px;
+  display: flex;
+  margin-left: 4em;
+  margin-top: 0.4em;
+  color: black;
+  margin-bottom: -1.3em;
+  &:focus {
+    border: 1px solid #0995fd;
+    box-shadow: 0 0 0 3.3px #ddeaf7;
+  }
+`;
 const ToggleDiv = styled.div`
   margin: -1.7em 0em 1.8em -2.1em;
 `;
@@ -177,7 +192,9 @@ const PageText = styled.div`
   font-size: 1.2em;
   width: 25rem;
   margin-left: -1em;
+  margin-top: 1.5em;
   font-weight: 400;
+  
 `;
 
 const MyPageSecond = () => {
@@ -198,15 +215,15 @@ const url = "http://13.209.190.35:8080";
   const weightInputRef = useRef();
   const nameInputRef = useRef();
   const ageInputRef = useRef();
-
-  const [gender, setGender] = useState("W"); //토글
+  const [gender2, setGender2] = useState(""); 
+  const [gender, setGender] = useState(false); //토글
   //get해올 값들
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [height, setHeight] = useState("");
   const [weight, setWeight] = useState("");
   const [email, setEmail] = useState("");
-
+  let a = "";
   useEffect(() => {
     axios({
       method: "get",
@@ -216,6 +233,7 @@ const url = "http://13.209.190.35:8080";
         `${token}`,
       },
     }).then((res) => {
+      console.log(res.data)
       setName(res.data.data.nickname);
       setAge(res.data.data.age);
       setWeight(res.data.data.weight);
@@ -224,6 +242,8 @@ const url = "http://13.209.190.35:8080";
       setGender(res.data.data.gender);
     });
   }, []);
+
+  // (setGender==="M") ? setGender2("남자") : setGender2("여자");
 
   const handleOnClick = (event) => {
     event.preventDefault();
@@ -266,13 +286,14 @@ const url = "http://13.209.190.35:8080";
           if (enteredName) {
             alert(`${enteredName}님 정보수정 완료!`);
             navigate("/");
+            console.log(setGender);
           } else if (!enteredName) {
             alert(`${name}님 정보수정 완료!`);
             navigate("/");
           }
         })
         .catch((data) => {
-          console.log(enteredAge);
+          console.log(gender);
           console.log(data);
         });
     }
@@ -285,7 +306,7 @@ const url = "http://13.209.190.35:8080";
     <>
       <form onSubmit={handleOnClick}>
         <MyPageForm>
-          <PageText>정보수정</PageText>
+          <PageText >정보수정</PageText>
           <MyPageButton2
             type="button"
             onClick={() => setIsOpen(true)}
@@ -325,7 +346,7 @@ const url = "http://13.209.190.35:8080";
               type="password"
               id="password"
               placeholder="변경을 눌러주세요."
-              autoComplete="oㄹㄹ"
+              autoComplete="off"
               readOnly
             />
             <SerchButton
@@ -371,7 +392,12 @@ const url = "http://13.209.190.35:8080";
             <DisplayText3>Sex</DisplayText3>
           </InputInfo>
           <ToggleDiv>
-            <Toggle setGender={setGender} value={gender} />
+          <Input5
+              type="text"
+              value={gender}
+              readOnly
+            />
+            <Toggle setGender={setGender}/>
           </ToggleDiv>
           <MyPageButton type="button" onClick={handleOnClick}>
             Save

@@ -15,3 +15,9 @@ export const TokenState = atom({
   default: null,
   effects_UNSTABLE: [persistAtom],
 });
+
+export const Googlelogin = atom({
+  key: "Googlelogin",
+  default: false,
+  effects_UNSTABLE: [persistAtom],
+});

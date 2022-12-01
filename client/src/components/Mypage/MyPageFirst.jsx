@@ -44,6 +44,17 @@ justify-content: center;
 font-size: 1.2em;
 width: 25rem;
 font-weight: 400;
+margin-bottom: 3em;
+`;
+const PageText2 = styled.div`
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 0.2em;
+margin-bottom:-23.5em;
+margin-left: -51em;
+width: 25rem;
+font-weight: 400;
 `;
 
 
@@ -90,6 +101,7 @@ const MyPageFirst = () => {
     { headers: {Authorization: `${token}`,}, 
    })
     .then((res => {
+      console.log(res.data)
       let a = []
       for(let i = 0; i<6; i++){
       if(res.data.data.monthlyWeights[i]){
@@ -108,8 +120,8 @@ const MyPageFirst = () => {
 
       let c = []
       for(let i = 0; i<6; i++){
-      if(res.data.data.monthlyRecords[i]){
-      c.push(res.data.data.monthlyRecords[i].date);
+      if(res.data.data.monthlyWeights[i]){
+      c.push(res.data.data.monthlyWeights[i].date);
       }  
     }
       setMonth(c)
@@ -127,7 +139,7 @@ const data = {
   labels: GymMonth,
   datasets: [
     {
-      label: "몸무게",
+      label: "월 평균 체중",
       data: Kg,
       fill: true,
       borderColor: ['rgba(151, 164, 255, 0.3)'],
@@ -193,7 +205,8 @@ const options = {
 
   return (
     <MyPageForm>
-      <PageText>나만의 운동 일지</PageText>
+      <PageText className="matext">나만의 운동 일지</PageText>
+      <PageText2 className="hitext">Touch</PageText2>
         <Container>
         <Line data={data} options={options}/>
         </Container>
