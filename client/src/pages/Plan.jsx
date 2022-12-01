@@ -18,6 +18,9 @@ const Plan = () => {
   const [token, setToken] = useRecoilState(TokenValue);
   const [selectedDay, setSelectedDay] = useRecoilState(selectedDays);
   const [data, setData] = useState(undefined);
+  const [editData, setEditData] = useState(undefined);
+  const [recordId, setRecordId] = useState(undefined);
+  const [editRecord, setEditRecord] = useState(undefined); //수정할 운동 요기 저장
   const URL = process.env.REACT_APP_BASE_URL;
 
   const dayFormat = dayjs(
@@ -32,12 +35,25 @@ const Plan = () => {
         },
       })
       .then((res) => {
-        console.log(res);
         setData(data.filter((item) => item.recordId !== id));
-
         if (data.length === 1) {
           setData(undefined);
         }
+      });
+  };
+
+  const handleEdit = async (id) => {
+    await axios
+      .get(URL + `/exercises/records/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setEditData(res.data.data);
+        setEditRecord(res.data.data.records);
+        setRecordId(id);
+        setModals(3);
       });
   };
 
@@ -72,6 +88,14 @@ const Plan = () => {
     }
   }, [isModalOpen]);
 
+  useEffect(() => {
+    // DetailEdit 이전 사진 기록 삭제
+    if (Modals === 0) {
+      setEditRecord(false);
+      setEditData(false);
+    }
+  }, [Modals]);
+
   return (
     <div className="h-screen bg-d-lighter relative">
       <Layout title="계획작성" hasTabBar>
@@ -83,7 +107,12 @@ const Plan = () => {
         </div>
         <div className="flex justify-center">
           {data ? (
-            <PlanList data={data} setData={setData} deletePlan={deletePlan} />
+            <PlanList
+              data={data}
+              setData={setData}
+              deletePlan={deletePlan}
+              handleEdit={handleEdit}
+            />
           ) : (
             <div className="flex flex-col items-center justify-center mt-[12em]">
               <Loading />
@@ -107,6 +136,12 @@ const Plan = () => {
             setIsModalOpen={setIsModalOpen}
             data={data}
             setData={setData}
+            editData={editData}
+            setEditData={setEditData}
+            recordId={recordId}
+            editRecord={editRecord}
+            setEditRecord={setEditRecord}
+            handleEdit={handleEdit}
           />
         )}
       </Layout>

@@ -135,7 +135,7 @@ const SecessionModal = ({ open, onClose }) => {
         resetlogout();
         resettoken();
         alert('회원탈퇴 완료! 그동안 근로그를 사랑해주셔서 감사합니다.')
-        navigate("/");
+        navigate("/login");
       })
         
         .catch((err)=>{
