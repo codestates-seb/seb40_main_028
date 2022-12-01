@@ -229,7 +229,6 @@ const MainCalendar = () => {
             ))}
           </div>
         </div>
-
         <section className="mt-4 px-12 ">
           <h2 className="font-semibold text-white">
             이날의 운동{" "}
