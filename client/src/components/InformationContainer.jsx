@@ -107,10 +107,8 @@ export default function InformationContainer() {
 
   // 토큰
   const token = useRecoilValue(TokenState);
-  
-  
-  
-  Googlelogin  
+
+  Googlelogin;
   const {
     register,
     formState: { errors },
@@ -158,7 +156,7 @@ export default function InformationContainer() {
 
     // 세션에 저장된 토큰 가져오기
     // let token = sessionStorage.getItem("jwt-token");
-    console.log(`토큰: ${token}`);
+    // console.log(`토큰: ${token}`);
 
     // const url = "http://13.209.190.35:8080";
     const url = "https://guenlog.shop";

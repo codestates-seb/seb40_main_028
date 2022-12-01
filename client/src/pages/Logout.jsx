@@ -146,7 +146,7 @@ const Logout = ({ open, onClose }) => {
       resetlogout();
       resettoken();
       resetgoogle();
-      console.log(login, " ===== LoginState, token, 초기값으로 변경완료!");
+      // console.log(login, " ===== LoginState, token, 초기값으로 변경완료!");
       // alert("로그아웃 되었습니다.");
     }
     navigate("/login");
