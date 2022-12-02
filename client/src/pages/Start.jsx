@@ -35,25 +35,9 @@ const Container = styled.div`
 
 // 로고 이미지
 const LogoPng = styled.img`
-  height: 500px;
-  width: 500px;
-  margin-bottom: 1px;
-`;
-
-const Bt = styled.button`
-  width: 5em;
-  height: 50px;
-  font-size: 1.5em;
-  font-weight: 600;
-  color: white;
-  background-color: rgb(88 102 242);
-  border: 0;
-  border-radius: 5px;
-  padding: 0;
-  margin-bottom: 5px;
-
-  &:hover {
-    background-color: rgb(71 82 196);
+  margin-top: -1em;
+  margin-bottom: -5em;
+  border-radius: 20px;
 `;
 
 // const Example = styled.div`
@@ -75,10 +59,16 @@ const Start = () => {
       <div className="h-screen bg-d-lighter pt-14" />
       <Container>
         <LogoPng src={Logo} />
-        당신의 성장과 함께할 운동 기록 서비스
+        <div className="mt-6 mb-16 text-sm text-slate-200">
+          {" "}
+          당신의 성장과 함께할 운동 기록 서비스
+        </div>
+
         <span className="title" />
         <Link to="/login">
-          <Bt>login</Bt>
+          <div className="bg-d-button hover:bg-d-button-hover text-lg font-semibold w-[10em] h-[2.5em] flex justify-center items-center text-center rounded-md ">
+            로그인
+          </div>
         </Link>
       </Container>
       {/* <Example>아래로 스크롤하면 예시페이지 나타남</Example> */}
