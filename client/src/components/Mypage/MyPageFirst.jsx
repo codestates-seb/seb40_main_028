@@ -70,10 +70,8 @@ const MyPageButton2 = styled.button`
   margin-bottom: -3.1em;
   :hover {
     background-color: #4c53bf;
-    border: 2px solid #3c53bf;
   }
   background-color: #747bf2;
-  border: 2px solid #737bf2;
   border-radius: 4px;
   cursor: pointer;
 `;
@@ -107,7 +105,8 @@ const MyPageFirst = () => {
   // 토큰
   const token = useRecoilValue(TokenState);
   // url주소
-  const url = "http://13.209.190.35:8080";
+  const URL = process.env.REACT_APP_BASE_URL;
+
   if (login === false) {
     alert("로그인이 안 되어 있습니다.");
     navigate("/login");
@@ -116,7 +115,7 @@ const MyPageFirst = () => {
   useEffect(()=>{
 
     axios
-    .get(`${url}/users/mypages`,
+    .get(`${URL}/users/mypages`,
     { headers: {Authorization: `${token}`,}, 
    })
     .then((res => {
