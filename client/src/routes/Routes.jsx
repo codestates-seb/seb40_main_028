@@ -1,5 +1,5 @@
 import React from "react";
-import { useRoutes, useNavigate } from "react-router-dom"; //
+import { useRoutes, Navigate } from "react-router-dom"; //
 import { useRecoilValue } from "recoil"; //
 import Main from "../pages/Main";
 import Mappage from "../pages/Mappage";
@@ -16,7 +16,7 @@ import Oauth from "../pages/Oauth";
 import { LoginState, TokenState, Googlelogin } from "../state/UserState";
 
 export default function Router() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   // 로그인 상태
   const login = useRecoilValue(LoginState);
@@ -24,27 +24,27 @@ export default function Router() {
   const routes = useRoutes([
     {
       path: "/",
-      element: login ? <Main /> : <Start />,
+      element: login ? <Main /> : <Navigate replace to="/start" />,
     },
     {
       path: "/mappage",
-      element: login ? <Mappage /> : <Start />,
+      element: login ? <Mappage /> : <Navigate replace to="/start" />,
     },
     {
       path: "/workout",
-      element: login ? <Workout /> : <Start />,
+      element: login ? <Workout /> : <Navigate replace to="/start" />,
     },
     {
       path: "/plan",
-      element: login ? <Plan /> : <Start />,
+      element: login ? <Plan /> : <Navigate replace to="/start" />,
     },
     {
       path: "/mypage",
-      element: login ? <Mypage /> : <Start />,
+      element: login ? <Mypage /> : <Navigate replace to="/start" />,
     },
     {
       path: "*",
-      element: login ? <NotFound /> : <Start />,
+      element: login ? <NotFound /> : <Navigate replace to="/start" />,
     },
     {
       path: "/login",
@@ -56,7 +56,7 @@ export default function Router() {
     },
     {
       path: "/register",
-      element: login ? <Register /> : <Start />,
+      element: login ? <Main /> : <Register />,
     },
     {
       path: "/startinginformation",
