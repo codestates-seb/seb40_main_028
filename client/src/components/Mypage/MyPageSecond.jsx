@@ -177,7 +177,6 @@ const MyPageButton3 = styled.button`
   border-radius: 4px;
   cursor: pointer;
 `;
-
 const SerchButton = styled.button`
   margin-top: -1.63em;
   margin-left: 12.5em;
