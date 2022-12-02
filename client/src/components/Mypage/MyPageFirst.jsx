@@ -7,6 +7,7 @@ import styled from 'styled-components/macro';
 import MyPageText from './MyPageText';
 import { LoginState, TokenState } from "../../state/UserState";
 import { useRecoilValue } from "recoil";
+import Logout from "../../pages/Logout";
 
 const MyPageForm = styled.form`
   display: flex;
@@ -57,7 +58,25 @@ width: 25rem;
 font-weight: 400;
 `;
 
-
+const MyPageButton2 = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+  height: 15px;
+  padding: 15px;
+  font-size: 2px;
+  margin-left: 278px;
+  margin-bottom: -22em;
+  :hover {
+    background-color: #4c53bf;
+    border: 2px solid #3c53bf;
+  }
+  background-color: #747bf2;
+  border: 2px solid #737bf2;
+  border-radius: 4px;
+  cursor: pointer;
+`;
 
 
 // function minMaxData() {
@@ -132,6 +151,7 @@ const MyPageFirst = () => {
     const Kg = KgData;
     const GymCheck = GymData;
     const GymMonth = month
+    const [isOpen, setIsOpen] = useState(false);
 
 Chart.register();
 const data = {
@@ -205,6 +225,14 @@ const options = {
 
   return (
     <MyPageForm>
+      <MyPageButton2
+            type="button"
+            onClick={() => setIsOpen(true)}
+            className="modalButton"
+          >
+            Logout
+          </MyPageButton2>
+          <Logout open={isOpen} onClose={() => setIsOpen(false)} />
       <PageText className="matext">나만의 운동 일지</PageText>
       <PageText2 className="hitext">Touch</PageText2>
         <Container>
