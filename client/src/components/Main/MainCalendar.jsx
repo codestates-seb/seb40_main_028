@@ -73,7 +73,7 @@ const MainCalendar = () => {
     await axios
       .get(URL + `/exercises/calendar?date=${month}`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: token,
         },
       })
       .then((res) => {
@@ -92,7 +92,7 @@ const MainCalendar = () => {
       await axios
         .get(URL + `/exercises/calendar/detail/${todayId}`, {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: token,
           },
         })
         .then((res) => {

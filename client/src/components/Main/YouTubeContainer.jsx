@@ -12,7 +12,6 @@ const YouTubeContainer = () => {
   const API = process.env.REACT_APP_YOUTUBE_API_KEY;
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [videos, setVideos] = useState(null);
-  const [token, setToken] = useRecoilState(TokenState);
 
   useEffect(() => {
     axios
