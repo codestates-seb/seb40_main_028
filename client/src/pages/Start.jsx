@@ -30,19 +30,20 @@ const Container = styled.div`
     font-weight: bold;
   }
   color: white;
+  font-size: 1em;
 `;
 
 // 로고 이미지
 const LogoPng = styled.img`
   height: 500px;
   width: 500px;
-  margin-bottom: 10px;
+  margin-bottom: 1px;
 `;
 
 const Bt = styled.button`
-  width: 150px;
+  width: 5em;
   height: 50px;
-  font-size: 13.6px;
+  font-size: 1.5em;
   font-weight: 600;
   color: white;
   background-color: rgb(88 102 242);
@@ -55,15 +56,15 @@ const Bt = styled.button`
     background-color: rgb(71 82 196);
 `;
 
-const Example = styled.div`
-  margin-top: -40px;
-  padding-top: 10px;
-  font-size: 1em;
-  color: white;
-  background-color: rgb(88 102 242);
-  width: 100%;
-  height: 800px;
-`;
+// const Example = styled.div`
+//   margin-top: -40px;
+//   padding-top: 10px;
+//   font-size: 1em;
+//   color: white;
+//   background-color: rgb(88 102 242);
+//   width: 100%;
+//   height: 800px;
+// `;
 
 const Start = () => {
   return (
@@ -80,7 +81,7 @@ const Start = () => {
           <Bt>login</Bt>
         </Link>
       </Container>
-      <Example>아래로 스크롤하면 예시페이지 나타남</Example>
+      {/* <Example>아래로 스크롤하면 예시페이지 나타남</Example> */}
     </>
   );
 };
