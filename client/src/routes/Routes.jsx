@@ -1,5 +1,6 @@
 import React from "react";
-import { useRoutes } from "react-router-dom";
+import { useRoutes, useNavigate } from "react-router-dom"; //
+import { useRecoilValue } from "recoil"; //
 import Main from "../pages/Main";
 import Mappage from "../pages/Mappage";
 import Plan from "../pages/Plan";
@@ -11,59 +12,60 @@ import Start from "../pages/Start";
 import Register from "../pages/Register";
 import Startinginformation from "../pages/Startinginformation";
 
-// 지울예정
-import Logout from "../pages/Logout";
 import Oauth from "../pages/Oauth";
+import { LoginState, TokenState, Googlelogin } from "../state/UserState";
 
 export default function Router() {
+  const navigate = useNavigate();
+
+  // 로그인 상태
+  const login = useRecoilValue(LoginState);
+
   const routes = useRoutes([
     {
       path: "/",
-      element: <Main />,
+      element: login ? <Main /> : <Start />,
     },
     {
       path: "/mappage",
-      element: <Mappage />,
+      element: login ? <Mappage /> : <Start />,
     },
     {
       path: "/workout",
-      element: <Workout />,
+      element: login ? <Workout /> : <Start />,
     },
     {
       path: "/plan",
-      element: <Plan />,
+      element: login ? <Plan /> : <Start />,
     },
     {
       path: "/mypage",
-      element: <Mypage />,
+      element: login ? <Mypage /> : <Start />,
     },
     {
       path: "*",
-      element: <NotFound />,
+      element: login ? <NotFound /> : <Start />,
     },
     {
       path: "/login",
-      element: <Login />,
+      element: login ? <Main /> : <Login />,
     },
     {
       path: "/start",
-      element: <Start />,
-    },
-    {
-      path: "/logout",
-      element: <Logout />,
+      element: login ? <Main /> : <Start />,
     },
     {
       path: "/register",
-      element: <Register />,
+      element: login ? <Register /> : <Start />,
     },
     {
       path: "/startinginformation",
-      element: <Startinginformation />,
+      element: login ? <Startinginformation /> : <Start />,
     },
     {
       path: "/login/oauth",
-      element: <Oauth />,
+      // element: <Oauth />,
+      element: login ? <Main /> : <Oauth />,
     },
   ]);
   return routes;
