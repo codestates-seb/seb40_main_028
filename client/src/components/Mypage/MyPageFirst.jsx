@@ -229,8 +229,7 @@ const options = {
             type="button"
             onClick={() => setIsOpen(true)}
             className="modalButton"
-          >
-            Logout
+          >Logout
           </MyPageButton2>
           <Logout open={isOpen} onClose={() => setIsOpen(false)} />
       <PageText className="matext">나만의 운동 일지</PageText>
