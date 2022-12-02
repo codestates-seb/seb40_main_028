@@ -87,6 +87,7 @@ export function Worklistbutton({
   iscompleted,
   hoverchangepic,
   setpic,
+  setNamestate,
 }) {
   return (
     <div
@@ -95,7 +96,10 @@ export function Worklistbutton({
       className="flex z-10 my-[0.6em] h-[3rem] xs:h-[4rem] mx-[1.5em] border-none text-[1.5em] bg-gradient-to-b from-[#4E525A] to-[#36393F] drop-shadow-2xl hover:from-d-hover border-2 rounded-lg justify-center items-center font-bold text-white overflow-x-hidden whitespace-nowrap"
       onClick={() => setState(idx)}
       onKeyDown={() => setState}
-      onMouseEnter={() => setpic(hoverchangepic)}
+      onMouseEnter={() => {
+        setpic(hoverchangepic);
+        setNamestate(name);
+      }}
       tabIndex={idx}
     >
       <span className={iscompleted ? "text-green-700" : ""}>{name}</span>
