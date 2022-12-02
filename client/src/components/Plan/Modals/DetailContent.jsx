@@ -50,7 +50,7 @@ const DetailContent = ({
       await axios
         .post(URL + `/exercises/records?date=${date}`, result, {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: token,
           },
         })
         .then((res) => {

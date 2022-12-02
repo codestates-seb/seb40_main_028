@@ -75,7 +75,7 @@ const DetailEdit = ({
             },
             {
               headers: {
-                Authorization: `Bearer ${token}`,
+                Authorization: token,
               },
             }
           )
