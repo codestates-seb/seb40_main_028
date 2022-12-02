@@ -2,7 +2,8 @@ import axios from "axios";
 import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import { categorie, isModal, TokenValue } from "../../../state/states";
+import { categorie, isModal } from "../../../state/states";
+import { TokenState } from "../../../state/UserState";
 import Button from "../../Button";
 import Loading from "../../Loading";
 
@@ -19,7 +20,7 @@ const DetailEdit = ({
 }) => {
   const URL = process.env.REACT_APP_BASE_URL;
   const [isModalOpen, setIsModalOpen] = useRecoilState(isModal);
-  const [token, setToken] = useRecoilState(TokenValue);
+  const [token, setToken] = useRecoilState(TokenState);
   const [result, setResult] = useState(undefined);
 
   // 배열의 객체의 값이 모두 존재하는지 확인하는 함수

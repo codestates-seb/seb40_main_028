@@ -1,11 +1,12 @@
 import axios from "axios";
 import React from "react";
 import { useRecoilState } from "recoil";
-import { categorie, TokenValue } from "../../state/states";
+import { categorie } from "../../state/states";
+import { TokenState } from "../../state/UserState";
 
 export default function PlanAdd({ setIsModalOpen }) {
   const [categories, setCategories] = useRecoilState(categorie);
-  const [token, setToken] = useRecoilState(TokenValue);
+  const [token, setToken] = useRecoilState(TokenState);
   const URL = process.env.REACT_APP_BASE_URL;
 
   const getApi = async () => {

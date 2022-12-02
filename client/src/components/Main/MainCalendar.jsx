@@ -17,7 +17,7 @@ import {
 import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import { TokenValue } from "../../state/states";
+import { TokenState } from "../../state/UserState";
 import CalendarContent from "./CalendarContent";
 
 const MainCalendar = () => {
@@ -42,7 +42,7 @@ const MainCalendar = () => {
   const [todos, setTodos] = useState([]);
   const [boolean, setBoolean] = useState(false);
   const [meetings, setMeetings] = useState([]);
-  const [token, setToken] = useRecoilState(TokenValue);
+  const [token, setToken] = useRecoilState(TokenState);
   const firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
   const days = eachDayOfInterval({
     start: firstDayCurrentMonth,

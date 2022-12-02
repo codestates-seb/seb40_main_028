@@ -5,14 +5,14 @@ import { Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
 import "swiper/swiper.min.css";
-import { TokenValue } from "../../state/states";
+import { TokenState } from "../../state/UserState";
 import Loading from "../Loading";
 
 const YouTubeContainer = () => {
   const API = process.env.REACT_APP_YOUTUBE_API_KEY;
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [videos, setVideos] = useState(null);
-  const [token, setToken] = useRecoilState(TokenValue);
+  const [token, setToken] = useRecoilState(TokenState);
 
   useEffect(() => {
     axios
