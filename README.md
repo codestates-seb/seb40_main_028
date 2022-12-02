@@ -32,17 +32,11 @@
 
 <img src="https://img.shields.io/badge/styledcomponents-DB7093?style=for-the-badge&logo=styledcomponents**&logoColor=white">
 
-<img src="https://img.shields.io/badge/TailwindCSS-06B6D4?style=for-the-badge&logo=**TailwindCSS**
+<img src="https://img.shields.io/badge/TailwindCSS-06B6D4?style=for-the-badge&logo=TailwindCSS&logoColor=white">
 
-&logoColor=white">
+<img src="https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=Axios&logoColor=white">
 
-<img src="https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=Axios
-
-&logoColor=white">
-
-<img src="https://img.shields.io/badge/Prettier-F7B93E?style=for-the-badge&logo=**Prettier**
-
-&logoColor=white">
+<img src="https://img.shields.io/badge/Prettier-F7B93E?style=for-the-badge&logo=Prettier&logoColor=white">
 
 <img src="https://img.shields.io/badge/Recoil-61DAFB?style=for-the-badge&logo=Recoil&logoColor=white">
 
