@@ -98,11 +98,11 @@ public class Oauth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
 
         return UriComponentsBuilder
                 .newInstance()
-                .scheme("http")
-                .host("localhost")
-                .port(3000)
+                .scheme("https")
+                .host("seb40-main-028-test.vercel.app")     //프론트 테스트 서버 임시 주소. 확인 완료 후 수정 필요
+//                .port(3000)
                 .path("/login/oauth")
-                .queryParams(queryParams) //http://localhost:3000/login/oauth로 리다이렉트
+                .queryParams(queryParams) //https://seb40-main-028-test.vercel.app/login/oauth로 리다이렉트
                 .build()
                 .toUri();
     }
