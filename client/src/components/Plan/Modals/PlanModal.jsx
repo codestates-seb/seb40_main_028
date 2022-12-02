@@ -89,21 +89,6 @@ const PlanModal = ({
           <div className="flex flex-col">
             <div className="h-9 px-1 bg-[#837f7f] border-2 border-[#837f7f] rounded-t-lg flex items-center justify-center text-white font-semibold">
               {Title()}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6 text-[#d9d9d9] fixed ml-[21em] cursor-pointer ease-out duration-150 hover:text-red-600"
-                onClick={() => setIsModalOpen(false)}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
             </div>
 
             <img
