@@ -52,7 +52,7 @@ display: flex;
 align-items: center;
 justify-content: center;
 font-size: 0.2em;
-margin-bottom:-23.5em;
+margin-bottom:-22.8em;
 margin-left: -51em;
 width: 25rem;
 font-weight: 400;
@@ -63,11 +63,10 @@ const MyPageButton2 = styled.button`
   justify-content: center;
   align-items: center;
   width: 80px;
-  height: 15px;
-  padding: 15px;
+  height: 2.4em;
   font-size: 14px;
   margin-left: 278px;
-  margin-bottom: -3.1em;
+  margin-bottom: -2.7em;
   :hover {
     background-color: #4c53bf;
   }
