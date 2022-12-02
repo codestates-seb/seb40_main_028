@@ -31,9 +31,9 @@ function Workout() {
 
   async function getdata(today) {
     await axios
-      .get(`https://13.209.190.35:8080/exercises/progress?date=${today}`, {
+      .get(`https://guenlog.shop/exercises/progress?date=${today}`, {
         // test용
-        // .get("https://13.209.190.35:8080/exercises/progress?date=2022-11-05", {
+        // .get("https://guenlog.shop/exercises/progress?date=2022-11-05", {
         headers: {
           Authorization: token,
         },
@@ -165,7 +165,7 @@ function Workout() {
 
     await axios
       .patch(
-        `https://13.209.190.35:8080/exercises/progress/${workoutdata.todayId}`,
+        `https://guenlog.shop/exercises/progress/${workoutdata.todayId}`,
         {
           totalTime: worktime,
           exercises: workoutdata.exercises,
@@ -178,7 +178,7 @@ function Workout() {
       )
       .then(
         axios.patch(
-          "https://13.209.190.35:8080/users/mypages/info",
+          "https://guenlog.shop/users/mypages/info",
           {
             Weight: weight,
           },
