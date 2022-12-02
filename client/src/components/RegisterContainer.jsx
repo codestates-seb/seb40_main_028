@@ -110,8 +110,8 @@ export default function RegisterContainer() {
   const navigate = useNavigate();
 
   // const url = "http://13.209.190.35:8080";
-  const url = "https://guenlog.shop";
-
+  // const url = "https://guenlog.shop";
+  const URL = process.env.REACT_APP_BASE_URL;
   const {
     register,
     formState: { errors },
@@ -141,7 +141,7 @@ export default function RegisterContainer() {
     try {
       // 응답 성공
       // const res = await axios.post("http://13.209.190.35:8080/users/login", {
-      const res = await axios.post(`${url}/users/signup`, {
+      const res = await axios.post(`${URL}/users/signup`, {
         // 보내고자 하는 데이터
         email: data.email,
         nickname: data.nickname,
