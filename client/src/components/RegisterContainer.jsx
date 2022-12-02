@@ -109,7 +109,8 @@ export default function RegisterContainer() {
 
   const navigate = useNavigate();
 
-  const url = "http://13.209.190.35:8080";
+  // const url = "http://13.209.190.35:8080";
+  const url = "https://guenlog.shop";
 
   const {
     register,
