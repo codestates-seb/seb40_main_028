@@ -80,7 +80,7 @@ const Start = () => {
           <Bt>login</Bt>
         </Link>
       </Container>
-      <Example>아래로 스크롤하면 예시페이지 나타남</Example>
+      {/* <Example>아래로 스크롤하면 예시페이지 나타남</Example> */}
     </>
   );
 };
