@@ -48,7 +48,7 @@ const DisplayText4 = styled.div`
   font-weight: 600;
   text-align: left;
   color: white;
-  margin: 0.7em 0em -1em 2.2em;
+  margin: 0.7em 0em -1.7em 2.2em;
 `;
 
 const InputInfo = styled.div`
@@ -145,7 +145,7 @@ const MyPageButton2 = styled.button`
   justify-content: center;
   align-items: center;
   width: 80px;
-  height: 15px;
+  height: 1em;
   padding: 15px;
   font-size: 14px;
   margin-left: 275px;
@@ -163,13 +163,13 @@ const MyPageButton3 = styled.button`
   justify-content: center;
   align-items: center;
   width: 80px;
-  height: 15px;
+  height: 10px;
   padding: 15px;
-  font-size: 1px;
+  font-size: 0.8em;
   color: black;
   margin-left: 275px;
-  margin-top: 5em;
-  margin-bottom: -55em;
+  margin-top: 0.6em;
+  margin-bottom: -3em;
   :hover {
     background-color: #2c53bf;
   }

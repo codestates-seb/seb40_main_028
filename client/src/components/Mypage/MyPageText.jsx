@@ -63,7 +63,7 @@ height: 12em;
 font-size: 15px;
 color: white;
 margin-top: 1em;
-margin-right: 0.3em;
+margin-right: 0.45em;
 border: solid 2px #36393F;
 	border-top: solid 2px #1249ed;
 	border-radius: 50%;  
