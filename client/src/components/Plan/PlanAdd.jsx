@@ -13,7 +13,7 @@ export default function PlanAdd({ setIsModalOpen }) {
     await axios
       .get(URL + `/exercises/category`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: token,
         },
       })
       .then((res) => {

@@ -32,7 +32,7 @@ const Plan = () => {
     await axios
       .delete(URL + `/exercises/records/${id}`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: token,
         },
       })
       .then((res) => {
@@ -47,7 +47,7 @@ const Plan = () => {
     await axios
       .get(URL + `/exercises/records/${id}`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: token,
         },
       })
       .then((res) => {
@@ -64,7 +64,7 @@ const Plan = () => {
     axios
       .get(URL + `/exercises/records?date=${dayFormat}`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: token,
         },
       })
       .then((res) => {
