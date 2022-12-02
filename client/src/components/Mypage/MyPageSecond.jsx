@@ -147,7 +147,7 @@ const MyPageButton2 = styled.button`
   width: 80px;
   height: 15px;
   padding: 15px;
-  font-size: 2px;
+  font-size: 14px;
   margin-left: 275px;
   :hover {
     background-color: #4c53bf;
@@ -177,7 +177,6 @@ const MyPageButton3 = styled.button`
   border-radius: 4px;
   cursor: pointer;
 `;
-
 const SerchButton = styled.button`
   margin-top: -1.63em;
   margin-left: 12.5em;
@@ -275,10 +274,8 @@ const url = "http://13.209.190.35:8080";
       alert("체중은 150이상 0이하로는 불가능 합니다.");
     } else {
       axios
-
         .patch(
           `${url}/users/mypages/info`,
-
           {
             nickname: enteredName || name,
             age: enteredAge || age,
@@ -309,7 +306,6 @@ const url = "http://13.209.190.35:8080";
         });
     }
   };
-
 
   const [PwModalOn, setPwModalOn] = useState(false);
   const [SeModalOn, setSeModalOn] = useState(false);
@@ -365,8 +361,7 @@ const url = "http://13.209.190.35:8080";
               type="button"
               onClick={() => setPwModalOn(true)}
               className="modalButton"
-            >
-              변경
+            > 변경
             </SerchButton>
             <PwModal open={PwModalOn} onClose={() => setPwModalOn(false)} />
           </InputInfo>
