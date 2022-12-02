@@ -105,5 +105,16 @@ public class Oauth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
                 .queryParams(queryParams) //http://localhost:3000/login/oauth로 리다이렉트
                 .build()
                 .toUri();
+
+
+//        return UriComponentsBuilder
+//                .newInstance()
+//                .scheme("https")
+//                .host("guenlog.vercel.app")     //프론트 배포 서버 주소.
+//                .port(3000)
+//                .path("/login/oauth")
+//                .queryParams(queryParams) //https://guenlog.vercel.app/login/oauth로 리다이렉트
+//                .build()
+//                .toUri();
     }
 }
