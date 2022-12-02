@@ -1,6 +1,5 @@
 package com.seb028.guenlog.config.auth.handler;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seb028.guenlog.config.auth.JwtTokenizer;
 import com.seb028.guenlog.config.auth.utils.CustomAuthorityUtils;
 import com.seb028.guenlog.exception.BusinessLogicException;
@@ -28,7 +27,6 @@ public class Oauth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils customAuthorityUtils;
     private final MemberRepository memberRepository;
-    private final ObjectMapper objectMapper = new ObjectMapper();
 
     public Oauth2MemberSuccessHandler(JwtTokenizer jwtTokenizer, CustomAuthorityUtils customAuthorityUtils, MemberRepository memberRepository) {
         this.jwtTokenizer = jwtTokenizer;
@@ -42,9 +40,6 @@ public class Oauth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         //OAuth2 로그인 사용자 정보
         var oauth2User = (OAuth2User)authentication.getPrincipal();
         String email = String.valueOf(oauth2User.getAttributes().get("email"));
-//        List<String> authority = customAuthorityUtils.createRoles(email);
-//        String nickname = String.valueOf(oauth2User.getAttributes().get("name"));
-//        String password = "oauth2user!";
 
         //DB에서 email를 통해 사용자 정보 확인
         Optional<Member> optionalMember = memberRepository.findByEmail(email);
@@ -99,10 +94,10 @@ public class Oauth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         return UriComponentsBuilder
                 .newInstance()
                 .scheme("https")
-                .host("seb40-main-028-test.vercel.app")     //프론트 테스트 서버 임시 주소. 확인 완료 후 수정 필요
+                .host("guenlog.vercel.app")     //프론트 배포 서버 주소.
 //                .port(3000)
                 .path("/login/oauth")
-                .queryParams(queryParams) //https://seb40-main-028-test.vercel.app/login/oauth로 리다이렉트
+                .queryParams(queryParams) //https://guenlog.vercel.app/login/oauth로 리다이렉트
                 .build()
                 .toUri();
     }
