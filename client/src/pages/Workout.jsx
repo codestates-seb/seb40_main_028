@@ -29,11 +29,11 @@ function Workout() {
   const [workoutdata, setWorkoutdata] = useRecoilState(workoutlistState);
   const token = useRecoilValue(TokenState);
   const navigate = useNavigate();
-  const URL = process.env.REACT_APP_URL;
+  const URL = process.env.REACT_APP_BASE_URL;
 
   async function getdata(today) {
     await axios
-      .get(URL + `exercises/progress?date=${today}`, {
+      .get(URL + `/exercises/progress?date=${today}`, {
         // test용
         // .get(URL + "exercises/progress?date=2022-11-05", {
         headers: {
@@ -168,7 +168,7 @@ function Workout() {
 
     await axios
       .patch(
-        URL + `exercises/progress/${workoutdata.todayId}`,
+        URL + `/exercises/progress/${workoutdata.todayId}`,
         {
           totalTime: worktime,
           exercises: workoutdata.exercises,
@@ -181,7 +181,7 @@ function Workout() {
       )
       .then(
         axios.patch(
-          URL + "users/mypages/info",
+          URL + "/users/mypages/info",
           {
             Weight: weight,
           },
