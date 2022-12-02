@@ -43,11 +43,19 @@ const DisplayText3 = styled.div`
   margin-top: 0.6em;
 `;
 
+const DisplayText4 = styled.div`
+  font-size: 15px;
+  font-weight: 600;
+  text-align: left;
+  color: white;
+  margin: 0.7em 0em -1em 2.2em;
+`;
+
 const InputInfo = styled.div`
   display: flex;
   flex-direction: column;
   width: 262px;
-  margin: 1px 0px 1px;
+  margin: 0px 0px -2px;
   color: black;
 `;
 
@@ -95,15 +103,14 @@ const Input4 = styled.input`
   }
 `;
 const Input5 = styled.input`
-  width: 18px;
-  height: 20px;
+  width: 33px;
+  height: 26px;
   border: 1px solid #babfc4;
   border-radius: 5px;
   display: flex;
-  margin-left: 4em;
-  margin-top: 0.4em;
+  margin-left:2.1em;
+  margin-top: 2em;
   color: black;
-  margin-bottom: -1.3em;
   &:focus {
     border: 1px solid #0995fd;
     box-shadow: 0 0 0 3.3px #ddeaf7;
@@ -123,7 +130,7 @@ const MyPageButton = styled.button`
   font-size: 15px;
   border: 0.01px solid #43549f;
   margin-left: 9.5em;
-  margin-top: -3em;
+  margin-top: -4em;
   :hover {
     background-color: #4c53bf;
     border: 2px solid #3c53bf;
@@ -162,7 +169,7 @@ const MyPageButton3 = styled.button`
   color: black;
   margin-left: 275px;
   margin-top: 5em;
-  margin-bottom: -20em;
+  margin-bottom: -55em;
   :hover {
     background-color: #2c53bf;
   }
@@ -215,15 +222,14 @@ const url = "http://13.209.190.35:8080";
   const weightInputRef = useRef();
   const nameInputRef = useRef();
   const ageInputRef = useRef();
-  const [gender2, setGender2] = useState(""); 
-  const [gender, setGender] = useState(false); //토글
+  const [gender, setGender] = useState(""); //토글
   //get해올 값들
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [height, setHeight] = useState("");
   const [weight, setWeight] = useState("");
   const [email, setEmail] = useState("");
-  let a = "";
+  const [gender2, setGender2] = useState("");
   useEffect(() => {
     axios({
       method: "get",
@@ -233,17 +239,22 @@ const url = "http://13.209.190.35:8080";
         `${token}`,
       },
     }).then((res) => {
-      console.log(res.data)
+      
       setName(res.data.data.nickname);
       setAge(res.data.data.age);
       setWeight(res.data.data.weight);
       setHeight(res.data.data.height);
       setEmail(res.data.data.email);
-      setGender(res.data.data.gender);
+      setGender(res.data.data.gender);   
+      if((res.data.data.gender)==="M"){
+        setGender2("남자")
+      }
+      else{
+        setGender2("여자")
+      }
+
     });
   }, []);
-
-  // (setGender==="M") ? setGender2("남자") : setGender2("여자");
 
   const handleOnClick = (event) => {
     event.preventDefault();
@@ -298,6 +309,7 @@ const url = "http://13.209.190.35:8080";
         });
     }
   };
+
 
   const [PwModalOn, setPwModalOn] = useState(false);
   const [SeModalOn, setSeModalOn] = useState(false);
@@ -389,14 +401,15 @@ const url = "http://13.209.190.35:8080";
               ref={weightInputRef}
             />
             <DisplayText2 className="h1">KG</DisplayText2>
-            <DisplayText3>Sex</DisplayText3>
+            <DisplayText3>Gender</DisplayText3>
           </InputInfo>
           <ToggleDiv>
           <Input5
               type="text"
-              value={gender}
+              value={gender2}
               readOnly
             />
+            <DisplayText4>Change Gender</DisplayText4>
             <Toggle setGender={setGender}/>
           </ToggleDiv>
           <MyPageButton type="button" onClick={handleOnClick}>
