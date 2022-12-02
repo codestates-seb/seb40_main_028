@@ -9,13 +9,14 @@ import PlanAdd from "../components/Plan/PlanAdd";
 import PlanCalendar from "../components/Plan/PlanCalendar";
 import PlanList from "../components/Plan/PlanList";
 import RandomMessage from "../components/Plan/RandomMessage";
-import { isModal, ModalNum, selectedDays, TokenValue } from "../state/states";
+import { isModal, ModalNum, selectedDays } from "../state/states";
+import { TokenState } from "../state/UserState";
 
 const Plan = () => {
   const [isModalOpen, setIsModalOpen] = useRecoilState(isModal);
   const [categories, setCategories] = useState(null);
   const [Modals, setModals] = useRecoilState(ModalNum);
-  const [token, setToken] = useRecoilState(TokenValue);
+  const [token, setToken] = useRecoilState(TokenState);
   const [selectedDay, setSelectedDay] = useRecoilState(selectedDays);
   const [data, setData] = useState(undefined);
   const [editData, setEditData] = useState(undefined);

@@ -2,7 +2,8 @@ import axios from "axios";
 import dayjs from "dayjs";
 import React from "react";
 import { useRecoilState } from "recoil";
-import { categorie, isModal, TokenValue } from "../../../state/states";
+import { categorie, isModal } from "../../../state/states";
+import { TokenState } from "../../../state/UserState";
 import Button from "../../Button";
 import Loading from "../../Loading";
 
@@ -17,7 +18,7 @@ const DetailContent = ({
 }) => {
   const URL = process.env.REACT_APP_BASE_URL;
   const [isModalOpen, setIsModalOpen] = useRecoilState(isModal);
-  const [token, setToken] = useRecoilState(TokenValue);
+  const [token, setToken] = useRecoilState(TokenState);
   const [categories, setCategories] = useRecoilState(categorie);
 
   const List = categories[selectedCategory].exercises[selectedExercise];
