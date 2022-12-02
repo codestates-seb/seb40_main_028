@@ -87,14 +87,13 @@ const MyPageButton = styled.button`
   height: 2em;
   padding:12px;
   font-size: 12px;
-  border: 0.01px solid #43549f;
   color: white;
   :hover {
     background-color: #4C53BF;
-    border: 2px solid #3C53BF;
+    border: 2px solid #4C53BF;
   }
   background-color: #747BF2;
-  border: 2px solid #737BF2;
+  border: 2px solid #747BF2;
   border-radius: 4px;
   cursor: pointer;
   margin-top: 1em;
@@ -107,7 +106,7 @@ const SecessionModal = ({ open, onClose }) => {
   // 토큰
   const token = useRecoilValue(TokenState);
   // url주소
-  const url = "http://13.209.190.35:8080";
+  const URL = process.env.REACT_APP_BASE_URL;
   if (login === false) {
     alert("로그인이 안 되어 있습니다.");
     navigate("/login");
@@ -127,7 +126,7 @@ const SecessionModal = ({ open, onClose }) => {
         alert('정확한 "회원탈퇴" 글자가 입력되지 않았습니다.')
       }else{
       axios
-      .delete(`${url}/users`,{
+      .delete(`${URL}/users`,{
         headers: { 
           Authorization : `${token}`},
       })
