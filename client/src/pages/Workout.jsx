@@ -28,12 +28,14 @@ function Workout() {
   const [workoutdata, setWorkoutdata] = useRecoilState(workoutlistState);
   const token = useRecoilValue(TokenState);
   const navigate = useNavigate();
+  const URL = process.env.REACT_APP_URL;
 
   async function getdata(today) {
+    console.log(URL);
     await axios
-      .get(`https://guenlog.shop/exercises/progress?date=${today}`, {
+      .get(URL + `exercises/progress?date=${today}`, {
         // test용
-        // .get("https://guenlog.shop/exercises/progress?date=2022-11-05", {
+        // .get(URL + "exercises/progress?date=2022-11-05", {
         headers: {
           Authorization: token,
         },
@@ -56,7 +58,7 @@ function Workout() {
     // if(worktime === 0 || workoutdata === {}) {
     //   getdata();
     // }
-    getdata(today);
+    if (workoutdata !== {}) getdata(today);
   }, []);
 
   const pausefunction = () => {
@@ -165,7 +167,7 @@ function Workout() {
 
     await axios
       .patch(
-        `https://guenlog.shop/exercises/progress/${workoutdata.todayId}`,
+        URL + `exercises/progress/${workoutdata.todayId}`,
         {
           totalTime: worktime,
           exercises: workoutdata.exercises,
@@ -178,7 +180,7 @@ function Workout() {
       )
       .then(
         axios.patch(
-          "https://guenlog.shop/users/mypages/info",
+          URL + "users/mypages/info",
           {
             Weight: weight,
           },
@@ -210,12 +212,11 @@ function Workout() {
   const recordweight = (event) => {
     console.log(event);
   };
-
   return (
     <Layout title="운동시작">
       <div className="flex flex-col bg-d-lighter text-gray-700 max-w-lg max-h-[85vh] text-center">
         {/* 시간이 흘러갈때는 초록색으로 표기하고 멈췄을때는 빨간색으로 표기하는것 적용 */}
-        {workoutdata.exercises && (
+        {workoutdata.exercises ? (
           <>
             <div className="relative flex justify-between items-center border-transparent h-[3em] px-[1em] py-[0.1em] xs:py-[0.5em] text-[1.5em] font-bold text-white">
               <span className="flex basis-1/2 px-[1em] xs:px-[1.2em] pt-[0.3em] xs:pt-[0.4em] xs:text-[1.5rem] whitespace-nowrap overflow-x-clip overflow-y-visible text-left">
@@ -277,7 +278,7 @@ function Workout() {
                   )}
             </div>
           </>
-        )}
+        ) : null}
         <div className="bg-d-dark max-w-lg z-[9995] text-white border-none fixed bottom-0 w-full pl-10 pb-3 pt-3 flex justify-between">
           {/* <div className="relative z-[9995] justify-between items-center w-full mt-auto mb-0 h-[4em] pb-24 overflow-clip"> */}
           {specificset === "list" ? (
