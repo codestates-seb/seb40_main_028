@@ -78,17 +78,16 @@ const MyPageButton = styled.button`
   height: 2em;
   padding:12px;
   font-size: 12px;
-  border: 0.01px solid #43549f;
   color: white;
   margin-left: 9.5em;
   margin-bottom: 2em;
   margin-top: 2em;
   :hover {
     background-color: #4C53BF;
-    border: 2px solid #3C53BF;
+    border: 2px solid #4C53BF;
   }
   background-color: #747BF2;
-  border: 2px solid #737BF2;
+  border: 2px solid #747BF2;
   border-radius: 4px;
   cursor: pointer;
 `;
@@ -103,7 +102,7 @@ const PwModal = ({ open, onClose }) => {
   // 토큰
   const token = useRecoilValue(TokenState);
   // url주소
-  const url = "http://13.209.190.35:8080";
+  const URL = process.env.REACT_APP_BASE_URL;
   if (login === false) {
     alert("로그인이 안 되어 있습니다.");
     navigate("/login");
@@ -127,7 +126,7 @@ const PwModal = ({ open, onClose }) => {
     }
     else{
      axios
-     .patch(`${url}/users/mypages/password`,
+     .patch(`${URL}/users/mypages/password`,
         {
           password: enteredPassword,
           newPassword: enteredNewPassword

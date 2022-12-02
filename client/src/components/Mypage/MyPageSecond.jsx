@@ -133,10 +133,10 @@ const MyPageButton = styled.button`
   margin-top: -4em;
   :hover {
     background-color: #4c53bf;
-    border: 2px solid #3c53bf;
+    border: 2px solid #4c53bf;
   }
   background-color: #747bf2;
-  border: 2px solid #737bf2;
+  border: 2px solid #747bf2;
   border-radius: 4px;
   cursor: pointer;
 `;
@@ -151,7 +151,7 @@ const MyPageButton2 = styled.button`
   margin-left: 275px;
   :hover {
     background-color: #4c53bf;
-    border: 2px solid #3c53bf;
+    border: 2px solid #4c53bf;
   }
   background-color: #747bf2;
   border: 2px solid #737bf2;
@@ -182,13 +182,13 @@ const SerchButton = styled.button`
   margin-left: 12.5em;
   width: 50px;
   background-color: #747bf2;
-  border: 1px solid #737bf2;
+  border: 1px solid #747bf2;
   border-radius: 0px 5px 5px 0px;
   color: white;
   cursor: pointer;
   :hover {
     background-color: #4c53bf;
-    border: 1px solid #3c53bf;
+    border: 1px solid #4c53bf;
   }
 `;
 const PageText = styled.div`
@@ -209,7 +209,7 @@ const login = useRecoilValue(LoginState);
 // 토큰
 const token = useRecoilValue(TokenState);
 // url주소
-const url = "http://13.209.190.35:8080";
+const URL = process.env.REACT_APP_BASE_URL;
   if (login === false) {
     alert("로그인이 안 되어 있습니다.");
     navigate("/login");
@@ -232,7 +232,7 @@ const url = "http://13.209.190.35:8080";
   useEffect(() => {
     axios({
       method: "get",
-      url: `${url}/users/mypages/info`,
+      url: `${URL}/users/mypages/info`,
       headers: {
         Authorization:
         `${token}`,
@@ -275,7 +275,7 @@ const url = "http://13.209.190.35:8080";
     } else {
       axios
         .patch(
-          `${url}/users/mypages/info`,
+          `${URL}/users/mypages/info`,
           {
             nickname: enteredName || name,
             age: enteredAge || age,
@@ -342,6 +342,7 @@ const url = "http://13.209.190.35:8080";
               placeholder={name}
               required
               ref={nameInputRef}
+              autoComplete="off"
             />
           </InputInfo>
           <InputInfo className="displayMail">
@@ -366,7 +367,7 @@ const url = "http://13.209.190.35:8080";
             <PwModal open={PwModalOn} onClose={() => setPwModalOn(false)} />
           </InputInfo>
           <InputInfo className="displayWidth">
-            <DisplayText>Age</DisplayText>
+            <DisplayText>Birthday</DisplayText>
             <Input
               type="date"
               id="birthday"
@@ -383,6 +384,7 @@ const url = "http://13.209.190.35:8080";
               placeholder={height}
               required
               ref={heightInputRef}
+              autoComplete="off"
             />
             <DisplayText2 className="h1">CM</DisplayText2>
           </InputInfo>
@@ -394,6 +396,7 @@ const url = "http://13.209.190.35:8080";
               placeholder={weight}
               required
               ref={weightInputRef}
+              autoComplete="off"
             />
             <DisplayText2 className="h1">KG</DisplayText2>
             <DisplayText3>Gender</DisplayText3>

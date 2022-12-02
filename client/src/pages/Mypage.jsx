@@ -30,10 +30,8 @@ const MyPageButton = styled.button`
   color: white;
   :hover {
     background-color: #4C53BF;
-    border: 2px solid #3C53BF;
   }
   background-color: #747BF2;
-  border: 2px solid #737BF2;
   border-radius: 4px;
   cursor: pointer;
   margin-top: 2em;
