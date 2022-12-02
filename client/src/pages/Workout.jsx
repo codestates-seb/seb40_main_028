@@ -31,9 +31,9 @@ function Workout() {
 
   async function getdata(today) {
     await axios
-      .get(`http://13.209.190.35:8080/exercises/progress?date=${today}`, {
+      .get(`https://13.209.190.35:8080/exercises/progress?date=${today}`, {
         // test용
-        // .get("http://13.209.190.35:8080/exercises/progress?date=2022-11-05", {
+        // .get("https://13.209.190.35:8080/exercises/progress?date=2022-11-05", {
         headers: {
           Authorization: token,
         },
@@ -165,7 +165,7 @@ function Workout() {
 
     await axios
       .patch(
-        `http://13.209.190.35:8080/exercises/progress/${workoutdata.todayId}`,
+        `https://13.209.190.35:8080/exercises/progress/${workoutdata.todayId}`,
         {
           totalTime: worktime,
           exercises: workoutdata.exercises,
@@ -178,7 +178,7 @@ function Workout() {
       )
       .then(
         axios.patch(
-          "http://13.209.190.35:8080/users/mypages/info",
+          "https://13.209.190.35:8080/users/mypages/info",
           {
             Weight: weight,
           },
@@ -212,110 +212,106 @@ function Workout() {
   };
 
   return (
-    workoutdata.exercises && (
-      <Layout title="운동시작">
-        <div className="flex flex-col bg-d-lighter text-gray-700 max-w-lg max-h-[85vh] text-center">
-          {/* 시간이 흘러갈때는 초록색으로 표기하고 멈췄을때는 빨간색으로 표기하는것 적용 */}
-          <div className="relative flex justify-between items-center border-transparent h-[3em] px-[1em] py-[0.1em] xs:py-[0.5em] text-[1.5em] font-bold text-white">
-            <span className="flex basis-1/2 px-[1em] xs:px-[1.2em] pt-[0.3em] xs:pt-[0.4em] xs:text-[1.5rem] whitespace-nowrap overflow-x-clip overflow-y-visible text-left">
-              {specificset === "list"
-                ? workoutdata.exercises[0].exerciseName
-                : workoutdata.exercises[specificset].exerciseName}
-            </span>
-            <button
-              type="button"
-              readOnly
-              className="flex justify-center items-center cursor-pointer w-[10rem] xs:w-[24rem] h-[3rem] text-[1em] xs:text-[1.7em]    m-auto mx-[0.5em] rounded-xl bg-d-dark shadow-lg shadow-black transition duration-150 active:ml-[0.5em] active:shadow-none hover:bg-d-hover max-w-"
-              onClick={pausefunction}
-              onKeyDown={pausefunction}
-            >
-              {stopped ? (
-                <Timebutton
-                  color="text-red-700"
-                  time={timeonscreen(worktime)}
-                />
-              ) : (
-                <Timebutton
-                  color="text-green-700"
-                  time={timeonscreen(worktime)}
-                />
-              )}
-            </button>
-            {/* <hr className='flex items-center first-letter:mx-2 pb-[1vh]'></hr> */}
-          </div>
-          <div className="flex max-w:100% my-[5rem] h-[6rem] xs:h-[12rem] border-none mx-[2.4em] justify-center items-center text-white">
-            <img src={specificpic} alt={workoutdata.exercises[0].imageUrl} />
-          </div>
-          {/* 여기에서 onclick 이벤트로 setState 넣어두면 무한반복되어버림=>useRef사용예정 */}
-          <div className="flex-col w-full h-[40rem] xs:h-[40rem] max-h-[58rem] mx-auto overflow-scroll">
-            {specificset === "list"
-              ? workoutdata.exercises.map((x, idx) => (
-                  <Worklistbutton
-                    key={`${x.exerciseId}${idx}`}
-                    id={x.exerciseId}
-                    name={x.exerciseName}
-                    idx={idx}
-                    iscompleted={x.isCompleted}
-                    setState={setSpecificset}
-                    hoverchangepic={x.imageUrl}
-                    setpic={setSpecificpic}
-                  />
-                ))
-              : workoutdata.exercises[specificset].eachRecords.map((x, idx) => (
-                  <EachRecordbutton
-                    key={idx}
-                    kg={x.weight}
-                    count={x.count}
-                    idx={idx}
-                    iscompleted={x.eachCompleted}
-                    fn={() => setclicked(x.timer, specificset, idx)}
-                    restfn={setIsrestmodalon}
-                  />
-                ))}
-          </div>
-          <div className="bg-d-dark max-w-lg z-[9995] text-white border-none fixed bottom-0 w-full pl-10 pb-3 pt-3 flex justify-between">
-            {/* <div className="relative z-[9995] justify-between items-center w-full mt-auto mb-0 h-[4em] pb-24 overflow-clip"> */}
-            {specificset === "list" ? (
-              <>
-                <Smallbutton name="운동종료" fn={gohome} />
-                {/* <Movingbutton fn={() => setIsrestmodalon([true,60])}/> */}
-              </>
-            ) : (
-              <>
-                <Smallbutton name="이전" fn={goback} />
-                {/* 첫분기: 완료표시안된 운동이 있습니까 -> 두번째분기: 뒤에 더 운동이 없습니까 */}
-
-                {!workoutdata.exercises[specificset].isCompleted ? (
-                  <Smallbutton
-                    name="세트완료"
-                    ifnext="mr-[2.5em]"
-                    fn={setdone}
-                  />
-                ) : workoutdata.exercises.length - 2 < specificset ? (
-                  <Smallbutton
-                    name="운동완료"
-                    fn={finished}
-                    ifnext="mr-[2.5em]"
+    <Layout title="운동시작">
+      <div className="flex flex-col bg-d-lighter text-gray-700 max-w-lg max-h-[85vh] text-center">
+        {/* 시간이 흘러갈때는 초록색으로 표기하고 멈췄을때는 빨간색으로 표기하는것 적용 */}
+        {workoutdata.exercises && (
+          <>
+            <div className="relative flex justify-between items-center border-transparent h-[3em] px-[1em] py-[0.1em] xs:py-[0.5em] text-[1.5em] font-bold text-white">
+              <span className="flex basis-1/2 px-[1em] xs:px-[1.2em] pt-[0.3em] xs:pt-[0.4em] xs:text-[1.5rem] whitespace-nowrap overflow-x-clip overflow-y-visible text-left">
+                {specificset === "list"
+                  ? workoutdata.exercises[0].exerciseName
+                  : workoutdata.exercises[specificset].exerciseName}
+              </span>
+              <button
+                type="button"
+                readOnly
+                className="flex justify-center items-center cursor-pointer w-[10rem] xs:w-[24rem] h-[3rem] text-[1em] xs:text-[1.7em]    m-auto mx-[0.5em] rounded-xl bg-d-dark shadow-lg shadow-black transition duration-150 active:ml-[0.5em] active:shadow-none hover:bg-d-hover max-w-"
+                onClick={pausefunction}
+                onKeyDown={pausefunction}
+              >
+                {stopped ? (
+                  <Timebutton
+                    color="text-red-700"
+                    time={timeonscreen(worktime)}
                   />
                 ) : (
-                  <Smallbutton
-                    name="다음운동"
-                    fn={gonext}
-                    ifnext="mr-[2.5em]"
+                  <Timebutton
+                    color="text-green-700"
+                    time={timeonscreen(worktime)}
                   />
                 )}
-              </>
-            )}
-            {isrestmodalon[0] ? (
-              <Restmodal data={isrestmodalon} fn={setIsrestmodalon} />
-            ) : null}
-            {workoutdone ? (
-              <Congrats workoutdone reset={reset} recordweight={recordweight} />
-            ) : null}
-          </div>
+              </button>
+              {/* <hr className='flex items-center first-letter:mx-2 pb-[1vh]'></hr> */}
+            </div>
+            <div className="flex max-w:100% my-[5rem] h-[6rem] xs:h-[12rem] border-none mx-[2.4em] justify-center items-center text-white">
+              <img src={specificpic} alt={workoutdata.exercises[0].imageUrl} />
+            </div>
+            {/* 여기에서 onclick 이벤트로 setState 넣어두면 무한반복되어버림=>useRef사용예정 */}
+            <div className="flex-col w-full h-[40rem] xs:h-[40rem] max-h-[58rem] mx-auto overflow-scroll">
+              {specificset === "list"
+                ? workoutdata.exercises.map((x, idx) => (
+                    <Worklistbutton
+                      key={`${x.exerciseId}${idx}`}
+                      id={x.exerciseId}
+                      name={x.exerciseName}
+                      idx={idx}
+                      iscompleted={x.isCompleted}
+                      setState={setSpecificset}
+                      hoverchangepic={x.imageUrl}
+                      setpic={setSpecificpic}
+                    />
+                  ))
+                : workoutdata.exercises[specificset].eachRecords.map(
+                    (x, idx) => (
+                      <EachRecordbutton
+                        key={idx}
+                        kg={x.weight}
+                        count={x.count}
+                        idx={idx}
+                        iscompleted={x.eachCompleted}
+                        fn={() => setclicked(x.timer, specificset, idx)}
+                        restfn={setIsrestmodalon}
+                      />
+                    )
+                  )}
+            </div>
+          </>
+        )}
+        <div className="bg-d-dark max-w-lg z-[9995] text-white border-none fixed bottom-0 w-full pl-10 pb-3 pt-3 flex justify-between">
+          {/* <div className="relative z-[9995] justify-between items-center w-full mt-auto mb-0 h-[4em] pb-24 overflow-clip"> */}
+          {specificset === "list" ? (
+            <>
+              <Smallbutton name="운동종료" fn={gohome} />
+              {/* <Movingbutton fn={() => setIsrestmodalon([true,60])}/> */}
+            </>
+          ) : (
+            <>
+              <Smallbutton name="이전" fn={goback} />
+              {/* 첫분기: 완료표시안된 운동이 있습니까 -> 두번째분기: 뒤에 더 운동이 없습니까 */}
+
+              {!workoutdata.exercises[specificset].isCompleted ? (
+                <Smallbutton name="세트완료" ifnext="mr-[2.5em]" fn={setdone} />
+              ) : workoutdata.exercises.length - 2 < specificset ? (
+                <Smallbutton
+                  name="운동완료"
+                  fn={finished}
+                  ifnext="mr-[2.5em]"
+                />
+              ) : (
+                <Smallbutton name="다음운동" fn={gonext} ifnext="mr-[2.5em]" />
+              )}
+            </>
+          )}
+          {isrestmodalon[0] ? (
+            <Restmodal data={isrestmodalon} fn={setIsrestmodalon} />
+          ) : null}
+          {workoutdone ? (
+            <Congrats workoutdone reset={reset} recordweight={recordweight} />
+          ) : null}
         </div>
-      </Layout>
-    )
+      </div>
+    </Layout>
   );
 }
 
