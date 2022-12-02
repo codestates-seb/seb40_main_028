@@ -1,10 +1,8 @@
-
 import styled from "styled-components";
 import React from "react";
 import { Link } from "react-router-dom";
 
 import Logo from "../assets/img/Logo.png";
-
 
 const Container = styled.div`
   // 화면 중앙 고정
@@ -31,15 +29,15 @@ const Container = styled.div`
     margin-bottom: 30px;
     font-weight: bold;
   }
+  color: white;
 `;
 
 // 로고 이미지
 const LogoPng = styled.img`
-  height: 200px;
-  width: 200px;
-  margin-bottom: 10px;  
+  height: 500px;
+  width: 500px;
+  margin-bottom: 10px;
 `;
-
 
 const Bt = styled.button`
   width: 150px;
@@ -58,24 +56,26 @@ const Bt = styled.button`
 `;
 
 const Example = styled.div`
-margin-top: -40px;
-padding-top: 10px;
-font-size: 1em;
-color: white;
-background-color: rgb(88 102 242);
-width: 100%;
-height: 800px;
+  margin-top: -40px;
+  padding-top: 10px;
+  font-size: 1em;
+  color: white;
+  background-color: rgb(88 102 242);
+  width: 100%;
+  height: 800px;
 `;
 
 const Start = () => {
   return (
     <>
-      <div className="bg-d-dark w-full z-[1] h-12 max-w-lg justify-center text-lg px-10 font-medium fixed text-white border-b border-[#2C2F33] top-0  flex items-center">근로그</div>
+      <div className="bg-d-dark w-full z-[1] h-12 max-w-lg justify-center text-lg px-10 font-medium fixed text-white border-b border-[#2C2F33] top-0  flex items-center">
+        근로그
+      </div>
       <div className="h-screen bg-d-lighter pt-14" />
       <Container>
         <LogoPng src={Logo} />
         당신의 성장과 함께할 운동 기록 서비스
-        <span className="title">근로그</span>
+        <span className="title" />
         <Link to="/login">
           <Bt>login</Bt>
         </Link>
@@ -86,9 +86,3 @@ const Start = () => {
 };
 
 export default Start;
-
-
-
-
-
-
