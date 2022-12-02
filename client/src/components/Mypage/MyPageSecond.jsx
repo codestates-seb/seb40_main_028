@@ -147,7 +147,7 @@ const MyPageButton2 = styled.button`
   width: 80px;
   height: 15px;
   padding: 15px;
-  font-size: 2px;
+  font-size: 14px;
   margin-left: 275px;
   :hover {
     background-color: #4c53bf;

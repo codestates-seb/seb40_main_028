@@ -65,9 +65,9 @@ const MyPageButton2 = styled.button`
   width: 80px;
   height: 15px;
   padding: 15px;
-  font-size: 2px;
+  font-size: 14px;
   margin-left: 278px;
-  margin-bottom: -22em;
+  margin-bottom: -3.1em;
   :hover {
     background-color: #4c53bf;
     border: 2px solid #3c53bf;
