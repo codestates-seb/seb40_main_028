@@ -274,10 +274,8 @@ const url = "http://13.209.190.35:8080";
       alert("체중은 150이상 0이하로는 불가능 합니다.");
     } else {
       axios
-
         .patch(
           `${url}/users/mypages/info`,
-
           {
             nickname: enteredName || name,
             age: enteredAge || age,
@@ -308,7 +306,6 @@ const url = "http://13.209.190.35:8080";
         });
     }
   };
-
 
   const [PwModalOn, setPwModalOn] = useState(false);
   const [SeModalOn, setSeModalOn] = useState(false);
@@ -364,8 +361,7 @@ const url = "http://13.209.190.35:8080";
               type="button"
               onClick={() => setPwModalOn(true)}
               className="modalButton"
-            >
-              변경
+            > 변경
             </SerchButton>
             <PwModal open={PwModalOn} onClose={() => setPwModalOn(false)} />
           </InputInfo>
