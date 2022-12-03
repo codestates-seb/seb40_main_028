@@ -317,6 +317,8 @@ export default function InformationContainer() {
               // onClick={() => navigate('/')}
               type="submit"
               value="완료"
+              className="ease-out duration-150
+              "
             />
             {error && <Errormsg>{error}</Errormsg>}
           </Form>

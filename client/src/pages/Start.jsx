@@ -66,7 +66,10 @@ const Start = () => {
 
         <span className="title" />
         <Link to="/login">
-          <div className="bg-d-button hover:bg-d-button-hover text-lg font-semibold w-[10em] h-[2.5em] flex justify-center items-center text-center rounded-md ">
+          <div
+            className="bg-d-button hover:bg-d-button-hover text-lg ease-out duration-150
+ font-semibold w-[10em] h-[2.5em] flex justify-center items-center text-center rounded-md "
+          >
             로그인
           </div>
         </Link>
