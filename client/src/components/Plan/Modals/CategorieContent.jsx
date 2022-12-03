@@ -12,7 +12,6 @@ const CategorieContent = ({ Modals, setModals, setSelectedCategory }) => {
         <Loading />
       </div>
     );
-  console.log(categories);
   return (
     <>
       <div className="flex flex-wrap items-center justify-center ">
@@ -28,7 +27,11 @@ const CategorieContent = ({ Modals, setModals, setSelectedCategory }) => {
               className="flex flex-col justify-center items-center w-[7em] h-[7em]"
             >
               <div className="w-16 h-16 hover:bg-d-button-hover bg-[#d9d9d9] rounded-lg ease-out duration-150">
-                <img src={item.imageUrl} alt="사진" className="mt-3" />
+                {item.imageUrl ? (
+                  <img src={item.imageUrl} alt="사진" className="mt-3" />
+                ) : (
+                  <Loading small />
+                )}
               </div>
               <div className="font-medium text-[0.8em] mt-1">
                 {item.name} 운동
