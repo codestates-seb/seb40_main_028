@@ -295,7 +295,7 @@ export default function LoginContainer() {
           <SubmitBtn
             type="submit"
             value="Login"
-            className="w-full h-10 px-10 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline outline-none pl-[2em] bg-d-button hover:bg-d-button-hover"
+            className="w-full h-10 px-10 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline outline-none pl-[2em] ease-out duration-150 bg-d-button hover:bg-d-button-hover"
           />
           {error && <Errormsg>{error}</Errormsg>}
         </Form>
@@ -305,7 +305,7 @@ export default function LoginContainer() {
         <div className="flex flex-col">
           <div
             onClick={() => navigate("/register")}
-            className="rounded-full bg-white w-[3em] h-[3em] flex items-center justify-center hover:bg-d-button-hover"
+            className="rounded-full bg-white w-[3em] h-[3em] flex items-center justify-center hover:bg-d-button-hover ease-out duration-150"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -326,7 +326,7 @@ export default function LoginContainer() {
         </div>
         <div className="flex flex-col">
           <div
-            className="rounded-full bg-white w-[3em] h-[3em] flex items-center justify-center hover:bg-d-button-hover"
+            className="rounded-full bg-white w-[3em] h-[3em] flex items-center justify-center hover:bg-d-button-hover ease-out duration-150"
             onClick={googleLogin}
           >
             <svg

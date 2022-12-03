@@ -30,13 +30,12 @@ const MentDiv = styled.div`
 
 const MentSpan = styled.span`
   font-size: 1.1em;
-  margin-bottom: 0.2em;
+  margin-bottom: 0.3em;
   cursor: pointer;
   // & a {
   //   text-decoration: none;
   //   color: #0074cc;
   // }
-  color: rgb(88 101 242);
 `;
 
 const Form = styled.form`
@@ -305,14 +304,20 @@ export default function RegisterContainer() {
             <SubmitBtn
               type="submit"
               value="Sign up"
-              className="w-full h-10 px-10 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline outline-none pl-[2em]"
+              className="w-full h-10 px-10 text-base ease-out duration-150 placeholder-gray-600 border rounded-lg focus:shadow-outline outline-none pl-[2em]"
             />
             {error && <Errormsg>{error}</Errormsg>}
           </Form>
         </Container>
-        <MentDiv>
+        <MentDiv className="text-gray-900">
           이미 계정이 있습니까?
-          <MentSpan onClick={() => navigate("/login")}> Log in</MentSpan>
+          <MentSpan
+            className="text-[#0074ce] hover:text-[#0aaefa]"
+            onClick={() => navigate("/login")}
+          >
+            {" "}
+            Log in
+          </MentSpan>
         </MentDiv>
       </div>
     </MainContainer>
