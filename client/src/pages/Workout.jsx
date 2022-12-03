@@ -50,6 +50,7 @@ function Workout() {
       .catch((data) => {
         if (data.response.status === 421 || data.response.status === 419)
           alert("계획된 운동이 없습니다");
+        else alert("에러가 발생하였습니다. 메인페이지로 돌아갑니다.");
         navigate("/");
       });
   }
