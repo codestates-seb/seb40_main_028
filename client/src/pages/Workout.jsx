@@ -43,18 +43,22 @@ function Workout() {
       // .then(data => console.log(data))
       .then((data) => {
         setWorkoutdata(data.data.data);
-        setWorktime(data.data.data.totalTime);
+        if (worktime === 0) setWorktime(data.data.data.totalTime);
         setSpecificpic(data.data.data.exercises[0].imageUrl);
         setSpecificname(data.data.data.exercises[0].exerciseName);
       })
       .catch((data) => {
-        if (data.response.status === 421) alert("계획된 운동이 없습니다");
+        if (data.response.status === 421 || data.response.status === 419)
+          alert("계획된 운동이 없습니다");
+        else alert("에러가 발생하였습니다. 메인페이지로 돌아갑니다.");
         navigate("/");
       });
   }
 
   useEffect(() => {
-    const datecalc = new Date();
+    const datecalc = new Date(
+      Date.now() - new Date().getTimezoneOffset() * 60000
+    );
     const today = datecalc.toISOString().split("T", 1)[0];
     // if(worktime === 0 || workoutdata === {}) {
     //   getdata();
