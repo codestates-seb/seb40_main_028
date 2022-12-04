@@ -23,7 +23,8 @@
 |[@HelloHailie](https://github.com/HelloHailie)        |[@houndhollis](https://github.com/houndhollis)           |[@shotny](https://github.com/shotny)           |[@Damm06](https://github.com/Damm06)       |
 
 
-
+📅 Project period
+기간 : 2022.11.8 ~ 2022.12.4
 
 # 서비스 소개
 
