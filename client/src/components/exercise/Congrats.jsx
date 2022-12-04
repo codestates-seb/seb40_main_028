@@ -38,7 +38,6 @@ export default function Congrats({ workoutdone, reset, recordweight }) {
   };
   const onChange = (el) => {
     setWeight(el.target.value);
-    console.log(el);
   };
   return (
     <Modal
