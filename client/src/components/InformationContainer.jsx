@@ -159,7 +159,8 @@ export default function InformationContainer() {
     // console.log(`토큰: ${token}`);
 
     // const url = "http://13.209.190.35:8080";
-    const url = "https://guenlog.shop";
+    // const url = "https://guenlog.shop";
+    const URL = process.env.REACT_APP_BASE_URL;
     // https://guenlog.shop/users/info
 
     // 로그인상태가 아닌경우 login 페이지로 이동
@@ -172,7 +173,7 @@ export default function InformationContainer() {
       // 응답 성공
       // const res = await axios.post("http://13.209.190.35:8080/users/info",
       const res = await axios.patch(
-        `${url}/users/info`,
+        `${URL}/users/info`,
         {
           // 보내고자 하는 데이터
           // 키 몸무게만 숫자형으로
