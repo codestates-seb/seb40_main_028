@@ -32,6 +32,18 @@
     시청할 수 있도록 하였습니다.
     
     
+    
+# 사용 스택
+
+---
+
+- 스택 플로우
+![사용 스택](https://user-images.githubusercontent.com/107875213/205490913-e81303f5-dfd0-4591-8f15-13ba65fc3bf4.png)
+
+전체 스택
+![스택 아키텍쳐](https://user-images.githubusercontent.com/107875213/205490929-3ed7f3a5-33d0-4c5d-8ace-f58426bf5753.png)
+
+
 
 <div align=center><h1>📚 Share STACKS</h1></div>
 
