@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { useState } from "react";
+import React, {  useRef,useState } from "react";
 import styled from "styled-components/macro";
 import Map from "./Map";
 
@@ -11,17 +11,15 @@ const Container = styled.div`
 `;
 
 const SearchPlace = () => {
-  const [inputText, setInputText] = useState("");
   const [place, setPlace] = useState("");
 
-  const onChange = (e) => {
-    setInputText(e.target.value);
-  };
+ const InputRef = useRef();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setPlace(inputText);
-    setInputText("");
+    const entered = InputRef.current.value;
+    setPlace(entered );
+    
   };
 
   return (
@@ -34,8 +32,9 @@ const SearchPlace = () => {
           <input
             className="w-72 h-10 mb-3 border-2 border-d-light  border-r-0 text-center rounded-tl-md rounded-bl-md pl-2 outline-none"
             placeholder="근처 역 또는 지역을 입력해주세요"
-            onChange={onChange}
-            value={inputText}
+
+            required
+            ref={InputRef}
           />
           <button
             type="submit"

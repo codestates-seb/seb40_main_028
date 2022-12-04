@@ -163,7 +163,7 @@ export default function InformationContainer() {
           <Form onSubmit={handleSubmit(onInformation)}>
             {/* onChange={onChangeAccount} */}
             <InputContainer>
-              <Label htmlFor="age">age(생년월일)</Label>
+              <Label htmlFor="age">Birthday(생년월일)</Label>
               <Input
                 type="text"
                 id="age"

@@ -84,10 +84,9 @@ const DetailEdit = ({
             setEditData(res.data.data);
             setEditRecord(res.data.data);
           });
-
-        setIsModalOpen(false);
       }
     }
+    setIsModalOpen(false);
   };
 
   const onChange = (e, idx) => {
