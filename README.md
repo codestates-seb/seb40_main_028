@@ -10,6 +10,21 @@
 
 
 
+## 👨‍👩‍👧‍👦 Team Members 
+|임종정 (FE 팀장)   |류지환 (FE 팀원)                  |김용훈 (BE 팀원)               |오경준 (BE 팀원)               |
+|----------------|-------------------------------|-----------------------------|-----------------------------|
+|<img src='https://user-images.githubusercontent.com/104314701/195014647-071dcecb-ee2c-4664-8b13-1b0d3e9edd7a.png' width='150'>|<img src='https://user-images.githubusercontent.com/103996469/192595845-36d99b8c-ec46-41ff-98f7-aef452181093.png' width='150'/>|<img src='https://user-images.githubusercontent.com/104314701/194877479-b32226f2-50c9-4741-855a-a0ef5db9388d.png' width='150'/>|<img src='https://user-images.githubusercontent.com/104314701/194877509-fd0c2ee0-397a-4808-8c32-23a8144bfd94.png' width='150'/>|                  
+|[@HelloHailie](https://github.com/HelloHailie)        |[@houndhollis](https://github.com/houndhollis)           |[@shotny](https://github.com/shotny)           |[@Damm06](https://github.com/Damm06)       |
+
+
+|김영민 (BE 팀장)   |김찬중 (BE 팀원)                  |이충민 (BE 팀원)               |
+|----------------|-------------------------------|-----------------------------|
+|<img src='https://user-images.githubusercontent.com/104314701/195014647-071dcecb-ee2c-4664-8b13-1b0d3e9edd7a.png' width='150'>|<img src='https://user-images.githubusercontent.com/103996469/192595845-36d99b8c-ec46-41ff-98f7-aef452181093.png' width='150'/>|<img src='https://user-images.githubusercontent.com/104314701/194877479-b32226f2-50c9-4741-855a-a0ef5db9388d.png' width='150'/>|<img src='https://user-images.githubusercontent.com/104314701/194877509-fd0c2ee0-397a-4808-8c32-23a8144bfd94.png' width='150'/>|                  
+|[@HelloHailie](https://github.com/HelloHailie)        |[@houndhollis](https://github.com/houndhollis)           |[@shotny](https://github.com/shotny)           |[@Damm06](https://github.com/Damm06)       |
+
+
+
+
 # 서비스 소개
 
 ---
@@ -28,8 +43,7 @@
     또한 운동을 갓 시작하시는 분들을 위해
     1) 주변 체육관을 검색할 수 있도록 카카오 지도 API를 연동하고, 
     2) 운동 동작 이미지 첨부해 사용자가 동작을 확인할 수 있고, 
-    3)더 많은 정보를 찾을 수 있도록 YouTube API를 이용해 헬스에 관련한 추천 동영상을 
-    시청할 수 있도록 하였습니다.
+    3) 더 많은 정보를 찾을 수 있도록 YouTube API를 이용해 헬스에 관련한 추천 동영상을 시청할 수 있도록 하였습니다.
     
     
     
