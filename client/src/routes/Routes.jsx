@@ -64,8 +64,8 @@ export default function Router() {
     },
     {
       path: "/login/oauth",
-      // element: <Oauth />,
-      element: login ? <Main /> : <Oauth />,
+      element: <Oauth />,
+//       element: login ? <Main /> : <Oauth />,
     },
   ]);
   return routes;

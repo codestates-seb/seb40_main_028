@@ -37,8 +37,8 @@ const Plan = () => {
       })
       .then((res) => {
         setData(data.filter((item) => item.recordId !== id));
-        if (data.length === 1) {
-          setData(undefined);
+        if (data.length === 1 || !data.length) {
+          setData([]);
         }
       });
   };
