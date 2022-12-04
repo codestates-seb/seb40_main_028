@@ -6,6 +6,8 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -29,6 +31,10 @@ public class Today extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="member_id")
     private Member member;
+
+    //Today, Record 연관관계 맵핑
+    @OneToMany(mappedBy = "today", cascade = CascadeType.ALL)
+    private List<Record> records = new ArrayList<>();
 
     public void updateTotalTime(Integer totalTime) {
         this.totalTime = totalTime;

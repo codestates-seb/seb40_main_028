@@ -2,6 +2,7 @@ package com.seb028.guenlog.member.entity;
 
 
 import com.seb028.guenlog.base.BaseEntity;
+import com.seb028.guenlog.exercise.entity.Today;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -50,6 +51,10 @@ public class Member extends BaseEntity {
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles;
+
+    //Member, Today 연관관계 맵핑
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<Today> todays = new ArrayList<>();
 
     public Member(String email, String nickname, String password) {
         this.email = email;
