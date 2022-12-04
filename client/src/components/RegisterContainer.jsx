@@ -108,9 +108,6 @@ export default function RegisterContainer() {
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
-
-  // const url = "http://13.209.190.35:8080";
-  // const url = "https://guenlog.shop";
   const URL = process.env.REACT_APP_BASE_URL;
   const {
     register,
@@ -126,21 +123,8 @@ export default function RegisterContainer() {
   // console.log(watch("email"));
 
   const onRegister = async (data) => {
-    // console.log("data", data);
-    // console.log("이메일", data.email)
-    // console.log("닉네임", data.nickname)
-    // console.log("패스워드", data.password)
-    // console.log("패스워드", data.passwordConfirm)
-
-    // let userData = {
-    //   email: data.email,
-    //   nickname: data.displayName,
-    //   password: data.password,
-    // };
-
     try {
       // 응답 성공
-      // const res = await axios.post("http://13.209.190.35:8080/users/login", {
       const res = await axios.post(`${URL}/users/signup`, {
         // 보내고자 하는 데이터
         email: data.email,
@@ -148,32 +132,13 @@ export default function RegisterContainer() {
         password: data.password,
       });
 
-      // console.log("받아온데이터", res);
-
       // 응답코드 201이면 회원가입 성공
       if (res.status === 201) {
         // 로그인 페이지로 이동
         alert("회원가입 성공!");
         navigate("/login");
-
-        // console.log(res);
-        // console.log("회원가입 성공 로그인 ~~~~~~~~~~~~~~~~");
-        // console.log("응답 전체",res)
       }
     } catch (err) {
-      // 응답 실패
-      // console.log(err);
-
-      // 에러 상세 메세지
-      // console.log(err.response.data.message)
-
-      // 에러 코드 409
-      // console.log(err.response.status)
-
-      // console.log("에러메세지: ", err.message)
-
-      // 회원가입 실패시
-      // alert("Email or Password를 확인하세요");
       if (err.response.status === 409) {
         // 서버에서 넘어온 에러메세지 출력
         alert(`${err.response.data.message}`);

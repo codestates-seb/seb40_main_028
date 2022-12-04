@@ -1,10 +1,10 @@
 /* eslint-disable */
-import axios from 'axios';
-import Chart from 'chart.js/auto';
-import React, { useState,useEffect } from 'react';
+import axios from "axios";
+import Chart from "chart.js/auto";
+import React, { useState, useEffect } from "react";
 import { Line } from "react-chartjs-2";
-import styled from 'styled-components/macro';
-import MyPageText from './MyPageText';
+import styled from "styled-components/macro";
+import MyPageText from "./MyPageText";
 import { LoginState, TokenState } from "../../state/UserState";
 import { useRecoilValue } from "recoil";
 import Logout from "../../pages/Logout";
@@ -19,33 +19,33 @@ const MyPageForm = styled.form`
 `;
 
 const Container = styled.div`
-display: flex;
-align-items: center;
-justify-content: center;
-max-width: 27em;
-width: 25em;
-height: 15em;
-margin-bottom: 2em;
-margin-top: 2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 27em;
+  width: 25em;
+  height: 15em;
+  margin-bottom: 2em;
+  margin-top: 2em;
 `;
 
 const Container2 = styled.div`
-display: flex;
-align-items: center;
-justify-content: center;
-width: 25rem;
-margin-bottom: 12em;
-margin-left: 3em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 25rem;
+  margin-bottom: 12em;
+  margin-left: 3em;
 `;
 
 const PageText = styled.div`
-display: flex;
-align-items: center;
-justify-content: center;
-font-size: 1.2em;
-width: 25rem;
-font-weight: 400;
-margin-bottom: 3em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2em;
+  width: 25rem;
+  font-weight: 400;
+  margin-bottom: 3em;
 `;
 const PageText2 = styled.div`
 display: flex;
@@ -76,9 +76,9 @@ const MyPageButton2 = styled.button`
 `;
 
 const MyPageFirst = () => {
-  const [KgData, setKgData] = useState('');
-  const [GymData, setGymCheck] = useState('');
-  const [month,setMonth]=useState([]);
+  const [KgData, setKgData] = useState("");
+  const [GymData, setGymCheck] = useState("");
+  const [month, setMonth] = useState([]);
   const login = useRecoilValue(LoginState);
   // 토큰
   const token = useRecoilValue(TokenState);
@@ -90,101 +90,97 @@ const MyPageFirst = () => {
     navigate("/login");
   }
 
-  useEffect(()=>{
-
+  useEffect(() => {
     axios
-    .get(`${URL}/users/mypages`,
-    { headers: {Authorization: `${token}`,}, 
-   })
-    .then((res => {
-      console.log(res.data)
-      let a = []
-      for(let i = 0; i<6; i++){
-      if(res.data.data.monthlyWeights[i]){
-      a.push(res.data.data.monthlyWeights[i].weight);
-      }  
-    }
-      setKgData(a)
-      
-      let b = []
-      for(let i = 0; i<6; i++){
-      if(res.data.data.monthlyRecords[i]){
-      b.push(res.data.data.monthlyRecords[i].record);
-      }  
-    }
-      setGymCheck(b)
+      .get(`${URL}/users/mypages`, { headers: { Authorization: `${token}` } })
+      .then((res) => {
+        let a = [];
+        for (let i = 0; i < 6; i++) {
+          if (res.data.data.monthlyWeights[i]) {
+            a.push(res.data.data.monthlyWeights[i].weight);
+          }
+        }
+        setKgData(a);
 
-      let c = []
-      for(let i = 0; i<6; i++){
-      if(res.data.data.monthlyWeights[i]){
-      c.push(res.data.data.monthlyWeights[i].date);
-      }  
-    }
-      setMonth(c)
+        let b = [];
+        for (let i = 0; i < 6; i++) {
+          if (res.data.data.monthlyRecords[i]) {
+            b.push(res.data.data.monthlyRecords[i].record);
+          }
+        }
+        setGymCheck(b);
 
-      }))
-    },[])
+        let c = [];
+        for (let i = 0; i < 6; i++) {
+          if (res.data.data.monthlyWeights[i]) {
+            c.push(res.data.data.monthlyWeights[i].date);
+          }
+        }
+        setMonth(c);
+      });
+  }, []);
 
-    const Kg = KgData;
-    const GymCheck = GymData;
-    const GymMonth = month
-    const [isOpen, setIsOpen] = useState(false);
+  const Kg = KgData;
+  const GymCheck = GymData;
+  const GymMonth = month;
+  const [isOpen, setIsOpen] = useState(false);
 
-Chart.register();
-const data = {
-  responsive: false,
-  labels: GymMonth,
-  datasets: [
-    {
-      label: "월 평균 체중",
-      data: Kg,
-      fill: true,
-      borderColor: ['rgba(151, 164, 255, 0.3)'],
-      backgroundColor: ['rgba(151, 164, 255, 0.3)'],
-      pointBackgroundColor: ['#ffffff'],
-      pointBorderColor: ['#ffffff']
-    },
-    {
-      label: "운동횟수",
-      data: GymCheck,
-      fill: true,
-      borderColor: ['rgba(18, 73, 237, 1)'],
-      backgroundColor: ['rgba(18, 73, 237, 1)'],
-      pointBackgroundColor: ['#ffffff'],
-      pointBorderColor: ['#ffffff']
-    }
-  ]
-};
-const options = {
-  scales: {
-    y: {
-      min: 0,
-      ticks: {
-        stepSize: 5,
+  Chart.register();
+  const data = {
+    responsive: false,
+    labels: GymMonth,
+    datasets: [
+      {
+        label: "월 평균 체중",
+        data: Kg,
+        fill: true,
+        borderColor: ["rgba(151, 164, 255, 0.3)"],
+        backgroundColor: ["rgba(151, 164, 255, 0.3)"],
+        pointBackgroundColor: ["#ffffff"],
+        pointBorderColor: ["#ffffff"],
+      },
+      {
+        label: "운동횟수",
+        data: GymCheck,
+        fill: true,
+        borderColor: ["rgba(18, 73, 237, 1)"],
+        backgroundColor: ["rgba(18, 73, 237, 1)"],
+        pointBackgroundColor: ["#ffffff"],
+        pointBorderColor: ["#ffffff"],
+      },
+    ],
+  };
+  const options = {
+    scales: {
+      y: {
+        min: 0,
+        ticks: {
+          stepSize: 5,
+        },
       },
     },
-  },
-}
+  };
 
   return (
     <MyPageForm>
       <MyPageButton2
-            type="button"
-            onClick={() => setIsOpen(true)}
-            className="modalButton"
-          >Logout
-          </MyPageButton2>
-          <Logout open={isOpen} onClose={() => setIsOpen(false)} />
+        type="button"
+        onClick={() => setIsOpen(true)}
+        className="modalButton"
+      >
+        Logout
+      </MyPageButton2>
+      <Logout open={isOpen} onClose={() => setIsOpen(false)} />
       <PageText className="matext">나만의 운동 일지</PageText>
       <PageText2 className="hitext">Touch</PageText2>
-        <Container>
-        <Line data={data} options={options}/>
-        </Container>
-        <Container2>
+      <Container>
+        <Line data={data} options={options} />
+      </Container>
+      <Container2>
         <MyPageText setGymCheck={GymData} setKgData={KgData} />
-        </Container2>
-        </MyPageForm>
-  )
-}
+      </Container2>
+    </MyPageForm>
+  );
+};
 
-export default MyPageFirst
+export default MyPageFirst;

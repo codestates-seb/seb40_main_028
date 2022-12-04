@@ -115,55 +115,8 @@ export default function InformationContainer() {
     handleSubmit,
   } = useForm({ mode: onchange });
 
-  // const onInformation = async (data) => {
-  //   console.log(data);
-  //   // 회원가입 api 자리
-  //   // try {
-  //   //   axios.post("#", { ...data });
-  //   // } catch (err) {
-  //   //   setError(err);
-  //   // }
-  // };
-
-  // const [account, setAccount] = useState({
-  //   height: "",
-  //   // weight: "",
-  //   // age: "",
-  // });
-
-  //input에 입력될 때마다 account state값 변경되게 하는 함수
-  // const onChangeAccount = (e) => {
-  //   setAccount({
-  //     ...account,
-  //     [e.target.name]: e.target.value,
-  //   });
-  // };
-  // // console.log(account);
-
-  // 성별체크
-  // console.log(gender, "성별!!!!!")
-
   const onInformation = async (data) => {
-    // console.log(data);
-    // console.log(data.email+": 이메일");
-    // console.log(data.password+": 이메일");
-
-    // 키랑 몸무게는 number타입
-    // console.log(`height: ${Number(data.height)}`)
-    // console.log(`age: ${data.age}`)
-    // console.log(`gender: ${gender}`)
-    // console.log(`weight: ${Number(data.weight)}`)
-
-    // 세션에 저장된 토큰 가져오기
-    // let token = sessionStorage.getItem("jwt-token");
-    // console.log(`토큰: ${token}`);
-
-    // const url = "http://13.209.190.35:8080";
-    // const url = "https://guenlog.shop";
     const URL = process.env.REACT_APP_BASE_URL;
-    // https://guenlog.shop/users/info
-
-    // 로그인상태가 아닌경우 login 페이지로 이동
     if (login === false) {
       alert("로그인이 안 되어 있습니다.");
       navigate("/login");
@@ -171,7 +124,6 @@ export default function InformationContainer() {
 
     try {
       // 응답 성공
-      // const res = await axios.post("http://13.209.190.35:8080/users/info",
       const res = await axios.patch(
         `${URL}/users/info`,
         {
@@ -191,50 +143,13 @@ export default function InformationContainer() {
         }
       );
 
-      // let a = {
-      //   height: data.height,
-      //   age: data.age,
-      //   gender: gender,
-      //   weight: data.weight,
-      // };
-      // console.log(a, "정보입력 성공! 데이터값~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-
       // status가 200이면 세션스토리지에 jwt-token 저장
       if (res.status === 200) {
         // 정보 입력 완료하면 메인페이지로 이동
         alert("정보 입력에 성공하셨습니다!");
         navigate("/");
-
-        // console.log(res);
-        // console.log("성공 로그인 ~~~~~~~~~~~~~~~~");
-
-        // console.log("응답 전체",res)
-        // console.log("응답.headers", res.headers.InitialLogin)
-        // console.log("응답.headers", res.headers.initialLogin)
-        // console.log("응답.headers", res.headers.initiallogin)
-
-        // InitialLogin이 false면 처음 로그인으로
-        // if(res.InitialLogin === false){
-        //   navigate("/startinginformation");
-        //   sessionStorage.setItem('jwt-token', res.headers.authorization);
-        //   // InitialLogin이 true면 main 페이지로
-        // } else if(res.InitialLogin === ture){
-        //   navigate("/");
-        // }
       }
     } catch (err) {
-      // 응답 실패
-      // console.log(err);
-      // console.log(err.response);
-      // console.log(err.response.request);
-      // console.log(err.response.request.status);
-      // console.log("로그인 실패")
-
-      // 세션에 토큰이 없을경우??
-      // if(err.response.request.status === 403) {
-      //   alert("먼저 로그인을 해주세요.");
-      // }
-
       // 로그인 실패시
       alert("정보 입력에 실패하였습니다.");
       // console.log(`${token}`)

@@ -12,6 +12,7 @@ const CategorieContent = ({ Modals, setModals, setSelectedCategory }) => {
         <Loading />
       </div>
     );
+  
   return (
     <>
       <div className="flex flex-wrap items-center justify-center ">
