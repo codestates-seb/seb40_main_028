@@ -14,7 +14,7 @@
 |임종정 (FE 팀장)   |류지환 (FE 팀원)                  |김용훈 (BE 팀원)               |오경준 (BE 팀원)               |
 |----------------|-------------------------------|-----------------------------|-----------------------------|
 |<img src='https://user-images.githubusercontent.com/104314701/195014647-071dcecb-ee2c-4664-8b13-1b0d3e9edd7a.png' width='150'>|<img src='https://user-images.githubusercontent.com/103996469/192595845-36d99b8c-ec46-41ff-98f7-aef452181093.png' width='150'/>|<img src='https://user-images.githubusercontent.com/104314701/194877479-b32226f2-50c9-4741-855a-a0ef5db9388d.png' width='150'/>|<img src='https://user-images.githubusercontent.com/104314701/194877509-fd0c2ee0-397a-4808-8c32-23a8144bfd94.png' width='150'/>|                  
-|[@HelloHailie](https://github.com/HelloHailie)        |[@houndhollis](https://github.com/KKKHun2)           |[@shotny](https://github.com/shotny)           |[@Damm06](https://github.com/Damm06)       |
+|[@HelloHailie](https://github.com/HelloHailie)        |[@houndhollis](https:/)           |[@KKKHun2](https://github.com/KKKHun2)           |[@Damm06](https://github.com/Damm06)       |
 
 
 |김영민 (BE 팀장)   |김찬중 (BE 팀원)                  |이충민 (BE 팀원)               |
