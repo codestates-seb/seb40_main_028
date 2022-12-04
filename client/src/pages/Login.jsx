@@ -14,7 +14,7 @@ const Container = styled.div`
 const LogoPng = styled.img`
   height: 500px;
   width: 500px;
-  margin-top: -7.9em;
+  margin-bottom: 20px;
   border-radius: 20px;
 `;
 
