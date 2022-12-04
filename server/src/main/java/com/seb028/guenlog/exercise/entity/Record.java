@@ -34,7 +34,7 @@ public class Record extends BaseEntity {
     private Exercise exercise;
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name="today_id")
     private Today today;
 
