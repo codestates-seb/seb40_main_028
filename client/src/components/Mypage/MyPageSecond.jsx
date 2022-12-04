@@ -165,7 +165,7 @@ const MyPageButton3 = styled.button`
   width: 80px;
   height: 10px;
   padding: 15px;
-  font-size: 0.8em;
+  font-size: 0.6em;
   color: black;
   margin-left: 275px;
   margin-top: 0.6em;
