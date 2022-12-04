@@ -200,7 +200,6 @@ function Workout() {
         setWorktime(0);
         navigate("/");
       })
-      // .then((data) => console.log(data).promise())
       .catch((data) => {
         alert(data);
       });

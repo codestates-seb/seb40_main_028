@@ -161,8 +161,6 @@ export default function LoginContainer() {
   } = useForm({ mode: onchange });
 
   const onLogin = async (data) => {
-    // const url = "http://13.209.190.35:8080";
-    // const url = "https://guenlog.shop";
     const URL = process.env.REACT_APP_BASE_URL;
 
     // console.log(data);
@@ -171,7 +169,6 @@ export default function LoginContainer() {
 
     try {
       // 응답 성공
-      // const res = await axios.post("http://13.209.190.35:8080/users/login", {
       const res = await axios.post(`${URL}/users/login`, {
         // 보내고자 하는 데이터
         username: data.email,
@@ -185,8 +182,6 @@ export default function LoginContainer() {
 
         const token = res.headers.authorization;
 
-        // console.log(isToken, "토큰저장 전~~~~~~~");
-
         // 토큰이 있으면
         if (token) {
           // 토큰 저장
@@ -195,14 +190,6 @@ export default function LoginContainer() {
           setIsLogin(true);
           // console.log("토큰 확인됐음 로컬에 토큰 저장");
         }
-
-        // console.log(isLogin, "로그인 성공 시 트루로 바꾼 값~~~");
-
-        // console.log("성공 로그인 ~~~~~~~~~~~~~~~~");
-        // console.log(res);
-        // console.log("바디데이터 ", res.data);
-        // console.log("바디 이니셜로그인 값 확인 ", res.data.initialLogin)
-
         // 이니셜로그인 false면 초기정보 입력 페이지로
         if (res.data.initialLogin === false) {
           navigate("/startinginformation");
@@ -211,26 +198,8 @@ export default function LoginContainer() {
         else {
           navigate("/");
         }
-
-        // console.log("응답 전체",res)
-        // console.log("응답.headers", res.headers.InitialLogin)
-        // console.log("응답.headers", res.headers.initialLogin)
-        // console.log("응답.headers", res.headers.initiallogin)
-
-        // InitialLogin이 false면 처음 로그인으로
-        // if(res.InitialLogin === false){
-        //   navigate("/startinginformation");
-        //   sessionStorage.setItem('jwt-token', res.headers.authorization);
-        //   // InitialLogin이 true면 main 페이지로
-        // } else if(res.InitialLogin === ture){
-        //   navigate("/");
-        // }
       }
     } catch (err) {
-      // 응답 실패
-      // console.log(err);
-      // console.log("로그인 실패")
-
       // 로그인 실패시
       alert("Email or Password를 확인하세요");
     }
@@ -238,7 +207,7 @@ export default function LoginContainer() {
 
   const googleLogin = () => {
     // 구글로그인 주소
-    const url = "https://guenlog.shop/oauth2/authorization/google";
+    const url = URL + "/oauth2/authorization/google";
     window.location.href = `${url}`;
   };
 
