@@ -22,9 +22,6 @@ const Oauth = () => {
   const getaccessToken = param.get("access_token");
   const initialLogin = param.get("initial_login");
 
-  // console.log("토큰값 : ", getaccessToken);
-  // console.log("로그인 상태: ", initialLogin);
-
   if (getaccessToken) {
     // 토큰 리코일에 저장
     setToken(`Bearer ${getaccessToken}`);
@@ -34,23 +31,8 @@ const Oauth = () => {
     setgoogle(true);
   }
 
-  // console.log("토큰값 : ", getaccessToken);
-  // console.log("로그인 상태: ", initialLogin);
-
-  // 이니셜 로그인 값이 flase면 초기정보 입력 페이지로
-  // console.log(initialLogin, "로그인상태값~~~~~");
-  // console.log(isgoogle, "구글로그인 맞음~~~~~");
-
   if (initialLogin === "false") {
     navigate("/startinginformation");
   } else navigate("/");
-
-  // 이니셜로그인이 true면 메인페이지로
-  // if (initialLogin === true){
-  // }
-  // navigate("/");
-  // useEffect(() => {
-  //   console.log("useEffect!!", isLogin);
-  // });
 };
 export default Oauth;
