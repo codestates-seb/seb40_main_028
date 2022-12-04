@@ -19,12 +19,6 @@
 |🍻|술 취해서 쓴 코드|🗃|데이버베이스 관련 수정|
 |🔊|로그 추가/수정|🙈|.gitignore 추가/수정|
 
-<div align=center><h1>📚 STACKS</h1></div>
-
-<div align=center>
-<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=white">
-  
-<img src="https://img.shields.io/badge/ESLint-4B32C3?style=for-the-badge&logo=ESLint&logoColor=white">
 
 <div align=center><h1>📚 Share STACKS</h1></div>
 
