@@ -13,29 +13,28 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #36393f;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 10px 24px 0px,
+    rgba(0, 0, 0, 0.05) 0px 20px 48px 0px, rgba(0, 0, 0, 0.1) 0px 1px 4px 0px;
+  border-radius: 10px;
 `;
 
 const MentDiv = styled.div`
   font-size: ${({ fontSize }) => fontSize || "13px"};
-
+  margin-bottom: 10px;
   padding: ${({ padding }) => padding || 0};
-  margin-top: -2em;
+  margin-top: ${({ mt }) => mt || 0};
   text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5em;
 `;
 
 const MentSpan = styled.span`
-  font-size: 1.1em;
-  margin-bottom: 0.3em;
+  font-size: 13px;
   cursor: pointer;
   // & a {
   //   text-decoration: none;
   //   color: #0074cc;
   // }
+  color: rgb(88 101 242);
 `;
 
 const Form = styled.form`
@@ -46,7 +45,6 @@ const Form = styled.form`
   height: 100%;
   width: 100%;
   padding: 20px 10px 10px 10px;
-  gap: 1em;
 `;
 
 const InputContainer = styled.div`
@@ -57,9 +55,9 @@ const InputContainer = styled.div`
 `;
 
 const Errormsg = styled.p`
-  color: #f97583;
-  margin: 0.2em;
-  font-size: 0.8em;
+  color: #bf1650;
+  margin: 3px;
+  font-size: 13px;
 `;
 
 const Label = styled.label`
@@ -69,28 +67,26 @@ const Label = styled.label`
 `;
 
 const Input = styled.input`
-  box-sizing: border-box;
   width: 260px;
   height: 35px;
-  padding-left: 0.5em;
-  padding-right: 0.5em;
+  padding: 0;
   border: 2px solid rgb(88 101 242);
 `;
 
 const SubmitBtn = styled.input`
-  margin-top: 0.6em;
   width: 260px;
-  height: 2.5em;
-  padding-left: 2.5em;
-  padding-right: 2.5em;
-  font-size: 1em;
-  line-height: 1.5em;
-  border: none;
-  outline: none;
+  height: 35px;
+  font-size: 13.6px;
+  font-weight: 600;
   color: white;
-  background-color: #5865f2;
+  background-color: rgb(88 101 242);
+
+  border: 0;
+  border-radius: 3px;
+  padding: 0;
+  margin-bottom: 5px;
   &:hover {
-    background-color: #4752c4;
+    background-color: #0074cc;
   }
 `;
 
@@ -195,10 +191,8 @@ export default function RegisterContainer() {
         <Container>
           <Form onSubmit={handleSubmit(onRegister)}>
             <InputContainer>
+              <Label htmlFor="nickname">Nickname</Label>
               <Input
-                className="w-full h-10 px-10 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline outline-none pl-[2em]"
-                placeholder="Nickname"
-                autoComplete="off"
                 type="text"
                 id="nickname"
                 {...register("nickname", {
@@ -226,10 +220,8 @@ export default function RegisterContainer() {
             </InputContainer>
 
             <InputContainer>
+              <Label htmlFor="email">Email</Label>
               <Input
-                className="w-full h-10 px-10 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline outline-none pl-[2em]"
-                placeholder="Email"
-                autoComplete="off"
                 type="email"
                 id="email"
                 {...register("email", {
@@ -249,11 +241,9 @@ export default function RegisterContainer() {
               )}
             </InputContainer>
             <InputContainer>
+              <Label htmlFor="password">Password</Label>
               <Input
-                className="w-full h-10 px-10 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline outline-none pl-[2em]"
-                placeholder="Password"
                 type="password"
-                autoComplete="off"
                 id="password"
                 {...register("password", {
                   required: true,
@@ -274,12 +264,10 @@ export default function RegisterContainer() {
               )}
             </InputContainer>
             <InputContainer>
+              <Label htmlFor="passwordConfirm">passwordConfirm</Label>
               <Input
-                className="w-full h-10 px-10 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline outline-none pl-[2em]"
-                placeholder="Password Confirm"
                 // type를 패스워드로 입력 시 어떤 값을 입력하는지 화면에 안보임 ****로 처리
                 type="password"
-                autoComplete="off"
                 id="passwordConfirm"
                 {...register("passwordConfirm", {
                   required: true,
@@ -301,23 +289,13 @@ export default function RegisterContainer() {
               포함해야합니다.
             </RegisterMent>
             {/* 회원가입 버튼 */}
-            <SubmitBtn
-              type="submit"
-              value="Sign up"
-              className="w-full h-10 px-10 text-base ease-out duration-150 placeholder-gray-600 border rounded-lg focus:shadow-outline outline-none pl-[2em]"
-            />
+            <SubmitBtn type="submit" value="Sign up" />
             {error && <Errormsg>{error}</Errormsg>}
           </Form>
         </Container>
-        <MentDiv className="text-gray-900">
+        <MentDiv>
           이미 계정이 있습니까?
-          <MentSpan
-            className="text-[#0074ce] hover:text-[#0aaefa]"
-            onClick={() => navigate("/login")}
-          >
-            {" "}
-            Log in
-          </MentSpan>
+          <MentSpan onClick={() => navigate("/login")}> Log in</MentSpan>
         </MentDiv>
       </div>
     </MainContainer>

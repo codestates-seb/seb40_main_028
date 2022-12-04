@@ -248,7 +248,7 @@ export default function InformationContainer() {
           <Form onSubmit={handleSubmit(onInformation)}>
             {/* onChange={onChangeAccount} */}
             <InputContainer>
-              <Label htmlFor="age">age(생년월일)</Label>
+              <Label htmlFor="age">Birthday(생년월일)</Label>
               <Input
                 type="text"
                 id="age"
@@ -317,8 +317,6 @@ export default function InformationContainer() {
               // onClick={() => navigate('/')}
               type="submit"
               value="완료"
-              className="ease-out duration-150
-              "
             />
             {error && <Errormsg>{error}</Errormsg>}
           </Form>
