@@ -40,7 +40,6 @@ function Workout() {
           Authorization: token,
         },
       })
-      // .then(data => console.log(data))
       .then((data) => {
         setWorkoutdata(data.data.data);
         if (worktime === 0) setWorktime(data.data.data.totalTime);
@@ -187,7 +186,7 @@ function Workout() {
         axios.patch(
           URL + "/users/mypages/info",
           {
-            Weight: weight,
+            weight,
           },
           {
             headers: {
@@ -203,7 +202,7 @@ function Workout() {
       })
       // .then((data) => console.log(data).promise())
       .catch((data) => {
-        console.log(data);
+        alert(data);
       });
   };
 
@@ -214,9 +213,6 @@ function Workout() {
     }
   };
 
-  const recordweight = (event) => {
-    console.log(event);
-  };
   return (
     <Layout title="운동시작">
       <div className="flex flex-col bg-d-lighter text-gray-700 max-w-lg max-h-[85vh] text-center">
