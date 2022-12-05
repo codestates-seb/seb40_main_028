@@ -3,8 +3,10 @@ import axios from "axios";
 import Chart from "chart.js/auto";
 import React, { useState, useEffect } from "react";
 import { Line } from "react-chartjs-2";
-import styled from "styled-components/macro";
-import MyPageText from "./MyPageText";
+import styled from 'styled-components/macro';
+import MyPageText from './MyPageText';
+import MyPageText2 from './MyPageText2';
+
 import { LoginState, TokenState } from "../../state/UserState";
 import { useRecoilValue } from "recoil";
 import Logout from "../../pages/Logout";
@@ -29,14 +31,7 @@ const Container = styled.div`
   margin-top: 2em;
 `;
 
-const Container2 = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 25rem;
-  margin-bottom: 12em;
-  margin-left: 3em;
-`;
+
 
 const PageText = styled.div`
   display: flex;
@@ -173,14 +168,17 @@ const MyPageFirst = () => {
       <Logout open={isOpen} onClose={() => setIsOpen(false)} />
       <PageText className="matext">나만의 운동 일지</PageText>
       <PageText2 className="hitext">Touch</PageText2>
-      <Container>
-        <Line data={data} options={options} />
-      </Container>
-      <Container2>
-        <MyPageText setGymCheck={GymData} setKgData={KgData} />
-      </Container2>
-    </MyPageForm>
-  );
-};
+
+        <Container>
+        <Line data={data} options={options}/>
+        </Container>
+
+          <MyPageText />
+        <MyPageText2 setGymCheck={GymData} setKgData={KgData} />
+        </MyPageForm>
+  )
+}
+
+  
 
 export default MyPageFirst;
