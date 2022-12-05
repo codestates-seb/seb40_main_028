@@ -36,10 +36,10 @@ const MyPageText = () => {
     <>
       <Container >
         <Text>
-            직전 달 평균 체중차이
+            전달 평균 체중 차이
         </Text>
         <Text2>
-            직전 달 운동 횟수차이
+            전달 운동 횟수 차이
         </Text2>
       </Container>
     </>
