@@ -5,6 +5,7 @@ import React, { useState,useEffect } from 'react';
 import { Line } from "react-chartjs-2";
 import styled from 'styled-components/macro';
 import MyPageText from './MyPageText';
+import MyPageText2 from './MyPageText2';
 import { LoginState, TokenState } from "../../state/UserState";
 import { useRecoilValue } from "recoil";
 import Logout from "../../pages/Logout";
@@ -29,14 +30,7 @@ margin-bottom: 2em;
 margin-top: 2em;
 `;
 
-const Container2 = styled.div`
-display: flex;
-align-items: center;
-justify-content: center;
-width: 25rem;
-margin-bottom: 12em;
-margin-left: 3em;
-`;
+
 
 const PageText = styled.div`
 display: flex;
@@ -180,9 +174,9 @@ const options = {
         <Container>
         <Line data={data} options={options}/>
         </Container>
-        <Container2>
-        <MyPageText setGymCheck={GymData} setKgData={KgData} />
-        </Container2>
+
+          <MyPageText />
+        <MyPageText2 setGymCheck={GymData} setKgData={KgData} />
         </MyPageForm>
   )
 }
