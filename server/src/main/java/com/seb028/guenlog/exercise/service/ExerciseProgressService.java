@@ -9,12 +9,14 @@ import com.seb028.guenlog.exercise.repository.TodayRepository;
 import com.seb028.guenlog.exercise.util.ExerciseProgress;
 import com.seb028.guenlog.member.service.MemberService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class ExerciseProgressService {
 
     private final ExerciseMainService exerciseMainService;
@@ -39,6 +41,7 @@ public class ExerciseProgressService {
      * @param memberId : 사용자 ID
      * @return ExerciseProgress 객체 - 오늘 하루 운동 내역, 운동 기록 목록 저장
      */
+    @Transactional(readOnly = true)
     public ExerciseProgress findTodayExerciseProgress(LocalDate date, long memberId) {
         // 오늘 하루 운동 내역 조회
         Today findToday = todayRepository.findByDateAndMemberId(date, memberId);
