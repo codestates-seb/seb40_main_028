@@ -15,11 +15,13 @@ import com.seb028.guenlog.member.util.MyPage;
 import com.seb028.guenlog.member.util.MyPageInfo;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class MyPageService {
     private final MemberRepository memberRepository;
     private final MemberWeightRepository memberWeightRepository;
@@ -46,6 +48,7 @@ public class MyPageService {
         this.todayRepository = todayRepository;
     }
 
+    @Transactional(readOnly = true)
     public MyPageInfo getMyPageInfo(long memberId) {
         // memberID를 이용해 memberService에서 사용자 개인 정보 가져옴
         Member findMember = memberService.findVerified(memberId);
@@ -125,6 +128,7 @@ public class MyPageService {
         memberRepository.save(findMember);
     }
 
+    @Transactional(readOnly = true)
     public MyPage findMyPage(long memberId) {
         // memberId를 통해 member객체 조회
         Member findMember = memberService.findVerified(memberId);
