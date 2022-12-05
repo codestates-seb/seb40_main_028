@@ -111,6 +111,10 @@ const MainCalendar = () => {
     onDateClick(selectedDay);
   }, [selectedDay]);
 
+  useEffect(() => {
+    onDateClick(selectedDay);
+  });
+
   return (
     <div className="mt-9 min-w-[20em] max-w-[20em]">
       <div className=" px-4 mx-auto ">

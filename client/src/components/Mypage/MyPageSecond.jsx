@@ -108,7 +108,7 @@ const Input5 = styled.input`
   border: 1px solid #babfc4;
   border-radius: 5px;
   display: flex;
-  margin-left:2.1em;
+  margin-left: 2.1em;
   margin-top: 2em;
   color: black;
   &:focus {
@@ -200,16 +200,15 @@ const PageText = styled.div`
   margin-left: -1em;
   margin-top: 1.5em;
   font-weight: 400;
-  
 `;
 
 const MyPageSecond = () => {
-// 로그인 상태
-const login = useRecoilValue(LoginState);
-// 토큰
-const token = useRecoilValue(TokenState);
-// url주소
-const URL = process.env.REACT_APP_BASE_URL;
+  // 로그인 상태
+  const login = useRecoilValue(LoginState);
+  // 토큰
+  const token = useRecoilValue(TokenState);
+  // url주소
+  const URL = process.env.REACT_APP_BASE_URL;
   if (login === false) {
     alert("로그인이 안 되어 있습니다.");
     navigate("/login");
@@ -234,24 +233,20 @@ const URL = process.env.REACT_APP_BASE_URL;
       method: "get",
       url: `${URL}/users/mypages/info`,
       headers: {
-        Authorization:
-        `${token}`,
+        Authorization: `${token}`,
       },
     }).then((res) => {
-      
       setName(res.data.data.nickname);
       setAge(res.data.data.age);
       setWeight(res.data.data.weight);
       setHeight(res.data.data.height);
       setEmail(res.data.data.email);
-      setGender(res.data.data.gender);   
-      if((res.data.data.gender)==="M"){
-        setGender2("남자")
+      setGender(res.data.data.gender);
+      if (res.data.data.gender === "M") {
+        setGender2("남자");
+      } else {
+        setGender2("여자");
       }
-      else{
-        setGender2("여자")
-      }
-
     });
   }, []);
 
@@ -285,8 +280,7 @@ const URL = process.env.REACT_APP_BASE_URL;
           },
           {
             headers: {
-              Authorization:
-              `${token}`,
+              Authorization: `${token}`,
             },
           }
         )
@@ -294,14 +288,12 @@ const URL = process.env.REACT_APP_BASE_URL;
           if (enteredName) {
             alert(`${enteredName}님 정보수정 완료!`);
             navigate("/");
-            console.log(setGender);
           } else if (!enteredName) {
             alert(`${name}님 정보수정 완료!`);
             navigate("/");
           }
         })
         .catch((data) => {
-          console.log(gender);
           console.log(data);
         });
     }
@@ -314,7 +306,7 @@ const URL = process.env.REACT_APP_BASE_URL;
     <>
       <form onSubmit={handleOnClick}>
         <MyPageForm>
-          <PageText >정보수정</PageText>
+          <PageText>정보수정</PageText>
           <MyPageButton2
             type="button"
             onClick={() => setIsOpen(true)}
@@ -362,7 +354,9 @@ const URL = process.env.REACT_APP_BASE_URL;
               type="button"
               onClick={() => setPwModalOn(true)}
               className="modalButton"
-            > 변경
+            >
+              {" "}
+              변경
             </SerchButton>
             <PwModal open={PwModalOn} onClose={() => setPwModalOn(false)} />
           </InputInfo>
@@ -402,13 +396,9 @@ const URL = process.env.REACT_APP_BASE_URL;
             <DisplayText3>Gender</DisplayText3>
           </InputInfo>
           <ToggleDiv>
-          <Input5
-              type="text"
-              value={gender2}
-              readOnly
-            />
+            <Input5 type="text" value={gender2} readOnly />
             <DisplayText4>Change Gender</DisplayText4>
-            <Toggle setGender={setGender}/>
+            <Toggle setGender={setGender} />
           </ToggleDiv>
           <MyPageButton type="button" onClick={handleOnClick}>
             Save

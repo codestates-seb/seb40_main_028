@@ -126,7 +126,6 @@ const Logout = ({ open, onClose }) => {
   // 토큰
   // const token = useRecoilValue(TokenState);
   // url주소
-  // const url = "http://13.209.190.35:8080";
 
   // 로그인 리셋 -> false
   const resetlogout = useResetRecoilState(LoginState);

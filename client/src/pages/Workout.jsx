@@ -29,32 +29,35 @@ function Workout() {
   const [workoutdata, setWorkoutdata] = useRecoilState(workoutlistState);
   const token = useRecoilValue(TokenState);
   const navigate = useNavigate();
-  const URL = process.env.REACT_APP_URL;
+  const URL = process.env.REACT_APP_BASE_URL;
 
   async function getdata(today) {
     await axios
-      .get(URL + `exercises/progress?date=${today}`, {
+      .get(URL + `/exercises/progress?date=${today}`, {
         // test용
         // .get(URL + "exercises/progress?date=2022-11-05", {
         headers: {
           Authorization: token,
         },
       })
-      // .then(data => console.log(data))
       .then((data) => {
         setWorkoutdata(data.data.data);
-        setWorktime(data.data.data.totalTime);
+        if (worktime === 0) setWorktime(data.data.data.totalTime);
         setSpecificpic(data.data.data.exercises[0].imageUrl);
         setSpecificname(data.data.data.exercises[0].exerciseName);
       })
       .catch((data) => {
-        if (data.response.status === 421) alert("계획된 운동이 없습니다");
+        if (data.response.status === 421 || data.response.status === 419)
+          alert("계획된 운동이 없습니다");
+        else alert("에러가 발생하였습니다. 메인페이지로 돌아갑니다.");
         navigate("/");
       });
   }
 
   useEffect(() => {
-    const datecalc = new Date();
+    const datecalc = new Date(
+      Date.now() - new Date().getTimezoneOffset() * 60000
+    );
     const today = datecalc.toISOString().split("T", 1)[0];
     // if(worktime === 0 || workoutdata === {}) {
     //   getdata();
@@ -168,7 +171,7 @@ function Workout() {
 
     await axios
       .patch(
-        URL + `exercises/progress/${workoutdata.todayId}`,
+        URL + `/exercises/progress/${workoutdata.todayId}`,
         {
           totalTime: worktime,
           exercises: workoutdata.exercises,
@@ -181,9 +184,9 @@ function Workout() {
       )
       .then(
         axios.patch(
-          URL + "users/mypages/info",
+          URL + "/users/mypages/info",
           {
-            Weight: weight,
+            weight,
           },
           {
             headers: {
@@ -197,9 +200,8 @@ function Workout() {
         setWorktime(0);
         navigate("/");
       })
-      // .then((data) => console.log(data).promise())
       .catch((data) => {
-        console.log(data);
+        alert(data);
       });
   };
 
@@ -210,9 +212,6 @@ function Workout() {
     }
   };
 
-  const recordweight = (event) => {
-    console.log(event);
-  };
   return (
     <Layout title="운동시작">
       <div className="flex flex-col bg-d-lighter text-gray-700 max-w-lg max-h-[85vh] text-center">
@@ -310,9 +309,7 @@ function Workout() {
           {isrestmodalon[0] ? (
             <Restmodal data={isrestmodalon} fn={setIsrestmodalon} />
           ) : null}
-          {workoutdone ? (
-            <Congrats workoutdone reset={reset} recordweight={recordweight} />
-          ) : null}
+          {workoutdone ? <Congrats workoutdone reset={reset} /> : null}
         </div>
       </div>
     </Layout>
@@ -320,41 +317,3 @@ function Workout() {
 }
 
 export default Workout;
-
-/* 
-운동사진 축하합니다 페이지에서 몸무게입력창있으면 좋을듯
-
-axios( {
-  method: "GET",
-  url: "exercise/progress",
-  headers: { "Content-Type": "application/json", authorization: token},
-  body: JSON.stringify(senddate),
-})
-
-senddate 형식 : 연도-월-일
-=> senddate url에 같이 보내드리는게 좋다는 의견이 있었으나, 토의하여 string으로 body에 보내는 것으로 의견종합
-
-response 형식
-=>종목과 각 세트에 대한 정보, 추가적으로 세트에 대한 id도 들어옴
-id에대한 무게 횟수
-ex)
-id1: 벤치프레스 첫번째세트 10kg 15회
-id2: 벤치프레스 두번째세트 10kg 12회
-
-axios( {
-  method: "PATCH",
-  url: "exercise/progress",
-  headers: { "Content-Type": "application/json", authorization: token},
-  body: JSON.stringify(sendprogress),
-})
-
-sendprogress:
-완료된 세트 id만 보내드리면 됨.(배열형식)
-운동전체시간
-ex) {00-12-57},[1,4,9,13] 자세한 형식은 다시 요청해서 샘플 받는것으로 결정
-
-response 성공 => status ok도 괜찮음
-/ 실패 => 고민해보아야함.
-
-이후 축하합니다 페이지에서 보낼 수 있는 url과 method를 저에게 알려주세요(지환)
-*/

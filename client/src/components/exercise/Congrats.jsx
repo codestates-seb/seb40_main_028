@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Modal from "react-modal";
 import Button from "../Button";
 
-export default function Congrats({ workoutdone, reset, recordweight }) {
+export default function Congrats({ workoutdone, reset }) {
   const [weight, setWeight] = useState("");
 
   const style = {
@@ -38,7 +38,6 @@ export default function Congrats({ workoutdone, reset, recordweight }) {
   };
   const onChange = (el) => {
     setWeight(el.target.value);
-    console.log(el);
   };
   return (
     <Modal
