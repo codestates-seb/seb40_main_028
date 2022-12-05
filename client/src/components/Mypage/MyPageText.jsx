@@ -16,7 +16,7 @@ font-size: 15px;
 color: white;
 margin-bottom: 1em;
 font-weight: 500;
-margin-left: 3.2em;
+margin-left: 3em;
 `
 const Text2 = styled.div`
 display: flex;
@@ -25,9 +25,9 @@ font-size: 15px;
 color: white;
 margin-bottom: 1em;
 font-weight: 500;
-margin-right:4.4em;
-
+margin-right:4.6em;
 `
+
 
 
 const MyPageText = () => {
