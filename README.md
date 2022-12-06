@@ -23,8 +23,8 @@
 ## 👨‍👩‍👧‍👦 BE Members 
 |김영민 (BE 팀장)   |김찬중 (BE 팀원)                  |이충민 (BE 팀원)               |
 |----------------|-------------------------------|-----------------------------|
-|<img src='https://user-images.githubusercontent.com/104314701/195014647-071dcecb-ee2c-4664-8b13-1b0d3e9edd7a.png' width='150'>|<img src='https://user-images.githubusercontent.com/103996469/192595845-36d99b8c-ec46-41ff-98f7-aef452181093.png' width='150'/>|<img src='https://user-images.githubusercontent.com/104314701/194877479-b32226f2-50c9-4741-855a-a0ef5db9388d.png' width='150'/>|<img src='https://user-images.githubusercontent.com/104314701/194877509-fd0c2ee0-397a-4808-8c32-23a8144bfd94.png' width='150'/>|                  
-|[@ZeroMin-K](https://github.com/ZeroMin-K)        |[@ClimberCode](https://github.com/ClimberCode)           |[@chungmin23](https://github.com/chungmin23)           |[@Damm06](https://github.com/Damm06)       |
+|<img src='https://user-images.githubusercontent.com/107402848/205866263-5533d10b-b6bb-44dc-9ac2-070957ee1b1a.png' width='150'>|<img src='https://user-images.githubusercontent.com/107402848/205866028-12d06d92-d001-4533-96d7-2b7a646bbec3.png' width='150'/>|<img src='https://user-images.githubusercontent.com/107402848/205866588-a7abd455-5148-4264-bd45-b82626d72a7f.png' width='150'/>               
+|[@ZeroMin-K](https://github.com/ZeroMin-K)        |[@ClimberCode](https://github.com/ClimberCode)           |[@chungmin23](https://github.com/chungmin23) |
 
 <br />
 
@@ -54,17 +54,59 @@
     2) 운동 동작 이미지 첨부해 사용자가 동작을 확인할 수 있고,  
     3) 더 많은 정보를 찾을 수 있도록 YouTube API를 이용해 헬스에 관련한 추천 동영상을 시청할 수 있도록 하였습니다.  
     
-    
-    
+### 근로그 서비스 주요 기능 시연 Gif
+
+<details>
+<summary>구글 OAuth2 로그인</summary>
+<br>
+<p align = "left">
+<img src = "https://user-images.githubusercontent.com/107402848/205823902-08b23b74-9686-4487-8959-c4eccacc3b34.gif" width = 250, height = 400>
+</p>
+</details>
+
+<details>
+<summary>메인 달력 페이지</summary>
+<br>
+<p align = "left">
+<img src = "https://user-images.githubusercontent.com/107402848/205827868-89ddb731-e64c-4942-8d79-df9a9ae1cf62.gif" width = 250, height = 400>
+</p>
+</details>
+
+<details>
+<summary>운동 계획 작성</summary>
+<br>
+<p align = "left">
+<img src = "https://user-images.githubusercontent.com/107402848/205830190-948bac1e-d10e-4e04-9e78-05c7c9f32bee.gif" width = 250, height = 400>
+</p>
+</details>
+
+<details>
+<summary>운동 계획 진행</summary>
+<br>
+<p align = "left">
+<img src = "https://user-images.githubusercontent.com/107402848/205827868-89ddb731-e64c-4942-8d79-df9a9ae1cf62.gif" width = 250, height = 400>
+</p>
+</details>
+
+<details>
+<summary>지도 API를 이용한 동네 헬스장 검색</summary>
+<br>
+<p align = "left">
+<img src = "https://user-images.githubusercontent.com/105702862/205849501-5581f9e4-ff76-4989-8b61-96f012bbecb5.gif" width = 250, height = 400>
+</p>
+</details>
+<a href = "https://github.com/codestates-seb/seb40_main_028/wiki">Wiki에서 더 자세한 내용 확인</a>
+
+
 # 사용 스택
 
 ---
 
-- 스택 플로우
+### 스택 플로우
 
 ![사용 스택](https://user-images.githubusercontent.com/107875213/205490913-e81303f5-dfd0-4591-8f15-13ba65fc3bf4.png)
 
-- 전체 스택
+### 전체 스택
 
 ![스택 아키텍쳐](https://user-images.githubusercontent.com/107875213/205490929-3ed7f3a5-33d0-4c5d-8ace-f58426bf5753.png)
 
