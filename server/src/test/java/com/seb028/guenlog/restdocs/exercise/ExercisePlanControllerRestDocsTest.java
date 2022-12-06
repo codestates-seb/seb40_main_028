@@ -52,8 +52,7 @@ import static org.springframework.restdocs.headers.HeaderDocumentation.requestHe
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -265,6 +264,95 @@ public class ExercisePlanControllerRestDocsTest {
                                                 fieldWithPath("data").type(JsonFieldType.ARRAY).description("응답 데이터"),
                                                 fieldWithPath("data[].recordId").type(JsonFieldType.NUMBER).description("카테고리 아이디"),
                                                 fieldWithPath("data[].name").type(JsonFieldType.STRING).description("카테고리 명")
+                                        )
+                                )
+                        )
+                )
+                .andReturn();
+
+    }
+
+    @Test
+    @WithMockUser
+    public void getExerciseRecordTest() throws Exception {
+
+        Long recordId = 1L;
+
+        ExercisePlanRequestDto.EachRecords eachRecord = new ExercisePlanRequestDto.EachRecords();
+        eachRecord.setWeight(50);
+        eachRecord.setCount(12);
+        eachRecord.setTimer(60);
+        eachRecord.setEachCompleted(false);
+
+        List<ExercisePlanRequestDto.EachRecords> eachRecords = new ArrayList<ExercisePlanRequestDto.EachRecords>();
+        eachRecords.add(eachRecord);
+
+        Exercise exercise = Exercise.builder()
+                .id(1L)
+                .imageUrl("s3.png")
+                .name("백 익스텐션")
+                .build();
+
+
+        Record records = Record.builder()
+                .id(1L)
+                .eachRecords(eachRecords)
+                .exercise(exercise)
+                .build();
+
+        ExercisePlanResponseDto.RecordDetailResponseDto responseDto = new ExercisePlanResponseDto.RecordDetailResponseDto();
+        responseDto.setExerciseId(records.getExercise().getId());
+        responseDto.setName(records.getExercise().getName());
+        responseDto.setImages(records.getExercise().getImageUrl());
+        responseDto.setRecords(records.getEachRecords());
+
+        given(exercisePlanService.findDetail(Mockito.anyLong()))
+                .willReturn(records);
+
+        given(exercisePlanMapper.recordToRecordDetailNameResponseDto(
+                Mockito.any(Record.class)))
+                .willReturn(responseDto);
+
+        // <<< when >>>
+        ResultActions actions =
+                mockMvc.perform(
+                        RestDocumentationRequestBuilders.get("/exercises/records/{record-id}",recordId)     // GET 요청시
+                                .header("Authorization", "Bearer {AccessToken}")    // 쿼리 파라미터 (운동 진행 날짜)
+                                .accept(MediaType.APPLICATION_JSON));
+
+        // <<< then >>>
+        MvcResult result =  actions
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.success").value(true))
+                .andExpect(jsonPath("$.data.exerciseId").value(responseDto.getExerciseId()))
+                .andExpect(jsonPath("$.data.name").value(responseDto.getName()))
+                .andExpect(jsonPath("$.data.images").value(responseDto.getImages()))
+                .andExpect(jsonPath("$.data.records[0].weight").value(responseDto.getRecords().get(0).getWeight()))
+                .andExpect(jsonPath("$.data.records[0].count").value(responseDto.getRecords().get(0).getCount()))
+                .andExpect(jsonPath("$.data.records[0].timer").value(responseDto.getRecords().get(0).getTimer()))
+                .andExpect(jsonPath("$.data.records[0].eachCompleted").value(responseDto.getRecords().get(0).getEachCompleted()))
+                .andDo(
+                        document(       // rest doc 생성
+                                "get-exercise-record",
+                                getRequestPreprocessor(),
+                                getResponsePreProcessor(),
+                                pathParameters(        // Path Parameter
+                                        Arrays.asList(parameterWithName("record-id").description("오늘 운동 계획 선택 ID"))
+                                ),
+                                requestHeaders(         // 헤더
+                                        headerWithName("Authorization").description("Bearer + {로그인 요청 Access 토큰}")
+                                ),
+                                responseFields(         // 응답 필드
+                                        Arrays.asList(
+                                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("응답 성공 여부"),
+                                                fieldWithPath("data").type(JsonFieldType.OBJECT).description("응답 데이터"),
+                                                fieldWithPath("data.exerciseId").type(JsonFieldType.NUMBER).description("운동 아이디"),
+                                                fieldWithPath("data.name").type(JsonFieldType.STRING).description("운동 이름"),
+                                                fieldWithPath("data.images").type(JsonFieldType.STRING).description("운동 이미지"),
+                                                fieldWithPath("data.records[].weight").type(JsonFieldType.NUMBER).description("운동 무게"),
+                                                fieldWithPath("data.records[].count").type(JsonFieldType.NUMBER).description("운동 횟수"),
+                                                fieldWithPath("data.records[].timer").type(JsonFieldType.NUMBER).description("운동 휴식시간"),
+                                                fieldWithPath("data.records[].eachCompleted").type(JsonFieldType.BOOLEAN).description("완료 여부")
                                         )
                                 )
                         )
