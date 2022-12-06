@@ -47,6 +47,7 @@ import java.util.List;
 import static com.seb028.util.ApiDocumentUtils.getRequestPreprocessor;
 import static com.seb028.util.ApiDocumentUtils.getResponsePreProcessor;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doNothing;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -486,6 +487,172 @@ public class ExercisePlanControllerRestDocsTest {
                         )
                 )
                 .andReturn();
+
+    }
+    @Test
+    @WithMockUser
+    public void patchExercisePlanTest() throws Exception {
+        Long recordId = 1L;
+
+        // 한 운동 세트에 대한 무게, 횟수, 휴식 시간, 세트 완료 여부 응답용 객체
+        ExercisePlanRequestDto.EachRecords eachRecord = new ExercisePlanRequestDto.EachRecords();
+        eachRecord.setWeight(50);
+        eachRecord.setCount(12);
+        eachRecord.setTimer(60);
+        eachRecord.setEachCompleted(false);
+
+        // 한 운동에 대한 각 세트 리스트 응답용 객체
+        List<ExercisePlanRequestDto.EachRecords> eachRecords = new ArrayList<ExercisePlanRequestDto.EachRecords>();
+        eachRecords.add(eachRecord);
+
+        Today today = Today.builder()
+                .id(1L)
+                .build();
+
+        Exercise exercise = Exercise.builder()
+                .id(1L)
+                .name("러시안 트위스트")
+                .imageUrl("s3.png")
+                .build();
+
+        Record record = Record.builder()
+                .exercise(exercise)
+                .today(today)
+                .isCompleted(false)
+                .eachRecords(eachRecords)
+                .build();
+
+        ExercisePlanResponseDto.RecordPostResponseDto  responseDto= new  ExercisePlanResponseDto.RecordPostResponseDto();
+        responseDto.setRecordId(recordId);
+        responseDto.setExerciseId(1L);
+        responseDto.setName("러시안 트위스트");
+        responseDto.setRecords(eachRecords);
+
+
+        ExercisePlanRequestDto.TodoPostDto todoPostDto = new ExercisePlanRequestDto.TodoPostDto();
+        todoPostDto.setExerciseId(1L);
+        todoPostDto.setEachRecords(eachRecords);
+
+        String content = gson.toJson(todoPostDto);
+
+        given(exercisePlanService.updateRecord(Mockito.anyLong(),Mockito.any(ExercisePlanRequestDto.TodoPostDto.class)))
+                .willReturn(record);
+
+        given(exercisePlanMapper.recordToRecordPostResponseDto(
+                Mockito.any(Record.class)))
+                .willReturn(responseDto);
+
+        // <<< when >>>
+        ResultActions actions =
+                mockMvc.perform(
+                        RestDocumentationRequestBuilders.patch("/exercises/records/{record-id}",recordId)
+                                .header("Authorization", "Bearer {AccessToken}")
+                                .accept(MediaType.APPLICATION_JSON)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(content)
+                                .with(csrf())
+                );
+
+
+        // <<< then >>>
+        MvcResult result =  actions
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.success").value(true))
+                .andExpect(jsonPath("$.data.recordId").value(responseDto.getRecordId()))
+                .andExpect(jsonPath("$.data.exerciseId").value(responseDto.getRecordId()))
+                .andExpect(jsonPath("$.data.name").value(responseDto.getName()))
+                .andExpect(jsonPath("$.data.records[0].weight").value(responseDto.getRecords().get(0).getWeight()))
+                .andExpect(jsonPath("$.data.records[0].count").value(responseDto.getRecords().get(0).getCount()))
+                .andExpect(jsonPath("$.data.records[0].timer").value(responseDto.getRecords().get(0).getTimer()))
+                .andExpect(jsonPath("$.data.records[0].eachCompleted").value(responseDto.getRecords().get(0).getEachCompleted()))
+                .andDo(
+                        document(       // rest doc 생성
+                                "patch-exercise-record",
+                                getRequestPreprocessor(),
+                                getResponsePreProcessor(),
+                                pathParameters(        // Path Parameter
+                                        Arrays.asList(parameterWithName("record-id").description("오늘 운동 계획 선택 ID"))
+                                ),
+                                requestParameters(      // 쿼리 파라미터
+                                        parameterWithName("_csrf").description("csrf").ignored()
+                                ),
+                                requestHeaders(         // 헤더
+                                        headerWithName("Authorization").description("Bearer + {로그인 요청 Access 토큰}")
+                                ),
+                                requestFields(                  // 요청 필드
+                                        Arrays.asList(
+                                                fieldWithPath("exerciseId").type(JsonFieldType.NUMBER).description("운동 아이디"),
+                                                fieldWithPath("eachRecords").type(JsonFieldType.ARRAY).description("각 세트"),
+                                                fieldWithPath("eachRecords[].weight").type(JsonFieldType.NUMBER).description("무게"),
+                                                fieldWithPath("eachRecords[].count").type(JsonFieldType.NUMBER).description("횟수"),
+                                                fieldWithPath("eachRecords[].timer").type(JsonFieldType.NUMBER).description("휴식 시간"),
+                                                fieldWithPath("eachRecords[].eachCompleted").type(JsonFieldType.BOOLEAN).description("세트 완료 여부")
+                                        )
+                                ),
+                                responseFields(         // 응답 필드
+                                        Arrays.asList(
+                                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("응답 성공 여부"),
+                                                fieldWithPath("data").type(JsonFieldType.OBJECT).description("응답 데이터"),
+                                                fieldWithPath("data.recordId").type(JsonFieldType.NUMBER).description("기록 아이디"),
+                                                fieldWithPath("data.exerciseId").type(JsonFieldType.NUMBER).description("운동 아이디"),
+                                                fieldWithPath("data.name").type(JsonFieldType.STRING).description("운동 이름"),
+                                                fieldWithPath("data.records[].weight").type(JsonFieldType.NUMBER).description("운동 무게"),
+                                                fieldWithPath("data.records[].count").type(JsonFieldType.NUMBER).description("운동 횟수"),
+                                                fieldWithPath("data.records[].timer").type(JsonFieldType.NUMBER).description("운동 휴식시간"),
+                                                fieldWithPath("data.records[].eachCompleted").type(JsonFieldType.BOOLEAN).description("완료 여부")
+                                        )
+                                )
+                        )
+                )
+                .andReturn();
+
+
+
+    }
+
+
+
+    @Test
+    @WithMockUser
+    public void deleteExercisePlanTest() throws Exception {
+        long recordId = 1L;
+
+
+
+        doNothing().when(exercisePlanService).deleteTodo(Mockito.anyLong());
+
+        ResultActions actions =
+                mockMvc.perform(
+                        RestDocumentationRequestBuilders.delete("/exercises/records/{record-id}",recordId)
+                                .header("Authorization", "Bearer {AccessToken}")
+                                .accept(MediaType.APPLICATION_JSON)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .with(csrf())
+                );
+
+
+        // then
+        actions.andExpect(status().isNoContent())
+                .andExpect(jsonPath("$.success").value(true))
+                .andDo(document(       // (9)
+                                "delete-exercise-record",     // (9-1)
+                                getRequestPreprocessor(),
+                                getResponsePreProcessor(),
+                                requestHeaders(    //request header
+                                        headerWithName("Authorization").description("Bearer + {로그인 요청 Access 토큰}")
+                                ),
+                                pathParameters(              // (1)
+                                        parameterWithName("record-id").description("기록 아이디")
+                                ),
+                                responseFields(     //response body에 포함된 데이터
+                                        List.of(
+                                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("결과"),
+                                                fieldWithPath("data").type(JsonFieldType.STRING).description("데이터")
+                                        )
+                                )
+                        )
+                );
+
 
     }
 }
