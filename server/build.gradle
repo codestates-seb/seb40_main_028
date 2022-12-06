@@ -71,7 +71,7 @@ tasks.named('asciidoctor') {
 	dependsOn test
 }
 
-// build task 실행 전 index.html 파일 copy 실행 API 문서를 파일 형태로 외부에 제공
+// build task 실행 전  index.html 파일 copy 실행 API 문서를 파일 형태로 외부에 제공
 task copyDocument(type: Copy) {
 	dependsOn asciidoctor
 	from file("${asciidoctor.outputDir}")
