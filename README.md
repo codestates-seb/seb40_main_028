@@ -9,7 +9,8 @@
 적극적인 커뮤니케이션을 위해 데일리 회의에서 각자 현재 상황 및 개발 내용을 공유하였습니다.
 
 ### 근로그 배포주소 : https://guenlog.vercel.app
-### QR코드 : <img src="https://user-images.githubusercontent.com/105702862/205854851-38e037cc-8dd6-4b0a-96e6-7788f47eab03.png" />
+### QR코드 :<br />
+<img src="https://user-images.githubusercontent.com/105702862/205854851-38e037cc-8dd6-4b0a-96e6-7788f47eab03.png" />
 
 
 
