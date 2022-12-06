@@ -1,0 +1,20 @@
+version: 0.0
+os: linux
+files:
+  - source:  /
+    destination: /home/ubuntu/action
+    overwrite: yes
+file_exists_behavior: OVERWRITE
+
+permissions:
+  - object: /
+    mode: 755
+    pattern: "**"
+    owner: ubuntu
+    group: ubuntu
+
+hooks:
+  ApplicationStart:
+    - location: server/scripts/deploy.sh
+      timeout: 60
+      runas: ubuntu
