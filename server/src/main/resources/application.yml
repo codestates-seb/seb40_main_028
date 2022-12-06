@@ -1,0 +1,47 @@
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/guenlog?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: 
+    password: 
+
+
+
+
+  jpa:
+    open-in-view: false
+    generate-ddl: true
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+  main:
+    allow-circular-references: true
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: 
+            clientSecret: 
+            scope:
+              - email
+              - profile
+#  jwt:
+#    secret: asasa
+#  mvc:
+#    path match:
+#      matching-strategy: ant_path_matcher
+
+logging:
+  level:
+    org:
+      springframework:
+        orm:
+          jpa: DEBUG
+
+jwt:
+  secret-key: asdfweqrzxcvfdghtuiytyrtywerfsdzgbfgyjuer5tszdfgfgjt7uyijhbnsdafgsertewrtsdfgdfvbcvbsdfgertsdfgsdfgergertewrtewrt
+  access-token-expiration-minutes: 10080  #access 토큰 유효 기간 7일
+  refresh-token-expiration-minutes: 420
