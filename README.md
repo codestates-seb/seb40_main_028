@@ -1,3 +1,4 @@
+
 # 팀 소개 - <28세기>
 
 ---
@@ -6,6 +7,8 @@
 습관을 가지길 바라며 이번 메인 프로젝트 서비스를 개발했습니다!! 😁
 - 또한 깃허브 칸반을 이용해 개인 작업을 목록화하여 시각적으로 진행 상황 이해를 쉽게하고,  
 적극적인 커뮤니케이션을 위해 데일리 회의에서 각자 현재 상황 및 개발 내용을 공유하였습니다.
+
+### 근로그 배포주소 : https://guenlog.vercel.app
 
 
 
@@ -19,7 +22,7 @@
 |김영민 (BE 팀장)   |김찬중 (BE 팀원)                  |이충민 (BE 팀원)               |
 |----------------|-------------------------------|-----------------------------|
 |<img src='https://user-images.githubusercontent.com/104314701/195014647-071dcecb-ee2c-4664-8b13-1b0d3e9edd7a.png' width='150'>|<img src='https://user-images.githubusercontent.com/103996469/192595845-36d99b8c-ec46-41ff-98f7-aef452181093.png' width='150'/>|<img src='https://user-images.githubusercontent.com/104314701/194877479-b32226f2-50c9-4741-855a-a0ef5db9388d.png' width='150'/>|<img src='https://user-images.githubusercontent.com/104314701/194877509-fd0c2ee0-397a-4808-8c32-23a8144bfd94.png' width='150'/>|                  
-|[@HelloHailie](https://github.com/HelloHailie)        |[@houndhollis](https://github.com/houndhollis)           |[@shotny](https://github.com/shotny)           |[@Damm06](https://github.com/Damm06)       |
+|[@HelloHailie](https://github.com/HelloHailie)        |[@ClimberCode](https://github.com/ClimberCode)           |[@shotny](https://github.com/shotny)           |[@Damm06](https://github.com/Damm06)       |
 
 <br />
 
