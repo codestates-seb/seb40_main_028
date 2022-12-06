@@ -150,7 +150,8 @@ export default function LoginContainer() {
 
   const [isLogin, setIsLogin] = useRecoilState(LoginState);
   const [isToken, setToken] = useRecoilState(TokenState);
-
+  
+  const URL = process.env.REACT_APP_BASE_URL;
   /////////////////////////////////////////////
   // console.log(isLogin, "처음 이즈로그인 값");
 
@@ -161,7 +162,7 @@ export default function LoginContainer() {
   } = useForm({ mode: onchange });
 
   const onLogin = async (data) => {
-    const URL = process.env.REACT_APP_BASE_URL;
+    
 
     // console.log(data);
     // console.log(data.email+": 이메일");
