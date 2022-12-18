@@ -183,9 +183,9 @@ public class ExerciseMainControllerRestDocsTest {
                 .today(today)
                 .build();
 
-        CalendarResponseDto calendarResponseDto = new CalendarResponseImpl(1L,duedate,1);
+        ExerciseMainResponseDto.CalendarDto calendarResponseDto = new ExerciseMainResponseDto.CalendarDto(1L, duedate.toLocalDate(),1);
 
-        List<CalendarResponseDto> calendarResponseDtos = new ArrayList<>();
+        List<ExerciseMainResponseDto.CalendarDto> calendarResponseDtos = new ArrayList<>();
         calendarResponseDtos.add(calendarResponseDto);
 
 

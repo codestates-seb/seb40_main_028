@@ -36,7 +36,7 @@ public class ExerciseMainController {
     public ResponseEntity getCalendar(@RequestParam("date") String date, HttpServletRequest request) {
         Long id = memberService.findMemberId(request);
 
-        List<CalendarResponseDto> calendars = exerciseMainService.findCalendar(date,id);
+        List<ExerciseMainResponseDto.CalendarDto> calendars = exerciseMainService.findCalendar(date,id);
 
 
         return new ResponseEntity<>(new MultiResponseDto<>(calendars),
