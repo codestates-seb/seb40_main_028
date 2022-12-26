@@ -97,7 +97,7 @@ public class Oauth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
 //                .host("geunlog-test.vercel.app")     //프론트 배포 서버 테스트 주소.
 ////                .port(3000)
 //                .path("/login/oauth")
-//                .queryParams(queryParams) //https://guenlog-test.vercel.app/login/oauth로 리다이렉트
+//                .queryParams(queryParams) //쿼리 파라미터로 access token, refresh token 전송.
 //                .build()
 //                .toUri();
 
@@ -105,10 +105,10 @@ public class Oauth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         return UriComponentsBuilder
                 .newInstance()
                 .scheme("https")
-                .host("guenlog.vercel.app")     //프론트 배포 서버 주소.
+                .host("realguenlog.vercel.app")     //프론트 배포 서버 주소.
 //                .port(3000)
                 .path("/login/oauth")
-                .queryParams(queryParams) //https://guenlog.vercel.app/login/oauth로 리다이렉트
+                .queryParams(queryParams) //쿼리 파라미터로 access token, refresh token 전송.
                 .build()
                 .toUri();
     }
