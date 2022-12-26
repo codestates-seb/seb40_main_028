@@ -10,7 +10,7 @@
 
 ### 근로그 배포주소 : https://realguenlog.vercel.app/
 ### QR코드 :<br />
-<img src="https://user-images.githubusercontent.com/105702862/205854851-38e037cc-8dd6-4b0a-96e6-7788f47eab03.png" />
+![근로그사이트](https://user-images.githubusercontent.com/105702862/209471447-f1c15b2d-3f05-42fc-a0fa-3db392ffa58d.PNG)
 
 
 
