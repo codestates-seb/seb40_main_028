@@ -34,7 +34,6 @@ public class MemberAuthenticationSuccessHandler implements AuthenticationSuccess
         Member findMember = optionalMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
         //헤더에 사용자 최초 로그인 상태 전송
         response.setHeader("InitialLogin", findMember.getInitialLogin().toString());
-        response.addHeader("InitialLogin", findMember.getInitialLogin().toString());
         //ResponseBody를 Json 형식으로 보여주도록 설정
         response.setContentType("application/json");
         response.setCharacterEncoding("utf-8");

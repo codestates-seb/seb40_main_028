@@ -95,7 +95,7 @@ public class SecurityConfig {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.addAllowedOriginPattern("*"); //모든 origin에 대해 접근 가능
+        configuration.addAllowedOriginPattern("https://realguenlog.vercel.app/"); //모든 origin에 대해 접근 가능
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "OPTIONS", "DELETE")); //해당 메서드에 대해 사용 가능
         configuration.setAllowedHeaders(Arrays.asList("*"));//전체 해더 접근 가능
         configuration.setAllowCredentials(true);
