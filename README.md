@@ -18,7 +18,7 @@
 |임종정 (FE 팀장)   |류지환 (FE 팀원)                  |김용훈 (FE 팀원)               |오경준 (FE 팀원)               |
 |----------------|-------------------------------|-----------------------------|-----------------------------|
 |<img src='https://user-images.githubusercontent.com/107875213/205656415-b0db5110-1d59-4210-aef5-cec756a5b83a.jpg' width='150'>|<img src='https://user-images.githubusercontent.com/103996469/192595845-36d99b8c-ec46-41ff-98f7-aef452181093.png' width='150'/>|<img src='https://user-images.githubusercontent.com/105702862/205853151-2fa17dea-1d5d-47ba-9f54-94cd175a5e19.jpeg' width='150'/>|<img src='https://avatars.githubusercontent.com/u/97310823?v=4' width='150'/>|                  
-|[@jongjeong](https://github.com/jongjeong)        |[@lactofreemilk](https://github.com/lactofreemilk)           |[@KKKHun2](https://github.com/KKKHun2)           |[@SkyRain1225](https://github.com/SkyRain1225)       |
+|[@limhada](https://github.com/limhada)        |[@lactofreemilk](https://github.com/lactofreemilk)           |[@KKKHun2](https://github.com/KKKHun2)           |[@SkyRain1225](https://github.com/SkyRain1225)       |
 
 ## 👨‍👩‍👧‍👦 BE Members 
 |김영민 (BE 팀장)   |김찬중 (BE 팀원)                  |이충민 (BE 팀원)               |
